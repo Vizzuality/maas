@@ -32,6 +32,9 @@
 
       </div>
 
+      <%= radio_button_tag :data_source_type, 3, false, :class => 'data_source_type' %>
+      <%= label_tag :data_source_type_3, t('.your_data.prefer_email') %>
+
     <% end %>
 
   </div>
@@ -39,6 +42,34 @@
   <div id="your_visualization">
     <%= f.radio_button :template_type, 1, :checked => false, :class => 'template_type' %>
     <%= f.label :template_type_1, t('.your_visualization.marker_map') %>
+
+    <%= f.radio_button :template_type, 2, :checked => false, :class => 'template_type' %>
+    <%= f.label :template_type_2, t('.your_visualization.thematic_map') %>
+
+    <%= f.radio_button :template_type, 3, :checked => false, :class => 'template_type' %>
+    <%= f.label :template_type_3, t('.your_visualization.not_sure') %>
+
+    <div class="options">
+      <h2><%= t('.your_visualization.options.title') %></h2>
+      <ul>
+        <li>
+          <%= f.check_box :options_1 %>
+          <%= f.label :options_1, t('.your_visualization.options.filter') %>
+        </li>
+        <li>
+          <%= f.check_box :options_2 %>
+          <%= f.label :options_2, t('.your_visualization.options.download') %>
+        </li>
+        <li>
+          <%= f.check_box :options_3 %>
+          <%= f.label :options_3, t('.your_visualization.options.corporative') %>
+        </li>
+        <li>
+          <%= f.check_box :options_4 %>
+          <%= f.label :options_4, t('.your_visualization.options.cluster') %>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div id="anything_else">

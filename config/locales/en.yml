@@ -26,4 +26,12 @@ en:
         my_data_url: 'My data url'
       your_visualization:
         marker_map: 'Marker map'
+        thematic_map: 'Thematic map'
+        not_sure: "I'm not sure"
+        options:
+          title: 'Any additional visualization needs?'
+          filter: 'Include a way of filtering of the data'
+          download: 'Allow the user to download the data in a ZIP / CSV / KML file'
+          corporative: 'Adapt the map to my corporative colors'
+          cluster: 'Clusterize markers'
       place_your_order: 'Place your order'

@@ -41,14 +41,40 @@ module OrderHelper
 
   end
 
-  def select_template_type
+  def data_by_email
 
-    within '#your_visualization' do
+    within '#your_data' do
 
-      choose 'Marker map'
+      choose 'I prefer to send it by email'
 
     end
 
+  end
+
+  def select_template_type(type = :marker)
+    types = {
+      :marker => 'Marker map',
+      :thematic => 'Thematic map',
+      :not_sure => "I'm not sure"
+    }
+
+    within '#your_visualization' do
+
+      choose types[type]
+
+    end
+
+  end
+
+  def select_visualization_options
+    within '#your_visualization .options' do
+      page.should have_content 'Any additional visualization needs?'
+
+      check 'Include a way of filtering of the data'
+      check 'Allow the user to download the data in a ZIP / CSV / KML file'
+      check 'Adapt the map to my corporative colors'
+      check 'Clusterize markers'
+    end
   end
 
   def set_some_comments
@@ -56,6 +82,31 @@ module OrderHelper
     within '#anything_else' do
       fill_in 'order_comments', :with => 'Bla bla bla...'
     end
+
+  end
+
+  def fill_order_form(template_type, template_type_id)
+
+    set_user_data
+
+    upload_data_file
+
+    select_template_type template_type
+
+    set_some_comments
+
+    expect do
+      click_on 'Place your order'
+      sleep 1
+    end.to change{ Order.count }.by(1)
+
+    order = Order.last
+    order.name.should == 'ACME'
+    order.email.should == 'coyote@acme.com'
+    order.template_type.should == template_type_id
+    order.comments.should == 'Bla bla bla...'
+    order.data_sources.should have(1).data_source
+    order.data_sources.last.file.url.should match(/uploads\/data_source\/file\/\d+\/whs_features\.csv/)
 
   end
 

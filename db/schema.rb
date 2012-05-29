@@ -25,6 +25,10 @@ ActiveRecord::Schema.define(:version => 20120528165647) do
     t.string   "email"
     t.integer  "template_type"
     t.text     "comments"
+    t.boolean  "options_1"
+    t.boolean  "options_2"
+    t.boolean  "options_3"
+    t.boolean  "options_4"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
