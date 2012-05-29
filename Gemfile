@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
+gem 'pg'
+gem 'responders'
+gem 'carrierwave'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -17,6 +20,7 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
-  gem 'poltergeist'
-  gem 'sqlite3'
+  gem 'capybara-webkit'
+  gem 'database_cleaner'
+  gem 'launchy'
 end

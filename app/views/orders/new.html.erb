@@ -1,0 +1,51 @@
+<%= form_for @order do |f| %>
+
+  <div id="about_you">
+    <%= f.label :name , t('.about_you.name', :name => Order.human_attribute_name('name')) %>
+    <%= f.text_field :name %>
+
+    <%= f.label :email , t('.about_you.email', :email => Order.human_attribute_name('email')) %>
+    <%= f.text_field :email %>
+  </div>
+
+  <div id="your_data">
+
+    <%= f.fields_for :data_sources do |ff| %>
+
+      <%= radio_button_tag :data_source_type, 1, false, :class => 'data_source_type' %>
+      <%= label_tag :data_source_type_1, t('.your_data.upload_a_file') %>
+
+      <div class="data_source_type_1">
+
+        <%= ff.label :file, t('.your_data.my_data') %>
+        <%= ff.file_field :file, :disabled => true %>
+
+      </div>
+
+      <%= radio_button_tag :data_source_type, 2, false, :class => 'data_source_type' %>
+      <%= label_tag :data_source_type_2, t('.your_data.provide_a_link') %>
+
+      <div class="data_source_type_2">
+
+        <%= ff.label :remote_file_url, t('.your_data.my_data_url') %>
+        <%= ff.text_field :remote_file_url, :disabled => true %>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+  <div id="your_visualization">
+    <%= f.radio_button :template_type, 1, :checked => false, :class => 'template_type' %>
+    <%= f.label :template_type_1, t('.your_visualization.marker_map') %>
+  </div>
+
+  <div id="anything_else">
+    <%= f.text_area :comments %>
+  </div>
+
+  <div class="submit">
+    <input type="submit" value="<%= t('.place_your_order') %>"/>
+  </div>
+<% end %>
