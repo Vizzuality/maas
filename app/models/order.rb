@@ -12,7 +12,9 @@ class Order < ActiveRecord::Base
 
   has_many :data_sources
   has_many :payments
+  has_many :order_options
 
   accepts_nested_attributes_for :data_sources
+  accepts_nested_attributes_for :order_options
 
 end

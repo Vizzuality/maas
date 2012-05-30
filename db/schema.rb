@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120531164232) do
+ActiveRecord::Schema.define(:version => 20120608110554) do
 
   create_table "data_sources", :force => true do |t|
     t.integer  "order_id"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(:version => 20120531164232) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "order_options", :force => true do |t|
+    t.integer  "order_id"
+    t.integer  "template_option_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "order_options", ["order_id"], :name => "index_order_options_on_order_id"
+  add_index "order_options", ["template_option_id"], :name => "index_order_options_on_template_option_id"
 
   create_table "orders", :force => true do |t|
     t.string   "name"
@@ -39,6 +49,21 @@ ActiveRecord::Schema.define(:version => 20120531164232) do
     t.string   "recurly_token"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "template_options", :force => true do |t|
+    t.integer  "template_id"
+    t.string   "name"
+    t.integer  "price"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "templates", :force => true do |t|
+    t.string   "name"
+    t.integer  "price"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

@@ -1,6 +1,6 @@
 require_relative 'acceptance_helper'
 
-feature 'MapMe payments' do
+feature 'MapMe payments', :js => :selenium do
 
   let(:awesome_map_order) { FactoryGirl.create(:awesome_map_order) }
 

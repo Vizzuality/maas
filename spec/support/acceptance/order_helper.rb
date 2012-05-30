@@ -1,7 +1,7 @@
 module OrderHelper
 
   def all_steps_hidden_but(step)
-    steps = %w(first second third fourth)
+    steps = %w(first second third forth)
     page.should have_css "##{step}_step",  :visible => true
     (steps - [step]).each do |step|
       page.should have_css "##{step}_step",  :visible => false
@@ -9,6 +9,8 @@ module OrderHelper
   end
 
   def set_user_data
+    page.should have_content '1. About you.'
+    page.should have_content 'Tell us who you are, so we can have an idea of your needs'
     within '#about_you' do
       fill_in 'Your name or company', :with => 'ACME'
       fill_in 'Your email', :with => 'coyote@acme.com'
@@ -118,6 +120,15 @@ module OrderHelper
 
   end
 
+  def should_show_template(template_type)
+    templates = %W(Markers Thematic Density Polygon)
+
+    page.should have_css 'h3', :text => template_type
+
+    (templates - [template_type]).each do |template|
+      page.should have_css 'h3', :text => template, :visible => false
+    end
+  end
 end
 
 RSpec.configure { |config| config.include OrderHelper }

@@ -15,23 +15,38 @@ en:
         alert: "%{resource_name} could not be destroyed."
   orders:
     new:
-      about_you:
-        name: 'Your %{name}'
-        email: 'Your %{email}'
-      your_data:
-        upload_a_file: 'Upload a file'
-        provide_a_link: 'Provide a link'
-        prefer_email: 'I prefer to send it by email'
-        my_data: 'My data'
-        my_data_url: 'My data url'
-      your_visualization:
-        marker_map: 'Marker map'
-        thematic_map: 'Thematic map'
-        not_sure: "I'm not sure"
-        options:
-          title: 'Any additional visualization needs?'
-          filter: 'Include a way of filtering of the data'
-          download: 'Allow the user to download the data in a ZIP / CSV / KML file'
-          corporative: 'Adapt the map to my corporative colors'
-          cluster: 'Clusterize markers'
-      place_your_order: 'Place your order'
+      creating_order: 'Creating your order'
+      select_your_template: 'Select your template'
+      templates-list:
+        markers: 'Markers map'
+        polygons: 'Polygons map'
+        choropleths: 'Choropleths map'
+        bubble: 'Bubble map'
+        dont_know: "Don't know"
+      templates-detail:
+        select_one_type: 'Select one of the types above to start configuring your template'
+        markers:
+          title: 'Markers map'
+          description: 'Including base interactivity, mouse-over effects and basic infowindows.'
+          price: '$%{price}'
+          options:
+            dynamic_filters:
+              name: 'Dynamic filters.'
+              description: 'This allows you to filter the features in your map dynamically.'
+              price: '$%{price}'
+            custom_infowindows:
+              name: 'Custom infowindows.'
+              description: 'This includes an ad-hoc design of your map infowindows.'
+              price: '$%{price}'
+            different_markers:
+              name: 'Different markers for different categories.'
+              description: 'This allows you to visual differentiate the features - styles may change-.'
+              price: '$%{price}'
+            dynamic_clusters:
+              name: 'Dynamic clusters.'
+              description: 'Creates a cluster when a lot of points are close each other - styles may change-.'
+              price: '$%{price}'
+      total:
+        title: 'Total'
+        ammount_html: 'Starting from $<span>%{price}</span>'
+

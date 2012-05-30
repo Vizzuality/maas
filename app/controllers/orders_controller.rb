@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new
     @order.data_sources.build
+    @templates_list = Template.all
   end
 
   def create
