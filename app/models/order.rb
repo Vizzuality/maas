@@ -11,6 +11,7 @@ class Order < ActiveRecord::Base
                   :options_4
 
   has_many :data_sources
+  has_many :payments
 
   accepts_nested_attributes_for :data_sources
 

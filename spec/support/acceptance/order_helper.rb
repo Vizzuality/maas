@@ -1,5 +1,13 @@
 module OrderHelper
 
+  def all_steps_hidden_but(step)
+    steps = %w(first second third fourth)
+    page.should have_css "##{step}_step",  :visible => true
+    (steps - [step]).each do |step|
+      page.should have_css "##{step}_step",  :visible => false
+    end
+  end
+
   def set_user_data
     within '#about_you' do
       fill_in 'Your name or company', :with => 'ACME'

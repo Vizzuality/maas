@@ -65,6 +65,20 @@ feature 'MaaS orders' do
       end
 
     end
+    scenario 'the customer can select a marker type template'
+    scenario 'the customer can select a thematic type template'
+    scenario 'the customer can select a density type template'
+    scenario 'the customer can select a polygon type template'
+  end
+
+  context 'in the third step' do
+    scenario 'the customer has to upload his data'
+  end
+
+  context 'in the fourth step' do
+    scenario 'the customer can see an order summary'
+    scenario 'can place the order'
+  end
 
     scenario 'sending data by email', :js => true do
 

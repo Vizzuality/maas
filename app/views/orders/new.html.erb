@@ -4,8 +4,53 @@
     <%= f.label :name , t('.about_you.name', :name => Order.human_attribute_name('name')) %>
     <%= f.text_field :name %>
 
-    <%= f.label :email , t('.about_you.email', :email => Order.human_attribute_name('email')) %>
-    <%= f.text_field :email %>
+    <h1><%= t('.first_step.title') %></h1>
+    <p><%= t('.first_step.description') %></p>
+
+    <div id="about_you">
+      <%= f.label :name , t('.first_step.about_you.name', :name => Order.human_attribute_name('name')) %>
+      <%= f.text_field :name %>
+
+      <%= f.label :email , t('.first_step.about_you.email', :email => Order.human_attribute_name('email')) %>
+      <%= f.text_field :email %>
+    </div>
+
+    <%= button_tag t('.next'), :class => 'next' %>
+  </div>
+
+  <div id="second_step" class="step">
+    <h1><%= t('.second_step.title') %></h1>
+
+    <div id="templates">
+      <a href="#" id="previous-template"><</a>
+      <a href="#" id="next-template">></a>
+
+      <ul class="list">
+        <li class="template showing">
+          <img src="" alt="" />
+          <h3><%= t('.second_step.templates.markers.title') %></h3>
+        </li>
+        <li class="template">
+          <img src="" alt="" />
+          <h3><%= t('.second_step.templates.thematic.title') %></h3>
+        </li>
+        <li class="template">
+          <img src="" alt="" />
+          <h3><%= t('.second_step.templates.density.title') %></h3>
+        </li>
+        <li class="template">
+          <img src="" alt="" />
+          <h3><%= t('.second_step.templates.polygon.title') %></h3>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <div id="third_step" class="step">
+  </div>
+
+  <div id="fourth_step" class="step">
   </div>
 
   <div id="your_data">

@@ -1,3 +1,5 @@
 MaaS::Application.routes.draw do
-  resources :orders
+  resources :orders do
+    resources :payments
+  end
 end

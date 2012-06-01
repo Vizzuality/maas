@@ -1,0 +1,17 @@
+<script>
+
+  Recurly.config({
+    subdomain: 'ferdev'
+  , currency: 'EUR'
+  , country: 'SP'
+  });
+
+  Recurly.buildTransactionForm({
+    target: '#transaction-form',
+    successURL: "<%= order_payments_path(@order) %>",
+    signature: '<%= @signature %>'
+  });
+
+</script>
+
+<div id="transaction-form"></div>

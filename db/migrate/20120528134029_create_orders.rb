@@ -9,6 +9,7 @@ class CreateOrders < ActiveRecord::Migration
       t.boolean    :options_2
       t.boolean    :options_3
       t.boolean    :options_4
+      t.integer    :total
 
       t.timestamps
     end
