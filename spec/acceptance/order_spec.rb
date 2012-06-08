@@ -119,7 +119,20 @@ feature 'MaaS orders creation', :js => true do
 
   end
 
-  scenario "allows to attach customer's data"
+  scenario "allows to attach customer's data" do
+
+    within 'form .your_data' do
+
+      page.should have_content 'Attach your data'
+      page.should have_content 'In order to get the best option for you, we need to analyze your data before sending you a budget.'
+
+      page.should have_content 'To attach files drag & drop here or'
+      page.should have_link 'select files from your computer'
+
+    end
+
+  end
+
   scenario 'allows customers their contact info'
   scenario 'allows customers to add further explanations about the data'
   scenario 'allows customers to place them if all data is ok'

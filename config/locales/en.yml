@@ -49,4 +49,9 @@ en:
       total:
         title: 'Total'
         ammount_html: 'Starting from $<span>%{price}</span>'
+      your_data:
+        title: 'Attach your data'
+        description: 'In order to get the best option for you, we need to analyze your data before sending you a budget.'
+        drag_drop: 'To attach files drag & drop here or '
+        select_files: 'select files from your computer'
 

@@ -43,4 +43,16 @@
     </li>
     <% end -%>
   </ul>
+
+  <div class="your_data">
+    <h3><%= t('.your_data.title') %></h3>
+    <p><%= t('.your_data.description') %></p>
+
+    <div class="upload">
+      <span><%= t('.your_data.drag_drop') %></span>
+      <%= link_to t('.your_data.select_files'), '#' %>
+    </div>
+
+  </div>
+
 <% end %>
