@@ -101,4 +101,4 @@ en:
         name: 'Your name/company'
         email: 'Your email'
         comments: 'Comments that should we know about your data on the map you want'
-
+      submit: 'Confirm and ask for a budget'

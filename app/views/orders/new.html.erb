@@ -17,6 +17,7 @@
 
     <% @templates_list.each do |template| -%>
     <li class="template <%= template.name %>">
+      <%= f.hidden_field :template_type, :value => template.id, :disabled => true %>
       <h4><%= t(".templates-detail.#{template.name}.title") %></h4>
       <p><%= t(".templates-detail.#{template.name}.description") %></p>
 
@@ -56,6 +57,7 @@
 
       <% if template.price.present? -%>
         <div class="total">
+          <%= f.hidden_field :total, :disabled => true %>
           <h3><%= t('.total.title') %></h3>
           <div class="ammount"><%= t('.total.ammount_html', :price => template.price) %></div>
         </div>
@@ -84,6 +86,10 @@
 
     <%= f.label :comments, t('.contact_info.comments') %>
     <%= f.text_area :comments %>
+  </div>
+
+  <div class="submit">
+    <%= f.submit t('.submit') %>
   </div>
 
 <% end %>

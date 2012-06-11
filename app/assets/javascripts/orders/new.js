@@ -2,7 +2,16 @@ $(function(){
 
   $('#templates-list').find('a').click(function(){
     $('#templates-detail').find('.template').removeClass('selected');
-    $('#templates-detail').find('.' + $(this).attr('class')).addClass('selected');
+
+    $('#templates-detail').find('input').attr('disabled', true);
+
+    $('#templates-detail')
+    .find('.' + $(this)
+    .attr('class'))
+    .addClass('selected')
+    .find('input').attr('disabled', false);
+
+    return false;
   });
 
   $('#templates-detail').find('.template').find('.options').find('input:checkbox').change(function(){
@@ -19,6 +28,7 @@ $(function(){
     });
 
     template.find('.total').find('.ammount').find('span').html(ammount);
+    template.find('.total').find('#order_total').val(ammount);
   });
 
 });

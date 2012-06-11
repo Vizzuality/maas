@@ -81,6 +81,28 @@ feature 'MaaS orders creation' do
 
   end
 
-  scenario 'allows customers to place them if all data is ok'
+  scenario 'allows customers to place them if all data is ok', :js => true do
+    click_on 'Markers map'
+    check 'Dynamic filters'
+    check 'Dynamic clusters'
+
+    fill_in 'Your name/company', :with => 'Naruto'
+    fill_in 'Your email', :with => 'naruto@konoha.jp'
+    fill_in 'Comments that should we know about your data on the map you want', :with => 'wadus'
+
+    expect do
+      click_on 'Confirm and ask for a budget'
+      wait_until { Order.count == 1 }
+    end.to change{ Order.count }.by(1)
+
+    last_order = Order.last
+    last_order.template_type.should be == Template.where(:name => 'markers').first.id
+    last_order.total.should be == 2700
+    last_order.name.should be == 'Naruto'
+    last_order.email.should be == 'naruto@konoha.jp'
+    last_order.comments.should be == 'wadus'
+
+    last_order.order_options.should have(2).options
+  end
 
 end
