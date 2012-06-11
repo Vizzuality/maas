@@ -24,6 +24,21 @@ FactoryGirl.define do
       price 350
     end
 
+    factory :different_polygons do
+      name 'different_polygons'
+      price 200
+    end
+
+    factory :variable_selection do
+      name 'variable_selection'
+      price 350
+    end
+
+    factory :custom_regions do
+      name 'custom_regions'
+      price 350
+    end
+
   end
 
 end

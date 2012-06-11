@@ -19,27 +19,47 @@
     <li class="template <%= template.name %>">
       <h4><%= t(".templates-detail.#{template.name}.title") %></h4>
       <p><%= t(".templates-detail.#{template.name}.description") %></p>
-      <span class="price"><%= t(".templates-detail.#{template.name}.price", :price => template.price) %></span>
+
+      <% if template.price.present? -%>
+        <span class="price"><%= t(".templates-detail.#{template.name}.price", :price => template.price) %></span>
+      <% end -%>
+
+      <% if template.visualization_methods.present? -%>
+        <h4><%= t('.templates-detail.visualization_method') %></h4>
+        <ul class="visualization_method">
+          <% template.visualization_methods.each do |visualization_method| -%>
+            <li>
+              <%= f.radio_button :visualization_method, :value => visualization_method.id %>
+              <%= f.label :visualization_method, t(".templates-detail.visualization_methods.#{visualization_method.name}.name") %>
+              <p>
+                <%= t(".templates-detail.visualization_methods.#{visualization_method.name}.description") %>
+              </p>
+            </li>
+          <% end -%>
+        </ul>
+      <% end -%>
 
       <ul class="options">
         <% template.options.each do |option| -%>
           <li>
             <%= f.fields_for :order_options, @order.order_options.build do |ff| %>
               <%= ff.check_box :template_option_id, :value => option.id %>
-              <%= ff.label :template_option_id,t(".templates-detail.#{template.name}.options.#{option.name}.name") %>
-              <span class="label_price">(<%= t(".templates-detail.#{template.name}.options.#{option.name}.price", :price => option.price) %>)</span>
-              <p><%= t(".templates-detail.#{template.name}.options.#{option.name}.description") %></p>
+              <%= ff.label :template_option_id,t(".templates-detail.template_options.#{option.name}.name") %>
+              <span class="label_price">(<%= t(".templates-detail.template_options.#{option.name}.price", :price => option.price) %>)</span>
+              <p><%= t(".templates-detail.template_options.#{option.name}.description") %></p>
               <div class="ellipsis">...</div>
-              <div class="option_price"><%= t(".templates-detail.#{template.name}.options.#{option.name}.price", :price => option.price) %></div>
+              <div class="option_price"><%= t(".templates-detail.template_options.#{option.name}.price", :price => option.price) %></div>
             <% end -%>
           </li>
         <% end -%>
       </ul>
 
-      <div class="total">
-        <h3><%= t('.total.title') %></h3>
-        <div class="ammount"><%= t('.total.ammount_html', :price => template.price) %></div>
-      </div>
+      <% if template.price.present? -%>
+        <div class="total">
+          <h3><%= t('.total.title') %></h3>
+          <div class="ammount"><%= t('.total.ammount_html', :price => template.price) %></div>
+        </div>
+      <% end -%>
     </li>
     <% end -%>
   </ul>
@@ -53,6 +73,17 @@
       <%= link_to t('.your_data.select_files'), '#' %>
     </div>
 
+  </div>
+
+  <div class="contact_info">
+    <%= f.label :name, t('.contact_info.name') %>
+    <%= f.text_field :name %>
+
+    <%= f.label :email, t('.contact_info.email') %>
+    <%= f.email_field :email %>
+
+    <%= f.label :comments, t('.contact_info.comments') %>
+    <%= f.text_area :comments %>
   </div>
 
 <% end %>

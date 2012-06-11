@@ -1,19 +1,19 @@
 require_relative 'acceptance_helper'
 
-feature 'MaaS orders creation', :js => true do
+feature 'MaaS orders creation' do
 
   background do
     [
       :markers,
       :polygons,
-      :choropleths,
-      :bubble,
+      :thematic,
+      :density,
       :dont_know
     ].each{ |name| FactoryGirl.create(name) }
     visit new_order_path
   end
 
-  scenario 'allows to select between different map templates' do
+  scenario 'allows to select between different map templates', :js => true do
 
     within 'form' do
 
@@ -31,89 +31,22 @@ feature 'MaaS orders creation', :js => true do
       within '#templates-list' do
         page.should have_link 'Markers map'
         page.should have_link 'Polygons map'
-        page.should have_link 'Choropleths map'
-        page.should have_link 'Bubble map'
+        page.should have_link 'Thematic map'
+        page.should have_link 'Density map'
         page.should have_link "Don't know"
 
         click_on 'Markers map'
       end
 
-      within '#templates-list' do
-        page.should have_css 'a', :text => 'Markers map', :class => 'selected'
-      end
+      markers_template_specs
 
-      within '#templates-detail' do
-        page.should_not have_link    'Markers map', :class => 'selected'
-        find('h4', :text => 'Markers map').should be_visible
-        find('p', :text => 'Including base interactivity, mouse-over effects and basic infowindows.').should be_visible
-        find('.price', :text => '$2000').should be_visible
-        find('.options').should be_visible
+      polygons_template_specs
 
-        within '.options' do
-          lis = all('li')
+      thematic_template_specs
 
-          lis[0].should have_css 'input', :type => 'checkbox'
-          lis[0].should have_css 'label', :text => 'Dynamic filters.'
-          lis[0].should have_css '.label_price', :text => '($350)'
-          lis[0].should have_content 'This allows you to filter the features in your map dynamically.'
-          lis[0].should have_css '.ellipsis', :text => '...'
-          lis[3].should have_css '.option_price', :visible => false
+      density_template_specs
 
-          lis[1].should have_css 'input', :type => 'checkbox'
-          lis[1].should have_css 'label', :text => 'Custom infowindows.'
-          lis[1].should have_css '.label_price', :text => '($350)'
-          lis[1].should have_content 'This includes an ad-hoc design of your map infowindows.'
-          lis[1].should have_css '.ellipsis', :text => '...'
-          lis[3].should have_css '.option_price', :visible => false
-
-          lis[2].should have_css 'input', :type => 'checkbox'
-          lis[2].should have_css 'label', :text => 'Different markers for different categories.'
-          lis[2].should have_css '.label_price', :text => '($200)'
-          lis[2].should have_content 'This allows you to visual differentiate the features - styles may change-.'
-          lis[2].should have_css '.ellipsis', :text => '...'
-          lis[3].should have_css '.option_price', :visible => false
-
-          lis[3].should have_css 'input', :type => 'checkbox'
-          lis[3].should have_css 'label', :text => 'Dynamic clusters.'
-          lis[3].should have_css '.label_price', :text => '($350)'
-          lis[3].should have_content 'Creates a cluster when a lot of points are close each other - styles may change-.'
-          lis[3].should have_css '.ellipsis', :text => '...'
-          lis[3].should have_css '.option_price', :visible => false
-
-        end
-
-        within '.total' do
-          page.should have_content 'Total'
-          page.should have_content 'Starting from $2000'
-        end
-
-        check 'Dynamic filters.'
-        check 'Different markers for different categories.'
-
-        within '.options' do
-          lis = all('li.selected')
-
-          lis[0].should have_css 'input', :type => 'checkbox', :checked => true
-          lis[0].should have_css 'label', :text => 'Dynamic filters.'
-          lis[0].should have_css '.label_price', :visible => false
-          lis[0].should have_content 'This allows you to filter the features in your map dynamically.'
-          lis[0].should have_css '.ellipsis', :visible => false
-          lis[0].should have_css '.option_price', :text => '$350', :visible => true
-
-          lis[1].should have_css 'input', :type => 'checkbox', :checked => true
-          lis[1].should have_css 'label', :text => 'Different markers for different categories.'
-          lis[1].should have_css '.label_price', :visible => false
-          lis[1].should have_content 'This allows you to visual differentiate the features - styles may change-.'
-          lis[1].should have_css '.ellipsis', :visible => false
-          lis[1].should have_css '.option_price', :text => '$200', :visible => true
-        end
-
-        within '.total' do
-          page.should have_content 'Total'
-          page.should have_content 'Starting from $2550'
-        end
-
-      end
+      dont_know_template_specs
 
     end
 
@@ -133,8 +66,21 @@ feature 'MaaS orders creation', :js => true do
 
   end
 
-  scenario 'allows customers their contact info'
-  scenario 'allows customers to add further explanations about the data'
+  scenario 'allows customers their contact info' do
+
+    within 'form .contact_info' do
+      page.should have_css 'label', :text => 'Your name/company'
+      page.should have_css 'input#order_name', :type => 'text'
+
+      page.should have_css 'label', :text => 'Your email'
+      page.should have_css 'input#order_email', :type => 'email'
+
+      page.should have_css 'label', :text => 'Comments that should we know about your data on the map you want'
+      page.should have_css 'textarea#order_comments'
+    end
+
+  end
+
   scenario 'allows customers to place them if all data is ok'
 
 end

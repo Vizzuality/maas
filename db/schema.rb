@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608110554) do
+ActiveRecord::Schema.define(:version => 20120611102634) do
 
   create_table "data_sources", :force => true do |t|
     t.integer  "order_id"
@@ -34,14 +34,11 @@ ActiveRecord::Schema.define(:version => 20120608110554) do
     t.string   "name"
     t.string   "email"
     t.integer  "template_type"
+    t.integer  "visualization_method"
     t.text     "comments"
-    t.boolean  "options_1"
-    t.boolean  "options_2"
-    t.boolean  "options_3"
-    t.boolean  "options_4"
     t.integer  "total"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   create_table "payments", :force => true do |t|
@@ -65,5 +62,14 @@ ActiveRecord::Schema.define(:version => 20120608110554) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "visualization_methods", :force => true do |t|
+    t.integer  "template_id"
+    t.string   "name"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "visualization_methods", ["template_id"], :name => "index_visualization_methods_on_template_id"
 
 end

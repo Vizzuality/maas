@@ -20,32 +20,75 @@ en:
       templates-list:
         markers: 'Markers map'
         polygons: 'Polygons map'
-        choropleths: 'Choropleths map'
-        bubble: 'Bubble map'
+        thematic: 'Thematic map'
+        density: 'Density map'
         dont_know: "Don't know"
       templates-detail:
         select_one_type: 'Select one of the types above to start configuring your template'
+        visualization_method: 'Visualization method'
         markers:
           title: 'Markers map'
           description: 'Including base interactivity, mouse-over effects and basic infowindows.'
           price: '$%{price}'
-          options:
-            dynamic_filters:
-              name: 'Dynamic filters.'
-              description: 'This allows you to filter the features in your map dynamically.'
-              price: '$%{price}'
-            custom_infowindows:
-              name: 'Custom infowindows.'
-              description: 'This includes an ad-hoc design of your map infowindows.'
-              price: '$%{price}'
-            different_markers:
-              name: 'Different markers for different categories.'
-              description: 'This allows you to visual differentiate the features - styles may change-.'
-              price: '$%{price}'
-            dynamic_clusters:
-              name: 'Dynamic clusters.'
-              description: 'Creates a cluster when a lot of points are close each other - styles may change-.'
-              price: '$%{price}'
+        polygons:
+          title: 'Polygons map'
+          description: 'Including base interactivity, mouse-over effects and basic infowindows.'
+          price: '$%{price}'
+        thematic:
+          title: 'Thematic map'
+          description: 'Including base interactivity, mouse-over effects and basic infowindows.'
+          price: '$%{price}'
+        density:
+          title: 'Density map'
+          description: 'Includes data process & visualization.'
+          price: '$%{price}'
+        dont_know:
+          title: 'Custom consultancy'
+          description: 'Just send us your data and a brief idea of what you need to analyze, and we will give you the best option to represent it and the corresponding estimate.'
+          price: '$%{price}'
+        visualization_methods:
+          choropleth:
+            name: 'Choropleth map'
+            description: 'Shows values coloring the geographic features in different colors or intensities.'
+          bubble:
+            name: 'Bubble map'
+            description: 'Shows values through bubbles of different size.'
+          rectangular_grid:
+            name: 'Rectangular grid'
+            description: 'Group and represent data using a rectangular grid.'
+          hexagonal_grid:
+            name: 'Hexagonal grid'
+            description: 'Group and represent data using an hexagonal grid.'
+        template_options:
+          dynamic_filters:
+            name: 'Dynamic filters.'
+            description: 'This allows you to filter the features in your map dynamically.'
+            price: '$%{price}'
+          custom_infowindows:
+            name: 'Custom infowindows.'
+            description: 'This includes an ad-hoc design of your map infowindows.'
+            price: '$%{price}'
+          different_markers:
+            name: 'Different markers for different categories.'
+            description: 'This allows you to visual differentiate the features - styles may change-.'
+            price: '$%{price}'
+          dynamic_clusters:
+            name: 'Dynamic clusters.'
+            description: 'Creates a cluster when a lot of points are close each other - styles may change-.'
+            price: '$%{price}'
+          different_polygons:
+            name: 'Different polygons for different categories.'
+            description: 'This allows you to visual differentiate the features - styles may change-.'
+            price: '$%{price}'
+          variable_selection:
+            name: 'Variable selection.'
+            description: 'This allows your users to toggle between different variables to visualize.'
+            price: '$%{price}'
+          custom_regions:
+            name: 'Custom geographic regions.'
+            description: 'Define the geographic regions you want to use instead of the default ones.'
+            price: '$%{price}'
+
       total:
         title: 'Total'
         ammount_html: 'Starting from $<span>%{price}</span>'
@@ -54,4 +97,8 @@ en:
         description: 'In order to get the best option for you, we need to analyze your data before sending you a budget.'
         drag_drop: 'To attach files drag & drop here or '
         select_files: 'select files from your computer'
+      contact_info:
+        name: 'Your name/company'
+        email: 'Your email'
+        comments: 'Comments that should we know about your data on the map you want'
 

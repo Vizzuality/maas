@@ -29,6 +29,9 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
+    Dir[Rails.root.join('public/uploads/tmp/*')].each do |path|
+      FileUtils.rm_rf path
+    end
     Dir[Rails.root.join('tmp/uploads/*')].each do |path|
       FileUtils.rm_rf path
     end

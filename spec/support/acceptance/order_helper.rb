@@ -1,134 +1,252 @@
 module OrderHelper
 
-  def all_steps_hidden_but(step)
-    steps = %w(first second third forth)
-    page.should have_css "##{step}_step",  :visible => true
-    (steps - [step]).each do |step|
-      page.should have_css "##{step}_step",  :visible => false
+  def markers_template_specs
+    within '#templates-list' do
+      page.should have_css 'a', :text => 'Markers map', :class => 'selected'
+    end
+
+    within '#templates-detail .markers' do
+      page.should_not have_link    'Markers map', :class => 'selected'
+      find('h4', :text => 'Markers map').should be_visible
+      find('p', :text => 'Including base interactivity, mouse-over effects and basic infowindows.').should be_visible
+      find('.price', :text => '$2000').should be_visible
+      find('.options').should be_visible
+
+      within '.options' do
+        lis = all('li')
+
+        lis[0].should have_css 'input', :type => 'checkbox'
+        lis[0].should have_css 'label', :text => 'Dynamic filters.'
+        lis[0].should have_css '.label_price', :text => '($350)'
+        lis[0].should have_content 'This allows you to filter the features in your map dynamically.'
+        lis[0].should have_css '.ellipsis', :text => '...'
+        lis[0].should have_css '.option_price', :visible => false
+
+        lis[1].should have_css 'input', :type => 'checkbox'
+        lis[1].should have_css 'label', :text => 'Custom infowindows.'
+        lis[1].should have_css '.label_price', :text => '($350)'
+        lis[1].should have_content 'This includes an ad-hoc design of your map infowindows.'
+        lis[1].should have_css '.ellipsis', :text => '...'
+        lis[1].should have_css '.option_price', :visible => false
+
+        lis[2].should have_css 'input', :type => 'checkbox'
+        lis[2].should have_css 'label', :text => 'Different markers for different categories.'
+        lis[2].should have_css '.label_price', :text => '($200)'
+        lis[2].should have_content 'This allows you to visual differentiate the features - styles may change-.'
+        lis[2].should have_css '.ellipsis', :text => '...'
+        lis[2].should have_css '.option_price', :visible => false
+
+        lis[3].should have_css 'input', :type => 'checkbox'
+        lis[3].should have_css 'label', :text => 'Dynamic clusters.'
+        lis[3].should have_css '.label_price', :text => '($350)'
+        lis[3].should have_content 'Creates a cluster when a lot of points are close each other - styles may change-.'
+        lis[3].should have_css '.ellipsis', :text => '...'
+        lis[3].should have_css '.option_price', :visible => false
+
+      end
+
+      within '.total' do
+        page.should have_content 'Total'
+        page.should have_content 'Starting from $2000'
+      end
+
+      check 'Dynamic filters.'
+      check 'Different markers for different categories.'
+
+      within '.options' do
+        lis = all('li.selected')
+
+        lis[0].should have_css 'input', :type => 'checkbox', :checked => true
+        lis[0].should have_css 'label', :text => 'Dynamic filters.'
+        lis[0].should have_css '.label_price', :visible => false
+        lis[0].should have_content 'This allows you to filter the features in your map dynamically.'
+        lis[0].should have_css '.ellipsis', :visible => false
+        lis[0].should have_css '.option_price', :text => '$350', :visible => true
+
+        lis[1].should have_css 'input', :type => 'checkbox', :checked => true
+        lis[1].should have_css 'label', :text => 'Different markers for different categories.'
+        lis[1].should have_css '.label_price', :visible => false
+        lis[1].should have_content 'This allows you to visual differentiate the features - styles may change-.'
+        lis[1].should have_css '.ellipsis', :visible => false
+        lis[1].should have_css '.option_price', :text => '$200', :visible => true
+      end
+
+      within '.total' do
+        page.should have_content 'Total'
+        page.should have_content 'Starting from $2550'
+      end
+
     end
   end
 
-  def set_user_data
-    page.should have_content '1. About you.'
-    page.should have_content 'Tell us who you are, so we can have an idea of your needs'
-    within '#about_you' do
-      fill_in 'Your name or company', :with => 'ACME'
-      fill_in 'Your email', :with => 'coyote@acme.com'
+  def polygons_template_specs
+    click_on 'Polygons map'
+
+    within '#templates-list' do
+      page.should have_css 'a', :text => 'Polygons map', :class => 'selected'
+    end
+
+    within '#templates-detail .polygons' do
+      find('h4', :text => 'Polygons map').should be_visible
+      find('p', :text => 'Including base interactivity, mouse-over effects and basic infowindows.').should be_visible
+      find('.price', :text => '$2000').should be_visible
+      find('.options').should be_visible
+
+      within '.options' do
+        lis = all('li')
+
+        lis[0].should have_css 'input', :type => 'checkbox'
+        lis[0].should have_css 'label', :text => 'Dynamic filters.'
+        lis[0].should have_css '.label_price', :text => '($350)'
+        lis[0].should have_content 'This allows you to filter the features in your map dynamically.'
+        lis[0].should have_css '.ellipsis', :text => '...'
+        lis[0].should have_css '.option_price', :visible => false
+
+        lis[1].should have_css 'input', :type => 'checkbox'
+        lis[1].should have_css 'label', :text => 'Custom infowindows.'
+        lis[1].should have_css '.label_price', :text => '($350)'
+        lis[1].should have_content 'This includes an ad-hoc design of your map infowindows.'
+        lis[1].should have_css '.ellipsis', :text => '...'
+        lis[1].should have_css '.option_price', :visible => false
+
+        lis[2].should have_css 'input', :type => 'checkbox'
+        lis[2].should have_css 'label', :text => 'Different polygons for different categories.'
+        lis[2].should have_css '.label_price', :text => '($200)'
+        lis[2].should have_content 'This allows you to visual differentiate the features - styles may change-.'
+        lis[2].should have_css '.ellipsis', :text => '...'
+        lis[2].should have_css '.option_price', :visible => false
+
+      end
+
+      within '.total' do
+        page.should have_content 'Total'
+        page.should have_content 'Starting from $2000'
+      end
+
     end
   end
 
-  def upload_data_file
+  def thematic_template_specs
+    click_on 'Thematic map'
 
-    within '#your_data' do
-
-      page.should have_css 'label', :visible => false, :text => 'My data'
-      page.should have_css 'input', :visible => false, :type => 'file'
-
-      choose 'Upload a file'
-
-      page.should have_css 'label', :visible => true, :text => 'My data'
-      page.should have_css 'input', :visible => true, :type => 'file'
-
-      attach_file 'My data', Rails.root.join('spec/support/data/whs_features.csv')
+    within '#templates-list' do
+      page.should have_css 'a', :text => 'Thematic map', :class => 'selected'
     end
 
-  end
+    within '#templates-detail .thematic' do
+      find('h4', :text => 'Thematic map').should be_visible
+      find('p', :text => 'Including base interactivity, mouse-over effects and basic infowindows.').should be_visible
+      find('.price', :text => '$2000').should be_visible
+      find('.options').should be_visible
 
-  def set_data_url
+      within '.visualization_method' do
+        lis = all('li')
 
-    within '#your_data' do
+        lis[0].should have_css 'input', :type => 'radio'
+        lis[0].should have_css 'label', :text => 'Choropleth map'
+        lis[0].should have_content 'Shows values coloring the geographic features in different colors or intensities.'
 
-      page.should have_css 'label', :visible => false, :text => 'My data url'
-      page.should have_css 'input', :visible => false, :type => 'text'
+        lis[1].should have_css 'input', :type => 'radio'
+        lis[1].should have_css 'label', :text => 'Bubble map'
+        lis[1].should have_content 'Shows values through bubbles of different size.'
 
-      choose 'Provide a link'
+      end
 
-      page.should have_css 'label', :visible => true, :text => 'My data url'
-      page.should have_css 'input', :visible => true, :type => 'text'
+      within '.options' do
+        lis = all('li')
 
-      fill_in 'My data url', :with => "#{Capybara.current_url.gsub(Capybara.current_path, '')}/tmp/whs_features.csv"
-    end
+        lis[0].should have_css 'input', :type => 'checkbox'
+        lis[0].should have_css 'label', :text => 'Variable selection.'
+        lis[0].should have_css '.label_price', :text => '($350)'
+        lis[0].should have_content 'This allows your users to toggle between different variables to visualize.'
+        lis[0].should have_css '.ellipsis', :text => '...'
+        lis[0].should have_css '.option_price', :visible => false
 
-  end
+        lis[1].should have_css 'input', :type => 'checkbox'
+        lis[1].should have_css 'label', :text => 'Custom infowindows.'
+        lis[1].should have_css '.label_price', :text => '($350)'
+        lis[1].should have_content 'This includes an ad-hoc design of your map infowindows.'
+        lis[1].should have_css '.ellipsis', :text => '...'
+        lis[1].should have_css '.option_price', :visible => false
 
-  def data_by_email
+        lis[2].should have_css 'input', :type => 'checkbox'
+        lis[2].should have_css 'label', :text => 'Custom geographic regions.'
+        lis[2].should have_css '.label_price', :text => '($350)'
+        lis[2].should have_content 'Define the geographic regions you want to use instead of the default ones.'
+        lis[2].should have_css '.ellipsis', :text => '...'
+        lis[2].should have_css '.option_price', :visible => false
 
-    within '#your_data' do
+      end
 
-      choose 'I prefer to send it by email'
+      within '.total' do
+        page.should have_content 'Total'
+        page.should have_content 'Starting from $2000'
+      end
 
-    end
-
-  end
-
-  def select_template_type(type = :marker)
-    types = {
-      :marker => 'Marker map',
-      :thematic => 'Thematic map',
-      :not_sure => "I'm not sure"
-    }
-
-    within '#your_visualization' do
-
-      choose types[type]
-
-    end
-
-  end
-
-  def select_visualization_options
-    within '#your_visualization .options' do
-      page.should have_content 'Any additional visualization needs?'
-
-      check 'Include a way of filtering of the data'
-      check 'Allow the user to download the data in a ZIP / CSV / KML file'
-      check 'Adapt the map to my corporative colors'
-      check 'Clusterize markers'
     end
   end
 
-  def set_some_comments
+  def density_template_specs
+    click_on 'Density map'
 
-    within '#anything_else' do
-      fill_in 'order_comments', :with => 'Bla bla bla...'
+    within '#templates-list' do
+      page.should have_css 'a', :text => 'Density map', :class => 'selected'
     end
 
-  end
+    within '#templates-detail .density' do
+      find('h4', :text => 'Density map').should be_visible
+      find('p', :text => 'Includes data process & visualization.').should be_visible
+      find('.price', :text => '$2000').should be_visible
+      find('.options').should be_visible
 
-  def fill_order_form(template_type, template_type_id)
+      within '.visualization_method' do
+        lis = all('li')
 
-    set_user_data
+        lis[0].should have_css 'input', :type => 'radio'
+        lis[0].should have_css 'label', :text => 'Rectangular grid'
+        lis[0].should have_content 'Group and represent data using a rectangular grid.'
 
-    upload_data_file
+        lis[1].should have_css 'input', :type => 'radio'
+        lis[1].should have_css 'label', :text => 'Hexagonal grid'
+        lis[1].should have_content 'Group and represent data using an hexagonal grid.'
 
-    select_template_type template_type
+      end
 
-    set_some_comments
+      within '.options' do
+        lis = all('li')
 
-    expect do
-      click_on 'Place your order'
-      sleep 1
-    end.to change{ Order.count }.by(1)
+        lis[0].should have_css 'input', :type => 'checkbox'
+        lis[0].should have_css 'label', :text => 'Variable selection.'
+        lis[0].should have_css '.label_price', :text => '($350)'
+        lis[0].should have_content 'This allows your users to toggle between different variables to visualize.'
+        lis[0].should have_css '.ellipsis', :text => '...'
+        lis[0].should have_css '.option_price', :visible => false
 
-    order = Order.last
-    order.name.should == 'ACME'
-    order.email.should == 'coyote@acme.com'
-    order.template_type.should == template_type_id
-    order.comments.should == 'Bla bla bla...'
-    order.data_sources.should have(1).data_source
-    order.data_sources.last.file.url.should match(/uploads\/data_source\/file\/\d+\/whs_features\.csv/)
+      end
 
-  end
+      within '.total' do
+        page.should have_content 'Total'
+        page.should have_content 'Starting from $2000'
+      end
 
-  def should_show_template(template_type)
-    templates = %W(Markers Thematic Density Polygon)
-
-    page.should have_css 'h3', :text => template_type
-
-    (templates - [template_type]).each do |template|
-      page.should have_css 'h3', :text => template, :visible => false
     end
   end
+
+  def dont_know_template_specs
+    click_on "Don't know"
+
+    within '#templates-list' do
+      page.should have_css 'a', :text => "Don't know", :class => 'selected'
+    end
+
+    within '#templates-detail .dont_know' do
+      find('h4', :text => 'Custom consultancy').should be_visible
+      find('p', :text => 'Just send us your data and a brief idea of what you need to analyze, and we will give you the best option to represent it and the corresponding estimate.').should be_visible
+      page.should_not have_css '.price'
+      page.should_not have_css '.total'
+    end
+  end
+
 end
 
 RSpec.configure { |config| config.include OrderHelper }

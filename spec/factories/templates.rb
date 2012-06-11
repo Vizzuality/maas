@@ -18,22 +18,43 @@ FactoryGirl.define do
 
     factory :polygons do
       name 'polygons'
-      price 3000
+      price 2000
+
+      after(:create) do |template, evaluator|
+        FactoryGirl.create(:dynamic_filters,    template: template)
+        FactoryGirl.create(:custom_infowindows, template: template)
+        FactoryGirl.create(:different_polygons,  template: template)
+      end
     end
 
-    factory :choropleths do
-      name 'choropleths'
-      price 4000
+    factory :thematic do
+      name 'thematic'
+      price 2000
+
+      after(:create) do |template, evaluator|
+        FactoryGirl.create(:choropleth, template: template)
+        FactoryGirl.create(:bubble,     template: template)
+
+        FactoryGirl.create(:variable_selection, template: template)
+        FactoryGirl.create(:custom_infowindows, template: template)
+        FactoryGirl.create(:custom_regions,     template: template)
+      end
     end
 
-    factory :bubble do
-      name 'bubble'
-      price 5000
+    factory :density do
+      name 'density'
+      price 2000
+
+      after(:create) do |template, evaluator|
+        FactoryGirl.create(:rectangular_grid, template: template)
+        FactoryGirl.create(:hexagonal_grid,   template: template)
+
+        FactoryGirl.create(:variable_selection, template: template)
+      end
     end
 
     factory :dont_know do
       name 'dont_know'
-      price 6000
     end
 
   end
