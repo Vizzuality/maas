@@ -7,7 +7,7 @@ feature 'MapMe home' do
 
   scenario 'has a header with a navigation menu' do
 
-    within 'head' do
+    within 'header' do
 
       page.should have_link 'MapMe!'
 
@@ -51,6 +51,7 @@ feature 'MapMe home' do
   scenario 'has a section about the reasons to use mapme' do
 
     within '.why_mapme' do
+      page.should have_content 'Why MapMe?'
 
       page.should have_css '.reason h3', :text => 'Custom solutions'
       page.should have_css '.reason h3', :text => "It's efficient"
@@ -83,7 +84,7 @@ feature 'MapMe home' do
   scenario 'has a big button to order a new map' do
 
     within '.interested' do
-      page.should have_content 'Interested'
+      page.should have_content 'Interested?'
       page.should have_link 'Order your map and ask for a budget with no compromises'
       click_on 'Order your map and ask for a budget with no compromises'
     end
