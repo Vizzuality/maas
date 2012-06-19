@@ -13,6 +13,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'factory_girl_rails'
 
 group :development do
   gem 'debugger'
@@ -27,6 +28,5 @@ group :development, :test do
   gem 'vcr'
   gem 'webmock'
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
   gem 'launchy'
 end
