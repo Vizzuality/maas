@@ -17,6 +17,7 @@ gem 'jquery-rails'
 group :development do
   gem 'debugger'
   gem 'sextant'
+  gem 'heroku'
 end
 
 group :development, :test do
