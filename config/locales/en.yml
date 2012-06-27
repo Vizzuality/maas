@@ -13,19 +13,18 @@ en:
       destroy:
         notice: "%{resource_name} was successfully destroyed."
         alert: "%{resource_name} could not be destroyed."
-  common:
-   header:
-    title: 'Let us turn your data into an interactive map'
-    subtitle: 'Hand crafted, personalized and fit to your needs in <strong>less than 2 weeks and $3,000</strong>'
-    order_your_map: 'Order your map'
-    menu:
-      how_does_it_work: 'How does it work'
-      why_mapme: 'Why MapMe'
-      showcase: 'Showcase'
-      order_your_map: 'Order your map'
-      faq: 'FAQ'
   home:
-    index:
+    header:
+      title: 'Let us turn your data into an interactive map'
+      subtitle: 'Hand crafted, personalized and fit to your needs in <strong>less than 2 weeks and $3,000</strong>'
+      order_your_map: 'Order your map'
+      menu:
+        how_does_it_work: 'How does it work'
+        why_mapme: 'Why MapMe'
+        showcase: 'Showcase'
+        order_your_map: 'Order your map'
+        faq: 'FAQ'
+    characteristics:
       how_does_it_work:
         title: 'How does it work?'
         explanation_1: 'You send us your data and select your visualization template.'
@@ -52,26 +51,26 @@ en:
         reason_6:
           title: 'Different basemaps'
           description: 'You can have your maps over Google Maps, MapBox tiles or your own base layer.'
-      showcase:
+      slideshow:
         title: 'Showcase'
-      interested:
+      interest:
         title: 'Interested?'
         order_your_map: 'Order your map and ask for a budget with no compromises'
-      footer:
-        title: 'MapMe!'
-        understand:
-          title: 'Understand the service'
-          how_it_works: 'How it works'
-          why_mapme: 'Why MapMe'
-          faq: 'FAQ'
-        see_results:
-          title: 'See our results'
-          showcase: 'Showcase'
-          order_your_map: 'Order your map'
-          blog: 'Blog'
-        know_more:
-          title: 'Know more'
-          contact_us: 'Contact us'
+    footer:
+      title: 'MapMe!'
+      understand:
+        title: 'Understand the service'
+        how_it_works: 'How it works'
+        why_mapme: 'Why MapMe'
+        faq: 'FAQ'
+      see_results:
+        title: 'See our results'
+        showcase: 'Showcase'
+        order_your_map: 'Order your map'
+        blog: 'Blog'
+      know_more:
+        title: 'Know more'
+        contact_us: 'Contact us'
   orders:
     new:
       creating_order: 'Creating your order'

@@ -24,7 +24,10 @@ header {
   text-align:center;
 
   background: url(backgrounds/bg-street.png) repeat-x;
+  @extend .home-inner;
+}
 
+.home-inner {
   .inner {
     position:relative;
     margin: auto;
@@ -101,6 +104,77 @@ header .computer {
   font-size:21px;
   @extend .sans-serif;
   @include text-shadow($cWhite 1px 1px 1px);
+
+  // TODO: hover & active
 }
 
 
+section.characteristics {
+
+  @extend .home-inner;
+
+  padding: 20px 0;
+
+  background: url(backgrounds/bg-padded.png);
+
+  h2 {
+    padding: 40px 0;
+
+    color:$cGray2;
+    font-size:21px;
+    text-transform: uppercase;
+    @extend .sans-serif;
+    text-align:center;
+  }
+
+  .inner .box {
+    $pT: 40px;
+    $pR: 40px;
+    $pB: 40px;
+    $pL: 40px;
+
+    @include inline-block();
+
+    vertical-align: top;
+
+    width:300px - $pL - $pR;
+    padding: $pT $pR $pB $pL;
+    margin: 0 20px 29px 0;
+
+    background: $cWhite;
+
+    border: 1px solid #ccc;
+    @include border-radius(3px);
+
+    text-align:center;
+
+    &.last { margin-right: 0; }
+  }
+
+  .inner p {
+    padding: 15px 0 0 0;
+
+    @extend .sans-serif;
+    font-size:15px;
+    color: $cGray2;
+  }
+
+  .inner h3 {
+    padding: 0 0 15px 0;
+
+    @extend .sans-serif-bold;
+    font-size:21px;
+    color: $cGray1;
+  }
+}
+
+section.slideshow {
+  height: 533px;
+  background: url(backgrounds/bg-stars.png) center top;
+}
+
+section.interest {
+  height: 276px;
+  text-align:center;
+  background: url(backgrounds/bg-orange.png) repeat-x;
+}
