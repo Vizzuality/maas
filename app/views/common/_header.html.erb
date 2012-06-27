@@ -1,0 +1,17 @@
+<header>
+<div class="inner">
+  <%= link_to 'MapMe!', root_path, :class => :logo %>
+  <%= render :partial => 'common/nav' %>
+
+  <hgroup>
+    <h1><%= t('.title') %></h1>
+    <p><%= raw t('.subtitle') %></p>
+  <%= link_to t('.order_your_map'), new_order_path, :class => "button gray" %>
+  </hgroup>
+
+
+</div>
+
+<div class="computer"></div>
+
+</header>
