@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'ProximaNova-Regular';
+  src: asset-path("ProximaNova-Regular.eot", font);
+  src: local('☺'), url(asset-path("ProximaNova-Regular.woff", font)) format('woff'), url(asset-path("ProximaNova-Regular.ttf", font)) format('truetype'), url(asset-path("ProximaNova-Regular.svg", font)) format('svg');
+  src: local('☺'), url(asset-path("ProximaNova-Regular.ttf", font)) format('truetype'), url(asset-path("ProximaNova-Regular.svg", font)) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ProximaNova-Bold';
+  src: asset-path("ProximaNova-Bold.eot", font);
+  src: local('☺'), url(asset-path("ProximaNova-Bold.woff", font)) format('woff'), url(asset-path("ProximaNova-Bold.ttf", font)) format('truetype'), url(asset-path("ProximaNova-Bold.svg", font)) format('svg');
+  src: local('☺'), url(asset-path("ProximaNova-Bold.ttf", font)) format('truetype'), url(asset-path("ProximaNova-Bold.svg", font)) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ProximaNova-Semibold';
+  src: asset-path("ProximaNova-Semibold.eot", font);
+  src: local('☺'), url(asset-path("ProximaNova-Semibold.woff", font)) format('woff'), url(asset-path("ProximaNova-Semibold.ttf", font)) format('truetype'), url(asset-path("ProximaNova-Semibold.svg", font)) format('svg');
+  src: local('☺'), url(asset-path("ProximaNova-Semibold.ttf", font)) format('truetype'), url(asset-path("ProximaNova-Semibold.svg", font)) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

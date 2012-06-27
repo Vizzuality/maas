@@ -1,0 +1,166 @@
+/* Colors */
+$cWhite:                 #FFFFFF;
+$cGray4:                 #CCCCCC;
+$cGray3:                 #999999;
+$cGray2:                 #666666;
+$cGray1:                 #333333;
+$cGray0:                 #000000;
+
+$cBackground:            #75ADB5;
+$cLink:                  #F7BD63;
+$cLinkHover:             #F7BD63;
+
+
+/* Sprites */
+
+/*$icons-***-spacing:91px;*/
+@import "icons/*.png"; /**/
+
+strong { font-weight: bold; } // This is sad, I know.
+
+.hidden { display:none; }
+
+.pull-left {
+  float:right;
+}
+
+.pull-right {
+  float:right;
+}
+
+.shadow-transition {
+  -webkit-transition: -webkit-box-shadow 0.3s ease-out;
+  -moz-transition: -moz-box-shadow 0.3s ease-out;
+  -o-transition: box-shadow 0.3s ease-out;
+}
+
+.no-glow {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+@mixin glow($opacity) {
+  -moz-box-shadow:0px 0px 6px 1px rgba(255,255,255,$opacity); /* Firefox v3.5+ */
+  -webkit-box-shadow:0px 0px 6px 1px rgba(255,255,255,$opacity); /* Safari v3.0+ and by Chrome v0.2+ */
+  box-shadow:0px 0px 6px 1px rgba(255,255,255,$opacity); /* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+  and by Opera v10.5+ */
+  -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = $opacity * 10)";
+  filter:progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = $opacity * 10);
+}
+
+@mixin button($url, $height, $mL, $pT, $pR, $pB, $pL, $offset-y) {
+  @include inline-block();
+
+  position:relative;
+
+  height:$height;
+  background: url($url) no-repeat left -1*($offset-y + $height);
+  color:#fff;
+  text-decoration:none;
+  text-transform: uppercase;
+
+  @extend .shadow-transition;
+
+  & > span {
+    @include inline-block();
+    height: $height - $pT - $pB;
+    margin-left: $mL;
+    padding: $pT $pR $pB $pL;
+    background: url($url) repeat-x right -1*$offset-y;
+    white-space:nowrap;
+  }
+}
+
+@mixin absolute-left-center($width) {
+  position:absolute;
+  left:50%;
+  width: $width;
+  margin-left: -1*$width / 2;
+}
+
+@mixin absolute-center($width, $height) {
+  position:absolute;
+  left:50%;
+  top: 50%;
+  margin-left: -1*$width / 2;
+  margin-top:  -1*$height / 2;
+  width: $width;
+  height: $height;
+}
+
+@mixin clearfix() {
+  & { *zoom: 1; }
+  &:before, &:after { content: ""; display: table; }
+  &:after { clear: both; }
+}
+
+.disable-selection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin radio($url) {
+  @include inline-block();
+  @include icons-sprite(radio, $offset-y: -67px);
+
+  padding-left: 12px;
+
+  color:#333;
+  text-decoration:none;
+
+  &:hover          { @include icons-sprite($url, $offset-y:-207px); }
+
+  &:active         { @include icons-sprite($url, $offset-y:-207px); }
+  &:active:hover   { @include icons-sprite($url, $offset-y:-277px); }
+
+  &.checked        { @include icons-sprite($url, $offset-y:-137px); }
+  &.checked:hover  { @include icons-sprite($url, $offset-y:-277px); }
+
+  &.disabled       { color: $cGray4; @include icons-sprite($url, $offset-y:5px); }
+  &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }
+}
+
+@mixin checkboxes($url) {
+  @include inline-block();
+  @include icons-sprite(checkboxes, $offset-y: -66px);
+
+  padding-left: 12px;
+
+  color:#333;
+  text-decoration:none;
+
+  &:hover          { @include icons-sprite($url, $offset-y:-206px); }
+
+  &:active         { @include icons-sprite($url, $offset-y:-206px); }
+  &:active:hover   { @include icons-sprite($url, $offset-y:-276px); }
+
+  &.checked        { @include icons-sprite($url, $offset-y:-136px); }
+  &.checked:hover  { @include icons-sprite($url, $offset-y:-276px); }
+
+  &.disabled       { color: $cGray4; @include icons-sprite($url, $offset-y:5px); }
+  &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }
+}
+
+// Fonts
+.serif {
+  font-family: "Georgia", serif;
+}
+.sans-serif {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.font-big {
+  @extend .serif;
+  font-size: 37px;
+  color: $cWhite;
+}
+
+.font-regular {
+  @extend .sans-serif;
+  font-size: 15px;
+  color: $cWhite;
+}
