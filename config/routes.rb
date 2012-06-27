@@ -5,5 +5,7 @@ MaaS::Application.routes.draw do
     resources :payments
   end
 
+  resources :demo
+
   root :to => 'home#index'
 end
