@@ -5,3 +5,102 @@
 @import "compass";
 @import "compass/reset";
 @import "helpers";
+
+body {
+
+}
+
+a {
+  text-decoration:none;
+}
+
+
+/* HEADER */
+header {
+  position:relative;
+
+  height: 521px;
+  margin: auto;
+  text-align:center;
+
+  background: url(backgrounds/bg-street.png) repeat-x;
+
+  .inner {
+    position:relative;
+    margin: auto;
+    width:960px;
+
+    text-align:left;
+  }
+}
+
+header .logo {
+  position:absolute;
+  top: 40px;
+
+  @extend .sans-serif-bold;
+  font-size:31px;
+  color: $cWhite;
+}
+
+header hgroup {
+
+  position:absolute;
+  top: 180px;
+  margin: 0 0 40px 0;
+
+  color: $cWhite;
+  @extend .sans-serif;
+  @include text-shadow(rgba(0,0,0,.25) 1px 1px 2px);
+
+  h1 { width: 474px; margin: 0 0 20px 0; font-size:43px; line-height:40px; }
+  p  { width: 430px; font-size:21px; line-height: 25px; }
+  p strong { @extend .sans-serif-bold}
+}
+
+header nav {
+  position:absolute;
+  top:45px;
+  right:0;
+
+  ul {
+    li {
+      @include inline-block();
+
+      a { color: $cWhite; @extend .sans-serif; }
+    }
+  }
+}
+
+header .computer {
+  position:absolute;
+  right: 0;
+  bottom: 0;
+
+  width: 625px;
+  height: 391px;
+
+  background: url(backgrounds/bg-computer.png) no-repeat;
+}
+
+
+/* BODY */
+
+.button {
+  @include inline-block();
+
+  margin: 30px 0 0 0;
+  padding: 17px 27px;
+
+  border: 1px solid #7F441F;
+
+  @include border-radius(3px);
+  @include background-image(linear-gradient(white, #aaaaaa));
+
+  color: $cGray1;
+  font-size:21px;
+  @extend .sans-serif;
+  @include text-shadow($cWhite 1px 1px 1px);
+}
+
+

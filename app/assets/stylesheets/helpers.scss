@@ -149,8 +149,15 @@ strong { font-weight: bold; } // This is sad, I know.
 .serif {
   font-family: "Georgia", serif;
 }
+
 .sans-serif {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "ProximaNova-Regular", Helvetica, Arial, sans-serif;
+}
+.sans-serif-semi {
+  font-family: "ProximaNova-Semibold", Helvetica, Arial, sans-serif;
+}
+.sans-serif-bold {
+  font-family: "ProximaNova-Bold", Helvetica, Arial, sans-serif;
 }
 
 .font-big {
