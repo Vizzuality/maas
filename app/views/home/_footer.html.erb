@@ -1,29 +1,26 @@
 <footer>
-<h2><%= t('.footer.title') %></h2>
+<div class="inner">
+  <h2 class="logo"><%= t('.title') %></h2>
 
-<ul class="understand">
-  <li>
-  <span><%= t('.footer.understand.title') %></span>
-  </li>
-  <li><%= link_to t('.footer.understand.how_it_works'), '#' %></li>
-  <li><%= link_to t('.footer.understand.why_mapme'), '#' %></li>
-  <li><%= link_to t('.footer.understand.faq'), '#' %></li>
-</ul>
+  <nav>
+  <ul class="understand">
+    <li><strong><%= t('.understand.title') %></strong></li>
+    <li><%= link_to t('.understand.how_it_works'), '#' %></li>
+    <li><%= link_to t('.understand.why_mapme'), '#' %></li>
+    <li><%= link_to t('.understand.faq'), '#' %></li>
+  </ul>
 
-<ul class="see_results">
-  <li>
-  <span><%= t('.footer.see_results.title') %></span>
-  </li>
-  <li><%= link_to t('.footer.see_results.showcase'), '#' %></li>
-  <li><%= link_to t('.footer.see_results.order_your_map'), '#' %></li>
-  <li><%= link_to t('.footer.see_results.blog'), '#' %></li>
-</ul>
+  <ul class="see_results">
+    <li><strong><%= t('.see_results.title') %></strong></li>
+    <li><%= link_to t('.see_results.showcase'), '#' %></li>
+    <li><%= link_to t('.see_results.order_your_map'), '#' %></li>
+    <li><%= link_to t('.see_results.blog'), '#' %></li>
+  </ul>
 
-<ul class="know_more">
-  <li>
-  <span><%= t('.footer.know_more.title') %></span>
-  </li>
-  <li><%= link_to t('.footer.know_more.contact_us'), '#' %></li>
-</ul>
-
+  <ul class="know_more">
+    <li><strong><%= t('.know_more.title') %></strong></li>
+    <li><%= link_to t('.know_more.contact_us'), '#' %></li>
+  </ul>
+  </nav>
+</div>
 </footer>

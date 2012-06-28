@@ -117,7 +117,7 @@ section.characteristics {
 
   background: url(backgrounds/bg-padded.png);
 
-  h2 {
+  h2.section {
     padding: 40px 0;
 
     color:$cGray2;
@@ -127,7 +127,7 @@ section.characteristics {
     text-align:center;
   }
 
-  .inner .box {
+  .box {
     $pT: 40px;
     $pR: 40px;
     $pB: 40px;
@@ -151,18 +151,56 @@ section.characteristics {
     &.last { margin-right: 0; }
   }
 
-  .inner p {
+  .box p {
     padding: 15px 0 0 0;
+    margin:auto;
+    border-top: 1px solid #E5E5E5;
+    width: 221px;
 
     @extend .sans-serif;
     font-size:15px;
     color: $cGray2;
+
+    line-height:120%;
   }
 
-  .inner h3 {
+  .box h2 {
     padding: 0 0 15px 0;
 
-    @extend .sans-serif-bold;
+    @extend .sans-serif;
+    font-size:21px;
+    color: $cGray1;
+  }
+
+  .how_does_it_work {
+    .icon {
+      margin: auto;
+    }
+
+    .box.step-1 .icon {
+      width: 153px;
+      height:118px;
+      @include icons-sprite(step-01);
+    }
+
+    .box.step-2 .icon {
+      width: 190px;
+      height: 93px;
+      @include icons-sprite(step-02);
+    }
+
+    .box.step-3 .icon {
+      width: 173px;
+      height: 74px;
+      @include icons-sprite(step-03);
+    }
+
+  }
+
+  .box h3 {
+    padding: 0 0 15px 0;
+
+    @extend .sans-serif;
     font-size:21px;
     color: $cGray1;
   }
@@ -177,4 +215,59 @@ section.interest {
   height: 276px;
   text-align:center;
   background: url(backgrounds/bg-orange.png) repeat-x;
+}
+
+
+/* FOOTER */
+footer {
+
+  position:relative;
+
+  @extend .home-inner;
+
+  background: url(backgrounds/bg-padded.png);
+  height:221px;
+
+  nav {
+    position:absolute;
+    top: 65px;
+    right: 0;
+  }
+
+  .logo {
+    position:absolute;
+    top: 50px;
+
+    @extend .sans-serif-bold;
+    font-size:31px;
+    color: $cGray1;
+  }
+
+  ul {
+    @include inline-block();
+    vertical-align: top;
+
+    margin: 0 0 0 100px;
+
+    li {
+      margin: 0 0 7px 0;
+
+      @extend .sans-serif;
+    }
+
+    li strong {
+      display:block;
+      margin: 0 0 10px 0;
+
+      font-size:13px;
+      @extend .sans-serif;
+      text-transform: uppercase;
+    }
+  }
+
+  ul li a {
+    @extend .sans-serif;
+    font-size:15px;
+    color: $cLink;
+  }
 }
