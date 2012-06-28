@@ -194,3 +194,35 @@ strong { font-weight: bold; } // This is sad, I know.
   font-size: 15px;
   color: $cWhite;
 }
+
+
+/* MAAS */
+
+.home-inner {
+  .inner {
+    position:relative;
+    margin: auto;
+    width:960px;
+
+    text-align:left;
+  }
+}
+
+.shadow {
+  position:absolute;
+  width:100%;
+  height:36px;
+
+  &.top {
+    top: 0;
+    background: url(backgrounds/bg-shadow-top.png) repeat-x;
+  }
+
+  &.bottom {
+    bottom: 0;
+    background: url(backgrounds/bg-shadow-bottom.png) repeat-x;
+  }
+
+  z-index: 101;
+}
+

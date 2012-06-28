@@ -14,8 +14,8 @@ a {
   text-decoration:none;
 }
 
-
 /* HEADER */
+
 header {
   position:relative;
 
@@ -25,16 +25,6 @@ header {
 
   background: url(backgrounds/bg-street.png) repeat-x;
   @extend .home-inner;
-}
-
-.home-inner {
-  .inner {
-    position:relative;
-    margin: auto;
-    width:960px;
-
-    text-align:left;
-  }
 }
 
 header .logo {
@@ -57,7 +47,7 @@ header hgroup {
   @include text-shadow(rgba(0,0,0,.25) 1px 1px 2px);
 
   h1 { width: 474px; margin: 0 0 20px 0; font-size:43px; line-height:40px; }
-  p  { width: 430px; font-size:21px; line-height: 25px; }
+  p  { width: 430px; margin: 0 0 20px 0; font-size:21px; line-height: 25px; }
   p strong { @extend .sans-serif-bold}
 }
 
@@ -71,26 +61,20 @@ header nav {
       @include inline-block();
 
       a { color: $cWhite; @extend .sans-serif; }
+
+      &:last-child:after {
+        content: none;
+        padding: 0;
+      }
+
+      &:after {
+        color: $cWhite;
+        content: "/";
+        padding: 0 5px;
+      }
+
     }
   }
-}
-
-.shadow {
-  position:absolute;
-  width:100%;
-  height:36px;
-
-  &.top {
-    top: 0;
-    background: url(backgrounds/bg-shadow-top.png) repeat-x;
-  }
-
-  &.bottom {
-    bottom: 0;
-    background: url(backgrounds/bg-shadow-bottom.png) repeat-x;
-  }
-
-  z-index: 101;
 }
 
 header .computer {
@@ -145,6 +129,7 @@ header .computer {
   // TODO: hover & active
 }
 
+/* SECTION — CHARACTERISTICS */
 
 section.characteristics {
 
@@ -155,7 +140,6 @@ section.characteristics {
   background: url(backgrounds/bg-padded.png);
 
   h2.section {
-    padding: 40px 0;
 
     color:$cGray2;
     font-size:21px;
@@ -271,6 +255,7 @@ section.interest {
 
 
 /* FOOTER */
+
 footer {
 
   position:relative;
@@ -323,69 +308,5 @@ footer {
     color: $cLink;
   }
 }
-
-
-.textarea {
-  $height: 152px;
-  $width: 580px;
-  $pT: 12px;
-  $pR: 7px;
-
-  @include inline-block();
-  height:$height;
-  width: $width;
-
-  background:url(backgrounds/bg-form-textarea.png) no-repeat left 0;
-
-  textarea {
-    width: 100%;
-    height: $height - $pT*2;
-    margin: 0 0 0 5px;
-    padding: $pT $pR;
-
-    font-size: 14px;
-    background:url(backgrounds/bg-form-textarea.png) repeat-x right -1*$height;
-
-    border:none;
-    outline:none;
-    resize: none;
-  }
-}
-
-.input-field {
-  $height: 42px;
-  $width: 400px;
-  $pR: 7px;
-  $pL: 5px;
-
-  @include inline-block();
-  height:$height;
-  width: $width;
-
-  background:url(backgrounds/bg-form-input.png) no-repeat left 0;
-
-  input[type="text"] {
-    width:100%;
-    height:$height;
-    margin: 0 0 0 $pL;
-    padding: 0 $pR 0 $pL;
-
-    font-size: 14px;
-
-    background:url(backgrounds/bg-form-input.png) repeat-x right -1*$height;
-    border:none;
-    outline:none;
-  }
-}
-
-
-.radio {
-  @include radio();
-}
-
-.checkbox {
-  @include checkbox();
-}
-
 
 
