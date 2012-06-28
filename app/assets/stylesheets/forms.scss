@@ -17,6 +17,29 @@ body.orders footer .inner {
 .radio    { @include radio(); }
 .checkbox { @include checkbox(); }
 
+label {
+  display:block;
+  margin: 0 0 5px 0;
+
+  color: #666666;
+  @extend .sans-serif-bold;
+  font-size:11px;
+  text-transform:uppercase;
+}
+
+.field {
+  margin: 0 0 20px 0;
+
+  &.left, &.right {
+    @include inline-block();
+    width: 260px;
+    vertical-align:top;
+  }
+
+  &.left { margin: 0 24px 0 0; }
+
+}
+
 .textarea {
   $height: 152px;
   $width: 580px;
@@ -132,7 +155,9 @@ form section {
     font-size:15px;
   }
 
-  .input-field { width: 550px; }
+  .input-field { width: 260px; }
+  .input-field.upload { width: 549px; }
+  .textarea { width: 546px; }
 
   .left {
     @include inline-block();
