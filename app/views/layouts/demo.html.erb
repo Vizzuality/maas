@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WRI</title>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body onload="prettyPrint()"; class="<%= controller.controller_name %>">
+    <div id="content">
+      <%= yield %>
+    </div>
+    <%= yield :js %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "demo" %>
+    <%= javascript_include_tag "prettify" %>
+  </body>
+</html>
