@@ -13,4 +13,8 @@ class OrdersController < ApplicationController
     respond_with @order
   end
 
+  def show
+    @order = Order.where(:id => params[:id]).first
+  end
+
 end

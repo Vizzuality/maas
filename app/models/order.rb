@@ -8,6 +8,7 @@ class Order < ActiveRecord::Base
                   :data_sources_attributes,
                   :order_options_attributes
 
+  belongs_to :template, :foreign_key => 'template_type'
   has_many :data_sources
   has_many :payments
   has_many :order_options
