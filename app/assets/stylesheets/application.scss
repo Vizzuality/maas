@@ -379,3 +379,13 @@ footer {
 }
 
 
+.radio {
+  @include radio();
+}
+
+.checkbox {
+  @include checkbox();
+}
+
+
+

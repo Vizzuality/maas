@@ -16,6 +16,19 @@ $icons-step-01-spacing:40px;
 $icons-step-02-spacing:40px;
 $icons-step-03-spacing:40px;
 
+// checkboxes
+$icons-checkbox-checked-disabled-spacing: 40px;
+$icons-checkbox-checked-hover-spacing: 40px;
+$icons-checkbox-checked-spacing: 40px;
+$icons-checkbox-disabled-spacing: 40px;
+$icons-checkbox-spacing: 40px;
+
+$icons-radio-checked-disabled-spacing: 40px;
+$icons-radio-checked-hover-spacing: 40px;
+$icons-radio-checked-spacing: 40px;
+$icons-radio-disabled-spacing: 40px;
+$icons-radio-spacing: 40px;
+
 @import "icons/*.png"; /**/
 
 strong { font-weight: bold; } // This is sad, I know.
@@ -105,46 +118,54 @@ strong { font-weight: bold; } // This is sad, I know.
   user-select: none;
 }
 
-@mixin radio($url) {
+@mixin radio() {
   @include inline-block();
-  @include icons-sprite(radio, $offset-y: -67px);
+  @include icons-sprite(radio, $offset-y:2px);
 
-  padding-left: 12px;
+  padding-left: 15px;
 
-  color:#333;
+  color:$cGray1;
   text-decoration:none;
 
-  &:hover          { @include icons-sprite($url, $offset-y:-207px); }
+  &:hover                  { @include icons-sprite(radio-checked-hover, $offset-y:2px); }
 
-  &:active         { @include icons-sprite($url, $offset-y:-207px); }
-  &:active:hover   { @include icons-sprite($url, $offset-y:-277px); }
+  &:active                 { @include icons-sprite(radio-checked, $offset-y:2px); }
+  &:active:hover           { @include icons-sprite(radio-checked, $offset-y:2px); }
 
-  &.checked        { @include icons-sprite($url, $offset-y:-137px); }
-  &.checked:hover  { @include icons-sprite($url, $offset-y:-277px); }
+  &.checked                { @include icons-sprite(radio-checked, $offset-y:2px); }
+  &.checked:hover          { @include icons-sprite(radio-checked-hover, $offset-y:2px); }
+  &.checked:active         { @include icons-sprite(radio-checked, $offset-y:2px); }
 
-  &.disabled       { color: $cGray4; @include icons-sprite($url, $offset-y:5px); }
-  &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }
+  &.disabled,
+  &.disabled:hover         { color: $cGray4; @include icons-sprite(radio-disabled, $offset-y:2px); }
+
+  &.disabled.checked,
+  &.disabled.checked:hover { color: $cGray4; @include icons-sprite(radio-checked-disabled, $offset-y:2px); }
 }
 
-@mixin checkboxes($url) {
+@mixin checkbox() {
   @include inline-block();
-  @include icons-sprite(checkboxes, $offset-y: -66px);
+  @include icons-sprite(checkbox, $offset-y:2px);
 
-  padding-left: 12px;
+  padding-left: 15px;
 
-  color:#333;
+  color:$cGray1;
   text-decoration:none;
 
-  &:hover          { @include icons-sprite($url, $offset-y:-206px); }
+  &:hover                  { @include icons-sprite(checkbox-checked-hover, $offset-y:2px); }
 
-  &:active         { @include icons-sprite($url, $offset-y:-206px); }
-  &:active:hover   { @include icons-sprite($url, $offset-y:-276px); }
+  &:active                 { @include icons-sprite(checkbox-checked, $offset-y:2px); }
+  &:active:hover           { @include icons-sprite(checkbox-checked, $offset-y:2px); }
 
-  &.checked        { @include icons-sprite($url, $offset-y:-136px); }
-  &.checked:hover  { @include icons-sprite($url, $offset-y:-276px); }
+  &.checked                { @include icons-sprite(checkbox-checked, $offset-y:2px); }
+  &.checked:hover          { @include icons-sprite(checkbox-checked-hover, $offset-y:2px); }
+  &.checked:active         { @include icons-sprite(checkbox-checked, $offset-y:2px); }
 
-  &.disabled       { color: $cGray4; @include icons-sprite($url, $offset-y:5px); }
-  &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }
+  &.disabled,
+  &.disabled:hover         { color: $cGray4; @include icons-sprite(checkbox-disabled, $offset-y:2px); }
+
+  &.disabled.checked,
+  &.disabled.checked:hover { color: $cGray4; @include icons-sprite(checkbox-checked-disabled, $offset-y:2px); }
 }
 
 // Fonts

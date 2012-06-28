@@ -16,14 +16,10 @@
   </a>), { :comment => '— This is the <strong>canonical</strong> way for creating buttons.', :snippet_class => :dark } %>
 
   <%= snippet %(
-  <a href="#" class="btn hollow">
-    <span>Hi, I'm a hollow button</span>
-  </a>) %>
-
-  <%= snippet %(
   <a href="#" class="btn disabled">
     <span>Hi, I'm a disabled button</span>
   </a>) %>
+
 </div>
 
 <div class="demo">
@@ -39,22 +35,26 @@
   </a>), { :comment => "— Don't forget to add the data-name", :snippet_class => :dark } %>
 
   <%= snippet %(
-  <a href="#" class="radio checked fire"\n data-name="test-2">
+  <a href="#" class="radio checked"\n data-name="test-2">
     A radio button
   </a>
 
-  <a href="#" class="radio fire"\n data-name="test-2">
+  <a href="#" class="radio"\n data-name="test-2">
     Another radio button
+  </a>) %>
+
+  <%= snippet %(
+  <a href="#" class="radio disabled checked"\n data-name="test-2">
+    A disabled and checked radio button
+  </a>
+
+  <a href="#" class="radio disabled"\n data-name="test-2">
+    A disabled radio button
   </a>) %>
 
   <%= snippet %(
   <a href="#" class="checkbox">
     This is a checkbox
-  </a>) %>
-
-  <%= snippet %(
-  <a href="#" class="checkbox concessions">
-    This is a checkbox with a class
   </a>) %>
 
   <%= snippet %(
@@ -65,6 +65,11 @@
   <%= snippet %(
   <a href="#" class="checkbox disabled">
     This is a diabled checkbox
+  </a>) %>
+
+  <%= snippet %(
+  <a href="#" class="checkbox checked disabled">
+    This is a diabled checked checkbox
   </a>) %>
 
 </div>
