@@ -75,6 +75,24 @@ header nav {
   }
 }
 
+.shadow {
+  position:absolute;
+  width:100%;
+  height:36px;
+
+  &.top {
+    top: 0;
+    background: url(backgrounds/bg-shadow-top.png) repeat-x;
+  }
+
+  &.bottom {
+    bottom: 0;
+    background: url(backgrounds/bg-shadow-bottom.png) repeat-x;
+  }
+
+  z-index: 101;
+}
+
 header .computer {
   position:absolute;
   right: 0;
@@ -84,6 +102,8 @@ header .computer {
   height: 391px;
 
   background: url(backgrounds/bg-computer.png) no-repeat;
+
+  z-index: 100;
 }
 
 
@@ -154,8 +174,9 @@ section.characteristics {
   .box p {
     padding: 15px 0 0 0;
     margin:auto;
-    border-top: 1px solid #E5E5E5;
     width: 221px;
+
+    border-top: 1px solid #E5E5E5;
 
     @extend .sans-serif;
     font-size:15px;
@@ -164,17 +185,26 @@ section.characteristics {
     line-height:120%;
   }
 
-  .box h2 {
-    padding: 0 0 15px 0;
-
-    @extend .sans-serif;
-    font-size:21px;
-    color: $cGray1;
-  }
 
   .how_does_it_work {
     .icon {
       margin: auto;
+      padding-bottom: 10px;
+    }
+
+    .box {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .box h2 {
+      padding: 10px 0 15px 0;
+
+      border-top: 1px solid #E5E5E5;
+
+      @extend .sans-serif;
+      font-size:21px;
+      color: $cGray1;
     }
 
     .box.step-1 .icon {
@@ -185,14 +215,16 @@ section.characteristics {
 
     .box.step-2 .icon {
       width: 190px;
-      height: 93px;
-      @include icons-sprite(step-02);
+      //height: 93px;
+      height: 118px;
+      @include icons-sprite(step-02, $offset-y:15);
     }
 
     .box.step-3 .icon {
       width: 173px;
-      height: 74px;
-      @include icons-sprite(step-03);
+      //height: 74px;
+      height: 118px;
+      @include icons-sprite(step-03, $offset-y:23);
     }
 
   }
@@ -207,12 +239,15 @@ section.characteristics {
 }
 
 section.slideshow {
+  position:relative;
   height: 533px;
+
   background: url(backgrounds/bg-stars.png) center top;
 }
 
 section.interest {
   height: 276px;
+
   text-align:center;
   background: url(backgrounds/bg-orange.png) repeat-x;
 }

@@ -24,6 +24,11 @@ en:
         showcase: 'Showcase'
         order_your_map: 'Order your map'
         faq: 'FAQ'
+    slideshow:
+      title: 'Showcase'
+    interest:
+      title: 'Interested?'
+      order_your_map: 'Order your map and ask for a budget with no compromises'
     characteristics:
       how_does_it_work:
         title: 'How does it work?'
@@ -51,11 +56,6 @@ en:
         reason_6:
           title: 'Different basemaps'
           description: 'You can have your maps over Google Maps, MapBox tiles or your own base layer.'
-      slideshow:
-        title: 'Showcase'
-      interest:
-        title: 'Interested?'
-        order_your_map: 'Order your map and ask for a budget with no compromises'
     footer:
       title: 'MapMe!'
       understand:

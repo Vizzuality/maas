@@ -10,10 +10,12 @@ $cBackground:            #75ADB5;
 $cLink:                  #397DB9;
 $cLinkHover:             #397DB9;
 
-
 /* Sprites */
 
-/*$icons-***-spacing:91px;*/
+$icons-step-01-spacing:40px;
+$icons-step-02-spacing:40px;
+$icons-step-03-spacing:40px;
+
 @import "icons/*.png"; /**/
 
 strong { font-weight: bold; } // This is sad, I know.
