@@ -106,3 +106,44 @@ feature 'MaaS orders creation' do
   end
 
 end
+
+
+feature 'MaaS orders detail' do
+
+  background do
+    template = FactoryGirl.create(:markers)
+    order = FactoryGirl.create(:awesome_map_order,
+                               :template => template,
+                               :order_options => template.options.first(2).map{|o| FactoryGirl.create(:order_option,
+                                                                                                      :template_option => o)})
+    visit order_path(order)
+  end
+
+  scenario 'shows a summary of the order' do
+    within '.title' do
+      page.should have_content 'Hi Acme,'
+      page.should have_content 'This is your map tracker page. Here you will be able to see the progress of your map.'
+    end
+
+    within '.summary' do
+      page.should have_content 'Your order summary'
+      page.should have_content 'Markers map with...'
+      page.should have_content 'Dynamic filters'
+      page.should have_content 'Custom infowindows'
+    end
+
+    within '.total' do
+      page.should have_content 'Total'
+      page.should have_content 'Starting from $2000'
+    end
+
+    within '.analyzing' do
+      page.should have_content 'We are analyzing your data.'
+      page.should have_content 'In order to give you a price based on the time we will need to process and visualize it we need to take a look at your data first. Once we finish, we will contact you -and update this page- with the definitive budget, which you will approve or discard.'
+      page.should have_content 'Do you think that is taking us too much time?'
+      page.should have_link 'Contact us'
+    end
+
+  end
+
+end
