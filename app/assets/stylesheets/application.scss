@@ -316,7 +316,6 @@ section.slideshow {
 
   .slides {
     position:absolute;
-    width:100%;
 
     $width: 874px;
     @include absolute-vertical-center($width);
@@ -341,22 +340,24 @@ section.slideshow {
   .prev {
     left: -70px;
     @include icons-sprite(btn-slideshow-prev);
+    &:hover { @include icons-sprite(btn-slideshow-prev-hover);}
   }
 
   .next {
     right: -70px;
     @include icons-sprite(btn-slideshow-next);
+    &:hover { @include icons-sprite(btn-slideshow-next-hover);}
   }
 
 }
 
-section.slideshow li {
+section.slideshow ul {
   list-style:none;
+  height: 463px;
 }
 
 section.slideshow li img {
  display:none;
-
 }
 
 /* FOOTER */
