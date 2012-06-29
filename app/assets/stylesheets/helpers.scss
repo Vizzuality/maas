@@ -100,7 +100,7 @@ strong { font-weight: bold; } // This is sad, I know.
   }
 }
 
-@mixin absolute-left-center($width) {
+@mixin absolute-vertical-center($width) {
   position:absolute;
   left:50%;
   width: $width;
@@ -192,6 +192,9 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 .sans-serif {
   font-family: "ProximaNova-Regular", Helvetica, Arial, sans-serif;
+}
+.sans-serif-light {
+  font-family: "ProximaNova-Light", Helvetica, Arial, sans-serif;
 }
 .sans-serif-semi {
   font-family: "ProximaNova-Semibold", Helvetica, Arial, sans-serif;

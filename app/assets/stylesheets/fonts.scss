@@ -1,4 +1,13 @@
 @font-face {
+  font-family: 'ProximaNova-Light';
+  src: asset-path("ProximaNova-Light.eot", font);
+  src: local('☺'), url(asset-path("ProximaNova-Light.woff", font)) format('woff'), url(asset-path("ProximaNova-Light.ttf", font)) format('truetype'), url(asset-path("ProximaNova-Light.svg", font)) format('svg');
+  src: local('☺'), url(asset-path("ProximaNova-Light.ttf", font)) format('truetype'), url(asset-path("ProximaNova-Light.svg", font)) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'ProximaNova-Regular';
   src: asset-path("ProximaNova-Regular.eot", font);
   src: local('☺'), url(asset-path("ProximaNova-Regular.woff", font)) format('woff'), url(asset-path("ProximaNova-Regular.ttf", font)) format('truetype'), url(asset-path("ProximaNova-Regular.svg", font)) format('svg');

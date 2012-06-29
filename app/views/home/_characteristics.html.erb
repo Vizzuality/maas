@@ -2,7 +2,7 @@
 <div class="inner">
 
   <div class="how_does_it_work">
-    <h2 class="section"><%= t('.how_does_it_work.title') %></h2>
+    <h2 class="title"><%= t('.how_does_it_work.title') %></h2>
 
     <div class="box step-1">
       <div class="icon"></div>
@@ -12,7 +12,7 @@
     <div class="box step-2">
       <div class="icon"></div>
       <h2><%= t('.how_does_it_work.explanation_2') %></h2>
-      <%= link_to t('.how_does_it_work.order_your_map'), new_order_path %>
+      <%= link_to t('.how_does_it_work.order_your_map'), new_order_path, :class => "button blue" %>
     </div>
 
     <div class="box step-3 last">
@@ -23,7 +23,7 @@
   </div>
 
   <div class="why_mapme">
-    <h2 class="section"><%= t('.why_mapme.title') %></h2>
+    <h2 class="title"><%= t('.why_mapme.title') %></h2>
 
     <div class="box">
       <h3><%= t('.why_mapme.reason_1.title') %></h3>

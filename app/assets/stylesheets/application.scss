@@ -127,6 +127,52 @@ header nav {
   @include text-shadow($cWhite 1px 1px 1px);
 
   // TODO: hover & active
+
+  &.big {
+
+    padding: 25px 36px;
+
+    strong {
+      @include inline-block();
+
+      margin: 0 0 7px 0;
+      padding: 0 0 7px 0;
+
+      border-bottom: 1px solid $cGray3;
+      @include text-shadow($cWhite 1px 1px 1px);
+    }
+
+    a {
+      display:block;
+
+      font-size:13px;
+      color: #666666;
+      @include text-shadow(none);
+    }
+  }
+}
+
+section h2.title {
+  margin:auto;
+
+  text-align:center;
+  color:$cGray3;
+  text-transform: uppercase;
+  @extend .sans-serif-light;
+  font-size:21px;
+  letter-spacing: 2px;
+
+  &:before,
+  &:after { // Dash
+    content: "";
+    position:absolute;
+    width: 21px;
+    height: 1px;
+    background:$cGray4;
+ }
+
+  &:before { margin: 9px 0 0 -30px; }
+  &:after  { margin: 9px 0 0 7px; }
 }
 
 /* SECTION — CHARACTERISTICS */
@@ -135,18 +181,12 @@ section.characteristics {
 
   @extend .home-inner;
 
-  padding: 20px 0;
+  padding: 50px 0 40px 0;
 
   background: url(backgrounds/bg-padded.png);
 
-  h2.section {
-
-    color:$cGray2;
-    font-size:21px;
-    text-transform: uppercase;
-    @extend .sans-serif;
-    text-align:center;
-  }
+  h2.title { margin: 0 0 40px 0; }
+  .inner > div { margin: 0 0 30px 0; }
 
   .box {
     $pT: 40px;
@@ -239,20 +279,48 @@ section.characteristics {
   }
 }
 
+section.interest {
+  padding: 50px 0 57px 0;
+
+  text-align:center;
+  background: url(backgrounds/bg-orange.png) repeat-x;
+
+  h2.title {
+    color:$cWhite;
+    margin: 0 0 43px 0;
+
+    &:before, &:after { color:$cWhite; }
+  }
+
+}
+
+
+/* SLIDESHOW */
+
 section.slideshow {
   position:relative;
   height: 533px;
 
+  padding: 50px 0 0 0;
+
   background: url(backgrounds/bg-stars.png) center top;
+
+
+  h2.title {
+    color:$cWhite;
+
+    &:before, &:after { color:$cWhite; }
+  }
 }
 
-section.interest {
-  height: 276px;
+section.slideshow img {
+  $width: 874px;
+  @include absolute-vertical-center($width);
 
-  text-align:center;
-  background: url(backgrounds/bg-orange.png) repeat-x;
+  position:absolute;
+  bottom: 0;
+  z-index: 100;
 }
-
 
 /* FOOTER */
 

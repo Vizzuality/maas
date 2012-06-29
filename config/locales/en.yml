@@ -28,7 +28,9 @@ en:
       title: 'Showcase'
     interest:
       title: 'Interested?'
-      order_your_map: 'Order your map and ask for a budget with no compromises'
+      order_your_map:
+        title: 'Order your map'
+        subtitle: 'and ask for a budget with no compromises'
     characteristics:
       how_does_it_work:
         title: 'How does it work?'

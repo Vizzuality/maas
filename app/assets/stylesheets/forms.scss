@@ -172,12 +172,11 @@ form .map {
 
 form .map .browser {
   $width: 722px;
+  @include absolute-vertical-center($width);
   position:absolute;
   bottom: -70px;
   width: $width;
   height:463px;
-  left: 50%;
-  margin-left: -1*$width/2;
 
   @include icons-sprite(browser);
 }

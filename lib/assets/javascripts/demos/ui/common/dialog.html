@@ -9,6 +9,7 @@
       background-color: #666;
     }
     .dialog {
+      display:none;
       padding: 20px;
       background-color: #FFF;
       position: absolute;
@@ -33,10 +34,10 @@
   <body>
   </body>
 
-  <script src="../../../cartodb.js"></script>
+  <script src="/assets/cartodb.js"></script>
   <script>
     window.onload = function() {
-      cdb.load('../../../', function() {
+      cdb.load('/', function() {
 
         var MyDialog = cdb.ui.common.Dialog.extend({
           render_content: function() {
@@ -45,13 +46,14 @@
         })
 
         var dialog = new MyDialog({
-          title: 'test',
+          title: 'Hola',
           description: 'long description here',
           template_base: $('#base_template').html(),
           width: 500
         });
 
         $('body').append(dialog.render().el);
+
         dialog.open();
       });
     };

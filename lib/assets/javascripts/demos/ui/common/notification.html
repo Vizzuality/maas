@@ -15,10 +15,10 @@
     </div>
   </body>
 
-  <script src="../../../cartodb.js"></script>
+  <script src="/assets/cartodb.js"></script>
   <script>
     window.onload = function() {
-      cdb.load('../../../', function() {
+      cdb.load('/', function() {
         var notification = new cdb.ui.common.Notification({
           el: $('#notification'),
           msg: 'this is a test notification, click on close to close!',
