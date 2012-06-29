@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>MaaS</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body class="<%= controller_name %>">
+  <head>
+    <title>MaaS</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="<%= controller_name %>">
 
-<%= yield %>
+    <%= yield %>
 
-</body>
+    <script>
+      window.onload = function() {
+        cdb.load('../', function() {
+          console.log("CARTODB LOADED");
+          // your code here
+        });
+      };
+    </script>
+
+  </body>
 </html>
