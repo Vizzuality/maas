@@ -57,7 +57,7 @@ body.orders header .logo { color: $cGray2; }
 label {
   display:block;
   clear:both;
-  margin: 0 0 5px 0;
+  margin: 0 0 7px 0;
 
   color: $cGray2;
   @extend .sans-serif-bold;
@@ -66,7 +66,7 @@ label {
 }
 
 .field {
-  margin: 0 0 20px 0;
+  margin: 0 0 30px 0;
   @include clearfix();
 
   &.left, &.right {
@@ -216,7 +216,21 @@ form section {
 
   .price { @extend .sans-serif-base; font-size: 15px; font-weight:100; color: $cOrange; }
   .input-field { width: 248px; }
-  .input-field.upload { width: 549px; }
+
+  .input-field.upload {
+    width: 549px;
+
+    .icon {
+      float:left;
+
+      margin: 0 7px 0 3px;
+
+      width: 15px;
+      height: 16px;
+      @include icons-sprite(clip);
+    }
+  }
+
   .textarea { width: 546px; }
 
   &.dark {
@@ -230,6 +244,14 @@ form section {
       padding-top: 40px;
       padding-bottom: 40px;
     }
+  }
+
+  &.comments {
+    padding: 18px 0 0 0;
+  }
+
+  &.submit {
+    padding: 18px 0;
   }
 
   &.centered {

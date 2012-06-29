@@ -142,6 +142,7 @@
       <div class="input-field upload">
         <input type="text" />
         <div class="placeholder">
+          <div class="icon"></div>
           <span><%= t('.your_data.drag_drop') %></span>
           <%= link_to t('.your_data.select_files'), '#' %>
         </div>
@@ -150,7 +151,7 @@
   </div>
   </section>
 
-  <section>
+  <section class="comments">
   <div class="left">
 
     <div class="inner">
@@ -180,7 +181,7 @@
 
   </section>
 
-  <section class="centered">
+  <section class="submit centered">
   <div class="inner">
     <%= f.submit t('.submit'), :class => "button blue" %>
   </div>
