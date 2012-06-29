@@ -27,7 +27,7 @@ a {
   @extend .home-inner;
 }
 
-.home header .logo {
+header .logo {
   position:absolute;
   top: 40px;
 
@@ -51,7 +51,7 @@ a {
   p strong { @extend .sans-serif-bold}
 }
 
-.home header nav {
+header nav {
   position:absolute;
   top:45px;
   right:0;

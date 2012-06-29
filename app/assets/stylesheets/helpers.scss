@@ -10,6 +10,7 @@ $cBackground:            #75ADB5;
 $cLink:                  #397DB9;
 $cLinkHover:             #397DB9;
 
+$cBorder:                #E5E5E5;
 $cOrange:                #E87632;
 
 /* Sprites */
@@ -43,6 +44,13 @@ strong { font-weight: bold; } // This is sad, I know.
 
 .pull-right {
   float:right;
+}
+
+.bottom-20 {
+  margin-bottom: 20px;
+}
+.bottom-30 {
+  margin-bottom: 30px;
 }
 
 .shadow-transition {
@@ -175,6 +183,9 @@ strong { font-weight: bold; } // This is sad, I know.
   font-family: "Georgia", serif;
 }
 
+.sans-serif-base {
+  font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
+}
 .sans-serif {
   font-family: "ProximaNova-Regular", Helvetica, Arial, sans-serif;
 }
@@ -199,7 +210,6 @@ strong { font-weight: bold; } // This is sad, I know.
 
 
 /* MAAS */
-
 .home-inner {
   .inner {
     position:relative;

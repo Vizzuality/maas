@@ -1,6 +1,27 @@
 @import "compass";
 @import "helpers";
 
+$formWidth: 880px;
+
+.bg-map {
+  position:absolute;
+  height:269px;
+  width:100%;
+  top: 0;
+
+  background: url(backgrounds/bg-map.png) top center;
+}
+
+.orders-inner {
+  .inner {
+    position:relative;
+    margin: auto;
+    width: $formWidth;
+
+    text-align:left;
+  }
+}
+
 body.orders {
   background: url(backgrounds/bg-padded.png);
 }
@@ -11,20 +32,24 @@ body.orders footer {
 }
 
 body.orders footer .inner {
-  width: 880px;
+  width: $formWidth;
 }
 
 body.orders header {
-  text-align:center;
+  @extend .orders-inner;
+  position:relative;
+
+  hgroup {
+    position:relative;
+    top: 80px;
+
+    text-align:center;
+  }
 }
 
-.bg-map {
-  background: url(backgrounds/bg-map.png) top center;
-  height:269px;
-  width:100%;
-  position:absolute;
-  top: 0;
-}
+body.orders header nav ul li a,
+body.orders header nav ul li:after,
+body.orders header .logo { color: $cGray2; }
 
 .radio    { @include radio(); }
 .checkbox { @include checkbox(); }
@@ -33,7 +58,7 @@ label {
   display:block;
   margin: 0 0 5px 0;
 
-  color: #666666;
+  color: $cGray2;
   @extend .sans-serif-bold;
   font-size:11px;
   text-transform:uppercase;
@@ -44,12 +69,12 @@ label {
 
   &.left, &.right {
     @include inline-block();
-    width: 260px;
+    width: 250px;
+    border: 1px solid red;
     vertical-align:top;
   }
 
   &.left { margin: 0 24px 0 0; }
-
 }
 
 .textarea {
@@ -115,7 +140,7 @@ label {
 
     font-size:15px;
     color: #CCCCCC;
-    font-family: "Helvetica", serif;
+    @extend .sans-serif-base;
 
     a {
       font-size:15px;
@@ -127,7 +152,7 @@ label {
 
 form {
   margin: 118px auto;
-  width: 880px;
+  width: $formWidth;
 
   @include border-radius(3px);
   background: #fff;
@@ -156,43 +181,37 @@ form .map .browser {
 }
 
 form section {
+  @include clearfix();
 
-  padding: 30px 50px;
+  background:$cWhite;
+  border-bottom: 1px solid $cBorder;
 
-  background:#fff;
-  border-bottom: 1px solid #E5E5E5;
-
-  h3 {
-    margin: 0 0 5px 0;
-
-    color: #333;
-    font-size: 17px;
-    @extend .sans-serif-semi;
+  .inner {
+    padding: 30px 50px;
   }
 
-  p {
-    margin: 0 0 20px 0;
-    width: 500px;
+  & > .left,
+  & > .right { float:left; }
 
-    line-height:120%;
+  & > .left {
+    width: 560px;
 
-    font-family: "Helvetica", serif;
-    color: #666666;
-    font-size:15px;
+    &.border {
+      border-right: 1px solid $cBorder;
+    }
   }
 
+  & > .right {
+    width: 319px;
+    float:right;
+    text-align:right;
+  }
+
+  .price { @extend .sans-serif-base; font-size: 15px; font-weight:100; color: $cOrange; }
   .input-field { width: 260px; }
   .input-field.upload { width: 549px; }
   .textarea { width: 546px; }
 
-  .left {
-    @include inline-block();
-    width: 598px;
-  }
-
-  .right {
-    @include inline-block();
-  }
 
   &.dark {
     background: #F2F2F2;
@@ -205,6 +224,39 @@ form section {
   &.centered {
     text-align:center;
   }
+
+  h3 {
+    color: $cGray1;
+    font-size: 17px;
+    @extend .sans-serif-semi;
+  }
+
+
+  .prices li { margin: 0 0 20px 0; }
+  .prices li.separator { padding: 20px 0; border-top: 1px solid $cBorder; }
+
+  .checkbox, .radio {
+    @extend .sans-serif-semi;
+    color: #333333;
+    font-size:17px;
+  }
+
+  .description {
+    margin: 0 0 0 15px;
+    color: #999999;
+    font-size:15px;
+  }
+
+  p {
+    width: 500px;
+
+    line-height:120%;
+
+    @extend .sans-serif-base;
+    color: #666666;
+    font-size:15px;
+  }
+
 
 }
 
