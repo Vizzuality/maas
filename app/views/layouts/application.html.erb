@@ -9,15 +9,8 @@
   <body class="<%= controller_name %>">
 
     <%= yield %>
-
-    <script>
-      window.onload = function() {
-        cdb.load('../', function() {
-          console.log("CARTODB LOADED");
-          // your code here
-        });
-      };
-    </script>
-
+    <%= yield :js %>
   </body>
 </html>
+
+

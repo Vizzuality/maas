@@ -289,7 +289,7 @@ section.interest {
     color:$cWhite;
     margin: 0 0 43px 0;
 
-    &:before, &:after { color:$cWhite; }
+    &:before, &:after { background:$cWhite; }
   }
 
 }
@@ -304,22 +304,59 @@ section.slideshow {
   padding: 50px 0 0 0;
 
   background: url(backgrounds/bg-stars.png) center top;
+  border-bottom: 1px solid rgba(0,0,0,.5);
 
+  overflow:hidden;
 
   h2.title {
     color:$cWhite;
 
-    &:before, &:after { color:$cWhite; }
+    &:before, &:after { background:$cWhite; }
   }
+
+  .slides {
+    position:absolute;
+    width:100%;
+
+    $width: 874px;
+    @include absolute-vertical-center($width);
+
+    bottom: -20px;
+    z-index: 100;
+  }
+
+  .prev, .next {
+    position:absolute;
+
+    $width: 49px;
+    $height: 49px;
+
+    width: $width;
+    height: $height;
+
+    top: 50%;
+    margin-top: -1*$height/2;
+  }
+
+  .prev {
+    left: -70px;
+    @include icons-sprite(btn-slideshow-prev);
+  }
+
+  .next {
+    right: -70px;
+    @include icons-sprite(btn-slideshow-next);
+  }
+
 }
 
-section.slideshow img {
-  $width: 874px;
-  @include absolute-vertical-center($width);
+section.slideshow li {
+  list-style:none;
+}
 
-  position:absolute;
-  bottom: 0;
-  z-index: 100;
+section.slideshow li img {
+ display:none;
+
 }
 
 /* FOOTER */
@@ -376,5 +413,4 @@ footer {
     color: $cLink;
   }
 }
-
 

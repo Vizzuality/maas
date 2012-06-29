@@ -4,3 +4,43 @@
 <%= render :partial => 'home/interest' %>
 <%= render :partial => 'home/footer' %>
 
+
+<% content_for :js do %>
+
+  <script id="slideshow_template" type="text/tmpl">
+    <a href="#" class="prev"></a>
+    <a href="#" class="next"></a>
+  </script>
+
+  <script type="text/javascript">
+    window.onload = function() {
+      cdb.load('/', function() {
+
+console.log("CARTODB LOADED");
+
+      var MySlideshow = cdb.ui.common.Slideshow.extend({
+        render_content: function() {
+          return "my content";
+        }
+      });
+
+var slides = new cdb.ui.common.Slides([
+new cdb.ui.common.Slide({id:1}),
+new cdb.ui.common.Slide({id:2}),
+new cdb.ui.common.Slide({id:3}),
+new cdb.ui.common.Slide({id:4}),
+new cdb.ui.common.Slide({id:5})
+]);
+
+      var slideshow = new MySlideshow({
+          template_base: $('#slideshow_template').html(),
+width: 800,
+myID:"section.slideshow .canvas",
+collection: slides
+      });
+
+      slideshow.render();
+      });
+    };
+  </script>
+<% end %>
