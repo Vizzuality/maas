@@ -44,6 +44,21 @@ body.orders header {
     top: 80px;
 
     text-align:center;
+      @extend .sans-serif-light;
+
+    h3 {
+      color: $cGray2;
+      font-size:15px;
+      margin: 0 0 5px 0;
+
+    }
+
+    h2 {
+      font-size:21px;
+      color: $cOrange;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
   }
 }
 
@@ -141,7 +156,7 @@ label {
     padding: 13px 10px;
 
     font-size:15px;
-    color: #CCCCCC;
+    color: $cGray4;
     @extend .sans-serif-base;
 
     a {
@@ -272,13 +287,13 @@ form section {
     margin: 0 0 3px 0;
 
     @extend .sans-serif-semi;
-    color: #333333;
+    color: $cGray1;
     font-size:17px;
   }
 
   .description {
     margin: 0 0 0 15px;
-    color: #999999;
+    color: $cGray3;
     font-size:15px;
   }
 
@@ -288,7 +303,7 @@ form section {
     line-height:120%;
 
     @extend .sans-serif-base;
-    color: #666666;
+    color: $cGray2;
     font-size:15px;
   }
 
@@ -297,7 +312,7 @@ form section {
 
 form .templates {
   @include clearfix();
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid $cGray4;
 
   display: box;
   display: -moz-box;
@@ -306,14 +321,14 @@ form .templates {
   li {
 
     a {
-      color: #666666;
+      color: $cGray2;
       font-size: 15px;
       @extend .sans-serif;
     }
 
     padding: 45px;
 
-    border-right: 1px solid #ccc;
+    border-right: 1px solid $cGray4;
     &:last-child { border:none; }
 
     text-align:center;
