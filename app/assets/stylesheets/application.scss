@@ -298,15 +298,18 @@ section.interest {
 /* SLIDESHOW */
 
 section.slideshow {
-  position:relative;
-  height: 533px;
+  $pT: 50px;
 
-  padding: 50px 0 0 0;
+  position:relative;
+  height: 533px - $pT;
+
+  padding: $pT 0 0 0;
 
   background: url(backgrounds/bg-stars.png) center top;
   border-bottom: 1px solid rgba(0,0,0,.5);
 
   overflow:hidden;
+
 
   h2.title {
     color:$cWhite;
@@ -314,14 +317,50 @@ section.slideshow {
     &:before, &:after { background:$cWhite; }
   }
 
-  .slides {
+  .pagination {
+    position:relative;
+    top: -10px;
+
+    margin: auto;
+    text-align:center;
+
+
+    li {
+      @include inline-block();
+      margin: 0 5px 0 0;
+
+      &.selected a { @include icons-sprite(slideshow-bullet-selected); }
+
+      a {
+        display:block;
+
+        width:7px;
+        height:7px;
+
+        @include icons-sprite(slideshow-bullet);
+      }
+    }
+
+  }
+
+  & > .slideshow {
+
+    position:relative;
+    width: 874px;
+    bottom: -10px;
+    margin: auto;
+    height: 463px;
+
+  }
+
+  ul.slides {
+    position:relative;
+    list-style:none;
+  }
+
+  ul.slides li {
+    display:none;
     position:absolute;
-
-    $width: 874px;
-    @include absolute-vertical-center($width);
-
-    bottom: -20px;
-    z-index: 100;
   }
 
   .prev, .next {
@@ -337,27 +376,20 @@ section.slideshow {
     margin-top: -1*$height/2;
   }
 
+  $paginationPadding: 70px;
+
   .prev {
-    left: -70px;
+    left: -1*$paginationPadding;
     @include icons-sprite(btn-slideshow-prev);
     &:hover { @include icons-sprite(btn-slideshow-prev-hover);}
   }
 
   .next {
-    right: -70px;
+    right: -1*$paginationPadding;
     @include icons-sprite(btn-slideshow-next);
     &:hover { @include icons-sprite(btn-slideshow-next-hover);}
   }
 
-}
-
-section.slideshow ul {
-  list-style:none;
-  height: 463px;
-}
-
-section.slideshow li img {
- display:none;
 }
 
 /* FOOTER */

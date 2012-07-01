@@ -7,40 +7,26 @@
 
 <% content_for :js do %>
 
-  <script id="slideshow_template" type="text/tmpl">
+  <script id="slideshow-template" type="text/tmpl">
     <a href="#" class="prev"></a>
     <a href="#" class="next"></a>
-    <ul></ul>
+    <ul class="pagination"></ul>
+    <ul class="slides"></ul>
   </script>
 
   <script type="text/javascript">
     window.onload = function() {
       cdb.load('/', function() {
 
-console.log("CARTODB LOADED");
 
-      var MySlideshow = cdb.ui.common.Slideshow.extend({
-        render_content: function() {
-          return "my content";
-        }
-      });
+var slides = new cdb.ui.common.Slides([ { id: 1, title: "Hi"}, { id: 2, title: "I'm"}, { id: 3, title: "a"}, { id: 4, title: "very cool"}, { id: 5, title: "slideshow"} ]);
 
-var slides = new cdb.ui.common.Slides([
-new cdb.ui.common.Slide({id:1}),
-new cdb.ui.common.Slide({id:2}),
-new cdb.ui.common.Slide({id:3}),
-new cdb.ui.common.Slide({id:4}),
-new cdb.ui.common.Slide({id:5})
-]);
-
-      var slideshow = new MySlideshow({
-          template_base: $('#slideshow_template').html(),
-width: 800,
-myID:"section.slideshow .canvas",
+window.slideshow = new cdb.ui.common.Slideshow({
 collection: slides
-      });
+});
 
       slideshow.render();
+      slideshow.start();
       });
     };
   </script>
