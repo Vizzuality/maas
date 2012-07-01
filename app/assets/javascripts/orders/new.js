@@ -1,4 +1,4 @@
-$(function(){
+/*$(function(){
 
   $('#templates-list').find('a').click(function(){
     $('#templates-detail').find('.template').removeClass('selected');
@@ -31,4 +31,4 @@ $(function(){
     template.find('.total').find('#order_total').val(ammount);
   });
 
-});
+});*/

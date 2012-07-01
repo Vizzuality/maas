@@ -3,3 +3,5 @@
 //= require_tree .
 //= require recurly
 //= require cartodb
+//= require underscore-min
+//= require backbone-min

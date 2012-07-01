@@ -18,7 +18,9 @@
     <div class="shadow bottom"></div>
   </div>
 
-  <section class="dark">
+  <div id="container"></div>
+
+  <!--<section class="dark">
   <div class="left border">
     <div class="inner">
       <h3>Density map</h3>
@@ -72,7 +74,7 @@
     </div>
   </div>
   </section>
-
+-->
 
   <section class="hidden">
   <div class="inner">
@@ -196,4 +198,106 @@
 <%= render :partial => 'home/footer' %>
 
 
+<% content_for :js do %>
+    <script type="text/template" id="field-template">
+      {{ if (type) { }}
 
+        {{ if (type === 'title') { }}
+          <h3 class="{{= type }}"> {{= title }} </h3>
+          {{ } else { }}
+
+          <a class="{{= type }} {{ if (checked) {}} checked {{ } }}" name="{{= name }}">
+            {{= title }} {{ if (price > 0) { }} ${{= price }} {{ } }}
+          </a>
+          {{ } }}
+
+        {{ } else { }}
+
+        {{= title }} {{ if (price > 0) { }} ${{= price }} {{ } }}
+
+        {{ } }}
+
+      {{ if (description) { }}
+        <p>{{= description }}</p>
+        {{ } }}
+
+      {{ if ( price > 0 ) { }}<div class="price">${{= price }}</div>{{ } }}
+
+    </script>
+
+    <script type="text/template" id="fixed-template">
+      <section class="dark">
+      <div class="left border">
+        <div class="inner">
+          <ul class="prices">
+            <li>
+            <h3>{{= title }}</h3>
+            {{ if (description) { }}
+              <p>{{= description }}</p>
+              {{ } }}
+            <span class="price">${{= price }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      </section>
+    </script>
+
+    <script type="text/template" id="form-template">
+
+      <div class="fixed"></div>
+
+      <section>
+      <div class="left border">
+        <div class="inner">
+          <ul class="prices test"></ul>
+        </div>
+      </div>
+
+      </section>
+
+      <section>
+      <div class="left border">
+        <div class="inner">
+          <h3 class="total">Total</h3>
+        </div>
+      </div>
+      <div class="right">
+        <div class="inner">
+          <span class="subtotal price">Starting from {{= total }} </span>
+        </div>
+      </div>
+      </section>
+    </script>
+
+
+
+    <script type="text/javascript">
+
+      window.onload = function() {
+cdb.load('/', function() {
+
+var fields = new cdb.ui.common.Fields([
+{ className: "", checked: false, title: "Visualization method", name: false, type: "title", price: 0, description: false },
+{ className: "", checked: false, title: "Density map", name: "z", type: false, price: 2000, description: "Includes data process & visualization." },
+{ className: "", checked: true,  title: "Rectangular grid", name: "a", type: 'radio', price: 0, description: "Group and represent data using an hexagonal grid" },
+{ className: "", checked: false, title: "Hexagonal grid", name: "a", type: 'radio', price: 0, description: "Group and represent data using a rectangular grid" },
+{ className: "", checked: false, title: "Circular grid", name: "a", type: 'radio', price: 0, description: "this is a description" },
+{ className: "", checked: true,  title: "Pentabula grid", name: "a", type: 'radio', price: 0, description: "this is a description" },
+{ className: "separator", checked: false, title: "Variable selection", name: "b", type: 'checkbox', price: 100, description: "This allows your users to toggle between different variables to visualize." },
+{ className: "", checked: false, title: "Color selection", name: "c", type: 'checkbox', price: 200, description: "This allows your users to toggle between different variables to visualize." }
+]);
+
+
+window.formModel = new cdb.ui.common.FormModel({ base: 0, total: 0 });
+window.app = new cdb.ui.common.Form({ model: window.formModel, collection: fields });
+
+$("#container").append(window.app.render());
+
+
+});
+};
+    </script>
+
+
+  <% end %>

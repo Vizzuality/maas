@@ -44,7 +44,7 @@ body.orders header {
     top: 80px;
 
     text-align:center;
-      @extend .sans-serif-light;
+    @extend .sans-serif-light;
 
     h3 {
       color: $cGray2;
@@ -231,6 +231,7 @@ form section {
   .price { @extend .sans-serif-base; font-size: 15px; font-weight:100; color: $cOrange; }
   .input-field { width: 248px; }
 
+
   .input-field.upload {
     width: 549px;
 
@@ -280,11 +281,32 @@ form section {
     &.total { text-transform: uppercase; }
   }
 
-  .prices li { margin: 0 0 20px 0; }
-  .prices li.separator { margin: 30px 0 0 0; padding: 30px 0 0 0; border-top: 1px solid $cBorder; }
+
+  ul li:last-child { margin: 0; }
+
+  .prices {
+    li {
+      @include clearfix();
+      width: 780px;
+      position:relative;
+      margin: 0 0 20px 0; 
+
+      .price { display:none; top: 0; right: 0; position:absolute; }
+      &.selected .price { display:block; }
+
+      &.separator { padding: 30px 0 0 0;  background:url(icons/separator.png) no-repeat top left;}
+      &.separator .price { top: 30px; }
+    }
+  }
+
+    &.dark {
+      .prices li .price { top: 10px; display:block; }
+    }
 
   .checkbox, .radio {
     margin: 0 0 3px 0;
+
+    cursor: pointer;
 
     @extend .sans-serif-semi;
     color: $cGray1;

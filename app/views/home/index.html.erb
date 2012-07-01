@@ -16,14 +16,11 @@
 
   <script type="text/javascript">
     window.onload = function() {
-      cdb.load('/', function() {
+      cdb.load('', function() {
 
+    var slides = new cdb.ui.common.Slides([ { id: 1, title: "Spanish Electoral results map."}, { id: 2, title: "I'm"}, { id: 3, title: "a"}, { id: 4, title: "very cool"}, { id: 5, title: "slideshow"} ]);
 
-var slides = new cdb.ui.common.Slides([ { id: 1, title: "Spanish Electoral results map."}, { id: 2, title: "I'm"}, { id: 3, title: "a"}, { id: 4, title: "very cool"}, { id: 5, title: "slideshow"} ]);
-
-window.slideshow = new cdb.ui.common.Slideshow({
-collection: slides
-});
+    window.slideshow = new cdb.ui.common.Slideshow({ collection: slides });
 
       slideshow.render();
       slideshow.start();
