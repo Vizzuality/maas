@@ -1,3 +1,18 @@
+<div class="bg-map"></div>
+
+<%= render :partial => 'orders/header' %>
+
+<div id="receipt">
+
+<div class="t"></div>
+<div class="b"></div>
+</div>
+
+<%= render :partial => 'home/footer' %>
+
+<!--
+
+
 <div class="title">
   <h2><%= t('.title.hi', :name => @order.name) %></h2>
   <p><%= t('.title.description') %></p>
@@ -6,14 +21,14 @@
 <div class="summary">
   <h2><%= t('.summary.title') %></h2>
   <ul class="details">
-    <li><%= t('.summary.map_type', :type => t("templates.#{@order.template.name}.title")) %></li>
+    <li><%#= t('.summary.map_type', :type => t("templates.#{@order.template.name}.title")) %></li>
     <% @order.order_options.each do |option| -%>
       <li class="order_option">
         <span class="name">
           <%= t("templates.template_options.#{option.template_option.name}.name") %>
         </span>
         <span class="price">
-          <%= t("templates.template_options.#{option.template_option.name}.price", :price => option.template_option.price) %>
+          <%#= t("templates.template_options.#{option.template_option.name}.price", :price => option.template_option.price) %>
         </span>
       </li>
 
@@ -23,7 +38,7 @@
 
 <div class="total">
   <h2><%= t('.total.title') %></h2>
-  <span class="price"><%= t('.total.starting', :price => @order.template.price) %></span>
+  <span class="price"><%#= t('.total.starting', :price => @order.template.price) %></span>
 </div>
 
 <div class="analyzing">
@@ -34,3 +49,4 @@
     <%= link_to t('.analyzing.contact_us'), '#' %>
   </p>
 </div>
+-->

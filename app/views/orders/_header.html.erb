@@ -5,8 +5,8 @@
   <%= render :partial => 'orders/nav' %>
 
   <hgroup>
-  <h3><%= t('.creating_order') %></h3>
-  <h2>&mdash; <%= t('.select_your_template') %> &mdash;</h1>
+  <h3><%= t(".#{controller.action_name}.title") %></h3>
+  <h2>&mdash; <%= t(".#{controller.action_name}.subtitle") %> &mdash;</h1>
   </hgroup>
 
 </div>

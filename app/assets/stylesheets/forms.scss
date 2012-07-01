@@ -356,3 +356,30 @@ form .templates {
     text-align:center;
   }
 }
+
+
+#receipt {
+
+  $width: 882px;
+
+  position:relative;
+  width: $width; 
+  margin: 150px auto 90px auto;
+
+  height: 300px;
+  background:url(backgrounds/bg-paper.png) repeat-y -1*$width 0;
+
+
+  .t, .b { position:absolute; height: 30px; }
+  .t {
+    top: -30px;
+    width:100%;
+    background:url(backgrounds/bg-paper.png) no-repeat 0 0;
+  }
+  .b {
+    bottom: -30px;
+    background:url(backgrounds/bg-paper.png) no-repeat 0 -20px;
+    width:100%;
+
+  }
+}

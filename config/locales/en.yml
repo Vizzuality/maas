@@ -74,9 +74,13 @@ en:
         title: 'Know more'
         contact_us: 'Contact us'
   orders:
-    header: 
-      creating_order: 'Creating your order'
-      select_your_template: 'Select your template'
+    header:
+      new:
+        title: 'Creating your order'
+        subtitle: 'Select your template'
+      show:
+        title: 'Track your order'
+        subtitle: "We're analyzing your data"
     new:
       templates-list:
         markers: 'Markers map'
