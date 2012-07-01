@@ -319,17 +319,17 @@ section.slideshow {
 
   .pagination {
     position:relative;
-    top: -10px;
+    top: -15px;
 
     margin: auto;
     text-align:center;
-
 
     li {
       @include inline-block();
       margin: 0 5px 0 0;
 
       &.selected a { @include icons-sprite(slideshow-bullet-selected); }
+      a:hover { @include icons-sprite(slideshow-bullet-selected); }
 
       a {
         display:block;
@@ -361,6 +361,27 @@ section.slideshow {
   ul.slides li {
     display:none;
     position:absolute;
+
+    .bubble {
+      position:absolute;
+      top: -30px;
+      right: -90px;
+
+      width:  171px;
+      height: 172px;
+
+      @include icons-sprite(slideshow-bubble);
+      opacity:0;
+
+      display:table;
+
+      p {
+        display:table-cell;
+        vertical-align:middle;
+        text-align: center;
+        padding: 10px;
+      }
+    }
   }
 
   .prev, .next {
