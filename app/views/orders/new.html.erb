@@ -254,13 +254,18 @@
         });
 
 
-        var URL  = 'http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png';
-        var URL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
-        URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/22677/256/{z}/{x}/{y}.png',
-
+        var URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
         map.addLayer(new cdb.geo.TileLayer({urlTemplate: URL}));
-        map.addLayerCartoDB();
-        window.map = map; // to play in console
+
+        map.addLayer(new cdb.geo.CartoDBLayer({
+          options: {
+            user_name:'examples',
+            table_name: 'earthquakes',
+            query: "SELECT * FROM {{table_name}}",
+            tile_style: "#{{table_name}}{marker-fill:red}",
+            interactivity: "cartodb_id, magnitude",
+          }
+        }));
 
       });
     };
