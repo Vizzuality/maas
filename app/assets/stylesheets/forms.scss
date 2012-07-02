@@ -227,7 +227,7 @@ form {
   position:relative;
 
   @include border-radius(3px);
-  background: #fff;
+  background: $cWhite;
   border: 1px solid #9A9A9A;
 }
 
@@ -242,11 +242,13 @@ form .map {
 
 form .map .browser {
   $width: 722px;
+  $height: 463px;
+
   @include absolute-vertical-center($width);
   position:absolute;
   bottom: -70px;
   width: $width;
-  height:463px;
+  height: $height;
 
   @include icons-sprite(browser);
 }
@@ -324,7 +326,6 @@ form section {
       p { margin: 0 0 0px 0; }
 
       .price { display:none; top: 0; right: 0; position:absolute; }
-      &.selected .price { display:block; }
 
       &.separator { padding: 30px 0 0 0;  background:url(icons/separator.png) no-repeat top left;}
       &.separator .price { top: 30px; }
