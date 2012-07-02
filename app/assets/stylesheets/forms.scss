@@ -251,6 +251,15 @@ form .map .browser {
   height: $height;
 
   @include icons-sprite(browser);
+
+  #map {
+    background:#f1f1f1;
+    position:absolute;
+    top: 40px;
+    left: 1px;
+    width: $width - 2;
+    height: $height - 110;
+  }
 }
 
 form section {

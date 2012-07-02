@@ -10,7 +10,9 @@
   </ul>
 
   <div class="map">
-    <div class="browser"></div>
+    <div class="browser">
+      <div id="map"></div>
+    </div>
     <div class="shadow bottom"></div>
   </div>
 
@@ -218,19 +220,48 @@
       cdb.load('/', function() {
 
         var fields = new cdb.ui.common.Fields([
-          { className: false,       checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
-          { className: false,       checked: false, title: "Density map",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
-          { className: false,       checked: true,  title: "Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
-          { className: false,       checked: false, title: "Hexagonal grid",        name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using a rectangular grid" },
-          { className: false,       checked: false, title: "Circular grid",         name: "a",   type: 'radio',    price: 0,    description: "this is a description" },
+          { className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
+          { className: null,        checked: false, title: "Density map",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
+          { className: null,        checked: true,  title: "Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
+          { className: null,        checked: false, title: "Hexagonal grid",        name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using a rectangular grid" },
+          { className: null,        checked: false, title: "Circular grid",         name: "a",   type: 'radio',    price: 0,    description: "this is a description" },
           { className: "separator", checked: false, title: "Variable selection",    name: "b",   type: 'checkbox', price: 100,  description: "This allows your users to toggle between different variables to visualize." },
-          { className: false,       checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
+          { className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
         ]);
 
         window.formModel = new cdb.ui.common.FormModel({ base: 0, total: 0 });
         window.app       = new cdb.ui.common.Form({ model: window.formModel, collection: fields });
 
         $("#container").append(window.app.render());
+
+
+        var map = new cdb.geo.Map({
+        center: [18.289374355860424, 59.765625]
+          
+        });
+
+        map.setCenter([18.289374355860424, 59.765625]);
+
+        var mapView = new cdb.geo.LeafletMapView({
+          el: $('#map'),
+          map: map
+        });
+
+        map.setZoom(2);
+
+        map.bind('change:center', function(model, center) {
+          console.log(center[0], center[1]);
+        });
+
+
+        var URL  = 'http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png';
+        var URL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+        URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/22677/256/{z}/{x}/{y}.png',
+
+        map.addLayer(new cdb.geo.TileLayer({urlTemplate: URL}));
+        window.map = map; // to play in console
+
+
 
       });
     };
