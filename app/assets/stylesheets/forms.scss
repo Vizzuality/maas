@@ -50,7 +50,7 @@ section {
   }
 
   h3 {
-    margin: 0 0 10px 0; 
+    margin: 0 0 10px 0;
 
     color: $cGray1;
     font-size: 17px;
@@ -114,6 +114,10 @@ body.orders header {
 body.orders header nav ul li a,
 body.orders header nav ul li:after,
 body.orders header .logo { color: $cGray2; }
+
+body.orders header nav ul li a:hover {
+  border-bottom: 1px solid rgba(0,0,0,.5);
+}
 
 .radio    { @include radio(); }
 .checkbox { @include checkbox(); }
@@ -220,6 +224,8 @@ form {
   margin: 118px auto;
   width: $formWidth;
 
+  position:relative;
+
   @include border-radius(3px);
   background: #fff;
   border: 1px solid #9A9A9A;
@@ -312,7 +318,7 @@ form section {
       @include clearfix();
       width: 780px;
       position:relative;
-      margin: 0 0 20px 0; 
+      margin: 0 0 20px 0;
 
       h3 { margin: 0 0 3px 0; }
       p { margin: 0 0 0px 0; }
@@ -379,7 +385,7 @@ form .templates {
   $width: 882px;
 
   position:relative;
-  width: $width; 
+  width: $width;
   margin: 150px auto 90px auto;
 
   background:url(backgrounds/bg-paper.png) repeat-y -1*$width 0;
@@ -392,7 +398,7 @@ form .templates {
 
   section {
 
-    &:first-child { 
+    &:first-child {
       $pT: 20px;
       $pL: 40px;
 
