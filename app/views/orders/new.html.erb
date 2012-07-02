@@ -219,22 +219,6 @@
     window.onload = function() {
       cdb.load('/', function() {
 
-        var fields = new cdb.ui.common.Fields([
-          { className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
-          { className: null,        checked: false, title: "Density map",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
-          { className: null,        checked: true,  title: "Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
-          { className: null,        checked: false, title: "Hexagonal grid",        name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using a rectangular grid" },
-          { className: null,        checked: false, title: "Circular grid",         name: "a",   type: 'radio',    price: 0,    description: "this is a description" },
-          { className: "separator", checked: false, title: "Variable selection",    name: "b",   type: 'checkbox', price: 100,  description: "This allows your users to toggle between different variables to visualize." },
-          { className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
-        ]);
-
-        window.formModel = new cdb.ui.common.FormModel({ base: 0, total: 0 });
-        window.app       = new cdb.ui.common.Form({ model: window.formModel, collection: fields });
-
-        $("#container").append(window.app.render());
-
-
         var map = new cdb.geo.Map({
         center: [18.289374355860424, 59.765625]
           
@@ -256,7 +240,19 @@
         var URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
         var layer = new cdb.geo.TileLayer({urlTemplate: URL});
         map.addLayer(layer);
-        map.addLayer(new cdb.geo.CartoDBLayer({
+
+        window.map = map;
+
+        var fields = new cdb.ui.common.Fields([
+          { callback: null, className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
+          { callback: null, className: null,        checked: false, title: "Density map",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
+          { callback: null, className: null,        checked: true,  title: "Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
+          { callback: null, className: null,        checked: false, title: "Hexagonal grid",        name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using a rectangular grid" },
+          { callback: null, className: null,        checked: false, title: "Circular grid",         name: "a",   type: 'radio',    price: 0,    description: "this is a description" },
+          { callback: null, className: "separator", checked: false, title: "Variable selection",    name: "b",   type: 'checkbox', price: 100,  description: "This allows your users to toggle between different variables to visualize." },
+          { callback: function() {
+
+        return map.addLayer(new cdb.geo.CartoDBLayer({
           options: {
             user_name:'examples',
             table_name: 'earthquakes',
@@ -265,8 +261,16 @@
             interactivity: "cartodb_id, magnitude",
           }
         }));
+            
+            
+          }, className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
+        ]);
 
-        map.removeLayer(1);
+        window.formModel = new cdb.ui.common.FormModel({ base: 0, total: 0 });
+        window.app       = new cdb.ui.common.Form({ model: window.formModel, collection: fields });
+
+        $("#container").append(window.app.render());
+
 
       });
     };
