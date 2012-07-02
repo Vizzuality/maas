@@ -298,6 +298,7 @@ section.interest {
 /* SLIDESHOW */
 
 section.slideshow {
+
   $pT: 50px;
 
   position:relative;
@@ -318,10 +319,11 @@ section.slideshow {
   }
 
   .pagination {
-    position:relative;
-    top: -15px;
 
+    position:relative;
+    top: -20px;
     margin: auto;
+
     text-align:center;
 
     li {
@@ -333,32 +335,28 @@ section.slideshow {
 
       a {
         display:block;
-
         width:7px;
         height:7px;
 
         @include icons-sprite(slideshow-bullet);
       }
     }
-
-  }
+  } // pagination
 
   & > .slideshow {
-
     position:relative;
     width: 874px;
-    bottom: -10px;
-    margin: auto;
     height: 463px;
-
+    bottom: -25px;
+    margin: auto;
   }
 
-  ul.slides {
+  & > .slideshow ul.slides {
     position:relative;
     list-style:none;
   }
 
-  ul.slides li {
+  & > .slideshow ul.slides li {
     display:none;
     position:absolute;
 
@@ -378,8 +376,13 @@ section.slideshow {
       p {
         display:table-cell;
         vertical-align:middle;
+        padding: 35px 30px 30px 30px;
+
+        color: #333333;
+
+        font-size: 16px;
         text-align: center;
-        padding: 10px;
+        @extend .sans-serif-light;
       }
     }
   }
@@ -388,7 +391,7 @@ section.slideshow {
     position:absolute;
 
     $width: 49px;
-    $height: 49px;
+    $height: $width;
 
     width: $width;
     height: $height;
