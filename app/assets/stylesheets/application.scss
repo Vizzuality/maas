@@ -226,6 +226,19 @@ section.characteristics {
     line-height:120%;
   }
 
+  .box {position:relative;}
+  .box .button {
+    position:absolute;
+    bottom: -45px;
+    @include border-radius(0 0 3px 3px);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 248px;
+    left:-1px;
+    margin:0;
+
+    font-size:16px;
+  }
 
   .how_does_it_work {
     .icon {
@@ -279,6 +292,9 @@ section.characteristics {
   }
 }
 
+
+/* INTERESTED? */
+
 section.interest {
   padding: 50px 0 57px 0;
 
@@ -291,8 +307,7 @@ section.interest {
 
     &:before, &:after { background:$cWhite; }
   }
-
-}
+} // interest
 
 
 /* SLIDESHOW */
