@@ -253,10 +253,9 @@
           console.log(center[0], center[1]);
         });
 
-
         var URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
-        map.addLayer(new cdb.geo.TileLayer({urlTemplate: URL}));
-
+        var layer = new cdb.geo.TileLayer({urlTemplate: URL});
+        map.addLayer(layer);
         map.addLayer(new cdb.geo.CartoDBLayer({
           options: {
             user_name:'examples',
@@ -266,6 +265,8 @@
             interactivity: "cartodb_id, magnitude",
           }
         }));
+
+        map.removeLayer(1);
 
       });
     };
