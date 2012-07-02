@@ -61,6 +61,7 @@ header nav {
       @include inline-block();
 
       a { color: $cWhite; @extend .sans-serif; }
+      a:hover { border-bottom: 1px solid rgba(255,255,255,.5); padding-bottom: 3px;}
 
       &:last-child:after {
         content: none;
@@ -469,6 +470,13 @@ footer {
       @extend .sans-serif;
     }
 
+    li a {
+      @extend .sans-serif;
+      font-size:15px;
+      color: $cLink;
+      &:hover { color: $cGray1; }
+    }
+
     li strong {
       display:block;
       margin: 0 0 10px 0;
@@ -479,10 +487,5 @@ footer {
     }
   }
 
-  ul li a {
-    @extend .sans-serif;
-    font-size:15px;
-    color: $cLink;
-  }
 }
 
