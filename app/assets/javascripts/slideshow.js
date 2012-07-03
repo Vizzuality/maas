@@ -129,6 +129,10 @@ cdb.ui.common.Slideshow = cdb.core.View.extend({
     this.model = new cdb.ui.common.SlideshowModel({ visible: false });
     this.model.collection = this.collection;
     this.model.bind("change:currentIndex", this.gotoSlide);
+
+    this.render();
+    this.start();
+
   },
 
   gotoSlide: function() {

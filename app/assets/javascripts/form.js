@@ -40,6 +40,13 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.find("a").addClass("checked");
       this.$el.addClass("selected");
       this.$el.find(".price").fadeIn(250);
+
+      var callback = this.model.get('callback');
+
+      if (callback) {
+        callback();
+      }
+
     } else {
       this.$el.find("a").removeClass("checked");
       this.$el.removeClass("selected");
