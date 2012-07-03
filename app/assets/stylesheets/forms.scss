@@ -259,10 +259,24 @@ form .map .browser {
     left: 1px;
     width: $width - 2;
     height: $height - 110;
-  }
+  } // map
+}
+
+.form { position:relative; }
+
+.circle {
+  display:none;
+
+  position:absolute;
+  top: 70px;
+  right:183px;
+  width:92px;
+  height:92px;
+  @include icons-sprite(map-updated-circle);
 }
 
 form section {
+
   @include clearfix();
 
   background:$cWhite;

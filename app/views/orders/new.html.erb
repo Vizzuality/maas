@@ -188,6 +188,7 @@
   <script type="text/template" id="form-template">
 
     <div class="fixed"></div>
+    <div class="circle"></div>
 
     <section>
     <div class="left border">
@@ -195,7 +196,6 @@
         <ul class="prices test"></ul>
       </div>
     </div>
-
     </section>
 
     <section>
@@ -238,10 +238,8 @@
         });
 
         var URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
-        var layer = new cdb.geo.TileLayer({urlTemplate: URL});
+        var layer = new cdb.geo.TileLayer({ urlTemplate: URL });
         map.addLayer(layer);
-
-        window.map = map;
 
         var fields = new cdb.ui.common.Fields([
           { callback: null, className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
@@ -252,22 +250,36 @@
           { callback: null, className: "separator", checked: false, title: "Variable selection",    name: "b",   type: 'checkbox', price: 100,  description: "This allows your users to toggle between different variables to visualize." },
           { callback: function() {
 
-        return map.addLayer(new cdb.geo.CartoDBLayer({
-          options: {
-            user_name:'examples',
-            table_name: 'earthquakes',
-            query: "SELECT * FROM {{table_name}}",
-            tile_style: "#{{table_name}}{marker-fill:red}",
-            interactivity: "cartodb_id, magnitude",
-          }
-        }));
-            
-            
+            var style = "#github_javascript{[prop_count>0]{polygon-fill:#313695;}[prop_count>1]{polygon-fill:#4575B4;}[prop_count>2]{polygon-fill:#74ADD1;}[prop_count>4]{polygon-fill:#ABD9E9;}[prop_count>8]{polygon-fill:#E0F3F8;}[prop_count>16]{polygon-fill:#FFFFBF;}[prop_count>32]{polygon-fill:#FEE090;}[prop_count>64]{polygon-fill:#FDAE61;}[prop_count>128]{polygon-fill:#F46D43;}[prop_count>256]{polygon-fill:#D73027;}[prop_count>512]{polygon-fill:#A50026;}polygon-opacity:0.71;line-width:0;}";
+            var query = "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15),CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell";
+
+            // style = "#github_javascript{ marker-fill:#333333; marker-width:5; marker-opacity:.75; marker-line-width:0; marker-placement:point; marker-type:ellipse; marker-allow-overlap:true; }"
+            // query ="SELECT * FROM {{table_name}}";
+
+            return map.addLayer(new cdb.geo.CartoDBLayer({
+              options: {
+                user_name:'saleiva',
+                table_name: 'github_javascript',
+                style: style,
+                query: query,
+                interactivity: "cartodb_id"
+              }
+
+            // return map.addLayer(new cdb.geo.CartoDBLayer({
+            //   options: {
+            //     user_name: 'examples',
+            //     table_name: 'earthquakes',
+            //     query: 'SELECT * FROM {{table_name}}',
+            //     tile_style: "#{{table_name}}{marker-fill:red}",
+            //     interactivity: "cartodb_id, magnitude",
+            //   }
+            }));
+
           }, className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
         ]);
 
         window.formModel = new cdb.ui.common.FormModel({ base: 0, total: 0 });
-        window.app       = new cdb.ui.common.Form({ model: window.formModel, collection: fields });
+        window.app       = new cdb.ui.common.Form({ map: map, model: window.formModel, collection: fields });
 
         $("#container").append(window.app.render());
 
