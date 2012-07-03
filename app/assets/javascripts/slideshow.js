@@ -1,13 +1,6 @@
-_.templateSettings = {
-  interpolate: /\{\{\=(.+?)\}\}/g,
-  evaluate: /\{\{(.+?)\}\}/g
-};
-
-cdb.ui.common.Slide = Backbone.Model.extend({
-});
+cdb.ui.common.Slide = Backbone.Model.extend({ });
 
 cdb.ui.common.BulletView = cdb.core.View.extend({
-  template: _.template('<li class="bullet" id="bullet-{{= id }}"><a href="#"></a></li>'),
 
   events: {
     'click a': 'goto'
@@ -16,6 +9,7 @@ cdb.ui.common.BulletView = cdb.core.View.extend({
   initialize: function() {
     _.bindAll(this, "render", "goto");
 
+    this.template = cdb.templates.getTemplate('templates/slideshow/bullet');
     this.render();
   },
 
@@ -38,12 +32,12 @@ cdb.ui.common.SlideView = cdb.core.View.extend({
     speed: 350
   },
 
-  template: _.template('<li class="slide" id="slide-{{= id }}"><img src="/assets/slideshow/slide-0{{= id }}.png" /><div class="bubble"><p>{{= title }}</p></div></li>'),
   initialize: function() {
     _.bindAll(this, "render", "toggle");
 
     this.model.bind("change:visible", this.toggle);
 
+    this.template = cdb.templates.getTemplate('templates/slideshow/view');
     this.render();
   },
 
@@ -125,7 +119,7 @@ cdb.ui.common.Slideshow = cdb.core.View.extend({
 
     $(document).bind('keydown', this.keydown);
 
-    this.template = _.template($("#slideshow-template").html());
+    this.template = cdb.templates.getTemplate('templates/slideshow/slideshow');
 
     this.model = new cdb.ui.common.SlideshowModel({ visible: false });
     this.model.collection = this.collection;

@@ -141,82 +141,15 @@
 
 
 <% content_for :js do %>
-  <script type="text/template" id="field-template">
-    {{ if (type) { }}
 
-      {{ if (type === 'title') { }}
-        <h3 class="{{= type }}"> {{= title }} </h3>
-        {{ } else { }}
 
-        <a class="{{= type }} {{ if (checked) {}} checked {{ } }}" name="{{= name }}">
-          {{= title }} {{ if (price > 0) { }} ${{= price }} {{ } }}
-        </a>
-        {{ } }}
-
-      {{ } else { }}
-
-      {{= title }} {{ if (price > 0) { }} ${{= price }} {{ } }}
-
-      {{ } }}
-
-    {{ if (description) { }}
-      <p>{{= description }}</p>
-      {{ } }}
-
-    {{ if ( price > 0 ) { }}<div class="price">${{= price }}</div>{{ } }}
-
-  </script>
-
-  <script type="text/template" id="fixed-template">
-    <section class="dark">
-    <div class="left border">
-      <div class="inner">
-        <ul class="prices">
-          <li>
-          <h3>{{= title }}</h3>
-          {{ if (description) { }}
-            <p>{{= description }}</p>
-            {{ } }}
-          <span class="price">${{= price }}</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    </section>
-  </script>
-
-  <script type="text/template" id="form-template">
-
-    <div class="fixed"></div>
-    <div class="circle"></div>
-
-    <section>
-    <div class="left border">
-      <div class="inner">
-        <ul class="prices test"></ul>
-      </div>
-    </div>
-    </section>
-
-    <section>
-    <div class="left border">
-      <div class="inner">
-        <h3 class="total">Total</h3>
-      </div>
-    </div>
-    <div class="right">
-      <div class="inner">
-        <span class="subtotal price">Starting from {{= total }} </span>
-      </div>
-    </div>
-    </section>
-  </script>
 
 
 
   <script type="text/javascript">
     $(function() {
 
+        cdb.init();
         var map = new cdb.geo.Map({
         center: [18.289374355860424, 59.765625]
           

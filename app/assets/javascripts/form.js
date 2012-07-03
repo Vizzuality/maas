@@ -16,8 +16,10 @@ cdb.ui.common.FieldView = Backbone.View.extend({
   initialize: function() {
 
     _.bindAll(this, "render", "toggle");
-    this.template = _.template( $("#field-template").html());
-    this.templateFixed = _.template( $("#fixed-template").html());
+
+
+    this.template      = cdb.templates.getTemplate('templates/form/field');
+    this.templateFixed = cdb.templates.getTemplate('templates/form/fixed');
 
     this.model.bind("change:selected", this.toggle);
 
@@ -117,7 +119,7 @@ cdb.ui.common.Form = Backbone.View.extend({
   initialize: function() {
     _.bindAll(this, "render", "recalc", "updatePrice");
 
-    this.template = _.template($("#form-template").html());
+    this.template = cdb.templates.getTemplate('templates/form/form');
 
     this.model.collection = this.collection;
     this.model.bind("change:total", this.updatePrice);

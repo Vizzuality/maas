@@ -5,6 +5,7 @@ gem 'pg'
 gem 'responders'
 gem 'carrierwave'
 gem 'recurly'
+gem "rails-backbone"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
