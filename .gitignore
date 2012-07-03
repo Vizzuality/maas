@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 .DS_Store
 /.bundle
 /db/*.sqlite3
 /log/*.log
 /public/uploads/tmp
 /tmp
-=======
 *.swp
->>>>>>> 7d587a4aaaee8c24db3464a902c4bec6b24eb55f

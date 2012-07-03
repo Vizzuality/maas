@@ -85,16 +85,21 @@ cdb.ui.common.SlideshowModel = Backbone.Model.extend({
   prev: function() {
     var i = this.get("currentIndex") - 1;
     if (i < 0) i = this.collection.length - 1;
+
     this.set("currentIndex", i);
   },
 
   next: function() {
     var i = this.get("currentIndex") + 1;
     if (i >= this.collection.length) i = 0;
+
     this.set("currentIndex", i);
   }
 
 });
+
+
+/* Slideshow main view */
 
 cdb.ui.common.Slideshow = cdb.core.View.extend({
   className: 'slideshow',
