@@ -1,8 +1,10 @@
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
 //= require recurly
 //= require underscore-min
 //= require backbone-min
+//= require leaflet
+//= require wax.leaf.min-6.2.3-touched
+//= require cartodb-leaflet
 //= require cdb
-//= require maas/slideshow.js
+//= require_tree .
