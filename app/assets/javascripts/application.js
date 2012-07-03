@@ -4,4 +4,5 @@
 //= require recurly
 //= require underscore-min
 //= require backbone-min
-//= require cdb.js
+//= require cdb
+//= require maas/slideshow.js
