@@ -1,6 +1,6 @@
 .leaflet-control-attribution { display: none; }
 
-.leaflet-control-zoom {
+#zoom {
 
   $zoomWidth: 43px;
   $zoomHeight: 36px; // distance from the top of the canvas until the middle line
@@ -9,21 +9,21 @@
 
   $url: "icons/map-zoom.png";
 
-  top:  5px;
-  left: 5px;
+  top:  50px;
+  left: 15px;
 
   z-index: 1000;
 
-  .leaflet-control-zoom-in,
-  .leaflet-control-zoom-out { display:block; position:relative; width: $zoomWidth; height: $zoomHeight; cursor: pointer; }
+  .zoom_in,
+  .zoom_out { display:block; position:relative; width: $zoomWidth; height: $zoomHeight; cursor: pointer; }
 
-  .leaflet-control-zoom-in {
+  .zoom_in {
     background: transparent url($url) no-repeat 0 0;
     &:hover { background: transparent url($url) no-repeat -1*$zoomWidth 0; }
     &:active { background: transparent url($url) no-repeat -2*$zoomWidth 0; }
   }
 
-  .leaflet-control-zoom-out {
+  .zoom_out {
     background: transparent url($url) no-repeat 0 -1*$zoomHeight;
     &:hover { background: transparent url($url) no-repeat -1*$zoomWidth -1*$zoomHeight; }
     &:active { background: transparent url($url) no-repeat -2*$zoomWidth -1*$zoomHeight; }

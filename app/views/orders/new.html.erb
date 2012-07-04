@@ -11,6 +11,7 @@
 
   <div class="map">
     <div class="browser">
+      <div id="zoom"></div>
       <div id="map"></div>
     </div>
     <div class="shadow bottom"></div>
@@ -146,63 +147,72 @@
 
 
 
+
   <script type="text/javascript">
     $(function() {
 
-        cdb.init();
+      cdb.init();
 
-        var map = new cdb.geo.Map({
-          center: [18.289374355860424, 59.765625]
-        });
-
-        map.setCenter([18.289374355860424, 59.765625]);
-
-        var mapView = new cdb.geo.LeafletMapView({
-          el: $('#map'),
-          map: map
-        });
-
-        map.setZoom(2);
-
-        var URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
-        var layer = new cdb.geo.TileLayer({ urlTemplate: URL });
-        map.addLayer(layer);
-
-               var options = {
-                 user_name: 'examples',
-                 table_name: 'earthquakes',
-                 query: 'SELECT * FROM {{table_name}}',
-                 tile_style: "#{{table_name}}{marker-fill:red}",
-                 interactivity: "cartodb_id, magnitude",
-                 featureOut: function() { console.log('out'); },
-                 featureOver: function() { console.log('over'); },
-                 featureClick: function() { console.log('click'); }
-               };
-
-               var layer = new cdb.geo.CartoDBLayer(options);
-               map.addLayer(layer);
-
-
-        var fields = new cdb.ui.common.Fields([
-          { callback: null, className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
-          { callback: null, className: null,        checked: false, title: "Density map",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
-          { callback: null, className: null,        checked: true,  title: "Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
-          { callback: null, className: null,        checked: false, title: "Hexagonal grid",        name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using a rectangular grid" },
-          { callback: null, className: null,        checked: false, title: "Circular grid",         name: "a",   type: 'radio',    price: 0,    description: "this is a description" },
-          { callback: null, className: "separator", checked: false, title: "Variable selection",    name: "b",   type: 'checkbox', price: 100,  description: "This allows your users to toggle between different variables to visualize." },
-          { callback: function() {
-
-
-          }, className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
-        ]);
-
-        window.formModel = new cdb.ui.common.FormModel({ base: 0, total: 0 });
-        window.app       = new cdb.ui.common.Form({ map: map, model: window.formModel, collection: fields });
-
-        $("#container").append(window.app.render());
-
-
+      var map = new cdb.geo.Map({
+        center: [18.289374355860424, 59.765625]
       });
+
+      map.setCenter([18.289374355860424, 59.765625]);
+
+      var mapView = new cdb.geo.LeafletMapView({
+        el: $('#map'),
+        map: map
+      });
+
+      var zoom = new cdb.geo.ui.Zoom({
+        model: map,
+        template: cdb.templates.getTemplate('templates/map/zoom'),
+        el: $('#zoom')
+      })
+
+      zoom.render();
+
+
+      map.setZoom(2);
+
+      var URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+      var layer = new cdb.geo.TileLayer({ urlTemplate: URL });
+      map.addLayer(layer);
+
+      var options = {
+        user_name: 'examples',
+        table_name: 'earthquakes',
+        query: 'SELECT * FROM {{table_name}}',
+        tile_style: "#{{table_name}}{marker-fill:red}",
+        interactivity: "cartodb_id, magnitude",
+        featureOut: function() { console.log('out'); },
+        featureOver: function() { console.log('over'); },
+        featureClick: function() { console.log('click'); }
+      };
+
+      var layer = new cdb.geo.CartoDBLayer(options);
+      map.addLayer(layer);
+
+      var fields = new cdb.ui.common.Fields([
+        { callback: null, className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
+        { callback: null, className: null,        checked: false, title: "Density map",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
+        { callback: null, className: null,        checked: true,  title: "Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
+        { callback: null, className: null,        checked: false, title: "Hexagonal grid",        name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using a rectangular grid" },
+        { callback: null, className: null,        checked: false, title: "Circular grid",         name: "a",   type: 'radio',    price: 0,    description: "this is a description" },
+        { callback: null, className: "separator", checked: false, title: "Variable selection",    name: "b",   type: 'checkbox', price: 100,  description: "This allows your users to toggle between different variables to visualize." },
+        { callback: function() {
+
+
+        }, className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
+      ]);
+
+      window.formModel = new cdb.ui.common.FormModel({ base: 0, total: 0 });
+      window.app       = new cdb.ui.common.Form({ map: map, model: window.formModel, collection: fields });
+
+      $("#container").append(window.app.render());
+
+
+    });
   </script>
 
 <% end %>
