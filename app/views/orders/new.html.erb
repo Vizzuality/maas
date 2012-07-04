@@ -150,9 +150,9 @@
     $(function() {
 
         cdb.init();
+
         var map = new cdb.geo.Map({
-        center: [18.289374355860424, 59.765625]
-          
+          center: [18.289374355860424, 59.765625]
         });
 
         map.setCenter([18.289374355860424, 59.765625]);
@@ -164,20 +164,20 @@
 
         map.setZoom(2);
 
-        map.bind('change:center', function(model, center) {
-          console.log(center[0], center[1]);
-        });
-
         var URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
         var layer = new cdb.geo.TileLayer({ urlTemplate: URL });
         map.addLayer(layer);
 
                var options = {
+                 mapView: mapView,
                  user_name: 'examples',
                  table_name: 'earthquakes',
                  query: 'SELECT * FROM {{table_name}}',
                  tile_style: "#{{table_name}}{marker-fill:red}",
-                 interactivity: "cartodb_id, magnitude"
+                 interactivity: "cartodb_id, magnitude",
+                 featureOut: function() { console.log('out'); },
+                 featureOver: function() { console.log('over'); },
+                 featureClick: function() { console.log('click'); }
                };
 
                var layer = new cdb.geo.CartoDBLayer(options);
