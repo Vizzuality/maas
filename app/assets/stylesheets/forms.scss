@@ -5,9 +5,8 @@ $formWidth: 880px;
 
 .bg-map {
   position:absolute;
-  height:269px;
-  width:100%;
   top: 0;
+  @include size(100%, 269px);
 
   background: url(backgrounds/bg-map.png) top center;
 }
@@ -23,12 +22,15 @@ $formWidth: 880px;
 }
 
 section {
+
   &.dark {
     background: #F2F2F2;
   }
 
   &.highlighted {
     background: #FCFCEB;
+
+    a { color: #397DB9; text-decoration: underline; }
 
     .inner {
       padding-top: 40px;
@@ -51,10 +53,7 @@ section {
 
   h3 {
     margin: 0 0 10px 0;
-
-    color: $cGray1;
-    font-size: 17px;
-    @extend .sans-serif-semi;
+    @include font("sans-serif-semi", 17px, $cGray1);
   }
 
   p {
@@ -64,9 +63,7 @@ section {
 
     line-height:120%;
 
-    @extend .sans-serif-base;
-    color: $cGray2;
-    font-size:15px;
+    @include font("sans-serif-base", 15px, $cGray2);
   }
 }
 
@@ -96,10 +93,10 @@ body.orders header {
     @extend .sans-serif-light;
 
     h3 {
-      color: $cGray2;
-      font-size:15px;
       margin: 0 0 5px 0;
 
+      color: $cGray2;
+      font-size:15px;
     }
 
     h2 {
@@ -109,14 +106,14 @@ body.orders header {
       letter-spacing: 2px;
     }
   }
-}
+} // body.orders header
 
 body.orders header nav ul li a,
 body.orders header nav ul li:after,
 body.orders header .logo { color: $cGray2; }
 
 body.orders header nav ul li a:hover {
-  border-bottom: 1px solid rgba(0,0,0,.5);
+  border-bottom: 1px solid rgba($cGray0, 0.5);
 }
 
 .radio    { @include radio(); }
@@ -127,9 +124,8 @@ label {
   clear:both;
   margin: 0 0 7px 0;
 
-  color: $cGray2;
-  @extend .sans-serif-bold;
-  font-size:11px;
+  @include font("sans-serif-bold", 11px, $cGray2);
+
   text-transform:uppercase;
 }
 
@@ -145,23 +141,25 @@ label {
 
   &.left { margin: 0 24px 0 0; }
   &.right { float:right; }
-}
+
+} // field
 
 .textarea {
+
   $height: 152px;
   $width: 580px;
+
   $pT: 12px;
   $pR: 7px;
 
   @include inline-block();
-  height:$height;
-  width: $width;
+  @include size($width, $height);
 
   background:url(backgrounds/bg-form-textarea.png) no-repeat left 0;
 
   textarea {
-    width: 100%;
-    height: $height - $pT*2;
+    @include size(100%, $height - $pT*2);
+
     margin: 0 0 0 5px;
     padding: $pT $pR;
 
@@ -175,23 +173,25 @@ label {
 }
 
 .input-field {
-  $height: 42px;
+
   $width: 400px;
+  $height: 42px;
+
   $pR: 7px;
   $pL: 5px;
 
   position:relative;
 
   @include inline-block();
-  height:$height;
-  width: $width;
+  @include size($width, $height);
 
   background:url(backgrounds/bg-form-input.png) no-repeat left 0;
 
   input[type="text"] {
-    width:100%;
-    height:$height;
-    margin: 0 0 0 $pL;
+
+    @include size(100%, $height);
+
+    margin:  0 0 0 $pL;
     padding: 0 $pR 0 $pL;
 
     font-size: 14px;
@@ -208,9 +208,7 @@ label {
     top:0;
     padding: 13px 10px;
 
-    font-size:15px;
-    color: $cGray4;
-    @extend .sans-serif-base;
+    @include font("sans-serif-base", 15px, $cGray4);
 
     a {
       font-size:15px;
@@ -236,42 +234,36 @@ form .map {
   position:relative;
   overflow:hidden;
 
-  border: 1px solid rgba(0,0,0,0.4);
+  border: 1px solid rgba($cGray0, 0.4);
   background: url(backgrounds/bg-map-stars.png) center top;
 }
 
 form .map .browser {
+
   $width: 722px;
   $height: 463px;
 
   @include absolute-vertical-center($width);
-  position:absolute;
   bottom: -70px;
-  width: $width;
-  height: $height;
 
+  @include size($width, $height);
   @include icons-sprite(browser);
 
   #map {
-    background:#f1f1f1;
-    position:absolute;
-    top: 40px;
-    left: 1px;
-    width: $width - 2;
-    height: $height - 110;
+    background:$cGray5;
+    @include position(40px, false, false, 1px);
+    @include size($width - 2, $height - 110);
   } // map
-}
+
+} // form map browser
 
 .form { position:relative; }
 
 .circle {
   display:none;
 
-  position:absolute;
-  top: 70px;
-  right:183px;
-  width:92px;
-  height:92px;
+  @include position(70px, 183px, false, false);
+  @include size(92px, 92px);
   @include icons-sprite(map-updated-circle);
 }
 
@@ -308,10 +300,10 @@ form section {
     }
   }
 
-  .price { @extend .sans-serif-base; font-size: 15px; font-weight:100; color: $cOrange; }
   .input-field { width: 248px; }
 
   .input-field.upload {
+
     width: 549px;
 
     .icon {
@@ -319,8 +311,8 @@ form section {
 
       margin: 0 7px 0 3px;
 
-      width: 15px;
-      height: 16px;
+      @include size(15px, 16px);
+
       @include icons-sprite(clip);
     }
   }
@@ -345,12 +337,14 @@ form section {
       position:relative;
       margin: 0 0 20px 0;
 
+      /* --------------------------------- */
+
       h3 { margin: 0 0 3px 0; }
-      p { margin: 0 0 0px 0; }
+      p  { margin: 0; }
 
-      .price { display:none; top: 0; right: 0; position:absolute; }
+      .price { display:none; @include position(0, 0, false, false); }
 
-      &.separator { padding: 30px 0 0 0;  background:url(icons/separator.png) no-repeat top left;}
+      &.separator { padding: 30px 0 0 0;  background:url(icons/separator.png) no-repeat top left; }
       &.separator .price { top: 30px; }
     }
   }
@@ -364,9 +358,7 @@ form section {
 
     cursor: pointer;
 
-    @extend .sans-serif-semi;
-    color: $cGray1;
-    font-size:17px;
+    @include font("sans-serif-semi", 17px, $cGray1);
   }
 
   .description {
@@ -375,24 +367,23 @@ form section {
     font-size:15px;
   }
 
-
-}
+} // form section
 
 form .templates {
+
   @include clearfix();
-  border-bottom: 1px solid $cGray4;
 
   display: box;
   display: -moz-box;
   display: -webkit-box;
 
+  border-bottom: 1px solid $cGray4;
+
+  /* --------------------------------- */
+
   li {
 
-    a {
-      color: $cGray2;
-      font-size: 15px;
-      @extend .sans-serif;
-    }
+    a { @include font("sans-serif", 15px, $cGray2); }
 
     padding: 45px;
 
@@ -401,8 +392,10 @@ form .templates {
 
     text-align:center;
   }
-}
+} // form templates
 
+
+/* RECEIPT */
 
 #receipt {
 
@@ -411,36 +404,76 @@ form .templates {
   position:relative;
   width: $width;
   margin: 150px auto 90px auto;
+  padding: 0 0 30px 0;
 
   background:url(backgrounds/bg-paper.png) repeat-y -1*$width 0;
 
+  /* --------------------------------- */
+
   $extremesHeight: 30px;
 
-  .t, .b { position:absolute; width: $width; height: $extremesHeight; }
-  .t { top: -1*$extremesHeight; background:url(backgrounds/bg-paper.png) no-repeat 0 0; }
+  .t, .b { position:absolute; @include size($width, $extremesHeight); }
+  .t { top:    -1*$extremesHeight; background:url(backgrounds/bg-paper.png) no-repeat 0 0; }
   .b { bottom: -1*$extremesHeight; background:url(backgrounds/bg-paper.png) no-repeat 0 -20px; }
 
   section {
+
+    $pT: 40px;
+    $pR: 40px;
+    $pB: 60px;
+    $pL: 40px;
+
+    $marginWidth: 58px;
+
+    margin: auto;
+    width: $width - $marginWidth*2 - $pL*2 - 4px;
+    padding: $pT $pR $pB $pL;
+
+    border-bottom: 1px solid $cBorder;
+
+    /* --------------------------------- */
+
+    &.highlighted {
+      padding: 40px 40px 20px 40px;
+    }
 
     &:first-child {
       $pT: 20px;
       $pL: 40px;
 
-      width: $width - 58px*2 - $pL*2 - 4px;
+      width: $width - $marginWidth*2 - $pL*2 - 4px;
       padding: $pT $pL;
     }
 
-    $pT: 40px;
-    $pL: 40px;
+    p { width: auto; color: $cGray3; font-size: 15px; }
 
-    background:$cWhite;
-    border-bottom: 1px solid $cBorder;
-    margin: auto;
-    width: $width - 58px*2 - $pL*2 - 4px;
-    padding: $pT $pL;
+    .date { float: right; @include font("sans-serif-base", 13px, $cGray4); }
 
-    &.highlighted {
-      background: #FCFCEB;
+    .total {
+      padding: 20px 0 0 0;
+      margin:  20px 0 0 0;
+
+      border-top: 1px solid $cBorder;
+
+      strong { float: left; @include font("sans-serif", 13px, $cGray1); }
+      .price { float:right; }
+    }
+
+    ul {
+      margin: 0 0 20px 0;
+
+      li {
+
+        margin: 0 0 10px 0;
+
+        @include font("sans-serif-base", 15px, $cGray3);
+
+        .price { float: right; }
+      }
+    }
+
+    ul li ul {
+      margin: 10px 0 0 10px;
     }
   }
 }

@@ -1,5 +1,6 @@
 /* Colors */
 $cWhite:                 #FFFFFF;
+$cGray5:                 #F1F1F1;
 $cGray4:                 #CCCCCC;
 $cGray3:                 #999999;
 $cGray2:                 #666666;
@@ -67,6 +68,32 @@ strong { font-weight: bold; } // This is sad, I know.
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+@mixin font($font, $size, $color) {
+  @if $font == "sans-serif-base"  { @extend .sans-serif-base; }
+  @if $font == "sans-serif"       { @extend .sans-serif; }
+  @if $font == "sans-serif-light" { @extend .sans-serif-light; }
+  @if $font == "sans-serif-semi"  { @extend .sans-serif-semi; }
+  @if $font == "sans-serif-bold"  { @extend .sans-serif-bold; }
+
+  color: $color;
+  font-size: $size;
+}
+
+@mixin size($width, $height) {
+  @if $width  != false { width:  $width; }
+  @if $height != false { height: $height; }
+}
+
+@mixin position($top, $right, $bottom, $left) {
+
+  position: absolute;
+
+  @if $top    != false { top:    $top; }
+  @if $right  != false { right:  $right; }
+  @if $bottom != false { bottom: $bottom; }
+  @if $left   != false { left:   $left; }
 }
 
 @mixin glow($opacity) {
