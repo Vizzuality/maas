@@ -416,6 +416,12 @@ form .templates {
   .t { top:    -1*$extremesHeight; background:url(backgrounds/bg-paper.png) no-repeat 0 0; }
   .b { bottom: -1*$extremesHeight; background:url(backgrounds/bg-paper.png) no-repeat 0 -20px; }
 
+  .stamp {
+    @include size(96px);
+    @include position(false, false, 25px, 120px);
+    @include icons-sprite(stamp);
+  }
+
   section {
 
     $pT: 40px;
@@ -424,6 +430,8 @@ form .templates {
     $pL: 40px;
 
     $marginWidth: 58px;
+
+    position:relative;
 
     margin: auto;
     width: $width - $marginWidth*2 - $pL*2 - 4px;

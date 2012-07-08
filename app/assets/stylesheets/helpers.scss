@@ -81,7 +81,7 @@ strong { font-weight: bold; } // This is sad, I know.
   font-size: $size;
 }
 
-@mixin size($width, $height) {
+@mixin size($width, $height:$width) {
   @if $width  != false { width:  $width; }
   @if $height != false { height: $height; }
 }
