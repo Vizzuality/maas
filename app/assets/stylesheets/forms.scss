@@ -373,9 +373,7 @@ form .templates {
 
   @include clearfix();
 
-  display: box;
-  display: -moz-box;
-  display: -webkit-box;
+  display:table;
 
   border-bottom: 1px solid $cGray4;
 
@@ -383,14 +381,17 @@ form .templates {
 
   li {
 
-    a { @include font("sans-serif", 15px, $cGray2); }
+    float: left;
 
-    padding: 45px;
+    padding: 45px 0;
+    width: 175px;
 
     border-right: 1px solid $cGray4;
+    text-align:center;
+
+    a { @include font("sans-serif", 15px, $cGray2); }
     &:last-child { border:none; }
 
-    text-align:center;
   }
 } // form templates
 

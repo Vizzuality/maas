@@ -3,8 +3,7 @@
 <%= render :partial => 'orders/header' %>
 
 <%= form_for @order do |f| %>
-  <ul class="templates">
-  </ul>
+  <ul class="templates"></ul>
 
   <div class="map">
     <div class="browser">
@@ -198,11 +197,11 @@
       ]);
 
       var templates = new cdb.ui.common.Templates([
-        { name: "Template 1" },
-        { name: "Template 2" },
-        { name: "Template 3" },
-        { name: "Template 4" },
-        { name: "Template 5" }
+        { className: "markers",    name: "Markers map" },
+        { className: "polygons",   name: "Polygons map" },
+        { className: "choropleth", name: "Choropleth map" },
+        { className: "bubble",     name: "Bubble map" },
+        { className: "unknown",    name: "Don't know" }
       ]);
 
       window.templateView = new cdb.ui.common.Navigation({ collection: templates });
