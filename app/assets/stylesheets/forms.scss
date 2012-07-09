@@ -390,6 +390,8 @@ form .templates {
     text-align:center;
 
     a { @include font("sans-serif", 15px, $cGray2); }
+    a.selected { color: $cGray1; font-weight: bold; }
+
     &:last-child { border:none; }
 
   }

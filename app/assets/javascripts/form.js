@@ -120,35 +120,71 @@ cdb.ui.common.FormModel = Backbone.Model.extend({
   }
 });
 
-cdb.ui.common.TemplateModel = Backbone.Model.extend({
+cdb.ui.common.NavigationItemModel = Backbone.Model.extend({
 
 });
 
-cdb.ui.common.Templates = Backbone.Collection.extend({
-  model: cdb.ui.common.TemplateModel
+cdb.ui.common.NavigationItems = Backbone.Collection.extend({
+  model: cdb.ui.common.NavigationItemModel
 });
 
 cdb.ui.common.NavigationItem = Backbone.View.extend({
   tagName: "li",
+  events: {
+    'click a': 'goto'
+  },
   initialize: function() {
+
+    _.bindAll(this, "render", "select", "goto");
+
+    this.parent = this.options.parent;
+
+    this.model.bind("change", this.select);
+
     this.template = cdb.templates.getTemplate('templates/form/navigation');
   },
+
   render: function() {
     return this.$el.append(this.template(this.model.toJSON()));
+  },
+
+  select: function() {
+    //this.parent.uncheck();
+    //this.model.set("selected", true);
+    this.$el.html( this.template(this.model.toJSON()) );
+  },
+
+  goto: function(e) {
+    e.preventDefault();
+
+    window.app.router.navigate("/orders/new/" + this.model.get("className"), { trigger: true });
   }
+
 });
 
 cdb.ui.common.Navigation = Backbone.View.extend({
+  tagName: "ul",
+  className: "templates",
   initialize: function() {
 
+    var self = this;
 
     var fieldView;
 
     this.collection.each(function(field, i) {
-      fieldView = new cdb.ui.common.NavigationItem({ model: field });
+      fieldView = new cdb.ui.common.NavigationItem({ parent: self, model: field });
       $("ul.templates").append(fieldView.render());
     });
+  },
+
+  select: function(pageName) {
+
+    this.collection.each(function(field, i) {
+      (pageName === field.get("className")) ? field.set("selected", true) : field.set("selected", false);
+    });
+
   }
+
 });
 
 cdb.ui.common.Form = Backbone.View.extend({
@@ -223,12 +259,11 @@ cdb.ui.common.Form = Backbone.View.extend({
 cdb.Router = Backbone.Router.extend({
 
   routes: {
-    "help":                 "help"
+    "orders/new/:page": "help"
   },
 
-  help: function() {
-    alert('a');
+  help: function(page) {
+    window.app.navigation.select(page);
   }
 
 });
-

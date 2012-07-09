@@ -196,21 +196,20 @@
         }, className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
       ]);
 
-      var templates = new cdb.ui.common.Templates([
-        { className: "markers",    name: "Markers map" },
-        { className: "polygons",   name: "Polygons map" },
-        { className: "choropleth", name: "Choropleth map" },
-        { className: "bubble",     name: "Bubble map" },
-        { className: "unknown",    name: "Don't know" }
+      var templates = new cdb.ui.common.NavigationItems([
+        { selected: true, className: "markers", name: "Markers map" },
+        { selected: false, className: "polygons",      name: "Polygons map" },
+        { selected: false, className: "choropleth",    name: "Choropleth map" },
+        { selected: false, className: "bubble",        name: "Bubble map" },
+        { selected: false, className: "unknown",       name: "Don't know" }
       ]);
 
-      window.templateView = new cdb.ui.common.Navigation({ collection: templates });
+      var formModel          = new cdb.ui.common.FormModel({ base: 0, total: 0 });
+      window.app             = new cdb.ui.common.Form({ map: map, model: formModel, collection: fields });
 
-      window.formModel     = new cdb.ui.common.FormModel({ base: 0, total: 0 });
-      window.app           = new cdb.ui.common.Form({ map: map, model: window.formModel, collection: fields });
-
-      window.router    = new cdb.Router();
-      Backbone.history.start({pushState: true});
+      window.app.navigation  = new cdb.ui.common.Navigation({ collection: templates });
+      window.app.router      = new cdb.Router();
+      Backbone.history.start({ pushState: true });
 
       $("#container").append(window.app.render());
 
