@@ -120,6 +120,37 @@ cdb.ui.common.FormModel = Backbone.Model.extend({
   }
 });
 
+cdb.ui.common.TemplateModel = Backbone.Model.extend({
+
+});
+
+cdb.ui.common.Templates = Backbone.Collection.extend({
+  model: cdb.ui.common.TemplateModel
+});
+
+cdb.ui.common.NavigationItem = Backbone.View.extend({
+  tagName: "li",
+  initialize: function() {
+    this.template = cdb.templates.getTemplate('templates/form/navigation');
+  },
+  render: function() {
+    return this.$el.append(this.template(this.model.toJSON()));
+  }
+});
+
+cdb.ui.common.Navigation = Backbone.View.extend({
+  initialize: function() {
+
+
+    var fieldView;
+
+    this.collection.each(function(field, i) {
+      fieldView = new cdb.ui.common.NavigationItem({ model: field });
+      $("ul.templates").append(fieldView.render());
+    });
+  }
+});
+
 cdb.ui.common.Form = Backbone.View.extend({
   className: "form",
 
@@ -155,9 +186,13 @@ cdb.ui.common.Form = Backbone.View.extend({
     this.collection.each(function(field, i) {
 
       if (field.get("type") == false) {
+
         fieldView = new cdb.ui.common.FieldViewFixed({ model: field });
+
       } else {
+
         fieldView = new cdb.ui.common.FieldView({ model: field });
+
       }
 
       field.bind("change:selected", self.recalc, field);
@@ -184,3 +219,16 @@ cdb.ui.common.Form = Backbone.View.extend({
   }
 
 });
+
+cdb.Router = Backbone.Router.extend({
+
+  routes: {
+    "help":                 "help"
+  },
+
+  help: function() {
+    alert('a');
+  }
+
+});
+

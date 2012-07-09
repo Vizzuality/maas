@@ -4,9 +4,6 @@
 
 <%= form_for @order do |f| %>
   <ul class="templates">
-    <% @templates_list.each do |template| -%>
-      <li><%= link_to t(".templates-list.#{template.name}"), '#', :class => template.name %></li>
-    <% end -%>
   </ul>
 
   <div class="map">
@@ -143,11 +140,6 @@
 
 <% content_for :js do %>
 
-
-
-
-
-
   <script type="text/javascript">
     $(function() {
 
@@ -184,8 +176,8 @@
         query: 'SELECT * FROM {{table_name}}',
         tile_style: "#{{table_name}}{marker-fill:red}",
         interactivity: "cartodb_id, magnitude",
-        featureOut: function() { console.log('out'); },
-        featureOver: function() { console.log('over'); },
+        featureOut:   function() { console.log('out'); },
+        featureOver:  function() { console.log('over'); },
         featureClick: function() { console.log('click'); }
       };
 
@@ -205,11 +197,23 @@
         }, className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
       ]);
 
-      window.formModel = new cdb.ui.common.FormModel({ base: 0, total: 0 });
-      window.app       = new cdb.ui.common.Form({ map: map, model: window.formModel, collection: fields });
+      var templates = new cdb.ui.common.Templates([
+        { name: "Template 1" },
+        { name: "Template 2" },
+        { name: "Template 3" },
+        { name: "Template 4" },
+        { name: "Template 5" }
+      ]);
+
+      window.templateView = new cdb.ui.common.Navigation({ collection: templates });
+
+      window.formModel     = new cdb.ui.common.FormModel({ base: 0, total: 0 });
+      window.app           = new cdb.ui.common.Form({ map: map, model: window.formModel, collection: fields });
+
+      window.router    = new cdb.Router();
+      Backbone.history.start({pushState: true});
 
       $("#container").append(window.app.render());
-
 
     });
   </script>

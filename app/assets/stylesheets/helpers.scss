@@ -70,15 +70,17 @@ strong { font-weight: bold; } // This is sad, I know.
   box-shadow: none;
 }
 
-@mixin font($font, $size, $color) {
+@mixin font($font, $font-size, $color: false) {
+
   @if $font == "sans-serif-base"  { @extend .sans-serif-base; }
   @if $font == "sans-serif"       { @extend .sans-serif; }
   @if $font == "sans-serif-light" { @extend .sans-serif-light; }
   @if $font == "sans-serif-semi"  { @extend .sans-serif-semi; }
   @if $font == "sans-serif-bold"  { @extend .sans-serif-bold; }
 
-  color: $color;
-  font-size: $size;
+  @if $color      != false { color: $color; }
+  @if $font-size  != false { font-size: $font-size; }
+
 }
 
 @mixin size($width, $height:$width) {

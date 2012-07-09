@@ -263,7 +263,7 @@ form .map .browser {
   display:none;
 
   @include position(70px, 183px, false, false);
-  @include size(92px, 92px);
+  @include size(92px);
   @include icons-sprite(map-updated-circle);
 }
 

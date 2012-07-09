@@ -356,7 +356,7 @@ section.slideshow {
       a {
         display:block;
 
-        @include size(7px, 7px);
+        @include size(7px);
 
         @include icons-sprite(slideshow-bullet);
         &:hover { @include icons-sprite(slideshow-bullet-selected); }
@@ -397,12 +397,9 @@ section.slideshow {
         display:table-cell;
         vertical-align:middle;
         padding: 35px 30px 30px 30px;
-
-        color: $cGray1;
-
-        font-size: 16px;
         text-align: center;
-        @extend .sans-serif-light;
+
+        @include font("sans-serif-light", 16px, $cGray1);
       }
     }
   }
@@ -452,10 +449,7 @@ footer {
   .logo {
 
     @include position(50px, false, false, false);
-
-    @extend .sans-serif-bold;
-    font-size:31px;
-    color: $cGray1;
+    @include font("sans-serif-bold", 31px, $cGray1);
 
   } // logo
 
@@ -471,9 +465,7 @@ footer {
       @extend .sans-serif;
 
       a {
-        @extend .sans-serif;
-        font-size:15px;
-        color: $cLink;
+        @include font("sans-serif", 15px, $cLink);
         &:hover { color: $cGray1; }
       }
 
@@ -481,8 +473,8 @@ footer {
         display:block;
         margin: 0 0 10px 0;
 
-        font-size:13px;
-        @extend .sans-serif;
+        @include font("sans-serif", 13px);
+
         text-transform: uppercase;
       }
     } // li
