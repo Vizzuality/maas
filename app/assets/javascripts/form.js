@@ -177,7 +177,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   select: function(page) {
 
-  var item;
+    var item;
 
     this.collection.each(function(field) {
 
@@ -191,18 +191,27 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     });
 
-    //var layer = new cdb.geo.TileLayer({ urlTemplate: item.get('url') });
-    //window.map.addLayer(layer);
+    if (page == "unknown") {
 
-  },
+      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250);
 
-  /*other: function() {
-    $(".browser").animate({ bottom: -70 }, 250);
-  },
+    } else {
 
-  unknown: function() {
-    $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250);
-  }*/
+      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250, function() {
+
+        // Removes previously loaded base layer
+        if (this.baseLayer) window.map.removeLayerByCid(this.baseLayer);
+
+        // Add base layer
+        var layer      = new cdb.geo.TileLayer({ urlTemplate: item.get('url') });
+        this.baseLayer = window.map.addLayer(layer);
+
+        $(".browser").animate({ bottom: -70 }, 250);
+
+        console.log("There're " + window.map.layers.length + " layers");
+      });
+    }
+  }
 
 });
 

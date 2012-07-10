@@ -177,9 +177,9 @@
 
       map.setZoom(2);
 
-      var URL   = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png';
-      var layer = new cdb.geo.TileLayer({ urlTemplate: URL });
-      map.addLayer(layer);
+//      var URL   = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png';
+//      var layer = new cdb.geo.TileLayer({ urlTemplate: URL });
+//      map.addLayer(layer);
 
       // // Add regular layer
       // var URL   = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
@@ -203,8 +203,8 @@
         }
       };
 
-      layer = new cdb.geo.CartoDBLayer(options);
-      var cid = map.addLayer(layer);
+//      layer = new cdb.geo.CartoDBLayer(options);
+//      var cid = map.addLayer(layer);
 
       var fields = new cdb.ui.common.Fields([
         { callback: null, className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
