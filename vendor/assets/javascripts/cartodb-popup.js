@@ -7,7 +7,7 @@
  *               Licensed under <a
  *               href="http://opensource.org/licenses/mit-license.php">MIT</a>
  *               license.<br/> This library lets you to use a new Popup with Leaflet.
- *                 
+ *
  */
 
 
@@ -109,7 +109,7 @@ L.CartoDBPopup = L.Class.extend({
 
       var div = this._container
         , that = this;
-    
+
       emile(div,{
         bottom: '-=' + 10 + 'px',
         opacity: 0,
@@ -122,7 +122,7 @@ L.CartoDBPopup = L.Class.extend({
       });
     }
   },
- 
+
   /**
    * Create the default content for the popup (private)
    */

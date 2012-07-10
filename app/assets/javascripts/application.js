@@ -6,6 +6,6 @@
 //= require backbone-min
 //= require leaflet
 //= require wax.leaf.min-6.2.3-touched
-//= require cartodb-leaflet
+//= require cartodb-popup
 //= require cdb
 //= require_tree .

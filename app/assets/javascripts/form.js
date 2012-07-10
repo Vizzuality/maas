@@ -149,14 +149,11 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
   },
 
   select: function() {
-    //this.parent.uncheck();
-    //this.model.set("selected", true);
     this.$el.html( this.template(this.model.toJSON()) );
   },
 
   goto: function(e) {
     e.preventDefault();
-
     window.app.router.navigate("/orders/new/" + this.model.get("className"), { trigger: true });
   }
 
@@ -168,22 +165,44 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   initialize: function() {
 
     var self = this;
+    _.bindAll(this, "select");
 
     var fieldView;
 
-    this.collection.each(function(field, i) {
-      fieldView = new cdb.ui.common.NavigationItem({ parent: self, model: field });
+    this.collection.each(function(model) {
+      fieldView = new cdb.ui.common.NavigationItem({ parent: self, model: model });
       $("ul.templates").append(fieldView.render());
     });
   },
 
-  select: function(pageName) {
+  select: function(page) {
 
-    this.collection.each(function(field, i) {
-      (pageName === field.get("className")) ? field.set("selected", true) : field.set("selected", false);
+  var item;
+
+    this.collection.each(function(field) {
+
+      if (page === field.get("className")) {
+        item = field;
+
+        field.set("selected", true);
+      } else {
+        field.set("selected", false);
+      }
+
     });
 
-  }
+    //var layer = new cdb.geo.TileLayer({ urlTemplate: item.get('url') });
+    //window.map.addLayer(layer);
+
+  },
+
+  /*other: function() {
+    $(".browser").animate({ bottom: -70 }, 250);
+  },
+
+  unknown: function() {
+    $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250);
+  }*/
 
 });
 
@@ -259,11 +278,11 @@ cdb.ui.common.Form = Backbone.View.extend({
 cdb.Router = Backbone.Router.extend({
 
   routes: {
-    "orders/new/:page": "help"
+    "orders/new/:page": "page"
   },
 
-  help: function(page) {
+  page: function(page) {
     window.app.navigation.select(page);
-  }
+  },
 
 });

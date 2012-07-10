@@ -163,25 +163,48 @@
 
       zoom.render();
 
+
+      var infowindowModel = new cdb.geo.ui.InfowindowModel({
+      });
+
+      var infowindow = new cdb.geo.ui.Infowindow({
+        model: infowindowModel,
+        template: cdb.templates.getTemplate('templates/map/infowindow'),
+        mapView: mapView
+      });
+
+      $("#map").append(infowindow.$el);
+
       map.setZoom(2);
 
-      var URL = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+      var URL   = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png';
       var layer = new cdb.geo.TileLayer({ urlTemplate: URL });
       map.addLayer(layer);
 
+      // // Add regular layer
+      // var URL   = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+      // var layer = new cdb.geo.TileLayer({ urlTemplate: URL });
+      // map.addLayer(layer);
+
+      // Add CartoDB layer
       var options = {
         user_name: 'examples',
         table_name: 'earthquakes',
         query: 'SELECT * FROM {{table_name}}',
         tile_style: "#{{table_name}}{marker-fill:red}",
-        interactivity: "cartodb_id, magnitude",
-        featureOut:   function() { console.log('out'); },
-        featureOver:  function() { console.log('over'); },
-        featureClick: function() { console.log('click'); }
+        interactivity: "cartodb_id, latitude, longitude, magnitude",
+        featureOver:  function() { document.body.style.cursor = "pointer"; },
+        featureOut:   function() { document.body.style.cursor = "default"; },
+        featureClick: function(ev, latlng, pos, data) { 
+          var latlng = new L.LatLng(data.latitude, data.longitude);
+          infowindow.setLatLng(latlng);
+          infowindowModel.set("content", data);
+          infowindow.showInfowindow();
+        }
       };
 
-      var layer = new cdb.geo.CartoDBLayer(options);
-      map.addLayer(layer);
+      layer = new cdb.geo.CartoDBLayer(options);
+      var cid = map.addLayer(layer);
 
       var fields = new cdb.ui.common.Fields([
         { callback: null, className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
@@ -196,17 +219,18 @@
         }, className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
       ]);
 
-      var templates = new cdb.ui.common.NavigationItems([
-        { selected: true, className: "markers", name: "Markers map" },
-        { selected: false, className: "polygons",      name: "Polygons map" },
-        { selected: false, className: "choropleth",    name: "Choropleth map" },
-        { selected: false, className: "bubble",        name: "Bubble map" },
-        { selected: false, className: "unknown",       name: "Don't know" }
-      ]);
-
       var formModel          = new cdb.ui.common.FormModel({ base: 0, total: 0 });
       window.app             = new cdb.ui.common.Form({ map: map, model: formModel, collection: fields });
 
+      var templates = new cdb.ui.common.NavigationItems([
+        { url: 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png', selected: true,  className: "markers",       name: "Markers map" },
+        { url: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', selected: false, className: "polygons",      name: "Polygons map" },
+        { url: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', selected: false, className: "choropleth",    name: "Choropleth map" },
+        { url: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', selected: false, className: "bubble",        name: "Bubble map" },
+        { url: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', selected: false, className: "unknown",       name: "Don't know" }
+      ]);
+
+      window.map = map;
       window.app.navigation  = new cdb.ui.common.Navigation({ collection: templates });
       window.app.router      = new cdb.Router();
       Backbone.history.start({ pushState: true });
