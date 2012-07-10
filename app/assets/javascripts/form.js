@@ -21,7 +21,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
     this.template      = cdb.templates.getTemplate('templates/form/field');
     this.templateFixed = cdb.templates.getTemplate('templates/form/fixed');
 
-    this.model.bind("change:selected", this.toggle);
+    this.model.bind("change:selected", this.toggle, this);
 
   },
 
@@ -78,6 +78,10 @@ cdb.ui.common.Fields = Backbone.Collection.extend({
 cdb.ui.common.FormModel = Backbone.Model.extend({
 
   selectedFields: [],
+  defaults: {
+    base: 0,
+    total: 0
+  },
 
   sub: function(field) {
 
@@ -139,7 +143,7 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
 
     this.parent = this.options.parent;
 
-    this.model.bind("change", this.select);
+    this.model.bind("change", this.select, this);
 
     this.template = cdb.templates.getTemplate('templates/form/navigation');
   },
@@ -183,7 +187,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
       if (page === field.get("className")) {
         item = field;
-
         field.set("selected", true);
       } else {
         field.set("selected", false);
@@ -193,22 +196,29 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     if (page == "unknown") {
 
-      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250);
+        $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250);
 
     } else {
 
       $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250, function() {
 
-        // Removes previously loaded base layer
-        if (this.baseLayer) window.map.removeLayerByCid(this.baseLayer);
+        // Removes previously loaded layers
+        if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
+        if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
 
         // Add base layer
-        var layer      = new cdb.geo.TileLayer({ urlTemplate: item.get('url') });
+        var layer      = new cdb.geo.TileLayer({ urlTemplate: item.get('baseLayerURL') });
         this.baseLayer = window.map.addLayer(layer);
 
-        $(".browser").animate({ bottom: -70 }, 250);
+        var options = item.get('cartoDBLayerOptions');
 
-        console.log("There're " + window.map.layers.length + " layers");
+        if (options) { // Add CartoDB layer
+          layer      = new cdb.geo.CartoDBLayer(options);
+          this.cartoDBLayer = window.map.addLayer(layer);
+        } else this.cartoDBLayer = null;
+
+        $(".browser").animate({ bottom: -70 }, 250);
+        window.app.replaceFields(item.get("fields").models);
       });
     }
   }
@@ -219,12 +229,15 @@ cdb.ui.common.Form = Backbone.View.extend({
   className: "form",
 
   initialize: function() {
-    _.bindAll(this, "render", "recalc", "updatePrice");
+    _.bindAll(this, "render", "replaceFields", "recalc", "updatePrice");
 
     this.template = cdb.templates.getTemplate('templates/form/form');
 
-    this.model.collection = this.collection;
-    this.model.bind("change:total", this.updatePrice);
+    this.collection = new cdb.ui.common.Fields;
+    this.collection.bind("reset", this.render);
+
+    this.model = new cdb.ui.common.FormModel();
+    this.model.bind("change:total", this.updatePrice, this);
   },
 
   updatePrice: function() {
@@ -232,10 +245,15 @@ cdb.ui.common.Form = Backbone.View.extend({
 
     var total = this.model.get('total') + this.model.get('base');
 
-    this.$el.find(".subtotal").animate({opacity:0}, 250, function() {
+    this.$el.find(".subtotal").animate({ opacity:0 }, 250, function() {
       self.$el.find(".subtotal").html("Starting from $" + total);
-      self.$el.find(".subtotal").animate({opacity: 1}, 250);
+      self.$el.find(".subtotal").animate({ opacity: 1 }, 250);
     });
+  },
+
+  replaceFields: function(fields) {
+    this.$el.empty();
+    this.collection.reset(fields);
   },
 
   render: function() {
@@ -247,39 +265,43 @@ cdb.ui.common.Form = Backbone.View.extend({
 
     var fieldView;
 
-    this.collection.each(function(field, i) {
+      this.collection.each(function(field, i) {
 
-      if (field.get("type") == false) {
+        if (field.get("type") == false) {
 
-        fieldView = new cdb.ui.common.FieldViewFixed({ model: field });
+          fieldView = new cdb.ui.common.FieldViewFixed({ model: field });
 
-      } else {
+        } else {
 
-        fieldView = new cdb.ui.common.FieldView({ model: field });
+          fieldView = new cdb.ui.common.FieldView({ model: field });
 
-      }
+        }
 
-      field.bind("change:selected", self.recalc, field);
+        field.bind("change:selected", self.recalc, field, self);
 
-      if (field.get('type') == false ||field.get('checked') == true)  {
-        field.set({ selected: true });
-      }
+        if (field.get('type') == false ||field.get('checked') == true)  {
+          field.set({ selected: true });
+        }
 
-      if (field.get('type') == false)  {
-        self.$el.find(".fixed").append(fieldView.render());
-      } else {
-        self.$el.find(".test").append(fieldView.render());
-      }
-    });
+        if (field.get('type') == false)  {
+          self.$el.find(".fixed").append(fieldView.render());
+        } else {
+          self.$el.find(".test").append(fieldView.render());
+        }
+      });
 
-    this.$el.find(".total").show();
+      this.$el.find(".total").show();
 
     return this.$el;
 
   },
 
   recalc: function(field) {
-    field.get("selected") ? this.model.add(field): this.model.sub(field);
+    if ( field.get("selected")) {
+      this.model.add(field);
+    } else {
+      this.model.sub(field);
+    }
   }
 
 });
@@ -292,6 +314,6 @@ cdb.Router = Backbone.Router.extend({
 
   page: function(page) {
     window.app.navigation.select(page);
-  },
+  }
 
 });
