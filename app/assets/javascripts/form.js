@@ -194,12 +194,14 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     });
 
-console.log("selecting", page);
     if (page == "unknown") {
 
-        $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250);
+      $("#map").fadeOut(250);
+      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250);
 
     } else {
+
+      $("#map").fadeOut(250);
 
       $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250, function() {
 
@@ -219,6 +221,7 @@ console.log("selecting", page);
         } else this.cartoDBLayer = null;
 
         $(".browser").animate({ bottom: -70 }, 250);
+        $("#map").fadeIn(250);
         //window.app.replaceFields(item.get("fields").models);
       });
     }
@@ -253,19 +256,24 @@ cdb.ui.common.Form = Backbone.View.extend({
   },
 
   show: function() {
-   this.$el.show();
+   this.$el.fadeIn(250);
   },
 
   hide: function() {
-   this.$el.hide();
+   this.$el.fadeOut(250);
   },
 
   render: function() {
-    console.log("rendering");
 
     var self = this;
 
-    this.$el.append(this.template(this.model.toJSON()));
+    var options = _.extend(this.model.toJSON(), { showPriceFields : true });
+
+    if (this.collection.length == 1 && !this.collection.at(0).get("type")) {
+      options = _.extend(options, { showPriceFields : false });
+    }
+
+    this.$el.append(this.template(options));
 
     var fields = {};
 
@@ -315,10 +323,14 @@ cdb.ui.common.Form = Backbone.View.extend({
 cdb.Router = Backbone.Router.extend({
 
   routes: {
+    "orders/new/": "page",
+    "orders/new": "page",
     "orders/new/:page": "page"
   },
 
   page: function(page) {
+    if (!page)  page = defaultPage;
+
     window.pane.active(page);
     window.navigation.select(page);
   }

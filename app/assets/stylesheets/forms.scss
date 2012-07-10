@@ -383,13 +383,12 @@ form .templates {
 
     float: left;
 
-    padding: 45px 0;
     width: 175px;
 
     border-right: 1px solid $cGray4;
     text-align:center;
 
-    a { @include font("sans-serif", 15px, $cGray2); }
+    a { display: block; padding: 45px 0; @include font("sans-serif", 15px, $cGray2); }
     a.selected { color: $cGray1; font-weight: bold; }
 
     &:last-child { border:none; }
