@@ -166,12 +166,48 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
 cdb.ui.common.Navigation = Backbone.View.extend({
   tagName: "ul",
   className: "templates",
+
+  keydown: function(e) {
+
+    if (e.keyCode == 37)      this.prev(e);
+    else if (e.keyCode == 39) this.next(e);
+
+  },
+
+  prev: function(e) {
+    e && e.preventDefault();
+    var pos = this.selectedPagePosition - 1;
+    if ( pos < 0 ) pos = this.collection.length - 1;
+    var name = this.collection.at(pos).get("className");
+    this.select(name);
+
+    window.router.navigate("orders/new/" + name);
+    window.pane.active(name);
+    window.navigation.select(name);
+  },
+
+  next: function(e) {
+    e && e.preventDefault();
+
+    var pos = this.selectedPagePosition + 1;
+    if (pos >= this.collection.length) pos = 0;
+    var name = this.collection.at(pos).get("className");
+    this.select(name);
+
+    window.router.navigate("orders/new/" + name);
+    window.pane.active(name);
+    window.navigation.select(name);
+  },
+
   initialize: function() {
 
     var self = this;
-    _.bindAll(this, "select");
+    _.bindAll(this, "select", "keydown", "prev", "next");
+
+    $(document).bind('keydown', this.keydown);
 
     var fieldView;
+    this.selectedPage = 0;
 
     this.collection.each(function(model) {
       fieldView = new cdb.ui.common.NavigationItem({ parent: self, model: model });
@@ -180,6 +216,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   },
 
   select: function(page) {
+  var self = this;
 
     var item;
 
@@ -187,6 +224,8 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
       if (page === field.get("className")) {
         item = field;
+        self.selectedPagePosition = self.collection.models.indexOf(item);
+
         field.set("selected", true);
       } else {
         field.set("selected", false);
@@ -198,10 +237,12 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
       $("#map").fadeOut(250);
       $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, { duration: 250, easing: "easeInExpo" });
+      $(".map").animate({ height: 300 }, { duration: 250, easing: "easeInCirc" });
 
     } else {
 
       $("#map").fadeOut(250);
+      $(".map").animate({ height: 463 }, { duration: 350, easing: "easeInCirc" });
 
       var onComplete = function() {
 
@@ -251,10 +292,12 @@ cdb.ui.common.Form = Backbone.View.extend({
 
     var total = this.model.get('total') + this.model.get('base');
 
-    this.$el.find(".subtotal").animate({ opacity:0 }, 250, function() {
-      self.$el.find(".subtotal").html("Starting from $" + total);
-      self.$el.find(".subtotal").animate({ opacity: 1 }, 250);
-    });
+    var onComplete = function() {
+      self.$el.find(".subtotal").html("Starting from <span>$" + total + "</span>");
+      self.$el.find(".subtotal span").animate({ opacity: 1 }, { duration: 250, easing: "easeOutExpo" });
+    };
+
+    this.$el.find(".subtotal span").animate({ opacity:0 }, { duration: 250, easing: "easeOutExpo", complete: onComplete });
   },
 
   show: function() {

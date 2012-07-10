@@ -195,7 +195,7 @@ strong { font-weight: bold; } // This is sad, I know.
   color:$cGray1;
   text-decoration:none;
 
-  &:hover                  { @include icons-sprite(checkbox-checked-hover, $offset-y:2px); }
+  &:hover                  { @include icons-sprite(checkbox, $offset-y:2px); }
 
   &:active                 { @include icons-sprite(checkbox-checked, $offset-y:2px); }
   &:active:hover           { @include icons-sprite(checkbox-checked, $offset-y:2px); }

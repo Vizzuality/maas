@@ -6,7 +6,7 @@
         <% } else { %>
 
         <a class="<%= type %> <% if (checked) {%> checked <% } %>" name="<%= name %>">
-          <%= title %> <% if (price > 0) { %> $<%= price %> <% } %>
+          <%= title %> <% if (price > 0) { %> ($<%= price %>) <% } %>
         </a>
         <% } %>
 

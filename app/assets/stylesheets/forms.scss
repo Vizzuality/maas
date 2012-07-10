@@ -340,7 +340,7 @@ form section {
       /* --------------------------------- */
 
       h3 { margin: 0 0 3px 0; }
-      p  { margin: 0; }
+      p  { margin: 0 0 0 15px; }
 
       .price { display:none; @include position(0, 0, false, false); }
 
@@ -350,6 +350,7 @@ form section {
   }
 
     &.dark {
+      .prices li p { margin: 0; }
       .prices li .price { top: 10px; display:block; }
     }
 
