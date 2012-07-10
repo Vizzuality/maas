@@ -197,13 +197,13 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     if (page == "unknown") {
 
       $("#map").fadeOut(250);
-      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250);
+      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, { duration: 250, easing: "easeInExpo" });
 
     } else {
 
       $("#map").fadeOut(250);
 
-      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250, function() {
+      var onComplete = function() {
 
         // Removes previously loaded layers
         if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
@@ -223,7 +223,9 @@ cdb.ui.common.Navigation = Backbone.View.extend({
         $(".browser").animate({ bottom: -70 }, 250);
         $("#map").fadeIn(250);
         //window.app.replaceFields(item.get("fields").models);
-      });
+      };
+
+      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, { duration: 250, easing: "easeOutExpo", complete: onComplete });
     }
   }
 
