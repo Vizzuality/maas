@@ -144,17 +144,18 @@
 
       cdb.init();
 
+      // Adds map
       var map = new cdb.geo.Map({
-        center: [18.289374355860424, 59.765625]
+        center: [18.289374355860424, 59.765625],
+        zoom: 2
       });
-
-      map.setCenter([18.289374355860424, 59.765625]);
 
       var mapView = new cdb.geo.LeafletMapView({
         el: $('#map'),
         map: map
       });
 
+      // Adds zoom
       var zoom = new cdb.geo.ui.Zoom({
         model: map,
         template: cdb.templates.getTemplate('templates/map/zoom'),
@@ -164,8 +165,8 @@
       zoom.render();
 
 
-      var infowindowModel = new cdb.geo.ui.InfowindowModel({
-      });
+      // Adds Infowindow
+      var infowindowModel = new cdb.geo.ui.InfowindowModel({ });
 
       var infowindow = new cdb.geo.ui.Infowindow({
         model: infowindowModel,
@@ -175,9 +176,16 @@
 
       $("#map").append(infowindow.$el);
 
-      map.setZoom(2);
+      // Adds pane
+      var pane = new cdb.ui.common.TabPane({
+        el: $("#container")
+      });
 
-      var fields = new cdb.ui.common.Fields([
+      window.pane = pane;
+
+      var fields = {};
+
+      fields.markers = new cdb.ui.common.Fields([
         { callback: null, className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
         { callback: null, className: null,        checked: false, title: "Density map",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
         { callback: null, className: null,        checked: true,  title: "Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
@@ -187,45 +195,50 @@
         { callback: null, className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
       ]);
 
-      var fields2 = new cdb.ui.common.Fields([
-        { callback: null, className: null, checked: false, title: "Aaaaaa", name: "z",   type: "title",   price: 500, description: "Includes data process & visualization." },
-        { callback: null, className: null, checked: false, title: "Bbbbbb", name: "z",   type: false,   price: 200, description: "Includes data process & visualization." }
+      fields.polygons = new cdb.ui.common.Fields([
+        { callback: null, className: null,        checked: false, title: "A. Visualization method",  name: false, type: "title",    price: 0,    description: false },
+        { callback: null, className: null,        checked: false, title: "A. Density map",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
+        { callback: null, className: null,        checked: true,  title: "A. Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
+        { callback: null, className: "separator", checked: false, title: "A. Variable selection",    name: "b",   type: 'checkbox', price: 100,  description: "This allows your users to toggle between different variables to visualize." },
+        { callback: null, className: null,        checked: false, title: "A. Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
       ]);
 
-      window.app = new cdb.ui.common.Form({ map: map });
+      pane.addTab('markers',  new cdb.ui.common.Form({ map: map, className: 'markers',  collection: fields.markers  }));
+      pane.addTab('polygons', new cdb.ui.common.Form({ map: map, className: 'polygons', collection: fields.polygons }));
 
-          var earthquakesOptions = {
-            user_name: 'examples',
-            table_name: 'earthquakes',
-            query: 'SELECT * FROM {{table_name}}',
-            tile_style: "#{{table_name}}{marker-fill:red}",
-            interactivity: "cartodb_id, latitude, longitude, magnitude",
-            featureOver:  function() { document.body.style.cursor = "pointer"; },
-            featureOut:   function() { document.body.style.cursor = "default"; },
-            featureClick: function(ev, latlng, pos, data) { 
-              var latlng = new L.LatLng(data.latitude, data.longitude);
-              infowindow.setLatLng(latlng);
-              infowindowModel.set("content", data);
-              infowindow.showInfowindow();
-            }
-    };
-    var baseLayerURL = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png';
-    var baseLayerURL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+      var earthquakesOptions = {
+        user_name: 'examples',
+        table_name: 'earthquakes',
+        query: 'SELECT * FROM {{table_name}}',
+        tile_style: "#{{table_name}}{marker-fill:red}",
+        interactivity: "cartodb_id, latitude, longitude, magnitude",
+        featureOver:  function() { document.body.style.cursor = "pointer"; },
+        featureOut:   function() { document.body.style.cursor = "default"; },
+        featureClick: function(ev, latlng, pos, data) { 
+          var latlng = new L.LatLng(data.latitude, data.longitude);
+          infowindow.setLatLng(latlng);
+          infowindowModel.set("content", data);
+          infowindow.showInfowindow();
+        }
+      };
+
+      var baseLayerURL = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png';
+      var baseLayerURL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
 
       var templates = new cdb.ui.common.NavigationItems([
-        { fields: fields, cartoDBLayerOptions: earthquakesOptions, baseLayerURL: baseLayerURL, selected: true,  className: "markers",       name: "Markers map" },
-        { fields: fields2, cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "polygons",      name: "Polygons map" },
-        { fields: fields2, cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "choropleth",    name: "Choropleth map" },
-        { fields: fields2, cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "bubble",        name: "Bubble map" },
-        { fields: fields2, cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "unknown",       name: "Don't know" }
+        { cartoDBLayerOptions: earthquakesOptions, baseLayerURL: baseLayerURL, selected: true,  className: "markers",       name: "Markers map" },
+        { cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "polygons",      name: "Polygons map" },
+        { cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "choropleth",    name: "Choropleth map" },
+        { cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "bubble",        name: "Bubble map" },
+        { cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "unknown",       name: "Don't know" }
       ]);
 
       window.map = map;
-      window.app.navigation  = new cdb.ui.common.Navigation({ collection: templates });
-      window.app.router      = new cdb.Router();
+      window.navigation  = new cdb.ui.common.Navigation({ collection: templates });
+      window.router      = new cdb.Router();
       Backbone.history.start({ pushState: true });
 
-      $("#container").append(window.app.render());
+      // $("#container").append(window.app.render());
 
     });
   </script>

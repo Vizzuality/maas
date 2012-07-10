@@ -158,7 +158,7 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
 
   goto: function(e) {
     e.preventDefault();
-    window.app.router.navigate("/orders/new/" + this.model.get("className"), { trigger: true });
+    window.router.navigate("/orders/new/" + this.model.get("className"), { trigger: true });
   }
 
 });
@@ -194,6 +194,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     });
 
+console.log("selecting", page);
     if (page == "unknown") {
 
         $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, 250);
@@ -218,7 +219,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
         } else this.cartoDBLayer = null;
 
         $(".browser").animate({ bottom: -70 }, 250);
-        window.app.replaceFields(item.get("fields").models);
+        //window.app.replaceFields(item.get("fields").models);
       });
     }
   }
@@ -229,15 +230,15 @@ cdb.ui.common.Form = Backbone.View.extend({
   className: "form",
 
   initialize: function() {
-    _.bindAll(this, "render", "replaceFields", "recalc", "updatePrice");
+    _.bindAll(this, "render", "show", "hide", "recalc", "updatePrice");
 
     this.template = cdb.templates.getTemplate('templates/form/form');
 
-    this.collection = new cdb.ui.common.Fields;
-    this.collection.bind("reset", this.render);
-
     this.model = new cdb.ui.common.FormModel();
     this.model.bind("change:total", this.updatePrice, this);
+
+    this.render();
+
   },
 
   updatePrice: function() {
@@ -251,12 +252,17 @@ cdb.ui.common.Form = Backbone.View.extend({
     });
   },
 
-  replaceFields: function(fields) {
-    this.$el.empty();
-    this.collection.reset(fields);
+  show: function() {
+   this.$el.show();
+  },
+
+  hide: function() {
+   this.$el.hide();
   },
 
   render: function() {
+    console.log("rendering");
+
     var self = this;
 
     this.$el.append(this.template(this.model.toJSON()));
@@ -291,9 +297,9 @@ cdb.ui.common.Form = Backbone.View.extend({
       });
 
       this.$el.find(".total").show();
+      $("#container").append(this.$el);
 
     return this.$el;
-
   },
 
   recalc: function(field) {
@@ -313,7 +319,8 @@ cdb.Router = Backbone.Router.extend({
   },
 
   page: function(page) {
-    window.app.navigation.select(page);
+    window.pane.active(page);
+    window.navigation.select(page);
   }
 
 });

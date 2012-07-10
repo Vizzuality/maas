@@ -257,7 +257,7 @@ form .map .browser {
 
 } // form map browser
 
-.form { position:relative; }
+#container > div { display: none; position:relative; }
 
 .circle {
   display:none;
