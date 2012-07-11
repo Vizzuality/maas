@@ -190,7 +190,7 @@ strong { font-weight: bold; } // This is sad, I know.
   @include inline-block();
   @include icons-sprite(checkbox, $offset-y:2px);
 
-  padding-left: 15px;
+  padding-left: 17px;
 
   color:$cGray1;
   text-decoration:none;

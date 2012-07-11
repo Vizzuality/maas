@@ -340,7 +340,7 @@ form section {
       /* --------------------------------- */
 
       h3 { margin: 0 0 3px 0; }
-      p  { margin: 0 0 0 15px; }
+      p  { margin: 0 0 0 17px; color: $cGray3; }
 
       .price { display:none; @include position(0, 0, false, false); }
       .ellipsis { @include size(13px, 3px); @include icons-sprite(ellipsis); @include position(10px, 0, false, false); }
@@ -361,7 +361,14 @@ form section {
 
     cursor: pointer;
 
-    @include font("sans-serif-semi", 17px, $cGray1);
+    @include font("sans-serif", 17px, $cGray2);
+
+    @include transition-property(color);
+    @include transition-duration(200ms);
+
+    &.checked {
+      color:$cGray1;
+    }
   }
 
   .description {

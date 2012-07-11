@@ -167,8 +167,21 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
 
 cdb.ui.common.Navigation = Backbone.View.extend({
   className: "navigation",
-  //tagName: "ul",
-  //className: "templates",
+
+  initialize: function() {
+
+    var self = this;
+
+    _.bindAll(this, "select", "keydown", "prev", "next", "showUnknown", "showPage");
+
+    $(document).bind('keydown', this.keydown);
+
+    this.template     = cdb.templates.getTemplate('templates/form/navigation');
+    this.animating    = false;
+    this.selectedPage = 0;
+
+    this.render();
+  },
 
   keydown: function(e) {
 
@@ -179,6 +192,8 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   prev: function(e) {
     e && e.preventDefault();
+    if (this.animating) return;
+
     var pos = this.selectedPagePosition - 1;
     if ( pos < 0 ) pos = this.collection.length - 1;
     var name = this.collection.at(pos).get("className");
@@ -190,6 +205,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   next: function(e) {
     e && e.preventDefault();
+    if (this.animating) return;
 
     var pos = this.selectedPagePosition + 1;
     if (pos >= this.collection.length) pos = 0;
@@ -198,20 +214,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     window.router.navigate("orders/new/" + name);
     window.pane.active(name);
-  },
-
-  initialize: function() {
-
-    var self = this;
-    _.bindAll(this, "select", "keydown", "prev", "next");
-
-    $(document).bind('keydown', this.keydown);
-
-    this.template = cdb.templates.getTemplate('templates/form/navigation');
-
-    var fieldView;
-    this.selectedPage = 0;
-    this.render();
   },
 
   render: function() {
@@ -229,66 +231,84 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     return this.$el;
   },
 
+  moveTip: function(posX) {
+    $(".tip").animate({ left: posX }, { duration: 250, easing: "easeOutExpo" } );
+  },
+
   select: function(page) {
-  var self = this;
+
+    var self = this;
 
     var item;
 
+    // Gets the selected field
     this.collection.each(function(field) {
 
       if (page === field.get("className")) {
 
         item = field;
+
+        // Stores the position of the item
         self.selectedPagePosition = self.collection.models.indexOf(item);
 
         field.set("selected", true);
 
       } else {
-
         field.set("selected", false);
-
       }
 
     });
 
-    var x = item.view.$el.position().left;
-    $(".tip").animate({ left: x + item.view.$el.width() / 2 - 13 }, { duration: 250, easing: "easeOutExpo" } );
+    var posX = item.view.$el.position().left + ( item.view.$el.width() / 2 ) - 13;
+    this.moveTip(posX);
+
+    this.animating = true;
 
     if (page == "unknown") {
+      this.showUnknown();
+    } else {
+      this.showPage(item);
+    }
+  },
 
-      $("#map").fadeOut(250);
+  showPage: function(item) {
+    var self = this;
+    $("#map").fadeOut(250);
+    $(".map").animate({ height: 463 }, { duration: 350, easing: "easeInCirc" });
+
+    var onComplete = function() {
+
+      // Removes previously loaded layers
+      if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
+      if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
+
+      // Add base layer
+      var layer      = new cdb.geo.TileLayer({ urlTemplate: item.get('baseLayerURL') });
+      this.baseLayer = window.map.addLayer(layer);
+
+      var options = item.get('cartoDBLayerOptions');
+
+      if (options) { // Add CartoDB layer
+        layer      = new cdb.geo.CartoDBLayer(options);
+        this.cartoDBLayer = window.map.addLayer(layer);
+      } else this.cartoDBLayer = null;
+
+      $(".browser").animate({ bottom: -70 }, 250);
+      $("#map").fadeIn(250);
+
+      self.animating = false;
+    };
+    $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, { duration: 250, easing: "easeOutExpo", complete: onComplete });
+  },
+
+  showUnknown: function() {
+    var self = this;
+
+    $("#map").fadeOut(250, function() {
       $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, { duration: 250, easing: "easeInExpo" });
       $(".map").animate({ height: 300 }, { duration: 250, easing: "easeInCirc" });
-
-    } else {
-
-      $("#map").fadeOut(250);
-      $(".map").animate({ height: 463 }, { duration: 350, easing: "easeInCirc" });
-
-      var onComplete = function() {
-
-        // Removes previously loaded layers
-        if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
-        if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
-
-        // Add base layer
-        var layer      = new cdb.geo.TileLayer({ urlTemplate: item.get('baseLayerURL') });
-        this.baseLayer = window.map.addLayer(layer);
-
-        var options = item.get('cartoDBLayerOptions');
-
-        if (options) { // Add CartoDB layer
-          layer      = new cdb.geo.CartoDBLayer(options);
-          this.cartoDBLayer = window.map.addLayer(layer);
-        } else this.cartoDBLayer = null;
-
-        $(".browser").animate({ bottom: -70 }, 250);
-        $("#map").fadeIn(250);
-        //window.app.replaceFields(item.get("fields").models);
-      };
-
-      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, { duration: 250, easing: "easeOutExpo", complete: onComplete });
-    }
+      self.animating = false;
+    });
   }
 
 });
@@ -322,11 +342,11 @@ cdb.ui.common.Form = Backbone.View.extend({
   },
 
   show: function() {
-   this.$el.fadeIn(250);
+    this.$el.fadeIn(250);
   },
 
   hide: function() {
-   this.$el.fadeOut(250);
+    this.$el.fadeOut(250);
   },
 
   render: function() {
@@ -345,33 +365,33 @@ cdb.ui.common.Form = Backbone.View.extend({
 
     var fieldView;
 
-      this.collection.each(function(field, i) {
+    this.collection.each(function(field, i) {
 
-        if (field.get("type") == false) {
+      if (field.get("type") == false) {
 
-          fieldView = new cdb.ui.common.FieldViewFixed({ model: field });
+        fieldView = new cdb.ui.common.FieldViewFixed({ model: field });
 
-        } else {
+      } else {
 
-          fieldView = new cdb.ui.common.FieldView({ model: field });
+        fieldView = new cdb.ui.common.FieldView({ model: field });
 
-        }
+      }
 
-        field.bind("change:selected", self.recalc, field, self);
+      field.bind("change:selected", self.recalc, field, self);
 
-        if (field.get('type') == false ||field.get('checked') == true)  {
-          field.set({ selected: true });
-        }
+      if (field.get('type') == false ||field.get('checked') == true)  {
+        field.set({ selected: true });
+      }
 
-        if (field.get('type') == false)  {
-          self.$el.find(".fixed").append(fieldView.render());
-        } else {
-          self.$el.find(".test").append(fieldView.render());
-        }
-      });
+      if (field.get('type') == false)  {
+        self.$el.find(".fixed").append(fieldView.render());
+      } else {
+        self.$el.find(".test").append(fieldView.render());
+      }
+    });
 
-      this.$el.find(".total").show();
-      $("#container").append(this.$el);
+    this.$el.find(".total").show();
+    $("#container").append(this.$el);
 
     return this.$el;
   },
