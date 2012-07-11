@@ -144,6 +144,8 @@ label {
 
 } // field
 
+/* FORM ELEMENTS */
+
 .textarea {
 
   $height: 152px;
@@ -155,7 +157,16 @@ label {
   @include inline-block();
   @include size($width, $height);
 
-  background:url(backgrounds/bg-form-textarea.png) no-repeat left 0;
+  background: url(backgrounds/bg-form-textarea.png) no-repeat left 0;
+
+  &.error {
+    background: url(backgrounds/bg-form-textarea-error.png) no-repeat left 0;
+
+    textarea {
+      background:url(backgrounds/bg-form-textarea-error.png) repeat-x right -1*$height;
+    }
+
+  }
 
   textarea {
     @include size(100%, $height - $pT*2);
@@ -186,6 +197,15 @@ label {
   @include size($width, $height);
 
   background:url(backgrounds/bg-form-input.png) no-repeat left 0;
+
+  &.error {
+    background:url(backgrounds/bg-form-input-error.png) no-repeat left 0;
+
+    input[type="text"] {
+      background:url(backgrounds/bg-form-input-error.png) repeat-x right -1*$height;
+    }
+
+  }
 
   input[type="text"] {
 
