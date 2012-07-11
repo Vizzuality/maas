@@ -4,6 +4,19 @@ en:
       order:
         name: 'name or company'
         email: 'email'
+  common:
+    header:
+      faq:
+        index:
+          title: 'We are here to help you'
+          subtitle: 'General questions'
+      orders:
+        new:
+          title: 'Creating your order'
+          subtitle: 'Select your template'
+        show:
+          title: 'Track your order'
+          subtitle: "We're analyzing your data"
   flash:
     actions:
       create:
@@ -13,6 +26,10 @@ en:
       destroy:
         notice: "%{resource_name} was successfully destroyed."
         alert: "%{resource_name} could not be destroyed."
+  faq:
+    questions:
+      title: "Still have questions?"
+      contact_us: "Contact us"
   home:
     header:
       title: 'Let us turn your data into an interactive map'
@@ -74,13 +91,6 @@ en:
         title: 'Know more'
         contact_us: 'Contact us'
   orders:
-    header:
-      new:
-        title: 'Creating your order'
-        subtitle: 'Select your template'
-      show:
-        title: 'Track your order'
-        subtitle: "We're analyzing your data"
     new:
       templates-list:
         markers: 'Markers map'

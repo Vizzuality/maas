@@ -1,6 +1,6 @@
 <div class="bg-map"></div>
 
-<%= render :partial => 'orders/header' %>
+<%= render :partial => 'common/header' %>
 
 <%= form_for @order do |f| %>
 
@@ -85,7 +85,7 @@
 
       // Adds map
       var map = new cdb.geo.Map({
-        center: [18.289374355860424, 59.765625],
+        center: [40.463667, -3.74922],
         zoom: 2
       });
 
@@ -168,6 +168,20 @@
 
       defaultPage = "markers";
 
+      var trianglesOptions = {
+        // user_name: "saleiva",
+        // table_name: "github_javascript",
+        user_name: "viz2",
+        table_name: "stop_frisk",
+        tile_style: "#stop_frisk{[prop_count>0]{polygon-fill:#415E9E;}[prop_count>2]{polygon-fill:#6581B5;}[prop_count>4]{polygon-fill:#88A3CC;}[prop_count>6]{polygon-fill:#ACC6E3;}[prop_count>8]{polygon-fill:#88A3CC;}[prop_count>10]{polygon-fill:#F6BEB5;}[prop_count>30]{polygon-fill:#E3928C;}[prop_count>50]{polygon-fill:#CF6562;}[prop_count>100]{polygon-fill:#BC3939;}polygon-opacity:0.71;line-opacity:0.11;line-color:#000000;line-width:0.8;}",
+        query: "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, stop_frisk i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell",
+//        query:      "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15),CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell",
+//        tile_style: "#github_javascript{[prop_count>0]{polygon-fill:#313695;}[prop_count>1]{polygon-fill:#4575B4;}[prop_count>2]{polygon-fill:#74ADD1;}[prop_count>4]{polygon-fill:#ABD9E9;}[prop_count>8]{polygon-fill:#E0F3F8;}[prop_count>16]{polygon-fill:#FFFFBF;}[prop_count>32]{polygon-fill:#FEE090;}[prop_count>64]{polygon-fill:#FDAE61;}[prop_count>128]{polygon-fill:#F46D43;}[prop_count>256]{polygon-fill:#D73027;}[prop_count>512]{polygon-fill:#A50026;}polygon-opacity:0.71;line-width:0;}",
+        interactivity: false,
+        auto_bound: false,
+        debug: false
+      };
+
       var earthquakesOptions = {
         user_name: 'examples',
         table_name: 'earthquakes',
@@ -184,18 +198,20 @@
         }
       };
 
-      var baseLayerURL = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png';
+      var baseLayerURL  = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png';
       var baseLayerURL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
 
       var templates = new cdb.ui.common.NavigationItems([
-        { cartoDBLayerOptions: earthquakesOptions, baseLayerURL: baseLayerURL, selected: true,  className: "markers",       name: "Markers map" },
-        { cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "polygons",      name: "Polygons map" },
-        { cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "bubble",        name: "Bubble map" },
-        { cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "thematic",    name: "Thematic map" },
-        { cartoDBLayerOptions: null, baseLayerURL: baseLayerURL2, selected: false, className: "unknown",       name: "Don't know" }
+        { cartoDBLayerOptions: earthquakesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 2, center: [40.463667, -3.74922] },  selected: true,  className: "markers",       name: "Markers map" },
+        { cartoDBLayerOptions: trianglesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 9, center: [40.7143528, -74.1059731] }, selected: false, className: "polygons",      name: "Polygons map" },
+        { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 2, center: [40.7143528, -3.7059731] }, selected: false, className: "bubble",        name: "Bubble map" },
+        { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 10, center: [40.463667, -3.74922] }, selected: false, className: "thematic",    name: "Thematic map" },
+        { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 2, center: [40.463667, -3.74922] }, selected: false, className: "unknown",       name: "Don't know" }
       ]);
 
       window.map = map;
+      window.mapView = mapView;
+      window.map.infowindow = infowindow;
       window.navigation  = new cdb.ui.common.Navigation({ collection: templates });
       window.router      = new cdb.Router();
       Backbone.history.start({ pushState: true });

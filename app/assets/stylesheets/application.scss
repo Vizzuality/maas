@@ -19,6 +19,15 @@ a {
 
 .price { @extend .sans-serif-base; font-size: 15px; font-weight:100; color: $cOrange; }
 
+.section_title {
+  margin:auto;
+
+  text-align:center;
+  text-transform: uppercase;
+  @include font("sans-serif-light", 21px, $cGray3);
+  letter-spacing: 2px;
+}
+
 /* HEADER */
 
 .home header {
@@ -96,6 +105,24 @@ header .logo {
 
 /* BODY */
 
+.button.white {
+  @include inline-block();
+
+  padding: 26px 96px;
+
+  border: 1px solid #9A3E00;
+
+  @include border-radius(5px);
+  background: $cWhite;
+
+  text-transform: uppercase;
+  color: $cGray1;
+  font-size:17px;
+  @extend .sans-serif;
+
+  // TODO: hover & active
+}
+
 .button.blue {
   @include inline-block();
 
@@ -156,28 +183,6 @@ header .logo {
   }
 }
 
-section h2.title {
-  margin:auto;
-
-  text-align:center;
-  color:$cGray3;
-  text-transform: uppercase;
-  @extend .sans-serif-light;
-  font-size:21px;
-  letter-spacing: 2px;
-
-  /*&:before,
-  &:after { // Dash
-    content: "";
-    position:absolute;
-    width: 21px;
-    height: 1px;
-    background:$cGray4;
- }
-
-  &:before { margin: 9px 0 0 -30px; }
-  &:after  { margin: 9px 0 0 7px; }*/
-}
 
 /* SECTION — CHARACTERISTICS */
 
@@ -189,7 +194,7 @@ section.characteristics {
 
   background: url(backgrounds/bg-padded.png);
 
-  h2.title { margin: 0 0 40px 0; }
+  .section_title { margin: 0 0 40px 0; }
   .inner > div { margin: 0 0 30px 0; }
 
   .box {
@@ -288,29 +293,24 @@ section.characteristics {
 
   .box h3 {
     padding: 0 0 15px 0;
-
-    @extend .sans-serif;
-    font-size:21px;
-    color: $cGray1;
+    @include font("sans-serif", 21px, $cGray1);
   }
 }
 
 
-/* SECTION: INTERESTED? */
+/* SECTION: Call to action */
 
-section.interest {
+section.call_for_action {
   padding: 50px 0 57px 0;
 
   text-align:center;
   background: url(backgrounds/bg-orange.png) repeat-x;
+  border-top: 1px solid rgba($cGray0, .6);
+  border-bottom: 1px solid rgba($cGray0, .5);
 
-  h2.title {
-
+  .section_title {
     color:$cWhite;
     margin: 0 0 43px 0;
-
-    &:before, &:after { background:$cWhite; }
-
   }
 
 } // interest
@@ -328,14 +328,11 @@ section.slideshow {
   padding: $pT 0 0 0;
 
   background: url(backgrounds/bg-stars.png) center top;
-  border-bottom: 1px solid rgba($cGray0, .5);
 
   overflow:hidden;
 
-  h2.title {
+  .section_title {
     color:$cWhite;
-
-    &:before, &:after { background:$cWhite; }
   }
 
   .pagination {

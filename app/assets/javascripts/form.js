@@ -257,6 +257,12 @@ cdb.ui.common.Navigation = Backbone.View.extend({
         field.set("selected", false);
       }
 
+      if (!this.animating && item) {
+        var baseLayerOptions = item.get('baseLayerOptions');
+        //console.log(window.map, item, baseLayerOptions);
+        //window.mapView.map_leaflet.setZoom(baseLayerOptions.zoom);
+      }
+
     });
 
     var posX = item.view.$el.position().left + ( item.view.$el.width() / 2 ) - 13;
@@ -273,6 +279,9 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   showPage: function(item) {
     var self = this;
+
+    var baseLayerOptions = item.get('baseLayerOptions');
+
     $("#map").fadeOut(250);
     $(".map").animate({ height: 463 }, { duration: 350, easing: "easeInCirc" });
 
@@ -283,21 +292,26 @@ cdb.ui.common.Navigation = Backbone.View.extend({
       if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
 
       // Add base layer
-      var layer      = new cdb.geo.TileLayer({ urlTemplate: item.get('baseLayerURL') });
+      var layer      = new cdb.geo.TileLayer({ urlTemplate: baseLayerOptions.url });
       this.baseLayer = window.map.addLayer(layer);
 
       var options = item.get('cartoDBLayerOptions');
 
       if (options) { // Add CartoDB layer
-        layer      = new cdb.geo.CartoDBLayer(options);
+
+        layer             = new cdb.geo.CartoDBLayer(options);
         this.cartoDBLayer = window.map.addLayer(layer);
+
       } else this.cartoDBLayer = null;
 
-      $(".browser").animate({ bottom: -70 }, 250);
-      $("#map").fadeIn(250);
+      $("#map").fadeIn(150, function() {
+        $(".browser").animate({ bottom: -70 }, 150, function() {
+          self.animating = false;
+        });
+      });
 
-      self.animating = false;
     };
+
     $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, { duration: 250, easing: "easeOutExpo", complete: onComplete });
   },
 
@@ -417,6 +431,7 @@ cdb.Router = Backbone.Router.extend({
   page: function(page) {
     if (!page)  page = defaultPage;
 
+    window.map.infowindow.hide(true);
     window.pane.active(page);
     window.navigation.select(page);
   }

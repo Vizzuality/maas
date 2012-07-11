@@ -1,0 +1,104 @@
+@import "compass";
+@import "helpers";
+
+$formWidth: 880px;
+
+body.faq {
+  background: url(backgrounds/bg-padded.png);
+}
+
+body.faq footer {
+  /*border-top: 1px solid #A5A5A5;*/
+}
+
+body.faq footer .inner {
+  width: $formWidth;
+}
+
+body.faq header {
+  @extend .faq-inner;
+  position:relative;
+
+  margin: 0 0 151px 0;
+
+  height: 115px;
+
+  background: url(backgrounds/bg-header-orange.png) repeat-x;
+  border-bottom: 1px solid rgba($cGray1, 0.7);
+
+  @include box-shadow(rgba($cGray0, 0.5) 0px 0px 10px);
+
+  hgroup {
+    position:relative;
+    top: 180px;
+
+    text-align:center;
+    @extend .sans-serif-light;
+
+    h3 {
+      margin: 0 0 5px 0;
+
+      color: $cGray2;
+      font-size:15px;
+    }
+
+    h2 {
+      font-size:21px;
+      color: $cOrange;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+  }
+} // body.faq header
+
+body.faq header nav ul li a,
+body.faq header nav ul li:after,
+body.faq header .logo { color: $cWhite; }
+
+body.faq header nav ul li a:hover {
+  border-bottom: 1px solid rgba($cWhite, 0.5);
+}
+
+body.faq .section_title {
+  @include font("sans-serif-light", 21px, $cOrange);
+}
+
+/* SECTIONS */
+
+body.faq section.questions {
+  position:relative;
+
+  padding: 68px 0;
+
+  width: 959px;
+  margin: 58px auto;
+  border: 1px solid $cGray3;
+  @include border-radius(5px);
+
+  background:#fff;
+  text-align: center;
+
+  ul {
+
+    li {
+      margin: 0 0 54px 0;
+      &:last-child { margin: 0; }
+    }
+
+  }
+
+  h3 {
+    color: $cOrange;
+    font-size: 21px;
+    margin: 0 0 20px 0;
+  }
+
+  p { width: auto; margin: auto; font-size:15px; color: $cGray2; }
+}
+
+body.faq section.call_for_action {
+  .section_title {
+    @include font("sans-serif-light", 21px, $cWhite);
+  }
+}
+

@@ -256,6 +256,26 @@ strong { font-weight: bold; } // This is sad, I know.
   }
 }
 
+.faq-inner {
+  .inner {
+    position:relative;
+    margin: auto;
+    width:960px;
+
+    text-align:left;
+  }
+}
+
+.order-inner {
+  .inner {
+    position:relative;
+    margin: auto;
+    width:960px;
+
+    text-align:left;
+  }
+}
+
 .shadow {
   position:absolute;
   width:100%;
