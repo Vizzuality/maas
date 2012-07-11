@@ -282,8 +282,9 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var baseLayerOptions = item.get('baseLayerOptions');
 
-    $("#map").fadeOut(250);
-    $(".map").animate({ height: 463 }, { duration: 350, easing: "easeInCirc" });
+    $("#map").fadeOut(200, function() {
+      $(".map").animate({ height: 463 }, { duration: 250, easing: "easeInCirc" });
+    });
 
     var onComplete = function() {
 
@@ -312,14 +313,14 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     };
 
-    $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, { duration: 250, easing: "easeOutExpo", complete: onComplete });
+    $(".browser").fadeIn({ duration: 250, easing: "easeOutExpo", complete: onComplete });
   },
 
   showUnknown: function() {
     var self = this;
 
     $("#map").fadeOut(250, function() {
-      $(".browser").animate({ bottom: -1*$(".browser").outerHeight(true) }, { duration: 250, easing: "easeInExpo" });
+      $(".browser").fadeOut({ duration: 250, easing: "easeInExpo" });
       $(".map").animate({ height: 300 }, { duration: 250, easing: "easeInCirc" });
       self.animating = false;
     });

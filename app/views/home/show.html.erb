@@ -1,0 +1,38 @@
+<div class="canvas">
+  <div id="map"></div>
+</div>
+
+
+<div class="test" style="width: 500px; height: 5500px;"></div>
+<% content_for :js do %>
+
+  <script type="text/javascript">
+    $(function() {
+
+      var map = new L.Map('map');
+
+      var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+      cloudmadeAttrib = 'Map data © 2011 OpenStreetMap contributors, Imagery © 2011 CloudMade',
+      cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttrib});
+      map.addLayer(cloudmade);
+
+      var cartodb_leaflet = new L.CartoDBLayer({
+        map: map,
+        user_name:'examples',
+        table_name: 'earthquakes',
+        query: "SELECT * FROM {{table_name}}",
+        tile_style: "#{{table_name}}{marker-fill:red}",
+        interactivity: "cartodb_id, magnitude",
+        featureClick: function(ev, latlng, pos, data) {alert(data)},
+        featureOut: function() {},
+        featureOver: function(ev, latlng, pos, data) {},
+        auto_bound: true
+      });
+
+      map.addLayer(cartodb_leaflet);
+
+    });
+  </script>
+
+<% end %>
+

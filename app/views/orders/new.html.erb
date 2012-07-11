@@ -9,8 +9,10 @@
 
   <div class="map">
     <div class="browser">
-      <div id="zoom"></div>
-      <div id="map"></div>
+      <div class="canvas">
+        <div id="zoom"></div>
+        <div id="map"></div>
+      </div>
     </div>
     <div class="shadow bottom"></div>
   </div>
@@ -23,14 +25,8 @@
       <h3 class="bottom-5"><%= t('.your_data.title') %></h3>
       <p class="bottom-20"><%= t('.your_data.description') %></p>
 
-      <div class="input-field upload">
-        <input type="text" />
-        <div class="placeholder">
-          <div class="icon"></div>
-          <span><%= t('.your_data.drag_drop') %></span>
-          <%= link_to t('.your_data.select_files'), '#' %>
-        </div>
-      </div>
+      <div id="file-uploader"></div>
+
     </div>
   </div>
   </section>
@@ -210,13 +206,54 @@
       ]);
 
       window.map = map;
-      window.mapView = mapView;
       window.map.infowindow = infowindow;
       window.navigation  = new cdb.ui.common.Navigation({ collection: templates });
       window.router      = new cdb.Router();
       Backbone.history.start({ pushState: true });
 
       // $("#container").append(window.app.render());
+
+      var progress = 0;
+
+      var uploader = new qq.FileUploader({
+        // pass the dom node (ex. $(selector)[0] for jQuery users)
+        element: document.getElementById('file-uploader'),
+        // path to server-side upload script
+        action: '/server/upload',
+
+        onSubmit: function(id, fileName){
+          $(".qq-uploader").addClass("uploading");
+        },
+        onProgress: function(id, fileName, loaded, total){ 
+          p = Math.round(loaded/total * 100);
+          if (p > progress) {
+            progress = p;
+          }
+
+          console.log(progress);
+          $(".qq-uploader .progress .bar").css({ width: progress + "%" });
+          $(".qq-uploader .progress .bar span").html(progress + "%");
+          $(".qq-uploader").addClass("uploading");
+        },
+        onComplete: function(id, fileName, responseJSON){
+          progress = 0;
+          $(".qq-uploader .progress .bar").fadeOut(250, function() {
+            $(".qq-uploader .progress .bar").css({ width: 0 });
+            $(".qq-uploader .progress .bar").show();
+          });
+          $(".qq-uploader").removeClass("uploading");
+        },
+        onCancel: function(id, fileName){
+          $(".qq-uploader").removeClass("uploading");
+        },
+        
+        template: '<ul class="qq-upload-list"></ul>'  +
+          '<div class="qq-uploader">' +
+          '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
+          '<div class="placeholder"><div class="icon"></div><div class="qq-upload-button">To attach files drag & drop here or <a href="#">select files from your computer</a>.</div></div>' +
+          '<div class="progress"><div class="bar"><span>0</span></div></div>' + 
+          '</div>' 
+      });
 
     });
   </script>

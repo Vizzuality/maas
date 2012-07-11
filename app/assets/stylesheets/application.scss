@@ -2,6 +2,7 @@
 //= require fonts
 //= require_tree .
 //= require leaflet
+//= require fileuploader
 
 @import "compass";
 @import "compass/reset";
@@ -293,6 +294,7 @@ section.characteristics {
 
   .box h3 {
     padding: 0 0 15px 0;
+
     @include font("sans-serif", 21px, $cGray1);
   }
 }

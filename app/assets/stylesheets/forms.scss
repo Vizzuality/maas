@@ -67,6 +67,7 @@ section {
   }
 }
 
+
 body.orders {
   background: url(backgrounds/bg-padded.png);
 }
@@ -144,7 +145,6 @@ label {
 } // field
 
 /* FORM ELEMENTS */
-
 .textarea {
 
   $height: 152px;
@@ -230,8 +230,7 @@ label {
     @include font("sans-serif-base", 15px, $cGray4);
 
     a {
-      font-size:15px;
-      color: #2483B3;
+      @include font("sans-serif-base", 15px, #2483B3);
       text-decoration: underline;
     }
   }
@@ -249,32 +248,40 @@ form {
 }
 
 form .map {
-  height:461px;
+}
+
+form .map {
+
+  $width: 722px;
+  $height: 463px;
+
+  height:$height - 2;
   position:relative;
   overflow:hidden;
 
   border: 1px solid rgba($cGray0, 0.4);
   background: url(backgrounds/bg-map-stars.png) center top;
+
+  .browser {
+    @include absolute-vertical-center($width);
+    bottom: -70px;
+
+    @include size($width, $height);
+    @include icons-sprite(browser);
+
+    .canvas {
+      overflow:hidden;
+
+      @include position(40px, false, false, 1px);
+      @include size($width - 2, $height - 110);
+
+      #map {
+        @include size(100%, 100%);
+      } // map
+    }
+
+  } // form map browser
 }
-
-form .map .browser {
-
-  $width: 722px;
-  $height: 463px;
-
-  @include absolute-vertical-center($width);
-  bottom: -70px;
-
-  @include size($width, $height);
-  @include icons-sprite(browser);
-
-  #map {
-    background:$cGray5;
-    @include position(40px, false, false, 1px);
-    @include size($width - 2, $height - 110);
-  } // map
-
-} // form map browser
 
 #container > div { display: none; position:relative; }
 
@@ -431,7 +438,7 @@ form .navigation {
       text-align:center;
 
       a { display: block; padding: 45px 0; @include font("sans-serif", 15px, $cGray2); }
-      a.selected { color: $cGray1; font-weight: bold; }
+      a.selected { @include font("sans-serif-bold", 15px, $cGray1); }
 
       &:last-child { border:none; }
 
