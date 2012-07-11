@@ -1,24 +1,21 @@
+<% if (type) { %>
 
-    <% if (type) { %>
+<% if (type === 'title') { %>
+<h3 class="<%= type %>"> <%= title %> </h3>
+<% } else { %>
+<a class="<%= type %> <% if (checked) {%> checked <% } %>" name="<%= name %>">
+  <%= title %> <% if (price > 0) { %> $<%= price %> <% } %>
+</a>
+<% } %>
 
-      <% if (type === 'title') { %>
-        <h3 class="<%= type %>"> <%= title %> </h3>
-        <% } else { %>
+<% } else { %>
+<%= title %> <% if (price > 0) { %> $<%= price %> <% } %>
+<% } %>
 
-        <a class="<%= type %> <% if (checked) {%> checked <% } %>" name="<%= name %>">
-          <%= title %> <% if (price > 0) { %> ($<%= price %>) <% } %>
-        </a>
-        <% } %>
+<% if (description) { %>
+<p><%= description %></p>
+<% } %>
 
-      <% } else { %>
+<% if ( price > 0 ) { %><div class="price">$<%= price %></div><% } %>
 
-      <%= title %> <% if (price > 0) { %> $<%= price %> <% } %>
-
-      <% } %>
-
-    <% if (description) { %>
-      <p><%= description %></p>
-      <% } %>
-
-    <% if ( price > 0 ) { %><div class="price">$<%= price %></div><% } %>
-
+<% if (price > 0 && !checked) { %><div class="ellipsis"></div><% } %>

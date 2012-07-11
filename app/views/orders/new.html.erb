@@ -3,7 +3,9 @@
 <%= render :partial => 'orders/header' %>
 
 <%= form_for @order do |f| %>
-  <ul class="templates"></ul>
+
+  <div class="navigation">
+  </div>
 
   <div class="map">
     <div class="browser">
@@ -14,69 +16,6 @@
   </div>
 
   <div id="container"></div>
-
-  <section class="hidden">
-  <div class="inner">
-    <ul id="templates-detail">
-      <li class="template selected">
-      <p><%= t('.templates-detail.select_one_type') %></p>
-      </li>
-
-      <% @templates_list.each do |template| -%>
-        <li class="template <%= template.name %>">
-        <%= f.hidden_field :template_type, :value => template.id, :disabled => true %>
-        <h4><%= t(".templates-detail.#{template.name}.title") %></h4>
-        <p><%= t(".templates-detail.#{template.name}.description") %></p>
-
-        <% if template.price.present? -%>
-          <span class="price"><%= t(".templates-detail.#{template.name}.price", :price => template.price) %></span>
-        <% end -%>
-
-        <% if template.visualization_methods.present? -%>
-          <h4><%= t('.templates-detail.visualization_method') %></h4>
-          <ul class="visualization_method">
-            <% template.visualization_methods.each do |visualization_method| -%>
-              <li>
-              <%= f.radio_button :visualization_method, :value => visualization_method.id %>
-              <%= f.label :visualization_method, t(".templates-detail.visualization_methods.#{visualization_method.name}.name") %>
-              <p>
-              <%= t(".templates-detail.visualization_methods.#{visualization_method.name}.description") %>
-              </p>
-              </li>
-            <% end -%>
-          </ul>
-        <% end -%>
-
-        <ul class="options">
-          <% template.options.each do |option| -%>
-            <li>
-            <%= f.fields_for :order_options, @order.order_options.build do |ff| %>
-
-              <%= checkbox ff, :template_option_id, option.name, option.id %>
-
-
-              <span class="label_price">(<%= t(".templates-detail.template_options.#{option.name}.price", :price => option.price) %>)</span>
-
-              <p><%= t(".templates-detail.template_options.#{option.name}.description") %></p>
-              <div class="ellipsis">...</div>
-              <div class="option_price"><%= t(".templates-detail.template_options.#{option.name}.price", :price => option.price) %></div>
-            <% end -%>
-            </li>
-          <% end -%>
-        </ul>
-
-        <% if template.price.present? -%>
-          <div class="total">
-            <%= f.hidden_field :total, :disabled => true %>
-            <h3><%= t('.total.title') %></h3>
-            <div class="ammount"><%= t('.total.ammount_html', :price => template.price) %></div>
-          </div>
-        <% end -%>
-        </li>
-      <% end -%>
-    </ul>
-  </div>
-  </section>
 
   <section class="highlighted">
   <div class="inner">

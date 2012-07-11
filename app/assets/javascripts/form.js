@@ -40,6 +40,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.find("a").addClass("checked");
       this.$el.addClass("selected");
       this.$el.find(".price").fadeIn(250);
+      this.$el.find(".ellipsis").fadeOut(250);
 
       var callback = this.model.get('callback');
 
@@ -51,6 +52,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.find("a").removeClass("checked");
       this.$el.removeClass("selected");
       this.$el.find(".price").fadeOut(250);
+      this.$el.find(".ellipsis").fadeIn(250);
     }
 
   },
@@ -145,7 +147,7 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
 
     this.model.bind("change", this.select, this);
 
-    this.template = cdb.templates.getTemplate('templates/form/navigation');
+    this.template = cdb.templates.getTemplate('templates/form/navigation_item');
   },
 
   render: function() {
@@ -164,8 +166,9 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
 });
 
 cdb.ui.common.Navigation = Backbone.View.extend({
-  tagName: "ul",
-  className: "templates",
+  className: "navigation",
+  //tagName: "ul",
+  //className: "templates",
 
   keydown: function(e) {
 
@@ -183,7 +186,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     window.router.navigate("orders/new/" + name);
     window.pane.active(name);
-    window.navigation.select(name);
   },
 
   next: function(e) {
@@ -196,7 +198,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     window.router.navigate("orders/new/" + name);
     window.pane.active(name);
-    window.navigation.select(name);
   },
 
   initialize: function() {
@@ -206,13 +207,26 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     $(document).bind('keydown', this.keydown);
 
+    this.template = cdb.templates.getTemplate('templates/form/navigation');
+
     var fieldView;
     this.selectedPage = 0;
+    this.render();
+  },
+
+  render: function() {
+    var self = this;
+
+    this.$el.append(this.template());
+    $(".navigation").html(this.$el);
 
     this.collection.each(function(model) {
-      fieldView = new cdb.ui.common.NavigationItem({ parent: self, model: model });
-      $("ul.templates").append(fieldView.render());
+      fieldView = new cdb.ui.common.NavigationItem({ model: model });
+      model.view = fieldView;
+      self.$el.find("ul").append(fieldView.render());
     });
+
+    return this.$el;
   },
 
   select: function(page) {
@@ -223,15 +237,22 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     this.collection.each(function(field) {
 
       if (page === field.get("className")) {
+
         item = field;
         self.selectedPagePosition = self.collection.models.indexOf(item);
 
         field.set("selected", true);
+
       } else {
+
         field.set("selected", false);
+
       }
 
     });
+
+    var x = item.view.$el.position().left;
+    $(".tip").animate({ left: x + item.view.$el.width() / 2 - 13 }, { duration: 250, easing: "easeOutExpo" } );
 
     if (page == "unknown") {
 
