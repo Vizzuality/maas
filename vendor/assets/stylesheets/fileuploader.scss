@@ -10,6 +10,7 @@
     .placeholder .icon, .placeholder .qq-upload-button {
       display:none;
     }
+    .bar span { display: block!important; }
   }
 }
   .placeholder .icon {
@@ -67,21 +68,19 @@
     @include position(14px, false, false, 14px);
     @include size(540px, 14px);
 
-    .percentage {
-
-    }
-
     .bar {
       @include border-radius(5px);
-      @include size(10px, 100%);
+      @include size(0, 100%);
       background:url('backgrounds/bg-progress-bar.png');
 
       span {
+        display:none;
         position:relative;
+        top: 2px;
         float:right;
-        right: -20px;
+        right: -30px;
         @include font("sans-serif-base", 12px, $cOrange);
-
       }
+
     }
   }

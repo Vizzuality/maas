@@ -537,3 +537,14 @@ form .navigation {
     }
   }
 }
+
+section#upload {
+  @include transition-property(background);
+  @include transition-duration(200ms);
+  @include transition-timing-function(ease-in);
+}
+
+section#upload.finished  {
+  background-color: #E4F8DD!important;
+
+}

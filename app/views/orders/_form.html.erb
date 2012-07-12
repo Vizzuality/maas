@@ -1,0 +1,47 @@
+<section id="upload" class="highlighted">
+<div class="inner">
+  <div class="left">
+    <h3 class="bottom-5"><%= t('.your_data.title') %></h3>
+    <p class="bottom-20"><%= t('.your_data.description') %></p>
+
+    <div id="file-uploader"></div>
+
+  </div>
+</div>
+</section>
+
+<section class="comments">
+<div class="left">
+
+  <div class="inner">
+    <div class="field left">
+      <label for="name"><%= t('.contact_info.name') %></label>
+      <div class="input-field">
+        <input type="text" value="" name="name" />
+      </div>
+    </div>
+
+
+    <div class="field right">
+      <label for="email"><%= t('.contact_info.email') %></label>
+      <div class="input-field">
+        <input type="text" value="" name="email" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="comments"><%= t('.contact_info.comments') %></label>
+      <div class="textarea">
+        <textarea value="" name="comments"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="submit centered">
+<div class="inner">
+  <%= f.submit t('.submit'), :class => "button blue" %>
+</div>
+</section>

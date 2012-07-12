@@ -282,6 +282,10 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var baseLayerOptions = item.get('baseLayerOptions');
 
+      //window.map.setZoom(baseLayerOptions.zoom);
+      //window.map.setCenter(baseLayerOptions.center);
+
+
     $("#map").fadeOut(200, function() {
       $(".map").animate({ height: 463 }, { duration: 250, easing: "easeInCirc" });
     });

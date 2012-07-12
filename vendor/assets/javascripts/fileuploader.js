@@ -265,7 +265,7 @@ qq.FileUploaderBasic = function(o){
         // return false to cancel submit
         onSubmit: function(id, fileName){},
         onProgress: function(id, fileName, loaded, total){},
-        onComplete: function(id, fileName, responseJSON){},
+        onComplete: function(id, fileName, files, responseJSON){},
         onCancel: function(id, fileName){},
         // messages
         messages: {
@@ -328,9 +328,9 @@ qq.FileUploaderBasic.prototype = {
                 self._onProgress(id, fileName, loaded, total);
                 self._options.onProgress(id, fileName, loaded, total);
             },
-            onComplete: function(id, fileName, result){
-                self._onComplete(id, fileName, result);
-                self._options.onComplete(id, fileName, result);
+            onComplete: function(id, fileName, files, result){
+                self._onComplete(id, fileName, files, result);
+                self._options.onComplete(id, fileName, files, result);
             },
             onCancel: function(id, fileName){
                 self._onCancel(id, fileName);
@@ -358,7 +358,7 @@ qq.FileUploaderBasic.prototype = {
     },
     _onProgress: function(id, fileName, loaded, total){
     },
-    _onComplete: function(id, fileName, result){
+    _onComplete: function(id, fileName, files, result){
         this._filesInProgress--;
         if (result.error){
             this._options.showMessage(result.error);
@@ -605,11 +605,12 @@ qq.extend(qq.FileUploader.prototype, {
         } else {
             text = this._formatSize(total);
         }
+
         //console.log(id, text);
 
         qq.setText(size, text);
     },
-    _onComplete: function(id, fileName, result){
+    _onComplete: function(id, fileName, files, result){
         qq.FileUploaderBasic.prototype._onComplete.apply(this, arguments);
 
         // mark completed
@@ -862,7 +863,7 @@ qq.UploadHandlerAbstract = function(o){
         // maximum number of concurrent uploads
         maxConnections: 999,
         onProgress: function(id, fileName, loaded, total){},
-        onComplete: function(id, fileName, response){},
+        onComplete: function(id, fileName, files, response){},
         onCancel: function(id, fileName){}
     };
     qq.extend(this._options, o);
@@ -1014,7 +1015,7 @@ qq.extend(qq.UploadHandlerForm.prototype, {
 
             var response = self._getIframeContentJSON(iframe);
 
-            self._options.onComplete(id, fileName, response);
+            self._options.onComplete(id, fileName, this._inputs, response);
             self._dequeue(id);
 
             delete self._inputs[id];
@@ -1227,10 +1228,10 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
                 response = {};
             }
 
-            this._options.onComplete(id, name, response);
+            this._options.onComplete(id, name, this._files, response);
 
         } else {
-            this._options.onComplete(id, name, {});
+            this._options.onComplete(id, name, this._files, {});
         }
 
         this._files[id] = null;
