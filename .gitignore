@@ -5,3 +5,4 @@
 /public/uploads/tmp
 /tmp
 *.swp
+/lib/assets/javascripts/cdb
