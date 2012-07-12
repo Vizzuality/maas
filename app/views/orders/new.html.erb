@@ -87,47 +87,35 @@
 
       var fields = {};
 
-      fields.markers = new cdb.ui.common.Fields([
-        { callback: null, className: null,        checked: false, title: "Density map",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
-        { callback: null, className: null,        checked: false, title: "Visualization method",  name: false, type: "title",    price: 0,    description: false },
-        { callback: null, className: null,        checked: true,  title: "Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
-        { callback: null, className: null,        checked: false, title: "Hexagonal grid",        name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using a rectangular grid" },
-        { callback: null, className: null,        checked: false, title: "Circular grid",         name: "a",   type: 'radio',    price: 0,    description: "this is a description" },
-        { callback: null, className: "separator", checked: false, title: "Variable selection",    name: "b",   type: 'checkbox', price: 100,  description: "This allows your users to toggle between different variables to visualize." },
-        { callback: null, className: null,        checked: false, title: "Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
-      ]);
+      <% @templates_list.each do |template| -%>
 
-      fields.bubble = new cdb.ui.common.Fields([
-        { callback: null, className: null,        checked: false, title: "Bubble",           name: "z",   type: false,      price: 2000, description: "Includes data process & visualization." },
-        { callback: null, className: null,        checked: false, title: "",                   name: false, type: "title",    price: 0,    description: false },
-        { callback: null, className: null,        checked: true,  title: "A. Rectangular grid",      name: "a",   type: 'radio',    price: 0,    description: "Group and represent data using an hexagonal grid" },
-        { callback: null, className: "separator", checked: false, title: "A. Variable selection",    name: "b",   type: 'checkbox', price: 100,  description: "This allows your users to toggle between different variables to visualize." },
-        { callback: null, className: null,        checked: false, title: "A. Color selection",       name: "c",   type: 'checkbox', price: 200,  description: "This allows your users to toggle between different variables to visualize." }
-      ]);
+        fields.<%= template.name %> = new cdb.ui.common.Fields([
+          <% template.visualization_methods.each do |option| -%>
+            { callback: null, 
+              className: null, 
+              checked: false,
+              name: "template_options[radio][<%= template.name %>]", 
+              type: 'radio', 
+              price: 0, 
+              title: "<%= option.name %>", 
+              description: "Description" 
+            },
+          <% end -%>
+          <% template.options.each do |option| -%>
+            { callback: null, 
+              className: null, 
+              checked: false,
+              name: "template_options[<%= template.name %>][<%= option.id %>]",
+              type: 'checkbox', 
+              price: <%= option.price %>, 
+              title: "<%= option.name %>", 
+              description: "<%= option.description %>" 
+            },
+          <% end -%>
+        ]);
 
-      fields.thematic = new cdb.ui.common.Fields([
-        { callback: null, className: null, checked: false, name: "type", type: false,      price: 2000, title: "Thematic", description: "Including base interactivity, mouse-over effect and basic infowindows." },
-        { callback: null, className: null, checked: false, name: "type", type: 'checkbox', price: 350,  title: "Dynamic filters.", description: "This allows you to filter the polygons in your map dynamically." },
-        { callback: null, className: null, checked: false, name: "type", type: 'checkbox', price: 350,  title: "Custom infowindows.", description: "This includes an ad-hoc design for your map infowindows. " },
-        { callback: null, className: null, checked: false, name: "type", type: 'checkbox', price: 350,  title: "Different styles for different types of polygons.", description: "This allow you to visual differentiate the polygons- styles may change-." }
-      ]);
-
-      fields.polygons = new cdb.ui.common.Fields([
-        { callback: null, className: null, checked: false, name: "type", type: false,      price: 2000, title: "Polygons", description: "Including base interactivity, mouse-over effect and basic infowindows." },
-        { callback: null, className: null, checked: false, name: "type", type: 'checkbox', price: 350,  title: "Dynamic filters.", description: "This allows you to filter the polygons in your map dynamically." },
-        { callback: null, className: null, checked: false, name: "type", type: 'checkbox', price: 350,  title: "Custom infowindows.", description: "This includes an ad-hoc design for your map infowindows. " },
-        { callback: null, className: null, checked: false, name: "type", type: 'checkbox', price: 350,  title: "Different styles for different types of polygons.", description: "This allow you to visual differentiate the polygons- styles may change-." }
-      ]);
-
-      fields.unknown = new cdb.ui.common.Fields([
-        { callback: null, className: null, checked: false, name: "type", type: false,      price: 0, title: "Custom consultancy", description: "Just send us your data and a brief idea of what you need to analyze, and we will give you the best option to represent it and the corresponding estimate." },
-      ]);
-
-      pane.addTab('markers',  new cdb.ui.common.Form({ map: map, className: 'markers',  collection: fields.markers  }));
-      pane.addTab('polygons', new cdb.ui.common.Form({ map: map, className: 'polygons', collection: fields.polygons }));
-      pane.addTab('bubble',   new cdb.ui.common.Form({ map: map, className: 'bubble',   collection: fields.bubble }));
-      pane.addTab('thematic', new cdb.ui.common.Form({ map: map, className: 'thematic', collection: fields.thematic }));
-      pane.addTab('unknown',  new cdb.ui.common.Form({ map: map, className: 'unknown',  collection: fields.unknown }));
+        pane.addTab('<%= template.name %>',  new cdb.ui.common.Form({ map: map, className: '<%= template.name %>', collection: fields.<%= template.name %> }));
+      <% end -%>
 
       defaultPage = "<%= @defaultPage %>";
 
