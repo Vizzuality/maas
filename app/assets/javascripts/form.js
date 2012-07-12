@@ -302,10 +302,11 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
       } else this.cartoDBLayer = null;
 
+
       $("#map").fadeIn(150, function() {
         $(".browser").animate({ bottom: -70 }, 150, function() {
           self.animating = false;
-      window.map.setZoom(baseLayerOptions.zoom);
+          window.map.setView(baseLayerOptions.center, baseLayerOptions.zoom);
         });
       });
 
