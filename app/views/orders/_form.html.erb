@@ -1,3 +1,6 @@
+<%= f.fields_for :client_data, @order.client_data.new do |ff| %>
+  <%= ff.hidden_field :id %>
+<% end %>
 <section id="upload" class="highlighted">
 <div class="inner">
   <div class="left">

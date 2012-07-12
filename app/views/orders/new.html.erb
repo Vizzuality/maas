@@ -136,7 +136,7 @@
         auto_bound: false,
         featureOver:  function() { document.body.style.cursor = "pointer"; },
         featureOut:   function() { document.body.style.cursor = "default"; },
-        featureClick: function(ev, latlng, pos, data) { 
+        featureClick: function(ev, latlng, pos, data) {
           var latlng = new L.LatLng(data.latitude, data.longitude);
           infowindow.setLatLng(latlng);
           infowindowModel.set("content", data);
@@ -169,12 +169,12 @@
         // pass the dom node (ex. $(selector)[0] for jQuery users)
         element: document.getElementById('file-uploader'),
         // path to server-side upload script
-        action: '/server/upload',
+        action: '/client_data',
 
         onSubmit: function(id, fileName){
           $(".qq-uploader").addClass("uploading");
         },
-        onProgress: function(id, fileName, loaded, total){ 
+        onProgress: function(id, fileName, loaded, total){
           p = Math.round(loaded/total * 100);
           if (p > progress) {
             progress = p;
@@ -186,6 +186,7 @@
           $(".qq-uploader").addClass("uploading");
         },
         onComplete: function(id, fileName, files, responseJSON){
+                      console.log(responseJSON)
           progress = 0;
 
           console.log(files, files[0] == null, !_.any(files));
@@ -204,13 +205,13 @@
         onCancel: function(id, fileName){
           $(".qq-uploader").removeClass("uploading");
         },
-        
+
         template: '<ul class="qq-upload-list"></ul>'  +
           '<div class="qq-uploader">' +
           '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
           '<div class="placeholder"><div class="icon"></div><div class="qq-upload-button">To attach files drag & drop here or <a href="#">select files from your computer</a>.</div></div>' +
-          '<div class="progress"><div class="bar"><span>0</span></div></div>' + 
-          '</div>' 
+          '<div class="progress"><div class="bar"><span>0</span></div></div>' +
+          '</div>'
       });
 
     });
