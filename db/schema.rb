@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(:version => 20120712101926) do
     t.integer  "total"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
-    t.string   "client_data"
   end
 
   create_table "payments", :force => true do |t|

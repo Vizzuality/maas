@@ -5,12 +5,12 @@ class ClientDataController < ApplicationController
 
   def create
     begin
-      require 'ruby-debug'; debugger
+      
       client_datum = ClientDatum.new
       client_datum.data = CarrierwaveStringIO.new(params[:qqfile], request.body.read.force_encoding('utf-8'))
       client_datum.save!
 
-      render :json => client_datum
+      render :json => { data: client_datum, success: true }
     rescue => e
       logger.error e
       logger.error e.backtrace

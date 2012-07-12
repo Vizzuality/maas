@@ -51,6 +51,7 @@
   text-align:center;
   text-transform: uppercase;
   @include font("sans-serif-semi", 17px, $cGray4);
+  z-index: 200;
 }
 
 .qq-upload-drop-area span {
@@ -70,7 +71,7 @@
 .qq-upload-spinner {display: none; }
 /*.qq-upload-size,.qq-upload-cancel {font-size:11px;}*/
 
-.qq-upload-failed-text {display:none;}
+.qq-upload-failed-text { color:red; display:none;}
 .qq-upload-fail .qq-upload-failed-text {display:inline;}
 
 .progress {
