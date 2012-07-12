@@ -257,12 +257,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
         field.set("selected", false);
       }
 
-      if (!this.animating && item) {
-        var baseLayerOptions = item.get('baseLayerOptions');
-        //console.log(window.map, item, baseLayerOptions);
-        //window.mapView.map_leaflet.setZoom(baseLayerOptions.zoom);
-      }
-
     });
 
     var posX = item.view.$el.position().left + ( item.view.$el.width() / 2 ) - 13;
@@ -282,7 +276,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var baseLayerOptions = item.get('baseLayerOptions');
 
-      //window.map.setZoom(baseLayerOptions.zoom);
       //window.map.setCenter(baseLayerOptions.center);
 
 
@@ -312,6 +305,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
       $("#map").fadeIn(150, function() {
         $(".browser").animate({ bottom: -70 }, 150, function() {
           self.animating = false;
+      window.map.setZoom(baseLayerOptions.zoom);
         });
       });
 

@@ -13,74 +13,83 @@
     .bar span { display: block!important; }
   }
 }
-  .placeholder .icon {
-    @include position(13px, false, false, 10px);
-    @include size(15px, 16px);
-    @include icons-sprite(clip);
-  }
 
-  .qq-upload-button {
-    display:block; /* or inline-block */
-    width: 500px;
-    top: 13px;
-    left: 35px;
-    /*background:#880000; color:#fff;*/
+.placeholder {
+  position:absolute;
+  height: 41px;
+  width: 100%;
+  z-index: 100;
+}
 
-    @include font("sans-serif-base", 15px, $cGray4);
-  }
+.placeholder .icon {
+  @include position(13px, false, false, 10px);
+  @include size(15px, 16px);
+  @include icons-sprite(clip);
+}
 
-  .qq-upload-button.qq-upload-button-hover a {color:#cc0000;}
-  .qq-upload-button-focus {outline:1px dotted black;}
+.qq-upload-button {
+  display:block; /* or inline-block */
+  width: 500px;
+  top: 13px;
+  left: 35px;
+  height: 20px;
+  /*background:#880000; color:#fff;*/
 
-  .qq-upload-drop-area {
-    width:779px;
-    height:86px;
-    background:#FCFCEB;
-    border: 2px dashed $cGray3;
+  @include font("sans-serif-base", 15px, $cGray4);
+}
+
+.qq-upload-button.qq-upload-button-hover a {color:#cc0000;}
+.qq-upload-button-focus {outline:1px dotted black;}
+
+.qq-upload-drop-area {
+  width:779px;
+  height:86px;
+  background:#FCFCEB;
+  border: 2px dashed $cGray3;
+  @include border-radius(5px);
+  position:absolute; top:0; left:0; width:100%; height:100%; min-height: 70px; z-index:2;
+  text-align:center;
+  text-transform: uppercase;
+  @include font("sans-serif-semi", 17px, $cGray4);
+}
+
+.qq-upload-drop-area span {
+  display:block; position:absolute; top: 50%; width:100%; margin-top:-8px; font-size:16px;
+}
+/*.qq-upload-drop-area-active {background:#FF7171;}*/
+
+.qq-upload-list {list-style:none;  }
+.qq-upload-list li { margin:0 0 14px 0; padding:2px 0 14px 26px; @include icons-sprite(white-sheet, $offset-y: -5px); border-bottom: 1px solid rgba($cGray0, .13); @include font("sans-serif-base", 15px, $cGray2); }
+.qq-upload-list li:last-child { border:none; }
+.qq-upload-list li:first-child { padding: 14px 0 14px 26px; @include icons-sprite(white-sheet, $offset-y: 7px); border-top: 1px solid rgba($cGray0, .13); }
+.qq-upload-file, .qq-upload-spinner, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
+  margin-right: 7px;
+}
+
+.qq-upload-file {}
+.qq-upload-spinner {display: none; background: url("loading.gif"); width:15px; height:15px; vertical-align:text-bottom;}
+/*.qq-upload-size,.qq-upload-cancel {font-size:11px;}*/
+
+.qq-upload-failed-text {display:none;}
+.qq-upload-fail .qq-upload-failed-text {display:inline;}
+
+.progress {
+  @include position(14px, false, false, 14px);
+  @include size(540px, 14px);
+
+  .bar {
     @include border-radius(5px);
-    position:absolute; top:0; left:0; width:100%; height:100%; min-height: 70px; z-index:2;
-    text-align:center;
-    text-transform: uppercase;
-    @include font("sans-serif-semi", 17px, $cGray4);
-  }
+    @include size(0, 100%);
+    background:url('backgrounds/bg-progress-bar.png');
 
-  .qq-upload-drop-area span {
-    display:block; position:absolute; top: 50%; width:100%; margin-top:-8px; font-size:16px;
-  }
-  /*.qq-upload-drop-area-active {background:#FF7171;}*/
-
-  .qq-upload-list {list-style:none;  }
-  .qq-upload-list li { margin:0 0 14px 0; padding:2px 0 14px 26px; @include icons-sprite(white-sheet, $offset-y: -5px); border-bottom: 1px solid rgba($cGray0, .13); @include font("sans-serif-base", 15px, $cGray2); }
-  .qq-upload-list li:last-child { border:none; }
-  .qq-upload-list li:first-child { padding: 14px 0 14px 26px; @include icons-sprite(white-sheet, $offset-y: 7px); border-top: 1px solid rgba($cGray0, .13); }
-  .qq-upload-file, .qq-upload-spinner, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
-    margin-right: 7px;
-  }
-
-  .qq-upload-file {}
-  .qq-upload-spinner {display: none; background: url("loading.gif"); width:15px; height:15px; vertical-align:text-bottom;}
-  /*.qq-upload-size,.qq-upload-cancel {font-size:11px;}*/
-
-  .qq-upload-failed-text {display:none;}
-  .qq-upload-fail .qq-upload-failed-text {display:inline;}
-
-  .progress {
-    @include position(14px, false, false, 14px);
-    @include size(540px, 14px);
-
-    .bar {
-      @include border-radius(5px);
-      @include size(0, 100%);
-      background:url('backgrounds/bg-progress-bar.png');
-
-      span {
-        display:none;
-        position:relative;
-        top: 2px;
-        float:right;
-        right: -30px;
-        @include font("sans-serif-base", 12px, $cOrange);
-      }
-
+    span {
+      display:none;
+      position:relative;
+      top: 2px;
+      float:right;
+      right: -30px;
+      @include font("sans-serif-base", 12px, $cOrange);
     }
+
   }
+}
