@@ -41,6 +41,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.addClass("selected");
       this.$el.find(".price").fadeIn(250);
       this.$el.find(".ellipsis").fadeOut(250);
+      this.$el.find("input").val(1);
 
       var callback = this.model.get('callback');
 
@@ -53,6 +54,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.removeClass("selected");
       this.$el.find(".price").fadeOut(250);
       this.$el.find(".ellipsis").fadeIn(250);
+      this.$el.find("input").val(0);
     }
 
   },
