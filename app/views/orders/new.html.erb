@@ -172,6 +172,8 @@
 
         onSubmit: function(id, fileName){
           $(".qq-uploader").addClass("uploading");
+          $("section#upload").removeClass("finished");
+            $(".qq-uploader .progress .bar span").removeClass("big");
         },
         onProgress: function(id, fileName, loaded, total){
           p = Math.round(loaded/total * 100);
@@ -179,18 +181,23 @@
             progress = p;
           }
 
-          console.log(progress);
           $(".qq-uploader .progress .bar").css({ width: progress + "%" });
+
+          if (progress > 95) {
+            $(".qq-uploader .progress .bar span").addClass("big");
+          } 
+
           $(".qq-uploader .progress .bar span").html(progress + "%");
           $(".qq-uploader").addClass("uploading");
         },
+
         onComplete: function(id, fileName, files, responseJSON){
                       console.log(responseJSON)
           progress = 0;
 
-          console.log(files, files[0] == null, !_.any(files));
+          var z = _.compact(_.clone(files));
 
-          if (!_.any(files)) {
+          if (z.length <= 1) {
             $("section#upload").addClass("finished");
           }
 

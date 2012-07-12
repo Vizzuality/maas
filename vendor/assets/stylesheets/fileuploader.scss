@@ -66,6 +66,9 @@
 .qq-upload-file, .qq-upload-spinner, .qq-upload-size, .qq-upload-cancel, .qq-upload-failed-text {
   margin-right: 7px;
 }
+.qq-upload-size {
+  font-size: 12px;
+}
 
 .qq-upload-file {}
 .qq-upload-spinner {display: none; }
@@ -90,6 +93,7 @@
       float:right;
       right: -30px;
       @include font("sans-serif-base", 12px, $cOrange);
+      &.big { right: -5px; color: $cWhite; }
     }
 
   }
