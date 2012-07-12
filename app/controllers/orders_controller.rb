@@ -3,13 +3,16 @@ class OrdersController < ApplicationController
   responders :flash, :http_cache
 
   def new
+    @templates_list = Template.all
+
     @defaultPage = "markers"
     @order = Order.new
     @order.data_sources.build
-    @templates_list = Template.all
   end
 
   def create
+    @templates_list = Template.all
+
     @defaultPage = params[:order][:template_type]
     @order = Order.create(params[:order])
     respond_with @order

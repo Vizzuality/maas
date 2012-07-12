@@ -55,6 +55,7 @@ FactoryGirl.define do
 
     factory :dont_know do
       name 'dont_know'
+      price 0
     end
 
   end

@@ -10,9 +10,9 @@
       <h2><%= pluralize(@order.errors.count, "error") %> prohibited this post from being saved:</h2>
 
       <ul>
-      <% @order.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @order.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -66,7 +66,6 @@
 
       zoom.render();
 
-
       // Adds Infowindow
       var infowindowModel = new cdb.geo.ui.InfowindowModel({ });
 
@@ -90,8 +89,20 @@
       <% @templates_list.each do |template| -%>
 
         fields.<%= template.name %> = new cdb.ui.common.Fields([
+          { 
+            callback: null, 
+            className: null, 
+            checked: false,
+            name: "", 
+            type: false, 
+            price: <%= template.price %>, 
+            title: "<%= template.name %>", 
+            description: "Description" 
+          },
+
           <% template.visualization_methods.each do |option| -%>
-            { callback: null, 
+            { 
+              callback: null, 
               className: null, 
               checked: false,
               name: "template_options[radio][<%= template.name %>]", 
@@ -101,15 +112,17 @@
               description: "Description" 
             },
           <% end -%>
+
           <% template.options.each do |option| -%>
-            { callback: null, 
+            { 
+              callback: null, 
               className: null, 
               checked: false,
               name: "template_options[<%= template.name %>][<%= option.id %>]",
               type: 'checkbox', 
               price: <%= option.price %>, 
               title: "<%= option.name %>", 
-              description: "<%= option.description %>" 
+              description: "<%#= option.description %>" 
             },
           <% end -%>
         ]);
@@ -150,7 +163,7 @@
       var templates = new cdb.ui.common.NavigationItems([
         { cartoDBLayerOptions: earthquakesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 2, center: [40.463667, -3.74922] },  selected: true,  className: "markers",       name: "Markers map" },
         { cartoDBLayerOptions: trianglesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.7143528, -74.1059731] }, selected: false, className: "polygons",      name: "Polygons map" },
-        { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 2,  center: [40.7143528, -3.7059731] }, selected: false, className: "bubble",        name: "Bubble map" },
+        { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 2,  center: [40.7143528, -3.7059731] }, selected: false, className: "density",        name: "Bubble map" },
         { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 10, center: [40.463667, -3.74922] }, selected: false, className: "thematic",    name: "Thematic map" },
         { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 2,  center: [40.463667, -3.74922] }, selected: false, className: "unknown",       name: "Don't know" }
       ]);
