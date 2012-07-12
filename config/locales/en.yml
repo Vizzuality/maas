@@ -11,6 +11,9 @@ en:
           title: 'We are here to help you'
           subtitle: 'General questions'
       orders:
+        create:
+          title: 'Creating your order'
+          subtitle: 'Select your template'
         new:
           title: 'Creating your order'
           subtitle: 'Select your template'

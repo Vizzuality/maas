@@ -4,8 +4,21 @@
 
 <%= form_for @order do |f| %>
 
-  <div class="navigation">
-  </div>
+  <!--
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @order.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  -->
+
+  <div class="navigation"></div>
 
   <div class="map">
     <div class="browser">
@@ -116,7 +129,7 @@
       pane.addTab('thematic', new cdb.ui.common.Form({ map: map, className: 'thematic', collection: fields.thematic }));
       pane.addTab('unknown',  new cdb.ui.common.Form({ map: map, className: 'unknown',  collection: fields.unknown }));
 
-      defaultPage = "markers";
+      defaultPage = "<%= @defaultPage %>";
 
       var trianglesOptions = {
         user_name: "viz2",
@@ -163,17 +176,17 @@
       Backbone.history.start({ pushState: true });
 
       var progress = 0;
+      var processed = [];
+      var i = 0;
 
       var uploader = new qq.FileUploader({
-        // pass the dom node (ex. $(selector)[0] for jQuery users)
         element: document.getElementById('file-uploader'),
-        // path to server-side upload script
         action: '/client_data',
 
         onSubmit: function(id, fileName){
           $(".qq-uploader").addClass("uploading");
           $("section#upload").removeClass("finished");
-            $(".qq-uploader .progress .bar span").removeClass("big");
+          $(".qq-uploader .progress .bar span").removeClass("big");
         },
         onProgress: function(id, fileName, loaded, total){
           p = Math.round(loaded/total * 100);
@@ -192,7 +205,18 @@
         },
 
         onComplete: function(id, fileName, files, responseJSON){
-                      console.log(responseJSON)
+          var data = responseJSON.data;
+          var id = data.id;
+          console.log(data)
+
+          if (!processed[data.id]) {
+            var $field = $('<input id="order_client_data_attributes_' + i + '_id" name="order[client_data_attributes][' + i + '][id]" value="' + id + '"type="hidden" />');
+            processed[data.id] = true;
+            i++;
+          }
+
+          $("form").append($field);
+
           progress = 0;
 
           var z = _.compact(_.clone(files));

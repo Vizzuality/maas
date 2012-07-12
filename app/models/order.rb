@@ -1,12 +1,13 @@
 class Order < ActiveRecord::Base
 
   attr_accessible :name,
-                  :email,
-                  :template_type,
-                  :comments,
-                  :total,
-                  :data_sources_attributes,
-                  :order_options_attributes
+    :email,
+    :template_type,
+    :comments,
+    :total,
+    :data_sources_attributes,
+    :order_options_attributes,
+    :client_data_attributes
 
   belongs_to :template, :foreign_key => 'template_type'
   has_many :data_sources
@@ -19,5 +20,8 @@ class Order < ActiveRecord::Base
     attributes[:template_option_id].blank? || attributes[:template_option_id] == '0'
   }
   accepts_nested_attributes_for :client_data
+
+  validates :name, :email, :presence => true
+  validates :email, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
 
 end

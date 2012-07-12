@@ -240,6 +240,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     var self = this;
 
     var item;
+    $("#default-page").val(page);
 
     // Gets the selected field
     this.collection.each(function(field) {
@@ -301,7 +302,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
         this.cartoDBLayer = window.map.addLayer(layer);
 
       } else this.cartoDBLayer = null;
-
 
       $("#map").fadeIn(150, function() {
         $(".browser").animate({ bottom: -70 }, 150, function() {
@@ -423,13 +423,14 @@ cdb.ui.common.Form = Backbone.View.extend({
 cdb.Router = Backbone.Router.extend({
 
   routes: {
-    "orders/new/": "page",
-    "orders/new": "page",
+    "orders":           "page",
+    "orders/new/":      "page",
+    "orders/new":       "page",
     "orders/new/:page": "page"
   },
 
   page: function(page) {
-    if (!page)  page = defaultPage;
+    if (!page) page = defaultPage;
 
     window.map.infowindow.hide(true);
     window.pane.active(page);

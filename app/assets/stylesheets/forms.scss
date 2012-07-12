@@ -125,13 +125,31 @@ label {
   margin: 0 0 7px 0;
 
   @include font("sans-serif-bold", 11px, $cGray2);
-
   text-transform:uppercase;
+
+  @include transition-property(color);
+  @include transition-duration(200ms);
+
+  &.error {
+    color: $cError;
+
+    span {
+      float: right;
+      text-transform: none;
+      @include font("sans-serif", 12px, "#D05950");
+    }
+
+  }
 }
 
 .field {
+  width: 263px;
   margin: 0 0 30px 0;
   @include clearfix();
+
+  &.long {
+    width: 580px;
+  }
 
   &.left, &.right {
     float:left;
@@ -164,7 +182,6 @@ label {
     textarea {
       background:url(backgrounds/bg-form-textarea-error.png) repeat-x right -1*$height;
     }
-
   }
 
   textarea {
