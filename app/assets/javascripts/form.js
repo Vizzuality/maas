@@ -46,7 +46,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.addClass("selected");
       this.$el.find(".price").fadeIn(this.options.speed);
       this.$el.find(".ellipsis").fadeOut(this.options.speed);
-      this.$el.find("input").val(1);
+      this.$el.find("input").val(this.model.get("id"));
 
       var callback = this.model.get('callback');
 
@@ -175,6 +175,13 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
 cdb.ui.common.Navigation = Backbone.View.extend({
   className: "navigation",
 
+  options: {
+
+    speed: 250,
+    easing: "easeOutExpo"
+
+  },
+
   initialize: function() {
 
     var self = this;
@@ -239,20 +246,18 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   },
 
   moveTip: function(posX) {
-    $(".tip").animate({ left: posX }, { duration: 250, easing: "easeOutExpo" } );
+    $(".tip").animate({ left: posX }, { duration: this.options.speed, easing: this.options.easing } );
   },
 
-  select: function(page) {
+  select: function(page, id) {
 
   var $page = $("." + page);
   $(".option").attr("disabled", "disabled");
   $page.find("input[type='hidden']").removeAttr("disabled");
-  console.log($page.find("input[type='hidden']"));
 
     var self = this;
 
     var item;
-    $("#default-page").val(page);
 
     // Gets the selected field
     this.collection.each(function(field) {
@@ -271,6 +276,8 @@ cdb.ui.common.Navigation = Backbone.View.extend({
       }
 
     });
+
+    $("#default-page").val(id);
 
     var posX = item.view.$el.position().left + ( item.view.$el.width() / 2 ) - 13;
     this.moveTip(posX);
@@ -454,8 +461,8 @@ cdb.Router = Backbone.Router.extend({
     if (!page) page = defaultPage;
 
     window.map.infowindow.hide(true);
-    window.pane.active(page);
-    window.navigation.select(page);
+    var pane = window.pane.active(page);
+    window.navigation.select(page, pane.id);
   }
 
 });

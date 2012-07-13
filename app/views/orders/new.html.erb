@@ -95,8 +95,9 @@
             chtecked: false,
             name: "", 
             type: false, 
+            id: <%= template.id %>, 
             price: <%= template.price %>, 
-            title: "<%= template.name %>", 
+            title: "<%= template.name.humanize %>", 
             description: "Description" 
           },
 
@@ -107,8 +108,9 @@
               checked: false,
               name: "order[order_options_attributes][<%= option.id %>][template_option_id]", 
               type: 'radio', 
+              id: "<%= option.id %>", 
               price: 0, 
-              title: "<%= option.name %>", 
+              title: "<%= option.name.humanize %>", 
               description: "Description" 
             },
           <% end -%>
@@ -120,14 +122,16 @@
               checked: false,
               name: "order[order_options_attributes][<%= option.id %>][template_option_id]", 
               type: 'checkbox', 
+              id: "<%= option.id %>", 
               price: <%= option.price %>, 
-              title: "<%= option.name %>", 
+              title: "<%= option.name.humanize %>", 
               description: "<%#= option.description %>" 
             },
           <% end -%>
         ]);
 
-        pane.addTab('<%= template.name %>',  new cdb.ui.common.Form({ map: map, className: '<%= template.name %>', collection: fields.<%= template.name %> }));
+        pane.addTab('<%= template.name %>', new cdb.ui.common.Form({ map: map, id: <%= template.id %>, className: '<%= template.name %>', collection: fields.<%= template.name %> }));
+
       <% end -%>
 
       defaultPage = "<%= @defaultPage %>";

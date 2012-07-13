@@ -1,4 +1,7 @@
 en:
+  time:
+    formats:
+      pretty: "%m/%d/%Y"
   activerecord:
     attributes:
       order:

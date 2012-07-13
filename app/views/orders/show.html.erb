@@ -10,18 +10,19 @@
   </section>
 
   <section>
-  <h3>Your order summary <span class="date">3/06/2012</span></h3>
+  <h3>Your order summary <span class="date"><%= l @order.created_at, :format => :pretty %> </span></h3>
   <ul>
-    <li>Markers Map with… <span class="price">$2000</span>
+    <li><%= @order.template.name.capitalize %> map with&hellip; <span class="price">$<%= @order.template.price %></span>
     <ul>
-      <li>Dynamic filters <span class="price">$2000</span></li>
-      <li>Dynamic filters <span class="price">$2000</span></li>
+      <% @order.order_options.each do |o| %>
+          <li><%= o.template_option.name.humanize %> <span class="price">$<%= o.template_option.price %></span></li>
+      <% end %>
     </ul>
     </li>
   </ul>
 
   <div class="total">
-    <strong>TOTAL</strong> <div class="price">Starting from $4000</div>
+    <strong>TOTAL</strong> <div class="price">Starting from $<%= @order.total %></div>
   </div>
 
   <div class="stamp"></div>
