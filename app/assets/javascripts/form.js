@@ -7,6 +7,12 @@ cdb.ui.common.FieldModel = Backbone.Model.extend({
 cdb.ui.common.FieldView = Backbone.View.extend({
   tagName: "li",
 
+  options: {
+
+    speed: 250
+
+  },
+
   events: {
 
     'click a': 'select'
@@ -16,7 +22,6 @@ cdb.ui.common.FieldView = Backbone.View.extend({
   initialize: function() {
 
     _.bindAll(this, "render", "toggle");
-
 
     this.template      = cdb.templates.getTemplate('templates/form/field');
     this.templateFixed = cdb.templates.getTemplate('templates/form/fixed');
@@ -39,8 +44,8 @@ cdb.ui.common.FieldView = Backbone.View.extend({
     if (this.model.get("selected")) {
       this.$el.find("a").addClass("checked");
       this.$el.addClass("selected");
-      this.$el.find(".price").fadeIn(250);
-      this.$el.find(".ellipsis").fadeOut(250);
+      this.$el.find(".price").fadeIn(this.options.speed);
+      this.$el.find(".ellipsis").fadeOut(this.options.speed);
       this.$el.find("input").val(1);
 
       var callback = this.model.get('callback');
@@ -52,8 +57,8 @@ cdb.ui.common.FieldView = Backbone.View.extend({
     } else {
       this.$el.find("a").removeClass("checked");
       this.$el.removeClass("selected");
-      this.$el.find(".price").fadeOut(250);
-      this.$el.find(".ellipsis").fadeIn(250);
+      this.$el.find(".price").fadeOut(this.options.speed);
+      this.$el.find(".ellipsis").fadeIn(this.options.speed);
       this.$el.find("input").val(0);
     }
 
@@ -239,6 +244,11 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   select: function(page) {
 
+  var $page = $("." + page);
+  $(".option").attr("disabled", "disabled");
+  $page.find("input[type='hidden']").removeAttr("disabled");
+  console.log($page.find("input[type='hidden']"));
+
     var self = this;
 
     var item;
@@ -279,8 +289,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var baseLayerOptions = item.get('baseLayerOptions');
 
-      //window.map.setCenter(baseLayerOptions.center);
-
+    // window.map.setCenter(baseLayerOptions.center);
 
     $("#map").fadeOut(200, function() {
       $(".map").animate({ height: 463 }, { duration: 250, easing: "easeInCirc" });
@@ -331,6 +340,12 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
 cdb.ui.common.Form = Backbone.View.extend({
   className: "form",
+  options: {
+
+    speed: 250,
+    easing: "easeOutExpo"
+
+  },
 
   initialize: function() {
     _.bindAll(this, "render", "show", "hide", "recalc", "updatePrice");
@@ -351,18 +366,18 @@ cdb.ui.common.Form = Backbone.View.extend({
 
     var onComplete = function() {
       self.$el.find(".subtotal").html("Starting from <span>$" + total + "</span>");
-      self.$el.find(".subtotal span").animate({ opacity: 1 }, { duration: 250, easing: "easeOutExpo" });
+      self.$el.find(".subtotal span").animate({ opacity: 1 }, { duration: self.options.speed, easing: self.options.easing });
     };
 
-    this.$el.find(".subtotal span").animate({ opacity:0 }, { duration: 250, easing: "easeOutExpo", complete: onComplete });
+    this.$el.find(".subtotal span").animate({ opacity:0 }, { duration: self.options.speed, easing: self.options.easing, complete: onComplete });
   },
 
   show: function() {
-    this.$el.fadeIn(250);
+    this.$el.fadeIn(this.options.speed);
   },
 
   hide: function() {
-    this.$el.fadeOut(250);
+    this.$el.fadeOut(this.options.speed);
   },
 
   render: function() {
@@ -380,8 +395,11 @@ cdb.ui.common.Form = Backbone.View.extend({
     var fields = {};
 
     var fieldView;
+    var fieldOrder = 0;
 
     this.collection.each(function(field, i) {
+
+      field.set("name", "order[order_options_attributes][" + fieldOrder + "][template_option_id]");
 
       if (field.get("type") == false) {
 
@@ -389,6 +407,7 @@ cdb.ui.common.Form = Backbone.View.extend({
 
       } else {
 
+        fieldOrder++;
         fieldView = new cdb.ui.common.FieldView({ model: field });
 
       }
