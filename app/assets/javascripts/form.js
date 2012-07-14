@@ -304,9 +304,14 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var onComplete = function() {
 
-      // Removes previously loaded layers
-      if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
-      if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
+      try {
+        // Removes previously loaded layers
+        if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
+        if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
+      } catch(err) {
+
+        console.log(err);
+      }
 
       // Add base layer
       var layer      = new cdb.geo.TileLayer({ urlTemplate: baseLayerOptions.url });
@@ -462,6 +467,7 @@ cdb.Router = Backbone.Router.extend({
 
     window.map.infowindow.hide(true);
     var pane = window.pane.active(page);
+    console.log(pane);
     window.navigation.select(page, pane.id);
   }
 
