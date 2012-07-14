@@ -93,12 +93,19 @@ header .logo {
   color: $cWhite;
 }
 
+@-webkit-keyframes bodyslide {
+  0%   { right: -30px; }
+  100% { right: 0px; }
+}
+
 .home header .computer {
 
   @include position(false, 0, 0, false);
   @include size(625px, 391px);
 
   background: url(backgrounds/bg-computer.png) no-repeat;
+
+  -webkit-animation:bodyslide 1s ease;
 
   z-index: 100;
 }
