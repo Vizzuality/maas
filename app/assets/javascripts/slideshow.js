@@ -104,6 +104,10 @@ cdb.ui.common.SlideshowModel = Backbone.Model.extend({
 cdb.ui.common.Slideshow = cdb.core.View.extend({
   className: 'slideshow',
 
+  defaults: {
+    template_name: 'templates/slideshow/slideshow'
+  },
+
   events: {
 
     'click .prev': 'prev',
@@ -124,7 +128,7 @@ cdb.ui.common.Slideshow = cdb.core.View.extend({
 
     $(document).bind('keydown', this.keydown);
 
-    this.template = cdb.templates.getTemplate('templates/slideshow/slideshow');
+    this.template = this.options.template ? _.template(this.options.template) : cdb.templates.getTemplate(this.defaults.template_name);
 
     this.model = new cdb.ui.common.SlideshowModel({ visible: false });
     this.model.collection = this.collection;
@@ -155,11 +159,14 @@ cdb.ui.common.Slideshow = cdb.core.View.extend({
     var $pagination = self.$el.find(".pagination");
 
     this.collection.each(function(slide, i) {
+
       var slideView = new cdb.ui.common.SlideView({ model: slide });
+
       slide.view = slideView;
 
       $slides.append(slideView.$el);
       $pagination.append(new cdb.ui.common.BulletView({ parent: self, model: slide }).$el);
+
     });
 
     $pagination.find("li:first-child").addClass('selected');

@@ -1,4 +1,5 @@
 /* Colors */
+
 $cWhite:                 #FFFFFF;
 $cGray5:                 #F1F1F1;
 $cGray4:                 #CCCCCC;
@@ -103,9 +104,9 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 @mixin glow($opacity) {
-  -moz-box-shadow:0px 0px 6px 1px rgba(255,255,255,$opacity); /* Firefox v3.5+ */
-  -webkit-box-shadow:0px 0px 6px 1px rgba(255,255,255,$opacity); /* Safari v3.0+ and by Chrome v0.2+ */
-  box-shadow:0px 0px 6px 1px rgba(255,255,255,$opacity); /* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+  and by Opera v10.5+ */
+  -moz-box-shadow:0px 0px 6px 1px rgba($cWhite, $opacity); /* Firefox v3.5+ */
+  -webkit-box-shadow:0px 0px 6px 1px rgba($cWhite, $opacity); /* Safari v3.0+ and by Chrome v0.2+ */
+  box-shadow:0px 0px 6px 1px rgba($cWhite, $opacity); /* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+  and by Opera v10.5+ */
   -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = $opacity * 10)";
   filter:progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = $opacity * 10);
 }
@@ -117,7 +118,7 @@ strong { font-weight: bold; } // This is sad, I know.
 
   height:$height;
   background: url($url) no-repeat left -1*($offset-y + $height);
-  color:#fff;
+  color:$cWhite;
   text-decoration:none;
   text-transform: uppercase;
 

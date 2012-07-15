@@ -203,7 +203,9 @@
 
           if (progress > 95) {
             $(".qq-uploader .progress .bar span").addClass("big");
-          } 
+          }  else {
+            $(".qq-uploader .progress .bar span").removeClass("big");
+          }
 
           $(".qq-uploader .progress .bar span").html(progress + "%");
           $(".qq-uploader").addClass("uploading");
@@ -239,6 +241,10 @@
         },
         onCancel: function(id, fileName){
           $(".qq-uploader").removeClass("uploading");
+          $(".qq-uploader .progress .bar").fadeOut(250, function() {
+            $(".qq-uploader .progress .bar").css({ width: 0 });
+            $(".qq-uploader .progress .bar").show();
+          });
         },
 
         template: '<ul class="qq-upload-list"></ul>'  +
