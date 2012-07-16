@@ -25,6 +25,7 @@ a {
 
   text-align:center;
   text-transform: uppercase;
+
   @include font("sans-serif-light", 21px, $cGray3);
   letter-spacing: 2px;
 }
@@ -36,8 +37,8 @@ a {
 
   height: 521px;
   margin: auto;
-  text-align:center;
 
+  text-align:center;
   background: url(backgrounds/bg-street.png) repeat-x;
 
   @extend .home-inner;
@@ -186,43 +187,36 @@ section.characteristics {
     .box {
       padding-top: 20px;
       padding-bottom: 20px;
-    }
 
-    .box h2 {
-      padding: 10px 0 15px 0;
+      h2 {
+        padding: 10px 0 15px 0;
 
-      border-top: 1px solid #E5E5E5;
+        border-top: 1px solid #E5E5E5;
 
-      @extend .sans-serif;
-      font-size:21px;
-      color: $cGray1;
-    }
+        @extend .sans-serif;
+        font-size:21px;
+        color: $cGray1;
+      }
 
-    .box.step-1 .icon {
-      width: 153px;
-      height:118px;
-      @include icons-sprite(step-01);
-    }
+      &.step-1 .icon {
+        @include size(153px, 118px);
+        @include icons-sprite(step-01);
+      }
 
-    .box.step-2 .icon {
-      width: 190px;
-      //height: 93px;
-      height: 118px;
-      @include icons-sprite(step-02, $offset-y:15);
-    }
+      &.step-2 .icon {
+        @include size(190px, 118px);
+        @include icons-sprite(step-02, $offset-y:15);
+      }
 
-    .box.step-3 .icon {
-      width: 173px;
-      //height: 74px;
-      height: 118px;
-      @include icons-sprite(step-03, $offset-y:23);
-    }
-
+      &.step-3 .icon {
+        @include size(173px, 118px);
+        @include icons-sprite(step-03, $offset-y:23);
+      }
+    } // box
   }
 
   .box h3 {
     padding: 0 0 15px 0;
-
     @include font("sans-serif", 21px, $cGray1);
   }
 }

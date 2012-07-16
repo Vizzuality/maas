@@ -46,6 +46,8 @@
 
       cdb.init();
 
+      defaultPage = "<%= @defaultPage %>";
+
       // Adds map
       var map = new cdb.geo.Map({
         center: [40.463667, -3.74922],
@@ -83,6 +85,42 @@
       });
 
       window.pane = pane;
+
+      var // layer URLs
+      baseLayerURL  = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
+      baseLayerURL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+
+      var trianglesOptions = {
+        user_name: "viz2",
+        table_name: "stop_frisk",
+        tile_style: "#stop_frisk{[prop_count>0]{polygon-fill:#415E9E;}[prop_count>2]{polygon-fill:#6581B5;}[prop_count>4]{polygon-fill:#88A3CC;}[prop_count>6]{polygon-fill:#ACC6E3;}[prop_count>8]{polygon-fill:#88A3CC;}[prop_count>10]{polygon-fill:#F6BEB5;}[prop_count>30]{polygon-fill:#E3928C;}[prop_count>50]{polygon-fill:#CF6562;}[prop_count>100]{polygon-fill:#BC3939;}polygon-opacity:0.71;line-opacity:0.11;line-color:#000000;line-width:0.8;}",
+        query: "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, stop_frisk i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell"
+      };
+
+      var earthquakesOptions = {
+        user_name: 'examples',
+        table_name: 'earthquakes',
+        query: 'SELECT * FROM {{table_name}}',
+        tile_style: "#{{table_name}}{marker-fill:red}",
+        interactivity: "cartodb_id, latitude, longitude, magnitude",
+        auto_bound: false,
+        featureOver:  function() { document.body.style.cursor = "pointer"; },
+        featureOut:   function() { document.body.style.cursor = "default"; },
+        featureClick: function(ev, latlng, pos, data) {
+          var latlng = new L.LatLng(data.latitude, data.longitude);
+          infowindow.setLatLng(latlng);
+          infowindowModel.set("content", data);
+          infowindow.showInfowindow();
+        }
+      };
+
+      var data = {
+        markers:   { cartoDBLayerOptions: earthquakesOptions, baseLayerOptions: { url: baseLayerURL,  zoom: 2,  center: [40.463667, -3.74922] },     selected: true,  className: "markers",   name: "Markers map" },
+        polygons:  { cartoDBLayerOptions: trianglesOptions, baseLayerOptions:   { url: baseLayerURL,  zoom: 12, center: [40.7143528, -74.1059731] }, selected: false, className: "polygons",  name: "Polygons map" },
+        density:   { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.7143528, -3.7059731] },  selected: false, className: "density",   name: "Bubble map" },
+        thematic:  { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 10, center: [40.463667, -3.74922] },     selected: false, className: "thematic",  name: "Thematic map" },
+        dont_know: { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.463667, -3.74922] },     selected: false, className: "dont_know", name: "Don't know" }
+      };
 
       var fields = {};
 
@@ -130,46 +168,24 @@
           <% end -%>
         ]);
 
-        pane.addTab('<%= template.name %>', new cdb.ui.common.Form({ map: map, id: <%= template.id %>, className: '<%= template.name %>', collection: fields.<%= template.name %> }));
+        var view = new cdb.ui.common.Form({ 
+          map: map,
+          id: <%= template.id %>, 
+          data: data.<%= template.name %>,
+          className: '<%= template.name %>', 
+          collection: fields.<%= template.name %> 
+        });
+
+        pane.addTab('<%= template.name %>', view);
 
       <% end -%>
 
-      defaultPage = "<%= @defaultPage %>";
-
-      var trianglesOptions = {
-        user_name: "viz2",
-        table_name: "stop_frisk",
-        tile_style: "#stop_frisk{[prop_count>0]{polygon-fill:#415E9E;}[prop_count>2]{polygon-fill:#6581B5;}[prop_count>4]{polygon-fill:#88A3CC;}[prop_count>6]{polygon-fill:#ACC6E3;}[prop_count>8]{polygon-fill:#88A3CC;}[prop_count>10]{polygon-fill:#F6BEB5;}[prop_count>30]{polygon-fill:#E3928C;}[prop_count>50]{polygon-fill:#CF6562;}[prop_count>100]{polygon-fill:#BC3939;}polygon-opacity:0.71;line-opacity:0.11;line-color:#000000;line-width:0.8;}",
-        query: "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, stop_frisk i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell",
-        debug: false
-      };
-
-      var earthquakesOptions = {
-        user_name: 'examples',
-        table_name: 'earthquakes',
-        query: 'SELECT * FROM {{table_name}}',
-        tile_style: "#{{table_name}}{marker-fill:red}",
-        interactivity: "cartodb_id, latitude, longitude, magnitude",
-        auto_bound: false,
-        featureOver:  function() { document.body.style.cursor = "pointer"; },
-        featureOut:   function() { document.body.style.cursor = "default"; },
-        featureClick: function(ev, latlng, pos, data) {
-          var latlng = new L.LatLng(data.latitude, data.longitude);
-          infowindow.setLatLng(latlng);
-          infowindowModel.set("content", data);
-          infowindow.showInfowindow();
-        }
-      };
-
-      var baseLayerURL  = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png';
-      var baseLayerURL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
-
       var templates = new cdb.ui.common.NavigationItems([
-        { cartoDBLayerOptions: earthquakesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 2, center: [40.463667, -3.74922] },  selected: true,  className: "markers",       name: "Markers map" },
-        { cartoDBLayerOptions: trianglesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.7143528, -74.1059731] }, selected: false, className: "polygons",      name: "Polygons map" },
-        { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 2,  center: [40.7143528, -3.7059731] }, selected: false, className: "density",        name: "Bubble map" },
-        { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 10, center: [40.463667, -3.74922] }, selected: false, className: "thematic",    name: "Thematic map" },
-        { cartoDBLayerOptions: null, baseLayerOptions: { url: baseLayerURL2, zoom: 2,  center: [40.463667, -3.74922] }, selected: false, className: "dont_know",       name: "Don't know" }
+        { selected: true,  className: "markers",   name: "Markers map" },
+        { selected: false, className: "polygons",  name: "Polygons map" },
+        { selected: false, className: "density",   name: "Bubble map" },
+        { selected: false, className: "thematic",  name: "Thematic map" },
+        { selected: false, className: "dont_know", name: "Don't know" }
       ]);
 
       window.map = map;
@@ -180,9 +196,10 @@
       window.router      = new cdb.Router();
       Backbone.history.start({ pushState: true });
 
-      var progress = 0;
-      var processed = [];
-      var i = 0;
+      var 
+      i         = 0,
+      progress  = 0,
+      processed = [];
 
       var uploader = new qq.FileUploader({
         element: document.getElementById('file-uploader'),
@@ -214,7 +231,6 @@
         onComplete: function(id, fileName, files, responseJSON){
           var data = responseJSON.data;
           var id = data.id;
-          console.log(data)
 
           if (!processed[data.id]) {
             var $field = $('<input id="order_client_data_attributes_' + i + '_id" name="order[client_data_attributes][' + i + '][id]" value="' + id + '"type="hidden" />');

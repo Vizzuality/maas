@@ -186,7 +186,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var self = this;
 
-    _.bindAll(this, "select", "keydown", "prev", "next", "showUnknown", "showPage");
+    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPage");
 
     $(document).bind('keydown', this.keydown);
 
@@ -249,54 +249,35 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     $(".tip").animate({ left: posX }, { duration: this.options.speed, easing: this.options.easing } );
   },
 
-  select: function(page, id) {
+  select: function(pane) {
 
-  var $page = $("." + page);
-  $(".option").attr("disabled", "disabled");
-  $page.find("input[type='hidden']").removeAttr("disabled");
+    var $item = $(".navigation ul li a." + pane.className).parent();
+    var posX  = $item.position().left + ( $item.width() / 2 ) - 13;
 
-    var self = this;
-
-    var item;
-
-    // Gets the selected field
-    this.collection.each(function(field) {
-
-      if (page === field.get("className")) {
-
-        item = field;
-
-        // Stores the position of the item
-        self.selectedPagePosition = self.collection.models.indexOf(item);
-
-        field.set("selected", true);
-
-      } else {
-        field.set("selected", false);
-      }
-
-    });
-
-    $("#default-page").val(id);
-
-    var posX = item.view.$el.position().left + ( item.view.$el.width() / 2 ) - 13;
     this.moveTip(posX);
-
     this.animating = true;
 
-    if (page == "unknown") {
-      this.showUnknown();
+    // Disables all the options
+    $(".option").attr("disabled", "disabled");
+
+    // Enable the options of the current pane
+    pane.$el.find("input[type='hidden']").removeAttr("disabled");
+
+    if (pane.className == "dont_know") {
+      this.showDontKnow();
     } else {
-      this.showPage(item);
+      this.showPage(pane);
     }
+
+    $("#default_page").val(pane.id);
+
   },
 
-  showPage: function(item) {
+  showPage: function(pane) {
     var self = this;
 
-    var baseLayerOptions = item.get('baseLayerOptions');
-
-    // window.map.setCenter(baseLayerOptions.center);
+    var baseLayerOptions = pane.options.data.baseLayerOptions;
+    console.log(baseLayerOptions);
 
     $("#map").fadeOut(200, function() {
       $(".map").animate({ height: 463 }, { duration: 250, easing: "easeInCirc" });
@@ -317,7 +298,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
       var layer      = new cdb.geo.TileLayer({ urlTemplate: baseLayerOptions.url });
       this.baseLayer = window.map.addLayer(layer);
 
-      var options = item.get('cartoDBLayerOptions');
+      var options = pane.options.data.cartoDBLayerOptions;
 
       if (options) { // Add CartoDB layer
 
@@ -338,7 +319,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     $(".browser").fadeIn({ duration: 250, easing: "easeOutExpo", complete: onComplete });
   },
 
-  showUnknown: function() {
+  showDontKnow: function() {
     var self = this;
 
     $("#map").fadeOut(250, function() {
@@ -466,9 +447,9 @@ cdb.Router = Backbone.Router.extend({
     if (!page) page = defaultPage;
 
     window.map.infowindow.hide(true);
-    var pane = window.pane.active(page);
-    console.log(pane);
-    window.navigation.select(page, pane.id);
+    window.pane.active(page)
+    var pane = window.pane.getActivePane();
+    window.navigation.select(pane);
   }
 
 });
