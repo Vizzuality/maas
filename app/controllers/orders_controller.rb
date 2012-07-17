@@ -5,7 +5,8 @@ class OrdersController < ApplicationController
   def new
     @templates_list = Template.all
 
-    @defaultPage = "markers"
+    @defaultPageName = params[:page] || "markers"
+
     @order = Order.new
     @order.data_sources.build
   end
@@ -13,7 +14,8 @@ class OrdersController < ApplicationController
   def create
     @templates_list = Template.all
 
-    @defaultPage = params[:order][:template_type]
+    @defaultPageName = params[:template_name]
+
     @order = Order.create(params[:order])
     respond_with @order
   end

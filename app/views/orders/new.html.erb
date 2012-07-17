@@ -4,20 +4,6 @@
 
 <%= form_for @order do |f| %>
 
-  <!--
-  <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-      <ul>
-        <% @order.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  -->
-
   <div class="navigation"></div>
 
   <div class="map">
@@ -46,7 +32,8 @@
 
       cdb.init();
 
-      defaultPage = "<%= @defaultPage %>";
+      defaultPageName = "<%= @defaultPageName %>";
+      console.log(defaultPageName);
 
       // Adds map
       var map = new cdb.geo.Map({
@@ -115,11 +102,11 @@
       };
 
       var data = {
-        markers:   { cartoDBLayerOptions: earthquakesOptions, baseLayerOptions: { url: baseLayerURL,  zoom: 2,  center: [40.463667, -3.74922] },     selected: true,  className: "markers",   name: "Markers map" },
-        polygons:  { cartoDBLayerOptions: trianglesOptions, baseLayerOptions:   { url: baseLayerURL,  zoom: 12, center: [40.7143528, -74.1059731] }, selected: false, className: "polygons",  name: "Polygons map" },
-        density:   { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.7143528, -3.7059731] },  selected: false, className: "density",   name: "Bubble map" },
-        thematic:  { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 10, center: [40.463667, -3.74922] },     selected: false, className: "thematic",  name: "Thematic map" },
-        dont_know: { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.463667, -3.74922] },     selected: false, className: "dont_know", name: "Don't know" }
+        markers:   { cartoDBLayerOptions: earthquakesOptions, baseLayerOptions: { url: baseLayerURL,  zoom: 2,  center: [40.463667, -3.74922] },     className: "markers",   name: "Markers map" },
+        polygons:  { cartoDBLayerOptions: trianglesOptions, baseLayerOptions:   { url: baseLayerURL,  zoom: 12, center: [40.7143528, -74.1059731] }, className: "polygons",  name: "Polygons map" },
+        density:   { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.7143528, -3.7059731] },  className: "density",   name: "Bubble map" },
+        thematic:  { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 10, center: [40.463667, -3.74922] },     className: "thematic",  name: "Thematic map" },
+        dont_know: { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.463667, -3.74922] },     className: "dont_know", name: "Don't know" }
       };
 
       var fields = {};
@@ -144,7 +131,6 @@
               callback: null, 
               className: null, 
               checked: false,
-              name: "order[order_options_attributes][<%= option.id %>][template_option_id]", 
               type: 'radio', 
               id: "<%= option.id %>", 
               price: 0, 
@@ -181,7 +167,7 @@
       <% end -%>
 
       var templates = new cdb.ui.common.NavigationItems([
-        { selected: true,  className: "markers",   name: "Markers map" },
+        { selected: false, className: "markers",   name: "Markers map" },
         { selected: false, className: "polygons",  name: "Polygons map" },
         { selected: false, className: "density",   name: "Bubble map" },
         { selected: false, className: "thematic",  name: "Thematic map" },

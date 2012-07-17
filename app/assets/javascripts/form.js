@@ -142,10 +142,15 @@ cdb.ui.common.NavigationItems = Backbone.Collection.extend({
 });
 
 cdb.ui.common.NavigationItem = Backbone.View.extend({
+
   tagName: "li",
+
   events: {
+
     'click a': 'goto'
+
   },
+
   initialize: function() {
 
     _.bindAll(this, "render", "select", "goto");
@@ -166,7 +171,14 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
   },
 
   goto: function(e) {
+    var self = this;
+
     e.preventDefault();
+
+    this.parent.collection.each(function(c) {
+      (c == self.model) ? self.model.set("selected", true) :c.set("selected", false);
+    });
+
     window.router.navigate("/orders/new/" + this.model.get("className"), { trigger: true });
   }
 
@@ -188,7 +200,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPage");
 
-    $(document).bind('keydown', this.keydown);
+    //$(document).bind('keydown', this.keydown);
 
     this.template     = cdb.templates.getTemplate('templates/form/navigation');
     this.animating    = false;
@@ -208,7 +220,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     e && e.preventDefault();
     if (this.animating) return;
 
-    var pos = this.selectedPagePosition - 1;
+    var pos = this.selectedPage - 1;
     if ( pos < 0 ) pos = this.collection.length - 1;
     var name = this.collection.at(pos).get("className");
     this.select(name);
@@ -219,40 +231,48 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   next: function(e) {
     e && e.preventDefault();
+
     if (this.animating) return;
 
-    var pos = this.selectedPagePosition + 1;
-    if (pos >= this.collection.length) pos = 0;
-    var name = this.collection.at(pos).get("className");
-    this.select(name);
+    //var pos = this.selectedPage + 1;
+    //if (pos >= this.collection.length) pos = 0;
+    //var name = this.collection.at(pos).get("className");
+    //this.select(name);
 
-    window.router.navigate("orders/new/" + name);
-    window.pane.active(name);
+    //window.router.navigate("orders/new/" + name);
+    //window.pane.active(name);
   },
 
   render: function() {
     var self = this;
 
     this.$el.append(this.template());
+
     $(".navigation").html(this.$el);
 
-    this.collection.each(function(model) {
-      fieldView = new cdb.ui.common.NavigationItem({ model: model });
-      model.view = fieldView;
-      self.$el.find("ul").append(fieldView.render());
+    this.collection.each(function(model) { // Render the navigation items
+
+      if (model.get("className") == defaultPageName) model.set("selected", true);
+      var navigationItemView  = new cdb.ui.common.NavigationItem({ parent: self, model: model });
+
+      self.$el.find("ul").append(navigationItemView.render());
+
     });
 
     return this.$el;
   },
 
   moveTip: function(posX) {
+
     $(".tip").animate({ left: posX }, { duration: this.options.speed, easing: this.options.easing } );
+
   },
 
   select: function(pane) {
 
-    var $item = $(".navigation ul li a." + pane.className).parent();
-    var posX  = $item.position().left + ( $item.width() / 2 ) - 13;
+    var
+    $item = $(".navigation ul li a." + pane.className).parent(),
+    posX  = $item.position().left + ( $item.width() / 2 ) - 13;
 
     this.moveTip(posX);
     this.animating = true;
@@ -270,6 +290,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     }
 
     $("#default_page").val(pane.id);
+    $("#default_page_name").val(pane.className);
 
   },
 
@@ -277,7 +298,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     var self = this;
 
     var baseLayerOptions = pane.options.data.baseLayerOptions;
-    console.log(baseLayerOptions);
 
     $("#map").fadeOut(200, function() {
       $(".map").animate({ height: 463 }, { duration: 250, easing: "easeInCirc" });
@@ -285,13 +305,14 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var onComplete = function() {
 
-      try {
-        // Removes previously loaded layers
+      try { // Removes previously loaded layers
+
         if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
         if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
       } catch(err) {
 
         console.log(err);
+
       }
 
       // Add base layer
@@ -392,8 +413,6 @@ cdb.ui.common.Form = Backbone.View.extend({
 
     this.collection.each(function(field, i) {
 
-      field.set("name", "order[order_options_attributes][" + fieldOrder + "][template_option_id]");
-
       if (field.get("type") == false) {
 
         fieldView = new cdb.ui.common.FieldViewFixed({ model: field });
@@ -444,7 +463,7 @@ cdb.Router = Backbone.Router.extend({
   },
 
   page: function(page) {
-    if (!page) page = defaultPage;
+    if (!page) page = defaultPageName;
 
     window.map.infowindow.hide(true);
     window.pane.active(page)

@@ -53,6 +53,15 @@
 
   // TODO: hover & active
 
+  &:hover {
+    @include background-image(linear-gradient($cGray5, #aaaaaa));
+  }
+
+  &:active {
+    @include background-image(linear-gradient(#aaaaaa, $cGray5));
+  }
+
+
   &.big {
 
     padding: 25px 36px;

@@ -7,7 +7,7 @@
   <%= title %> <% if (price > 0) { %> $<%= price %> <% } %>
 </a>
 
-<input type="hidden" <% if (checked) {%> checked = "checked" value="1" <% } %> class="option" name="<%= name %>" />
+<input type="hidden" <% if (checked) {%> checked = "checked" value="1" <% } %> class="option" name="order[order_options_attributes][<%= id %>][template_option_id]" />
 
 <% } %>
 
