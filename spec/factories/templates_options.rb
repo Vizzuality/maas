@@ -30,7 +30,7 @@ FactoryGirl.define do
     end
 
     factory :variable_selection do
-      name 'Variable selection'
+      name 'variable_selection'
       price 350
     end
 

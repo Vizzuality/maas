@@ -1,0 +1,259 @@
+<script type="text/javascript">
+  $(function() {
+
+    cdb.init();
+
+    defaultPageName = "<%= @defaultPageName %>";
+
+    // Adds map
+    var map = new cdb.geo.Map({
+      center: [40.463667, -3.74922],
+      zoom: 2
+    });
+
+    var mapView = new cdb.geo.LeafletMapView({
+      el: $('#map'),
+      map: map
+    });
+
+    // Adds zoom
+    var zoom = new cdb.geo.ui.Zoom({
+      model: map,
+      template: cdb.templates.getTemplate('templates/map/zoom')
+    })
+
+    mapView.$el.append(zoom.render().$el);
+
+    var legend = new cdb.geo.ui.Legend({
+      model: map,
+      template: cdb.templates.getTemplate('templates/map/legend')
+    })
+
+    // Adds Infowindow
+    var infowindowModel = new cdb.geo.ui.InfowindowModel({ });
+
+    var infowindow = new cdb.geo.ui.Infowindow({
+      model: infowindowModel,
+      template: cdb.templates.getTemplate('templates/map/infowindow'),
+      mapView: mapView
+    });
+
+    $("#map").append(infowindow.$el);
+
+    // Adds pane
+    var pane = new cdb.ui.common.TabPane({
+      el: $("#container")
+    });
+
+    window.pane = pane;
+
+    var // layer URLs
+    baseLayerURL  = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
+    baseLayerURL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+
+    var trianglesOptions = {
+      user_name: "viz2",
+      table_name: "stop_frisk",
+      tile_style: "#stop_frisk{[prop_count>0]{polygon-fill:#415E9E;}[prop_count>2]{polygon-fill:#6581B5;}[prop_count>4]{polygon-fill:#88A3CC;}[prop_count>6]{polygon-fill:#ACC6E3;}[prop_count>8]{polygon-fill:#88A3CC;}[prop_count>10]{polygon-fill:#F6BEB5;}[prop_count>30]{polygon-fill:#E3928C;}[prop_count>50]{polygon-fill:#CF6562;}[prop_count>100]{polygon-fill:#BC3939;}polygon-opacity:0.71;line-opacity:0.11;line-color:#000000;line-width:0.8;}",
+      query: "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, stop_frisk i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell"
+    };
+
+    var earthquakesOptions = {
+      user_name: 'examples',
+      table_name: 'earthquakes',
+      query: 'SELECT * FROM {{table_name}}',
+      tile_style: "#{{table_name}}{marker-fill:red}",
+      interactivity: "cartodb_id, latitude, longitude, magnitude",
+      auto_bound: false,
+      featureOver:  function() { document.body.style.cursor = "pointer"; },
+      featureOut:   function() { document.body.style.cursor = "default"; },
+      featureClick: function(ev, latlng, pos, data) {
+        var latlng = new L.LatLng(data.latitude, data.longitude);
+        infowindow.setLatLng(latlng);
+        infowindowModel.set("content", data);
+        infowindow.showInfowindow();
+      }
+    };
+
+    var data = {
+      markers:   { cartoDBLayerOptions: earthquakesOptions, baseLayerOptions: { url: baseLayerURL,  zoom: 2,  center: [40.463667, -3.74922] },     className: "markers",   name: "Markers map" },
+      polygons:  { cartoDBLayerOptions: trianglesOptions, baseLayerOptions:   { url: baseLayerURL,  zoom: 12, center: [40.7143528, -74.1059731] }, className: "polygons",  name: "Polygons map" },
+      density:   { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.7143528, -3.7059731] },  className: "density",   name: "Bubble map" },
+      thematic:  { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 10, center: [40.463667, -3.74922] },     className: "thematic",  name: "Thematic map" },
+      dont_know: { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.463667, -3.74922] },     className: "dont_know", name: "Don't know" }
+    };
+
+    var checkboxCallbacks = {
+      dynamic_filters:    { on: function() { console.log('a'); }, off: function() { } },
+      custom_infowindows: { on: function() { 
+        mapView.$el.append(legend.render().$el);
+        legend.show();
+      }, off: function() {
+        legend.hide();
+
+      } },
+      different_markers:  { on: function() { console.log('c'); }, off: function() { } },
+      dynamic_clusters:   { on: function() { console.log('d'); }, off: function() { } },
+      different_polygons: { on: function() { console.log('e'); }, off: function() { } },
+      custom_regions:     { on: function() { console.log('e'); }, off: function() { } },
+      variable_selection: { on: function() { console.log('e'); }, off: function() { } }
+    };
+
+    var radioCallbacks = {
+      markers:   function() { console.log('a'); },
+      polygons:  function() { console.log('b'); },
+      density:   function() { console.log('c'); },
+      thematic:  function() { console.log('d'); },
+      dont_know: function() { console.log('e');}
+    };
+
+    var fields = {};
+
+    <% @templates_list.each do |template| -%>
+
+      fields.<%= template.name %> = new cdb.ui.common.Fields([
+        { 
+          callback: null, 
+          className: null, 
+          chtecked: false,
+          name: "", 
+          type: false, 
+          id: <%= template.id %>, 
+          price: <%= template.price %>, 
+          title: "<%= template.name.humanize %>", 
+          description: "Description" 
+        },
+
+        <% template.visualization_methods.each do |option| -%>
+          { 
+            callback: radioCallbacks.<%= option.name %>, 
+            className: null, 
+            checked: false,
+            type: 'radio', 
+            id: "<%= option.id %>", 
+            price: 0, 
+            title: "<%= option.name.humanize %>", 
+            description: "Description" 
+          },
+        <% end -%>
+
+        <% template.options.each do |option| -%>
+          { 
+            callback: checkboxCallbacks.<%= option.name %>, 
+            className: null, 
+            checked: false,
+            name: "order[order_options_attributes][<%= option.id %>][template_option_id]", 
+            type: 'checkbox', 
+            id: "<%= option.id %>", 
+            price: <%= option.price %>, 
+            title: "<%= option.name.humanize %>", 
+            description: "<%#= option.description %>" 
+          },
+        <% end -%>
+      ]);
+
+      var view = new cdb.ui.common.Form({ 
+        map: map,
+        id: <%= template.id %>, 
+        data: data.<%= template.name %>,
+        className: '<%= template.name %>', 
+        collection: fields.<%= template.name %> 
+      });
+
+      pane.addTab('<%= template.name %>', view);
+
+    <% end -%>
+
+    var templates = new cdb.ui.common.NavigationItems([
+      { selected: false, className: "markers",   name: "Markers map" },
+      { selected: false, className: "polygons",  name: "Polygons map" },
+      { selected: false, className: "density",   name: "Bubble map" },
+      { selected: false, className: "thematic",  name: "Thematic map" },
+      { selected: false, className: "dont_know", name: "Don't know" }
+    ]);
+
+    window.map = map;
+    window.mapView = mapView;
+
+    window.map.infowindow = infowindow;
+    window.navigation  = new cdb.ui.common.Navigation({ collection: templates });
+    window.router      = new cdb.Router();
+    Backbone.history.start({ pushState: true });
+
+    var 
+    i         = 0,
+    progress  = 0,
+    processed = [];
+
+    var uploader = new qq.FileUploader({
+      element: document.getElementById('file-uploader'),
+      action: '/client_data',
+
+      onSubmit: function(id, fileName){
+        $(".qq-uploader").addClass("uploading");
+        $("section#upload").removeClass("finished");
+        $(".qq-uploader .progress .bar span").removeClass("big");
+      },
+      onProgress: function(id, fileName, loaded, total){
+        p = Math.round(loaded/total * 100);
+        if (p > progress) {
+          progress = p;
+        }
+
+        $(".qq-uploader .progress .bar").css({ width: progress + "%" });
+
+        if (progress > 95) {
+          $(".qq-uploader .progress .bar span").addClass("big");
+        }  else {
+          $(".qq-uploader .progress .bar span").removeClass("big");
+        }
+
+        $(".qq-uploader .progress .bar span").html(progress + "%");
+        $(".qq-uploader").addClass("uploading");
+      },
+
+      onComplete: function(id, fileName, files, responseJSON){
+        var data = responseJSON.data;
+        var id = data.id;
+
+        if (!processed[data.id]) {
+          var $field = $('<input id="order_client_data_attributes_' + i + '_id" name="order[client_data_attributes][' + i + '][id]" value="' + id + '"type="hidden" />');
+          processed[data.id] = true;
+          i++;
+        }
+
+        $("form").append($field);
+
+        progress = 0;
+
+        var z = _.compact(_.clone(files));
+
+        if (z.length <= 1) {
+          $("section#upload").addClass("finished");
+        }
+
+        $(".qq-uploader .progress .bar").fadeOut(250, function() {
+          $(".qq-uploader .progress .bar").css({ width: 0 });
+          $(".qq-uploader .progress .bar").show();
+        });
+
+        $(".qq-uploader").removeClass("uploading");
+      },
+      onCancel: function(id, fileName){
+        $(".qq-uploader").removeClass("uploading");
+        $(".qq-uploader .progress .bar").fadeOut(250, function() {
+          $(".qq-uploader .progress .bar").css({ width: 0 });
+          $(".qq-uploader .progress .bar").show();
+        });
+      },
+
+      template: '<ul class="qq-upload-list"></ul>'  +
+        '<div class="qq-uploader">' +
+        '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
+        '<div class="placeholder"><div class="icon"></div><div class="qq-upload-button">To attach files drag & drop here or <a href="#">select files from your computer</a>.</div></div>' +
+        '<div class="progress"><div class="bar"><span>0</span></div></div>' +
+        '</div>'
+    });
+
+  });
+</script>

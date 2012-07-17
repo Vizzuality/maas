@@ -48,10 +48,10 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.find(".ellipsis").fadeOut(this.options.speed);
       this.$el.find("input").val(this.model.get("id"));
 
-      var callback = this.model.get('callback');
+      var callback = this.model.get("callback");
 
-      if (callback) {
-        callback();
+      if (callback && callback.on) {
+        callback.on();
       }
 
     } else {
@@ -60,6 +60,13 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.find(".price").fadeOut(this.options.speed);
       this.$el.find(".ellipsis").fadeIn(this.options.speed);
       this.$el.find("input").val(0);
+
+      var callback = this.model.get("callback");
+
+      if (callback && callback.off) {
+        callback.off();
+      }
+
     }
 
   },
