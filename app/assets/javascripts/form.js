@@ -59,7 +59,12 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.removeClass("selected");
       this.$el.find(".price").fadeOut(this.options.speed);
       this.$el.find(".ellipsis").fadeIn(this.options.speed);
-      this.$el.find("input").val(0);
+
+      if (this.model.get("type") == "radio") {
+        this.$el.find("input").val(null);
+      } else {
+        this.$el.find("input").val(0);
+      }
 
       var callback = this.model.get("callback");
 

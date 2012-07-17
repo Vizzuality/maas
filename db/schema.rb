@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120712181025) do
+ActiveRecord::Schema.define(:version => 20120717112622) do
 
   create_table "client_data", :force => true do |t|
     t.integer  "order_id"
@@ -41,11 +41,11 @@ ActiveRecord::Schema.define(:version => 20120712181025) do
     t.string   "name"
     t.string   "email"
     t.integer  "template_type"
-    t.integer  "visualization_method"
+    t.integer  "visualization_method_id"
     t.text     "comments"
     t.integer  "total"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
   end
 
   create_table "payments", :force => true do |t|
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(:version => 20120712181025) do
   create_table "templates", :force => true do |t|
     t.string   "name"
     t.integer  "price"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "visualization_methods", :force => true do |t|

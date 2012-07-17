@@ -15,10 +15,15 @@
     <li><%= @order.template.name.capitalize %> map with&hellip; <span class="price">$<%= @order.template.price %></span>
     <ul>
       <% @order.order_options.each do |o| %>
-          <li><%= o.template_option.name.humanize %> <span class="price">$<%= o.template_option.price %></span></li>
+        <li><%= o.template_option.name.humanize %> <span class="price">$<%= o.template_option.price %></span></li>
+      <% end %>
+
+      <% if @order.visualization_method %>
+        <li><%= @order.visualization_method.name.humanize %></li>
       <% end %>
     </ul>
-    </li>
+
+
   </ul>
 
   <div class="total">
