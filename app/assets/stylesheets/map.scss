@@ -2,17 +2,43 @@
 
 .leaflet-control-attribution { display: none; }
 
+/* Legend */
+
 #legend {
+
   display:none;
 
-  position:absolute;
-  top: 10px;
-  left: 10px;
-  background: #fff;
-  width: 100px;
-  height: 100px;
+  @include position(false, 10px, 10px, false);
+  @include size(100px, false);
+
+  padding: 15px;
+
+  background: $cWhite;
+  background: rgba($cWhite, .9);
+
+  border: 1px solid $cGray0;
+  @include dark-glow(.3);
+
+  @include font("sans-serif", 13px, $cGray2);
+  @include border-radius(2px);
+
   z-index: 1000;
+
+  ul {
+    li {
+      margin: 0 0 11px 0;
+      padding: 0 0 0 15px;
+
+      &.blue       { @include icons-sprite(map-bullet-blue, $offset-y: 1px); }
+      &.light_blue { @include icons-sprite(map-bullet-light_blue, $offset-y: 1px); }
+      &.light_red  { @include icons-sprite(map-bullet-light_red, $offset-y: 1px); }
+      &.red        { @include icons-sprite(map-bullet-red, $offset-y: 1px); }
+    }
+    li:last-child { margin: 0; }
+  }
 }
+
+/* Zoom */
 
 #zoom {
 
@@ -33,26 +59,27 @@
 
   .zoom_in {
     background: transparent url($url) no-repeat 0 0;
-    &:hover { background: transparent url($url) no-repeat -1*$zoomWidth 0; }
+    &:hover  { background: transparent url($url) no-repeat -1*$zoomWidth 0; }
     &:active { background: transparent url($url) no-repeat -2*$zoomWidth 0; }
   }
 
   .zoom_out {
     background: transparent url($url) no-repeat 0 -1*$zoomHeight;
-    &:hover { background: transparent url($url) no-repeat -1*$zoomWidth -1*$zoomHeight; }
+    &:hover  { background: transparent url($url) no-repeat -1*$zoomWidth -1*$zoomHeight; }
     &:active { background: transparent url($url) no-repeat -2*$zoomWidth -1*$zoomHeight; }
   }
 }
 
 
-/*other stuff*/
+/* Other stuff */
 
-.leaflet-popup-content label {width:100%; margin:0; padding:0; font:bold 12px Arial; color:#333333;}
-.leaflet-popup-content p {width:100%; margin:2px 0 3px!important; padding:0; font:normal 12px Arial; color:#666666;}
+.leaflet-popup-content label { width:100%; margin:0; padding:0; font:bold 12px Arial; color:#333333; }
+.leaflet-popup-content p     { width:100%; margin:2px 0 3px!important; padding:0; font:normal 12px Arial; color:#666666; }
 
 $width: 216px;
 
 /* CartoDB popup*/
+
 .infowindow {
   position: absolute;
   display: block;
@@ -65,18 +92,19 @@ $width: 216px;
   }
 
   div.cartodb-popup a.cartodb-popup-close-button {
-    position: absolute;
-    right: 3px;
-    top: 2px;
-    width: 22px;
-    height: 15px;
+
+    @include position(2px, 3px, false, false);
+    @include size(22px, 15px);
+
     padding: 4px 0 3px 0;
+
+    background: none;
+
     text-align: center;
     font: bold 15px "Helvetica",Arial;
     color: #666666;
     text-decoration: none;
     line-height: 15px;
-    background: none;
     text-indent: 0;
     overflow: visible;
   }

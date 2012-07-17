@@ -14,9 +14,10 @@ cdb.ui.common.BulletView = cdb.core.View.extend({
   },
 
   render: function() {
-    this.$el = $(this.template(this.model.toJSON()));
 
+    this.$el = $(this.template(this.model.toJSON()));
     return this;
+
   },
 
   goto: function(e) {

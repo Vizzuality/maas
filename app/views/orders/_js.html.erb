@@ -85,13 +85,25 @@
 
     var checkboxCallbacks = {
       dynamic_filters:    { on: function() { console.log('a'); }, off: function() { } },
-      custom_infowindows: { on: function() { 
-        mapView.$el.append(legend.render().$el);
-        legend.show();
-      }, off: function() {
-        legend.hide();
+      custom_infowindows: { 
+        on: function() { 
 
-      } },
+          legend.collection = new cdb.geo.ui.LegendItems([ 
+            { className: "light_blue", name: "1-10 stops" },
+            { className: "blue",       name: "11-50 stops" },
+            { className: "light_red",  name: "51-100" },
+            { className: "red",        name: "> 100 stops" }
+          ]);
+
+          mapView.$el.append(legend.render().$el);
+
+          legend.show();
+        }, 
+        off: function() {
+          legend.hide();
+        } 
+      },
+
       different_markers:  { on: function() { console.log('c'); }, off: function() { } },
       dynamic_clusters:   { on: function() { console.log('d'); }, off: function() { } },
       different_polygons: { on: function() { console.log('e'); }, off: function() { } },

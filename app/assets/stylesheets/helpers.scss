@@ -1,3 +1,5 @@
+@import "compass/css3";
+
 /* Colors */
 
 $cWhite:                 #FFFFFF;
@@ -38,6 +40,12 @@ $icons-radio-checked-spacing: 40px;
 $icons-radio-disabled-spacing: 40px;
 $icons-radio-spacing: 41px;
 
+// Bullets
+$icons-map-bullet-blue-spacing: 20px;
+$icons-map-bullet-light_blue-spacing: 20px;
+$icons-map-bullet-light_red-spacing: 20px;
+$icons-map-bullet-red-spacing: 20px;
+
 @import "icons/*.png"; /**/
 
 strong { font-weight: bold; } // This is sad, I know.
@@ -75,22 +83,11 @@ strong { font-weight: bold; } // This is sad, I know.
   box-shadow: none;
 }
 
-@mixin font($font, $font-size, $color: false) {
-
-  @if $font == "sans-serif-base"  { @extend .sans-serif-base; }
-  @if $font == "sans-serif"       { @extend .sans-serif; }
-  @if $font == "sans-serif-light" { @extend .sans-serif-light; }
-  @if $font == "sans-serif-semi"  { @extend .sans-serif-semi; }
-  @if $font == "sans-serif-bold"  { @extend .sans-serif-bold; }
-
-  @if $color      != false { color: $color; }
-  @if $font-size  != false { font-size: $font-size; }
-
-}
-
 @mixin size($width, $height:$width) {
+
   @if $width  != false { width:  $width; }
   @if $height != false { height: $height; }
+
 }
 
 @mixin position($top, $right, $bottom, $left) {
@@ -101,8 +98,16 @@ strong { font-weight: bold; } // This is sad, I know.
   @if $right  != false { right:  $right; }
   @if $bottom != false { bottom: $bottom; }
   @if $left   != false { left:   $left; }
+
 }
 
+@mixin dark-glow($opacity) {
+  -moz-box-shadow:0px 0px 6px 1px rgba($cGray3, $opacity); /* Firefox v3.5+ */
+  -webkit-box-shadow:0px 0px 6px 1px rgba($cGray3, $opacity); /* Safari v3.0+ and by Chrome v0.2+ */
+  box-shadow:0px 0px 6px 1px rgba($cGray3, $opacity); /* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+  and by Opera v10.5+ */
+  -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color = #33CCCCCC ,Strength = $opacity * 10)";
+  filter:progid:DXImageTransform.Microsoft.Glow(Color = #33CCCCCC ,Strength = $opacity * 10);
+}
 @mixin glow($opacity) {
   -moz-box-shadow:0px 0px 6px 1px rgba($cWhite, $opacity); /* Firefox v3.5+ */
   -webkit-box-shadow:0px 0px 6px 1px rgba($cWhite, $opacity); /* Safari v3.0+ and by Chrome v0.2+ */
@@ -249,6 +254,18 @@ strong { font-weight: bold; } // This is sad, I know.
   color: $cWhite;
 }
 
+@mixin font($font, $font-size, $color: false) {
+
+  @if $font == "sans-serif-base"  { @extend .sans-serif-base; }
+  @if $font == "sans-serif"       { @extend .sans-serif; }
+  @if $font == "sans-serif-light" { @extend .sans-serif-light; }
+  @if $font == "sans-serif-semi"  { @extend .sans-serif-semi; }
+  @if $font == "sans-serif-bold"  { @extend .sans-serif-bold; }
+
+  @if $color      != false { color: $color; }
+  @if $font-size  != false { font-size: $font-size; }
+
+}
 
 /* MAAS */
 .home-inner {

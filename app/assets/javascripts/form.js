@@ -5,6 +5,7 @@ cdb.ui.common.FieldModel = Backbone.Model.extend({
 });
 
 cdb.ui.common.FieldView = Backbone.View.extend({
+
   tagName: "li",
 
   options: {
@@ -46,6 +47,11 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.addClass("selected");
       this.$el.find(".price").fadeIn(this.options.speed);
       this.$el.find(".ellipsis").fadeOut(this.options.speed);
+
+      if (this.model.get("type") == "radio") {
+        this.$el.find("input").removeAttr("disabled");
+      }
+
       this.$el.find("input").val(this.model.get("id"));
 
       var callback = this.model.get("callback");
@@ -55,13 +61,14 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       }
 
     } else {
+
       this.$el.find("a").removeClass("checked");
       this.$el.removeClass("selected");
       this.$el.find(".price").fadeOut(this.options.speed);
       this.$el.find(".ellipsis").fadeIn(this.options.speed);
 
       if (this.model.get("type") == "radio") {
-        this.$el.find("input").val(null);
+        this.$el.find("input").attr("disabled", "disabled");
       } else {
         this.$el.find("input").val(0);
       }
@@ -374,7 +381,7 @@ cdb.ui.common.Form = Backbone.View.extend({
   },
 
   initialize: function() {
-    _.bindAll(this, "render", "show", "hide", "recalc", "updatePrice");
+    _.bindAll(this, "render", "show", "hide", "recalc", "updatePrice", "uncheckAllFields");
 
     this.template = cdb.templates.getTemplate('templates/form/form');
 
@@ -396,6 +403,14 @@ cdb.ui.common.Form = Backbone.View.extend({
     };
 
     this.$el.find(".subtotal span").animate({ opacity:0 }, { duration: self.options.speed, easing: self.options.easing, complete: onComplete });
+  },
+
+  uncheckAllFields: function() {
+
+    this.collection.each(function(item) {
+      item.get("selected") ? item.set("selected", false) : null;
+    });
+
   },
 
   show: function() {
@@ -475,12 +490,19 @@ cdb.Router = Backbone.Router.extend({
   },
 
   page: function(page) {
+
+    if (this.lastPane) {
+      this.lastPane.uncheckAllFields();
+    }
+
     if (!page) page = defaultPageName;
 
     window.map.infowindow.hide(true);
     window.pane.active(page)
     var pane = window.pane.getActivePane();
     window.navigation.select(pane);
+
+    this.lastPane = pane;
   }
 
 });
