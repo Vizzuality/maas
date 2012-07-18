@@ -97,6 +97,13 @@ en:
         title: 'Know more'
         contact_us: 'Contact us'
   orders:
+    js:
+      description:
+        markers: "Including base interactivity, mouse-over effect and basic infowindows."
+        polygons: "Including base interactivity, mouse-over effect and basic infowindows."
+        thematic: "Including base interactivity, mouse-over effect and basic infowindows."
+        density: "Includes data process & visualization."
+        dont_know: "Just send us your data and a brief idea of what you need to analyze, and we will give you the best option to represent it and the corresponding estimate."
     new:
       templates-list:
         markers: 'Markers map'

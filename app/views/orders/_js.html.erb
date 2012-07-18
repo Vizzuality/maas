@@ -78,11 +78,11 @@
     };
 
     var data = {
-      markers:   { cartoDBLayerOptions: markersOptions, baseLayerOptions: { url: baseLayerURL,  zoom: 2,  center: [40.463667, -3.74922] },     className: "markers",   name: "Markers map" },
-      polygons:  { cartoDBLayerOptions: trianglesOptions, baseLayerOptions:   { url: baseLayerURL,  zoom: 12, center: [40.7143528, -74.1059731] }, className: "polygons",  name: "Polygons map" },
-      density:   { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.7143528, -3.7059731] },  className: "density",   name: "Bubble map" },
-      thematic:  { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 10, center: [40.463667, -3.74922] },     className: "thematic",  name: "Thematic map" },
-      dont_know: { cartoDBLayerOptions: null, baseLayerOptions:               { url: baseLayerURL2, zoom: 2,  center: [40.463667, -3.74922] },     className: "dont_know", name: "Don't know" }
+      markers:   { cartoDBLayerOptions: markersOptions,   baseLayerOptions: { url: baseLayerURL, zoom: 5,  center: [33.13755119234614, -3.71337890625] },     className: "markers",   name: "Markers map" },
+      polygons:  { cartoDBLayerOptions: trianglesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.7143528, -74.1059731] }, className: "polygons",  name: "Polygons map" },
+      density:   { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.7143528, -3.7059731] },  className: "density",   name: "Bubble map" },
+      thematic:  { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 10, center: [40.463667, -3.74922] },     className: "thematic",  name: "Thematic map" },
+      dont_know: { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.463667, -3.74922] },     className: "dont_know", name: "Don't know" }
     };
 
     var checkboxCallbacks = {
@@ -135,7 +135,7 @@
           id: <%= template.id %>, 
           price: <%= template.price %>, 
           title: "<%= template.name.humanize %>", 
-          description: "Description" 
+          description: '<%= t(".description.#{template.name}") %>', 
         },
 
         <% template.visualization_methods.each do |option| -%>

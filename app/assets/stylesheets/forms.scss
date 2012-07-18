@@ -264,7 +264,41 @@ form {
   border: 1px solid #9A9A9A;
 }
 
-form .map {
+.dontknow {
+
+  z-index:1000;
+
+  .message {
+
+    opacity: 0;
+    left: -100px;
+
+    @include position(50px, false, false, 50px);
+
+    h2 {
+      width: 400px;
+      margin: 0 0 10px 0;
+
+      @include font("sans-serif", 42px, $cWhite);
+      @include text-shadow(rgba($cGray0, 0.5) 1px 1px 2px);
+    }
+
+    p {
+      width: 340px;
+
+      line-height: 20px;
+      @include font("sans-serif", 18px, $cWhite);
+      @include text-shadow(rgba($cGray0, 0.5) 1px 1px 2px);
+    }
+
+  }
+
+  .browsers {
+    @include position(false, 0, 0px, false);
+    @include size(552px, 220px);
+    @include icons-sprite(browsers);
+  }
+
 }
 
 form .map {

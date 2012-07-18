@@ -217,7 +217,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var self = this;
 
-    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPage");
+    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPage", "loadLayers");
 
     //$(document).bind('keydown', this.keydown);
 
@@ -316,47 +316,67 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   showPage: function(pane) {
     var self = this;
 
-    var baseLayerOptions = pane.options.data.baseLayerOptions;
+    // Callback: after the animations, unload & load the layers
+    var loadLayers = function() {
 
-    $("#map").fadeOut(200, function() {
-      $(".map").animate({ height: 463 }, { duration: 250, easing: "easeInCirc" });
-    });
-
-    var onComplete = function() {
-
-      try { // Removes previously loaded layers
-
-        if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
-        if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
-      } catch(err) {
-
-        console.log(err);
-
-      }
-
-      // Add base layer
-      var layer      = new cdb.geo.TileLayer({ urlTemplate: baseLayerOptions.url });
-      this.baseLayer = window.map.addLayer(layer);
-
-      var options = pane.options.data.cartoDBLayerOptions;
-
-      if (options) { // Add CartoDB layer
-
-        layer             = new cdb.geo.CartoDBLayer(options);
-        this.cartoDBLayer = window.map.addLayer(layer);
-
-      } else this.cartoDBLayer = null;
-
-      $("#map").fadeIn(150, function() {
-        $(".browser").animate({ bottom: -70 }, 150, function() {
-          self.animating = false;
-          window.map.setView(baseLayerOptions.center, baseLayerOptions.zoom);
-        });
-      });
+      self.loadLayers(pane.options.data.cartoDBLayerOptions, pane.options.data.baseLayerOptions);
 
     };
 
-    $(".browser").fadeIn({ duration: 250, easing: "easeOutExpo", complete: onComplete });
+    // Callback: shows the map and makes it ready to show the layers
+    var showMap = function() {
+
+      $("#map").fadeOut(200, function() {
+
+        $(".map").animate({ height: 463 }, { duration: 250, easing: "easeOutExpo" });
+        $(".browser").fadeIn({ duration: 250, easing: "easeOutExpo", complete: loadLayers });
+
+      });
+
+    }
+
+    // Hide the 'I don't know' divs
+    $(".dontknow .browsers").animate({ opacity: 0, bottom: -100}, 250);
+    $(".dontknow .message").animate({  opacity: 0, left: -100}, 250, showMap);
+
+  },
+
+  loadLayers:  function(cartoDBLayerOptions, baseLayerOptions) {
+
+    try { // Removes previously loaded layers
+
+      if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
+      if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
+    } catch(err) {
+
+      console.log(err);
+
+    }
+
+    // Add base layer
+    var layer      = new cdb.geo.TileLayer({ urlTemplate: baseLayerOptions.url });
+    this.baseLayer = window.map.addLayer(layer);
+
+    if (cartoDBLayerOptions) { // Add CartoDB layer
+
+      layer             = new cdb.geo.CartoDBLayer(cartoDBLayerOptions);
+      this.cartoDBLayer = window.map.addLayer(layer);
+
+    } else this.cartoDBLayer = null;
+
+    $("#map").fadeIn(150, function() {
+      $(".browser").animate({ bottom: -70 }, 150, function() {
+        self.animating = false;
+        window.map.setView(baseLayerOptions.center, baseLayerOptions.zoom);
+      });
+    });
+
+  },
+
+  showDontKnowMessage: function() {
+    $(".dontknow .browsers").animate({ opacity: 1, bottom: 0}, 250);
+    $(".dontknow .message").animate( { opacity: 1, left: 50 }, 250);
+    self.animating = false;
   },
 
   showDontKnow: function() {
@@ -364,9 +384,9 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     $("#map").fadeOut(250, function() {
       $(".browser").fadeOut({ duration: 250, easing: "easeInExpo" });
-      $(".map").animate({ height: 300 }, { duration: 250, easing: "easeInCirc" });
-      self.animating = false;
+      $(".map").animate({ height: 250 }, { duration: 250, easing: "easeInExpo", complete: self.showDontKnowMessage });
     });
+
   }
 
 });
