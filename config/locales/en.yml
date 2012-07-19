@@ -98,6 +98,20 @@ en:
         contact_us: 'Contact us'
   orders:
     js:
+      option:
+        description: 
+          rectangular_grid: "Group and represent data using a rectangular grid"
+          dynamic_filters: "This allows you to filter the polygons in your map dynamically."
+          different_styles_for_different_types_of_polygons: "This allow you to visual differentiate the polygons- styles may change"
+          hexagonal_grid: "Group and represent data using an hexagonal grid"
+          variable_selection: "This allows your users to toggle between different variables to visualize."
+          custom_infowindows: "This includes an ad-hoc design for your map infowindows."
+          custom_regions: "Define the geographic regions you want to use instead of the default ones."
+          infographic_map: "Remove base layer and leave only your data."
+          bubble_map: "Show values through bubbles of different size."
+          choropleth_map: "Show values coloring the geographic features in different colors or intensities."
+          dynamic_clusters: "Creates a cluster when a lot of points are close each other - styles may change-."
+          different_markers_for_different_categories: "This allow you to visual differentiate the features - styles may change-."
       description:
         markers: "Including base interactivity, mouse-over effect and basic infowindows."
         polygons: "Including base interactivity, mouse-over effect and basic infowindows."

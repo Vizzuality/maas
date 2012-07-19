@@ -11,7 +11,7 @@ FactoryGirl.define do
       after(:create) do |template, evaluator|
         FactoryGirl.create(:dynamic_filters,    template: template)
         FactoryGirl.create(:custom_infowindows, template: template)
-        FactoryGirl.create(:different_markers,  template: template)
+        FactoryGirl.create(:different_markers_for_different_categories,   template: template)
         FactoryGirl.create(:dynamic_clusters,   template: template)
       end
     end
@@ -23,7 +23,7 @@ FactoryGirl.define do
       after(:create) do |template, evaluator|
         FactoryGirl.create(:dynamic_filters,    template: template)
         FactoryGirl.create(:custom_infowindows, template: template)
-        FactoryGirl.create(:different_polygons,  template: template)
+        FactoryGirl.create(:different_styles_for_different_types_of_polygons,  template: template)
       end
     end
 
@@ -32,7 +32,7 @@ FactoryGirl.define do
       price 2000
 
       after(:create) do |template, evaluator|
-        FactoryGirl.create(:choropleth, template: template)
+        FactoryGirl.create(:choropleth_map, template: template)
         FactoryGirl.create(:bubble,     template: template)
 
         FactoryGirl.create(:variable_selection, template: template)

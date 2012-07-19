@@ -78,40 +78,44 @@
     };
 
     var data = {
-      markers:   { cartoDBLayerOptions: markersOptions,   baseLayerOptions: { url: baseLayerURL, zoom: 5,  center: [33.13755119234614, -3.71337890625] },     className: "markers",   name: "Markers map" },
-      polygons:  { cartoDBLayerOptions: trianglesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.7143528, -74.1059731] }, className: "polygons",  name: "Polygons map" },
-      density:   { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.7143528, -3.7059731] },  className: "density",   name: "Bubble map" },
-      thematic:  { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 10, center: [40.463667, -3.74922] },     className: "thematic",  name: "Thematic map" },
-      dont_know: { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.463667, -3.74922] },     className: "dont_know", name: "Don't know" }
+      markers:   { cartoDBLayerOptions: markersOptions,   baseLayerOptions: { url: baseLayerURL, zoom: 5,  center: [33.13755, -3.71337] }, className: "markers",   name: "Markers map" },
+      polygons:  { cartoDBLayerOptions: trianglesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.71435, -73.9000] }, className: "polygons",  name: "Polygons map" },
+      density:   { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.71435, -3.70597] }, className: "density",   name: "Bubble map" },
+      thematic:  { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 10, center: [40.46366, -3.74922] }, className: "thematic",  name: "Thematic map" },
+      dont_know: { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.46366, -3.74922] }, className: "dont_know", name: "Don't know" }
     };
 
     var checkboxCallbacks = {
-      dynamic_filters:    { on: function() { console.log('a'); }, off: function() { } },
-      custom_infowindows: { 
-        on: function() { 
+      markers: {
 
-          legend.collection = new cdb.geo.ui.LegendItems([ 
-            { className: "light_blue", name: "1-10 stops" },
-            { className: "blue",       name: "11-50 stops" },
-            { className: "light_red",  name: "51-100" },
-            { className: "red",        name: "> 100 stops" }
-          ]);
+        custom_infowindows: { 
 
-          mapView.$el.append(legend.render().$el);
+          on: function() { 
 
-          legend.show();
-        }, 
-        off: function() {
-          legend.hide();
+            legend.collection = new cdb.geo.ui.LegendItems([ 
+              { className: "light_blue", name: "1-10 stops" },
+              { className: "blue",       name: "11-50 stops" },
+              { className: "light_red",  name: "51-100" },
+              { className: "red",        name: "> 100 stops" }
+            ]);
+
+            mapView.$el.append(legend.render().$el);
+
+            legend.show();
+          }, 
+
+          off: function() { legend.hide() }  
+
         } 
-      },
+      }, 
 
-      different_markers:  { on: function() { console.log('c'); }, off: function() { } },
-      dynamic_clusters:   { on: function() { console.log('d'); }, off: function() { } },
-      different_polygons: { on: function() { console.log('e'); }, off: function() { } },
-      custom_regions:     { on: function() { console.log('e'); }, off: function() { } },
-      variable_selection: { on: function() { console.log('e'); }, off: function() { } }
+      polygons:  {},
+      density:   {},
+      thematic:  {},
+      dont_know: {}
+
     };
+
 
     var radioCallbacks = {
       markers:   function() { console.log('a'); },
@@ -148,13 +152,13 @@
             id: "<%= option.id %>", 
             price: 0, 
             title: "<%= option.name.humanize %>", 
-            description: "Description" 
+            description: '<%= t(".option.description.#{option.name}") %>'
           },
         <% end -%>
 
-        <% template.options.each do |option| -%>
+        <% template.options.each do |option, i| -%>
           { 
-            callback: checkboxCallbacks.<%= option.name %>, 
+            callback: checkboxCallbacks.<%= template.name %>.<%= option.name %>, 
             className: null, 
             checked: false,
             name: "template_option", 
@@ -162,7 +166,7 @@
             id: "<%= option.id %>", 
             price: <%= option.price %>, 
             title: "<%= option.name.humanize %>", 
-            description: "<%#= option.description %>" 
+            description: '<%= t(".option.description.#{option.name}") %>'
           },
         <% end -%>
       ]);

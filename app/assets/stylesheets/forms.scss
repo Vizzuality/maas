@@ -294,7 +294,7 @@ form {
   }
 
   .browsers {
-    @include position(false, 0, 0px, false);
+    @include position(false, 0, 0, false);
     @include size(552px, 220px);
     @include icons-sprite(browsers);
   }

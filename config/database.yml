@@ -5,16 +5,16 @@ development:
   username: postgres
   password:
 
-test:
-  adapter: postgresql
-  host: localhost
-  database: maas_test
-  username: postgres
-  password:
+#test:
+  #adapter: postgresql
+  #host: localhost
+  #database: maas_test
+  #username: postgres
+  #password:
 
-production:
-  adapter: postgresql
-  host: localhost
-  database: maas_production
-  username: postgres
-  password:
+#production:
+  #adapter: postgresql
+  #host: localhost
+  #database: maas_production
+  #username: postgres
+  #password:
