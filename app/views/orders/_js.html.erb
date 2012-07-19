@@ -30,11 +30,12 @@
     })
 
     // Adds Infowindow
-    var infowindowModel = new cdb.geo.ui.InfowindowModel({ });
+    var infowindowModel = new cdb.geo.ui.InfowindowModel({
+      template_name: 'templates/map/infowindow'
+    });
 
     var infowindow = new cdb.geo.ui.Infowindow({
       model: infowindowModel,
-      template: cdb.templates.getTemplate('templates/map/infowindow'),
       mapView: mapView
     });
 
@@ -49,7 +50,8 @@
 
     var // layer URLs
     baseLayerURL  = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
-    baseLayerURL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+    baseLayerURL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+    terrainURL    = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
 
     var trianglesOptions = {
       user_name: "viz2",
@@ -68,21 +70,33 @@
       featureOut:   function() { document.body.style.cursor = "default"; },
       featureClick: function(ev, latlng, pos, data) {
 
-        var parsedData = JSON.parse(data.latlng);
-        var latlng = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
+        var // get coordinates of the marker
+        parsedData = JSON.parse(data.latlng),
+        latlng = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
-        infowindow.setLatLng(latlng);
-        infowindowModel.set("content", data);
+        infowindow.model.set({ template_name: 'templates/map/infowindow_big', content: data, lat: latlng.lat, lng: latlng.lng });
         infowindow.showInfowindow();
       }
     };
 
+    var choroplethOptions = {
+      user_name: 'maas',
+      table_name: 'choropleth',
+      query: 'SELECT cartodb_id, pop_est, the_geom_webmercator FROM {{table_name}}'
+    };
+
+    var polygonOptions = {
+      user_name: 'maas',
+      table_name: 'polygons',
+      query: 'SELECT cartodb_id, the_geom_webmercator FROM {{table_name}}'
+    };
+
     var data = {
-      markers:   { cartoDBLayerOptions: markersOptions,   baseLayerOptions: { url: baseLayerURL, zoom: 5,  center: [33.13755, -3.71337] }, className: "markers",   name: "Markers map" },
-      polygons:  { cartoDBLayerOptions: trianglesOptions, baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.71435, -73.9000] }, className: "polygons",  name: "Polygons map" },
-      density:   { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.71435, -3.70597] }, className: "density",   name: "Bubble map" },
-      thematic:  { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 10, center: [40.46366, -3.74922] }, className: "thematic",  name: "Thematic map" },
-      dont_know: { cartoDBLayerOptions: null,             baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.46366, -3.74922] }, className: "dont_know", name: "Don't know" }
+      markers:   { cartoDBLayerOptions: markersOptions,    baseLayerOptions: { url: baseLayerURL, zoom: 5,  center: [33.13755, -3.71337] }, className: "markers",   name: "Markers map"  },
+      polygons:  { cartoDBLayerOptions: polygonOptions,    baseLayerOptions: { url: terrainURL,   zoom: 5,  center: [40.14528, -3.82324] }, className: "polygons",  name: "Polygons map" },
+      density:   { cartoDBLayerOptions: trianglesOptions,  baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.71435, -73.9000] }, className: "density",   name: "Bubble map"   },
+      thematic:  { cartoDBLayerOptions: choroplethOptions, baseLayerOptions: { url: baseLayerURL, zoom: 3,  center: [43.06888, 29.35545] }, className: "thematic",  name: "Thematic map" },
+      dont_know: { cartoDBLayerOptions: null,              baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.46366, -3.74922] }, className: "dont_know", name: "Don't know"   }
     };
 
     var checkboxCallbacks = {
