@@ -4,12 +4,12 @@ FactoryGirl.define do
 
   factory :visualization_method do
 
-    factory :choropleth do
-      name "choropleth"
+    factory :choropleth_map do
+      name "choropleth_map"
     end
 
-    factory :bubble do
-      name "bubble"
+    factory :bubble_map do
+      name "bubble_map"
     end
 
     factory :rectangular_grid do

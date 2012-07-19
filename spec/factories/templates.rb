@@ -32,8 +32,8 @@ FactoryGirl.define do
       price 2000
 
       after(:create) do |template, evaluator|
+        FactoryGirl.create(:bubble_map,     template: template)
         FactoryGirl.create(:choropleth_map, template: template)
-        FactoryGirl.create(:bubble,     template: template)
 
         FactoryGirl.create(:variable_selection, template: template)
         FactoryGirl.create(:custom_infowindows, template: template)

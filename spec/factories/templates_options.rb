@@ -44,16 +44,6 @@ FactoryGirl.define do
       price 350
     end
 
-    factory :choropleth_map  do
-      name 'choropleth_map'
-      price 350
-    end
-
-    factory :bubble_map do
-      name 'bubble_map'
-      price 350
-    end
-
     factory :custom_regions do
       name 'custom_regions'
       price 350

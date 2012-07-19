@@ -105,10 +105,23 @@ cdb.ui.common.Fields = Backbone.Collection.extend({
 
 cdb.ui.common.FormModel = Backbone.Model.extend({
 
+  attributes: {
+    name: "",
+    email: "",
+    comment: ""
+  },
+
   selectedFields: [],
+
   defaults: {
     base: 0,
     total: 0
+  },
+
+  validate: function(attrs) {
+    if (attrs.name == "" || attrs.email == "") {
+      return "can't end before it starts";
+    }
   },
 
   sub: function(field) {
@@ -217,7 +230,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var self = this;
 
-    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPage", "loadLayers");
+    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPage", "loadLayers", "loadBaseLayer", "loadCartoDBLayer", "removeLayers", "centerMap");
 
     //$(document).bind('keydown', this.keydown);
 
@@ -318,9 +331,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     // Callback: after the animations, unload & load the layers
     var loadLayers = function() {
-
       self.loadLayers(pane.options.data.cartoDBLayerOptions, pane.options.data.baseLayerOptions);
-
     };
 
     // Callback: shows the map and makes it ready to show the layers
@@ -341,36 +352,56 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   },
 
-  loadLayers:  function(cartoDBLayerOptions, baseLayerOptions) {
+  loadLayers: function(cartoDBLayerOptions, baseLayerOptions) {
+
+    this.removeLayers();
+    this.loadBaseLayer(baseLayerOptions);
+    this.loadCartoDBLayer(cartoDBLayerOptions);
+    this.centerMap(baseLayerOptions.center, baseLayerOptions.zoom);
+
+  },
+
+  centerMap: function(center, zoom) {
+
+  var self = this;
+
+    $("#map").fadeIn(150, function() {
+      $(".browser").animate({ bottom: -70 }, 150, function() {
+        self.animating = false;
+        window.map.setView(center, zoom);
+      });
+    });
+
+  },
+
+  loadBaseLayer: function(options) {
+
+    var layer      = new cdb.geo.TileLayer({ urlTemplate: options.url });
+    this.baseLayer = window.map.addLayer(layer);
+
+  },
+
+  loadCartoDBLayer: function(options) {
+
+  console.log(options);
+
+    if (options) {
+      layer             = new cdb.geo.CartoDBLayer(options);
+      this.cartoDBLayer = window.map.addLayer(layer);
+    } else this.cartoDBLayer = null;
+
+  },
+
+  removeLayers: function() {
 
     try { // Removes previously loaded layers
 
       if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
       if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
-    } catch(err) {
-
-      console.log(err);
+    }
+    catch(err) {
 
     }
-
-    // Add base layer
-    var layer      = new cdb.geo.TileLayer({ urlTemplate: baseLayerOptions.url });
-    this.baseLayer = window.map.addLayer(layer);
-
-    if (cartoDBLayerOptions) { // Add CartoDB layer
-
-      layer             = new cdb.geo.CartoDBLayer(cartoDBLayerOptions);
-      this.cartoDBLayer = window.map.addLayer(layer);
-
-    } else this.cartoDBLayer = null;
-
-    $("#map").fadeIn(150, function() {
-      $(".browser").animate({ bottom: -70 }, 150, function() {
-        self.animating = false;
-        window.map.setView(baseLayerOptions.center, baseLayerOptions.zoom);
-      });
-    });
-
   },
 
   showDontKnowMessage: function() {
@@ -400,6 +431,14 @@ cdb.ui.common.Form = Backbone.View.extend({
 
   },
 
+  events: {
+    "click .button":          "open"
+  },
+
+  open: function() {
+    console.log('open');
+  },
+
   initialize: function() {
     _.bindAll(this, "render", "show", "hide", "recalc", "updatePrice", "uncheckAllFields");
 
@@ -407,6 +446,10 @@ cdb.ui.common.Form = Backbone.View.extend({
 
     this.model = new cdb.ui.common.FormModel();
     this.model.bind("change:total", this.updatePrice, this);
+
+    this.model.on("error", function(model, error) {
+      alert(model.get("name") + " " + error);
+    });
 
     this.render();
 

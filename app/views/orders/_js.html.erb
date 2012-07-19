@@ -120,7 +120,26 @@
 
           off: function() { legend.hide() }  
 
-        } 
+      },
+
+      different_markers_for_different_categories: {
+
+        on: function() {
+          console.log(window.navigation);
+          
+          window.map.removeLayerByCid(window.navigation.cartoDBLayer);
+          window.navigation.loadCartoDBLayer(polygonOptions);
+
+        },
+
+        off: function() {
+
+          window.map.removeLayerByCid(window.navigation.cartoDBLayer);
+          window.navigation.loadCartoDBLayer(markersOptions);
+
+        }
+
+      }
       }, 
 
       polygons:  {},
