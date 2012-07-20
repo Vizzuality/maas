@@ -34,7 +34,6 @@ cdb.ui.common.FieldView = Backbone.View.extend({
   },
 
   toggleDisabled: function() {
-    console.log(this.model.get("title"), " is ", this.model.get("disabled") ? "disabled" : "active");
 
     if (this.model.get("disabled")) {
       this.$el.find("input").attr("disabled", "disabled");
@@ -127,12 +126,6 @@ cdb.ui.common.FormModel = Backbone.Model.extend({
     total: 0
   },
 
-  validate: function(attrs) {
-    if (attrs.name == "" || attrs.email == "") {
-      return "can't end before it starts";
-    }
-  },
-
   sub: function(field) {
 
     if (field.get('type') == 'checkbox') {
@@ -179,7 +172,17 @@ cdb.ui.common.NavigationItemModel = Backbone.Model.extend({
 });
 
 cdb.ui.common.NavigationItems = Backbone.Collection.extend({
-  model: cdb.ui.common.NavigationItemModel
+  model: cdb.ui.common.NavigationItemModel,
+  next: function() {
+
+    var active = this.find(function(p) { return p.get("selected"); });
+    var i = this.indexOf(active) + 1;
+    if (i > this.length + 1) i = 0;
+
+    return this.at(i);
+
+
+  }
 });
 
 cdb.ui.common.NavigationItem = Backbone.View.extend({
@@ -275,13 +278,15 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     if (this.animating) return;
 
-    //var pos = this.selectedPage + 1;
-    //if (pos >= this.collection.length) pos = 0;
-    //var name = this.collection.at(pos).get("className");
-    //this.select(name);
+    var n = this.collection.next();
 
-    //window.router.navigate("orders/new/" + name);
-    //window.pane.active(name);
+    var pageName = n.get("className");
+
+    //var pane = window.pane.active(pageName)
+    //console.log(pane);
+    //window.navigation.select(pane);
+    //window.router.navigate("orders/new/" + pageName);
+
   },
 
   render: function() {
@@ -457,20 +462,20 @@ cdb.ui.common.Form = Backbone.View.extend({
     this.model = new cdb.ui.common.FormModel();
     this.model.bind("change:total", this.updatePrice, this);
 
-    this.model.on("error", function(model, error) {
-      alert(model.get("name") + " " + error);
-    });
-
     this.render();
 
   },
 
+  // Enables all the fields in the form
   enableFields: function() {
+
     this.collection.each(function(field) {
       field.set("disabled", false);
     });
+
   },
 
+  // Disable all the fields in the form
   disableFields: function() {
 
     this.collection.each(function(field) {
@@ -584,7 +589,6 @@ cdb.Router = Backbone.Router.extend({
     var pane = window.pane.active(pageName)
     window.navigation.select(pane);
 
-    this.lastPane = pane;
   }
 
 });
