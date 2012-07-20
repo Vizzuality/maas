@@ -169,6 +169,7 @@
           type: false, 
           id: <%= template.id %>, 
           price: <%= template.price %>, 
+          disabled: true,
           title: "<%= template.name.humanize %>", 
           description: '<%= t(".description.#{template.name}") %>', 
         },
@@ -182,6 +183,7 @@
             type: 'radio', 
             name: "visualization_method_id", 
             id: "<%= option.id %>", 
+            disable: true,
             price: 0, 
             title: "<%= option.name.humanize %>", 
             description: '<%= t(".option.description.#{option.name}") %>'
@@ -193,6 +195,7 @@
             callback: checkboxCallbacks.<%= template.name %>.<%= option.name %>, 
             className: <%= ( i == 0 && template.visualization_methods.size > 0 ) ? "'separator'" : "null" %>, 
             checked: false,
+            disable: true,
             name: "template_option", 
             type: 'checkbox', 
             id: "<%= option.id %>", 

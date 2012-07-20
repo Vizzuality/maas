@@ -1,6 +1,7 @@
 cdb.ui.common.FieldModel = Backbone.Model.extend({
   defaults: {
-    selected: false
+    selected: false,
+    disabled: true
   }
 });
 
@@ -28,6 +29,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
     this.templateFixed = cdb.templates.getTemplate('templates/form/fixed');
 
     this.model.bind("change:selected", this.toggle, this);
+    this.model.bind("change:disabled", this.render, this);
 
   },
 
@@ -48,10 +50,6 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.find(".price").fadeIn(this.options.speed);
       this.$el.find(".ellipsis").fadeOut(this.options.speed);
 
-      if (this.model.get("type") == "radio") {
-        this.$el.find("input").removeAttr("disabled");
-      }
-
       this.$el.find("input").val(this.model.get("id"));
 
       var callback = this.model.get("callback");
@@ -67,9 +65,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.find(".price").fadeOut(this.options.speed);
       this.$el.find(".ellipsis").fadeIn(this.options.speed);
 
-      if (this.model.get("type") == "radio") {
-        this.$el.find("input").attr("disabled", "disabled");
-      } else {
+      if (this.model.get("type") != "radio") {
         this.$el.find("input").val(0);
       }
 
@@ -309,11 +305,19 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     this.animating = true;
     this.moveTip(pane);
 
-    // Disables all the options
-    $(".option").attr("disabled", "disabled");
+    //console.log(pane);
 
-    // Enable the options of the current pane
-    pane.$el.find("input[type='hidden']").removeAttr("disabled");
+    //pane.collection.each(function(field) {
+      //field.set("disabled", false);
+    //});
+    //console.log(this.collection);
+
+    this.collection.each(function(p) {
+    console.log("pane", p, pane, pane == p);
+
+      if (p == pane) pane.enableFields();
+      else pane.disableFields();
+    });
 
     // Shows pane
     pane.className == "dont_know" ? this.showDontKnow() : this.showPane(pane);
@@ -438,7 +442,7 @@ cdb.ui.common.Form = Backbone.View.extend({
   },
 
   initialize: function() {
-    _.bindAll(this, "render", "show", "hide", "recalc", "updatePrice", "uncheckAllFields");
+    _.bindAll(this, "render", "show", "hide", "recalc", "updatePrice", "enableFields", "disableFields", "uncheckAllFields");
 
     this.template = cdb.templates.getTemplate('templates/form/form');
 
@@ -451,6 +455,20 @@ cdb.ui.common.Form = Backbone.View.extend({
 
     this.render();
 
+  },
+
+  enableFields: function() {
+  console.log("enabling", this);
+    this.collection.each(function(field) {
+      field.set("disabled", false);
+    });
+  },
+
+  disableFields: function() {
+
+    this.collection.each(function(field) {
+      field.set("disabled", true);
+    });
   },
 
   updatePrice: function() {
@@ -468,8 +486,8 @@ cdb.ui.common.Form = Backbone.View.extend({
 
   uncheckAllFields: function() {
 
-    this.collection.each(function(item) {
-      item.get("selected") ? item.set("selected", false) : null;
+    this.collection.each(function(field) {
+      field.get("selected") ? field.set("selected", false) : null;
     });
 
   },
@@ -512,7 +530,7 @@ cdb.ui.common.Form = Backbone.View.extend({
 
       }
 
-      field.bind("change:selected", self.recalc, field, self);
+      field.bind("change:selected", self.recalc, field);
 
       if (field.get('type') == false ||field.get('checked') == true)  {
         field.set({ selected: true });
@@ -551,17 +569,15 @@ cdb.Router = Backbone.Router.extend({
     "orders/new/:page": "page"
   },
 
-  page: function(page) {
+  page: function(pageName) {
 
-    if (this.lastPane) {
+    /*if (this.lastPane) {
       this.lastPane.uncheckAllFields();
-    }
+    }*/
 
-    if (!page) page = defaultPageName;
+    if (!pageName) pageName = defaultPageName;
 
-    window.map.infowindow.hide(true);
-    window.pane.active(page)
-    var pane = window.pane.getActivePane();
+    var pane = window.pane.active(pageName)
     window.navigation.select(pane);
 
     this.lastPane = pane;
