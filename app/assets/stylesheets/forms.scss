@@ -271,9 +271,8 @@ form {
   .message {
 
     opacity: 0;
-    left: -100px;
 
-    @include position(50px, false, false, 50px);
+    @include position(50px, false, false, -100px);
 
     h2 {
       width: 400px;
@@ -294,6 +293,8 @@ form {
   }
 
   .browsers {
+    opacity: 0;
+
     @include position(false, 0, 0, false);
     @include size(552px, 220px);
     @include icons-sprite(browsers);
@@ -337,11 +338,13 @@ form .map {
 #container > div { display: none; position:relative; }
 
 .circle {
+
   display:none;
 
   @include position(70px, 183px, false, false);
   @include size(92px);
   @include icons-sprite(map-updated-circle);
+
 }
 
 form section {
@@ -385,9 +388,7 @@ form section {
 
     .icon {
       float:left;
-
       margin: 0 7px 0 3px;
-
       @include size(15px, 16px);
 
       @include icons-sprite(clip);

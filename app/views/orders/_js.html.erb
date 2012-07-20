@@ -189,10 +189,10 @@
           },
         <% end -%>
 
-        <% template.options.each do |option, i| -%>
+        <% template.options.each_with_index do |option, i| -%>
           { 
             callback: checkboxCallbacks.<%= template.name %>.<%= option.name %>, 
-            className: null, 
+            className: <%= ( i == 0 && template.visualization_methods.size > 0 ) ? "'separator'" : "null" %>, 
             checked: false,
             name: "template_option", 
             type: 'checkbox', 
