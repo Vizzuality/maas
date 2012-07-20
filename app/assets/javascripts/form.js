@@ -230,7 +230,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var self = this;
 
-    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPage", "loadLayers", "loadBaseLayer", "loadCartoDBLayer", "removeLayers", "centerMap");
+    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPane", "loadLayers", "loadBaseLayer", "loadCartoDBLayer", "removeLayers", "centerMap");
 
     //$(document).bind('keydown', this.keydown);
 
@@ -306,8 +306,10 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     $item = $(".navigation ul li a." + pane.className).parent(),
     posX  = $item.position().left + ( $item.width() / 2 ) - 13;
 
-    this.moveTip(posX);
     this.animating = true;
+    this.moveTip(posX);
+
+    console.log(pane);
 
     // Disables all the options
     $(".option").attr("disabled", "disabled");
@@ -315,23 +317,21 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     // Enable the options of the current pane
     pane.$el.find("input[type='hidden']").removeAttr("disabled");
 
-    if (pane.className == "dont_know") {
-      this.showDontKnow();
-    } else {
-      this.showPage(pane);
-    }
+    // Shows pane
+    pane.className == "dont_know" ? this.showDontKnow() : this.showPane(pane);
 
     $("#default_page").val(pane.id);
-    $("#default_page_name").val(pane.className);
 
   },
 
-  showPage: function(pane) {
+  showPane: function(pane) {
     var self = this;
 
     // Callback: after the animations, unload & load the layers
     var loadLayers = function() {
+
       self.loadLayers(pane.options.data.cartoDBLayerOptions, pane.options.data.baseLayerOptions);
+
     };
 
     // Callback: shows the map and makes it ready to show the layers
