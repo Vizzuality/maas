@@ -74,7 +74,7 @@
         parsedData = JSON.parse(data.latlng),
         latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
-        infowindow.model.set({ template_name: 'templates/map/infowindow_big', content: data, lat: latlng.lat, lng: latlng.lng });
+        infowindow.model.set({ template_name: 'templates/map/infowindow_big', content: data, latlng: [latlng.lat, latlng.lng] });
         infowindow.showInfowindow();
       }
     };
