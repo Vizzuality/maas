@@ -294,7 +294,11 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     return this.$el;
   },
 
-  moveTip: function(posX) {
+  moveTip: function(pane) {
+
+    var
+    $item = $(".navigation ul li a." + pane.className).parent(),
+    posX  = $item.position().left + ( $item.width() / 2 ) - 13;
 
     $(".tip").animate({ left: posX }, { duration: this.options.speed, easing: this.options.easing } );
 
@@ -302,14 +306,8 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   select: function(pane) {
 
-    var
-    $item = $(".navigation ul li a." + pane.className).parent(),
-    posX  = $item.position().left + ( $item.width() / 2 ) - 13;
-
     this.animating = true;
-    this.moveTip(posX);
-
-    console.log(pane);
+    this.moveTip(pane);
 
     // Disables all the options
     $(".option").attr("disabled", "disabled");
@@ -326,6 +324,9 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   showPane: function(pane) {
     var self = this;
+
+    // Hides the infowindow
+    window.map.infowindow.model.set("visibility", false);
 
     // Callback: after the animations, unload & load the layers
     var loadLayers = function() {
@@ -383,8 +384,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   loadCartoDBLayer: function(options) {
 
-  console.log(options);
-
     if (options) {
       layer             = new cdb.geo.CartoDBLayer(options);
       this.cartoDBLayer = window.map.addLayer(layer);
@@ -436,7 +435,6 @@ cdb.ui.common.Form = Backbone.View.extend({
   },
 
   open: function() {
-    console.log('open');
   },
 
   initialize: function() {
