@@ -29,7 +29,18 @@ cdb.ui.common.FieldView = Backbone.View.extend({
     this.templateFixed = cdb.templates.getTemplate('templates/form/fixed');
 
     this.model.bind("change:selected", this.toggle, this);
-    this.model.bind("change:disabled", this.render, this);
+    this.model.bind("change:disabled", this.toggleDisabled, this);
+
+  },
+
+  toggleDisabled: function() {
+    console.log(this.model.get("title"), " is ", this.model.get("disabled") ? "disabled" : "active");
+
+    if (this.model.get("disabled")) {
+      this.$el.find("input").attr("disabled", "disabled");
+    } else {
+      this.$el.find("input").removeAttr("disabled");
+    }
 
   },
 
@@ -87,8 +98,10 @@ cdb.ui.common.FieldView = Backbone.View.extend({
     } else {
       this.$el.append(this.template(this.model.toJSON()));
     }
+
     return this.$el;
   }
+
 });
 
 cdb.ui.common.FieldViewFixed = cdb.ui.common.FieldView.extend({
@@ -305,21 +318,16 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     this.animating = true;
     this.moveTip(pane);
 
-    //console.log(pane);
-
-    //pane.collection.each(function(field) {
-      //field.set("disabled", false);
-    //});
-    //console.log(this.collection);
-
     this.collection.each(function(p) {
-    console.log("pane", p, pane, pane == p);
+      var paneName = p.get("className");
+      var _pane = window.pane.getPane(paneName);
 
-      if (p == pane) pane.enableFields();
-      else pane.disableFields();
+      if (pane == _pane) _pane.enableFields();
+      else _pane.disableFields();
+
     });
 
-    // Shows pane
+    // Shows pane (TODO: move to the view)
     pane.className == "dont_know" ? this.showDontKnow() : this.showPane(pane);
 
     $("#default_page").val(pane.id);
@@ -458,7 +466,6 @@ cdb.ui.common.Form = Backbone.View.extend({
   },
 
   enableFields: function() {
-  console.log("enabling", this);
     this.collection.each(function(field) {
       field.set("disabled", false);
     });
@@ -469,6 +476,7 @@ cdb.ui.common.Form = Backbone.View.extend({
     this.collection.each(function(field) {
       field.set("disabled", true);
     });
+
   },
 
   updatePrice: function() {
@@ -570,10 +578,6 @@ cdb.Router = Backbone.Router.extend({
   },
 
   page: function(pageName) {
-
-    /*if (this.lastPane) {
-      this.lastPane.uncheckAllFields();
-    }*/
 
     if (!pageName) pageName = defaultPageName;
 
