@@ -523,8 +523,9 @@ cdb.ui.common.Form = Backbone.View.extend({
       if (field.get('type') == false)  {
         self.$el.find(".fixed").append(fieldView.render());
       } else {
-        self.$el.find(".test").append(fieldView.render());
+        self.$el.find(".other").append(fieldView.render());
       }
+
     });
 
     this.$el.find(".total").show();

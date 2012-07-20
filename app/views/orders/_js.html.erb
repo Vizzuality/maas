@@ -72,7 +72,7 @@
 
         var // get coordinates of the marker
         parsedData = JSON.parse(data.latlng),
-        latlng = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
+        latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
         infowindow.model.set({ template_name: 'templates/map/infowindow_big', content: data, lat: latlng.lat, lng: latlng.lng });
         infowindow.showInfowindow();
@@ -125,7 +125,6 @@
       different_markers_for_different_categories: {
 
         on: function() {
-          console.log(window.navigation);
           
           window.map.removeLayerByCid(window.navigation.cartoDBLayer);
           window.navigation.loadCartoDBLayer(polygonOptions);
@@ -166,7 +165,7 @@
         { 
           callback: null, 
           className: null, 
-          chtecked: false,
+          checked: false,
           name: "", 
           type: false, 
           id: <%= template.id %>, 
@@ -175,11 +174,12 @@
           description: '<%= t(".description.#{template.name}") %>', 
         },
 
-        <% template.visualization_methods.each do |option| -%>
+        <% template.visualization_methods.each_with_index do |option, i| -%>
           { 
             callback: radioCallbacks.<%= option.name %>, 
             className: null, 
-            checked: false,
+            checked: <%= i == 0 ? "true" : "false" %>,
+            value: <%= option.id %>,
             type: 'radio', 
             name: "visualization_method_id", 
             id: "<%= option.id %>", 

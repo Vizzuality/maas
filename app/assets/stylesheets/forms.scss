@@ -335,7 +335,7 @@ form .map {
   } // form map browser
 }
 
-#container > div { display: none; position:relative; }
+/*#container > div { display: none; position:relative; }*/
 
 .circle {
 
@@ -354,9 +354,7 @@ form section {
   background:$cWhite;
   border-bottom: 1px solid $cBorder;
 
-  .inner {
-    padding: 30px 50px;
-  }
+  .inner { padding: 30px 50px; }
 
   & > .left,
   & > .right { float:left; }
@@ -376,7 +374,6 @@ form section {
 
     .inner {
       padding: 30px 48px 0 0;
-
     }
   }
 
@@ -409,10 +406,12 @@ form section {
   ul li:last-child { margin: 0; }
 
   .prices {
+
     li {
+
       @include clearfix();
-      width: 780px;
       position:relative;
+      width: 780px;
       margin: 0 0 20px 0;
 
       /* --------------------------------- */
