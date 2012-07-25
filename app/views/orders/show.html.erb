@@ -12,7 +12,7 @@
   <section>
   <h3>Your order summary <span class="date"><%= l @order.created_at, :format => :pretty %> </span></h3>
   <ul>
-    <li><%= @order.template.name.capitalize %> map with&hellip; <span class="price">$<%= @order.template.price %></span>
+    <li><%= @order.template.name.capitalize %> map <%= "with&hellip;" if @order.order_options.size > 0 %> <span class="price">$<%= @order.template.price %></span>
     <ul>
       <% @order.order_options.each do |o| %>
         <li><%= o.template_option.name.humanize %> <span class="price">$<%= o.template_option.price %></span></li>

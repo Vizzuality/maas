@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120717112622) do
+ActiveRecord::Schema.define(:version => 20120722102148) do
 
   create_table "client_data", :force => true do |t|
     t.integer  "order_id"
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(:version => 20120717112622) do
     t.string   "recurly_token"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "questions", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.text     "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "template_options", :force => true do |t|

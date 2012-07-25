@@ -21,7 +21,7 @@ $cError:                 $cRed;
 
 /* Sprites */
 
-$icons-white-sheet-spacing:40px;
+$icons-white-sheet-spacing:41px;
 
 $icons-step-01-spacing:40px;
 $icons-step-02-spacing:40px;
@@ -229,6 +229,12 @@ strong { font-weight: bold; } // This is sad, I know.
 .sans-serif-base {
   font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
 }
+
+.sans-serif-base-bold {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight:bold;
+}
+
 .sans-serif {
   font-family: "ProximaNova-Regular", Helvetica, Arial, sans-serif;
 }
@@ -254,16 +260,18 @@ strong { font-weight: bold; } // This is sad, I know.
   color: $cWhite;
 }
 
-@mixin font($font, $font-size, $color: false) {
+@mixin font($font, $font-size, $color: false, $font-weight: false) {
 
-  @if $font == "sans-serif-base"  { @extend .sans-serif-base; }
-  @if $font == "sans-serif"       { @extend .sans-serif; }
-  @if $font == "sans-serif-light" { @extend .sans-serif-light; }
-  @if $font == "sans-serif-semi"  { @extend .sans-serif-semi; }
-  @if $font == "sans-serif-bold"  { @extend .sans-serif-bold; }
+  @if $font == "sans-serif-base"       { @extend .sans-serif-base; }
+  @if $font == "sans-serif-base-bold"  { @extend .sans-serif-base-bold; }
+  @if $font == "sans-serif"            { @extend .sans-serif; }
+  @if $font == "sans-serif-light"      { @extend .sans-serif-light; }
+  @if $font == "sans-serif-semi"       { @extend .sans-serif-semi; }
+  @if $font == "sans-serif-bold"       { @extend .sans-serif-bold; }
 
-  @if $color      != false { color: $color; }
-  @if $font-size  != false { font-size: $font-size; }
+  @if $color       != false { color: $color; }
+  @if $font-size   != false { font-size: $font-size; }
+  @if $font-weight != false { font-weight: $font-weight; }
 
 }
 

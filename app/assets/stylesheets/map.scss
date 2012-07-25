@@ -76,16 +76,17 @@
 .leaflet-popup-content label { width:100%; margin:0; padding:0; font:bold 12px Arial; color:#333333; }
 .leaflet-popup-content p     { width:100%; margin:2px 0 3px!important; padding:0; font:normal 12px Arial; color:#666666; }
 
-$width: 216px;
-
 /* CartoDB popup*/
 
 .infowindow {
+  $width: 216px;
+
   position: absolute;
   display: block;
   width: $width;
   padding: 0;
-  -webkit-transform: translateZ(10000px); /*Hack for Safari*/
+
+  -webkit-transform: translateZ(10000px); /* Hack for Safari */
 
   .cartodb-popup:hover {
     cursor: default;
@@ -100,7 +101,6 @@ $width: 216px;
 
     background: none;
 
-    text-align: center;
     font-weight: bold;
     @include font("sans-serif", 15px, $cGray2);
 
@@ -108,6 +108,8 @@ $width: 216px;
     line-height: 15px;
     text-indent: 0;
     overflow: visible;
+
+    text-align: center;
   }
 
   .cartodb-popup a.cartodb-popup-close-button:hover {
@@ -116,24 +118,30 @@ $width: 216px;
   }
 
   .cartodb-popup .cartodb-popup-content-wrapper {
-    width: 186px;
-    padding: 25px 18px 5px 10px;
+    width: $width;
+    padding:0;
     margin: 0;
 
     background: url("icons/infowindow.png") 0 top;
     border: none;
 
     box-shadow: none;
+
+    img {
+      position: relative;
+      top: 7px;
+      left: 7px;
+    }
   }
 
   .cartodb-popup .cartodb-popup-content {
-    width: 186px;
-    max-height: 200px;
-    padding: 0;
-    margin: 0;
-  }
 
-  .cartodb-popup .cartodb-popup-content label {
+    width: $width - 30px;
+    padding: 20px 15px 0 15px;
+
+    margin: 0;
+
+  label {
     display: block;
     width: auto;
     padding: 0 0 0 5px;
@@ -142,18 +150,23 @@ $width: 216px;
     text-shadow: 0 1px white;
   }
 
-  .cartodb-popup .cartodb-popup-content p {
-    display: block;
-    width: 170px;
-    max-width: 170px;
-    padding: 2px 4px!important;
-    margin: 2px 0 7px!important;
-    font: bold 11px 'Helvetica',Arial;
-    color: $cGray2;
-    border: none;
-    background: none;
-    text-shadow: 0 1px white;
+  h1 {
+    margin: 0 0 7px 0; padding: 0;
+    @include font("sans-serif-base-bold", 17px, $cLink);
   }
+
+  h2 {
+    margin: 0 0 5px 0; padding: 0;
+    @include font("sans-serif-base-bold", 11px, $cGray2);
+    text-transform: uppercase;
+  }
+
+  p {
+    display: block;
+    width: 185px;
+    @include font("sans-serif-base", 13px, $cGray3);
+  }
+}
 
   .cartodb-popup .cartodb-popup-content p.empty {
     font-weight: normal;
@@ -167,17 +180,22 @@ $width: 216px;
     background: url("icons/infowindow.png") no-repeat right top;
   }
 
+  .cartodb-popup.with_photo {
+    position:relative;
+    top: -7px;
+  }
+
   .cartodb-popup .cartodb-popup-tip-container label {
     float: left;
     margin: 5px 0 0 3px;
     font: normal 11px Arial;
     color: #B3B3B3;
     text-shadow: 0 1px white;
-  }
 
-  .cartodb-popup .cartodb-popup-tip-container label strong {
-    font: bold 11px 'Helvetica',Arial;
-    color: $cGray2;
-    text-shadow: 0 1px white;
+    strong {
+      font: bold 11px 'Helvetica',Arial;
+      color: $cGray2;
+      text-shadow: 0 1px white;
+    }
   }
 }

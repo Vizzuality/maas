@@ -1,3 +1,24 @@
+
+/**
+ * tabbed pane.
+ * if contains n views inside it and shows only one at once
+ *
+ * usage:
+ *
+ *    var slides = new cdb.ui.common.Slides([
+ *      { id: 1, title: "Hi!" },
+ *      { id: 2, title: "I'm" },
+ *      { id: 3, title: "a" },
+ *      { id: 4, title: "very cool" },
+ *      { id: 5, title: "slideshow" }
+ *    ]);
+ *
+ *    window.slideshow = new cdb.ui.common.Slideshow({ collection: slides });
+ *
+ *    NOTE: define the image path in the SlideView template
+ *
+ */
+
 cdb.ui.common.Slide = Backbone.Model.extend({ });
 
 cdb.ui.common.BulletView = cdb.core.View.extend({
@@ -132,8 +153,11 @@ cdb.ui.common.Slideshow = cdb.core.View.extend({
     this.template = this.options.template ? _.template(this.options.template) : cdb.templates.getTemplate(this.defaults.template_name);
 
     this.model = new cdb.ui.common.SlideshowModel({ visible: false });
+
+    this.add_related_model(this.model);
+
     this.model.collection = this.collection;
-    this.model.bind("change:currentIndex", this.gotoSlide);
+    this.model.bind("change:currentIndex", this.gotoSlide, this);
 
     this.render();
     this.start();

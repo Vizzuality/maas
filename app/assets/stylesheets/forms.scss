@@ -225,7 +225,7 @@ label {
 
   input[type="text"] {
 
-    @include size(100%, $height);
+    @include size(100%, $height+1);
 
     margin:  0 0 0 $pL;
     padding: 0 $pR 0 $pL;
@@ -253,15 +253,15 @@ label {
   }
 }
 
-form {
+body.orders form.new_order {
   margin: 118px auto;
   width: $formWidth;
 
   position:relative;
 
-  @include border-radius(3px);
   background: $cWhite;
   border: 1px solid #9A9A9A;
+  @include border-radius(3px);
 }
 
 .dontknow {

@@ -126,7 +126,7 @@ section.characteristics {
   background: url(backgrounds/bg-padded.png);
 
   .section_title { margin: 0 0 40px 0; }
-  .inner > div { margin: 0 0 30px 0; }
+  .inner > div   { margin: 0 0 30px 0; }
 
   .box {
     $pT: 40px;
@@ -403,3 +403,46 @@ footer {
   } // ul
 } // footer
 
+
+.dialog {
+  width: 468px;
+  position: absolute;
+
+  display:none;
+
+  background: $cWhite;
+  border: 1px solid #9A9A9A;
+  @include border-radius(3px);
+
+  z-index: 1000;
+
+  .inner { padding: 30px; }
+
+  .close {
+    $width: 23px;
+    @include size($width);
+    @include position(-1*$width/2, -1*$width/2, false, false);
+    @include icons-sprite(btn-close);
+  }
+
+  .section_title {
+    margin: 0 0 30px 0;
+    padding: 0 0 20px 0;
+
+    color: $cOrange;
+    border-bottom: 1px solid $cBorder;
+  }
+
+  .input-field {
+    width:387px;
+  }
+
+  .textarea {
+    width:387px;
+  }
+
+  ul li { margin: 0 0 20px 0; }
+
+  .button { width: 353px; text-align: center; }
+
+}

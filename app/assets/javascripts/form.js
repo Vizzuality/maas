@@ -318,14 +318,18 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   },
 
+  // This method is called when the user selects a different tab
   select: function(pane) {
 
     this.animating = true;
     this.moveTip(pane);
 
+    // Enables/disables fields
     this.collection.each(function(p) {
-      var paneName = p.get("className");
-      var _pane = window.pane.getPane(paneName);
+
+      var
+      paneName = p.get("className"),
+      _pane    = window.pane.getPane(paneName);
 
       if (pane == _pane) _pane.enableFields();
       else _pane.disableFields();
@@ -336,6 +340,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     pane.className == "dont_know" ? this.showDontKnow() : this.showPane(pane);
 
     $("#default_page").val(pane.id);
+    $("#default_name").val(pane.className);
 
   },
 

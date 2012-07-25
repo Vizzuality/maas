@@ -9,3 +9,12 @@
 //= require fileuploader.js
 //= require cdb
 //= require_tree .
+
+$(function() {
+
+  $("footer ul li a.contact").on("click", function(e) {
+  e.preventDefault();
+    window.dialog.open();
+  });
+
+});

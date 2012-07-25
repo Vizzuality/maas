@@ -1,6 +1,7 @@
 MaaS::Application.routes.draw do
   resources :client_data
 
+  resources :questions
   resources :templates
   resources :faq
 

@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   def create
     @templates_list = Template.all
 
-    @defaultPageName = params[:template_name]
+    @defaultPageName = params[:template][:name]
 
     @order = Order.create(params[:order])
     respond_with @order
