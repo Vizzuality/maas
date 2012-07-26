@@ -60,7 +60,7 @@
       query: "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, stop_frisk i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell"
     };
 
-    var markersOptions = {
+    var customMarkerOptions = {
       user_name: 'examples',
       table_name: 'maas_markers',
       query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, category FROM {{table_name}}',
@@ -74,7 +74,33 @@
         parsedData = JSON.parse(data.latlng),
         latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
-        infowindow.model.set({ template_name: 'templates/map/infowindow_big', content: data, latlng: [latlng.lat, latlng.lng] });
+        infowindow.model.set({ template_name: 'templates/map/infowindow_classic', content: data, latlng: [latlng.lat, latlng.lng] });
+        infowindow.showInfowindow();
+      }
+    };
+
+    var markerOptions = {
+      user_name: 'maas',
+      table_name: 'markers',
+      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, title, subtitle, description, category FROM {{table_name}}',
+      interactivity: "cartodb_id, latlng, title, subtitle, description, category",
+      auto_bound: false,
+      featureOver:  function() { document.body.style.cursor = "pointer"; },
+      featureOut:   function() { document.body.style.cursor = "default"; },
+      featureClick: function(ev, latlng, pos, data) {
+
+        var // get coordinates of the marker
+        parsedData = JSON.parse(data.latlng),
+        latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
+
+        infowindow.model.set({ 
+          template_name: 'templates/map/infowindow_big', 
+          title: data.title,
+          subtitle: data.subtitle,
+          description: data.description,
+          latlng: [latlng.lat, latlng.lng] 
+        });
+
         infowindow.showInfowindow();
       }
     };
@@ -92,16 +118,20 @@
     };
 
     var data = {
-      markers:   { cartoDBLayerOptions: markersOptions,    baseLayerOptions: { url: baseLayerURL, zoom: 5,  center: [33.13755, -3.71337] }, className: "markers",   name: "Markers map"  },
-      polygons:  { cartoDBLayerOptions: polygonOptions,    baseLayerOptions: { url: terrainURL,   zoom: 5,  center: [40.14528, -3.82324] }, className: "polygons",  name: "Polygons map" },
-      density:   { cartoDBLayerOptions: trianglesOptions,  baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.71435, -73.9000] }, className: "density",   name: "Bubble map"   },
-      thematic:  { cartoDBLayerOptions: choroplethOptions, baseLayerOptions: { url: baseLayerURL, zoom: 3,  center: [43.06888, 29.35545] }, className: "thematic",  name: "Thematic map" },
-      dont_know: { cartoDBLayerOptions: null,              baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.46366, -3.74922] }, className: "dont_know", name: "Don't know"   }
+      markers:   { cartoDBLayerOptions: markerOptions,       baseLayerOptions: { url: baseLayerURL, zoom: 5,  center: [33.13755, -3.71337] }, className: "markers",   name: "Markers map"  },
+      polygons:  { cartoDBLayerOptions: polygonOptions,      baseLayerOptions: { url: terrainURL,   zoom: 5,  center: [40.14528, -3.82324] }, className: "polygons",  name: "Polygons map" },
+      density:   { cartoDBLayerOptions: customMarkerOptions, baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.71435, -73.9000] }, className: "density",   name: "Bubble map"   },
+      thematic:  { cartoDBLayerOptions: choroplethOptions,   baseLayerOptions: { url: baseLayerURL, zoom: 3,  center: [43.06888, 29.35545] }, className: "thematic",  name: "Thematic map" },
+      dont_know: { cartoDBLayerOptions: null,                baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.46366, -3.74922] }, className: "dont_know", name: "Don't know"   }
     };
 
     var checkboxCallbacks = {
       markers: {
 
+        dynamic_filters: {
+          on: {},
+          off: {}
+        },
         custom_infowindows: { 
 
           on: function() { 
@@ -125,17 +155,11 @@
       different_markers_for_different_categories: {
 
         on: function() {
-          
-          window.map.removeLayerByCid(window.navigation.cartoDBLayer);
-          window.navigation.loadCartoDBLayer(polygonOptions);
-
+          window.navigation.replaceCartoDBLayer(customMarkerOptions);
         },
 
         off: function() {
-
-          window.map.removeLayerByCid(window.navigation.cartoDBLayer);
-          window.navigation.loadCartoDBLayer(markersOptions);
-
+          window.navigation.replaceCartoDBLayer(markerOptions);
         }
 
       }
@@ -151,7 +175,19 @@
     var radioCallbacks = {
       markers:   function() { console.log('a'); },
       polygons:  function() { console.log('b'); },
-      density:   function() { console.log('c'); },
+      density:  { 
+        on:  function(e) { 
+
+          if (window.navigation) { // we do this so the callback doesn't get fired at the start
+
+            if (e.model.get("option_name") == "rectangular_grid") {
+              window.navigation.replaceCartoDBLayer(customMarkerOptions);
+            } else {
+              window.navigation.replaceCartoDBLayer(trianglesOptions);
+            }
+          }
+        }
+      },
       thematic:  function() { console.log('d'); },
       dont_know: function() { console.log('e');}
     };
@@ -159,7 +195,6 @@
     var fields = {};
 
     <% @templates_list.each do |template| -%>
-
       fields.<%= template.name %> = new cdb.ui.common.Fields([
         { 
           callback: null, 
@@ -167,25 +202,25 @@
           checked: false,
           name: "", 
           type: false, 
-          id: <%= template.id %>, 
+          el_id: <%= template.id %>, 
           price: <%= template.price %>, 
           disabled: true,
           title: "<%= template.name.humanize %>", 
           description: '<%= t(".description.#{template.name}") %>', 
         },
-
         <% template.visualization_methods.each_with_index do |option, i| -%>
           { 
-            callback: radioCallbacks.<%= option.name %>, 
+            callback: radioCallbacks.<%= template.name %>, 
             className: null, 
             checked: <%= i == 0 ? "true" : "false" %>,
             value: <%= option.id %>,
             type: 'radio', 
             name: "visualization_method_id", 
-            id: "<%= option.id %>", 
+            el_id: "<%= option.id %>", 
             disable: true,
             price: 0, 
             title: "<%= option.name.humanize %>", 
+            option_name: "<%= option.name %>", 
             description: '<%= t(".option.description.#{option.name}") %>'
           },
         <% end -%>
@@ -198,7 +233,7 @@
             disable: true,
             name: "template_option", 
             type: 'checkbox', 
-            id: "<%= option.id %>", 
+            el_id: "<%= option.id %>", 
             price: <%= option.price %>, 
             title: "<%= option.name.humanize %>", 
             description: '<%= t(".option.description.#{option.name}") %>'

@@ -65,7 +65,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       var callback = this.model.get("callback");
 
       if (callback && callback.on) {
-        callback.on();
+        callback.on( this );
       }
 
     } else {
@@ -81,8 +81,8 @@ cdb.ui.common.FieldView = Backbone.View.extend({
 
       var callback = this.model.get("callback");
 
-      if (callback && callback.off) {
-        callback.off();
+      if (callback && callback.on) {
+        callback.off( this );
       }
 
     }
@@ -242,9 +242,11 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var self = this;
 
-    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPane", "loadLayers", "loadBaseLayer", "loadCartoDBLayer", "removeLayers", "centerMap");
+    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPane", "loadLayers", "loadBaseLayer", "replaceCartoDBLayer", "loadCartoDBLayer", "removeLayers", "centerMap", "onSuccess", "onError");
 
-    //$(document).bind('keydown', this.keydown);
+    $("form").on("ajax:error", this.onError);
+    $("form").on("ajax:success", this.onSuccess);
+    $("form").on("submit", this.onSubmit);
 
     this.template     = cdb.templates.getTemplate('templates/form/navigation');
     this.animating    = false;
@@ -257,6 +259,29 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     if (e.keyCode == 37)      this.prev(e);
     else if (e.keyCode == 39) this.next(e);
+
+  },
+
+  onSubmit: function() {
+    $(".field.error label span").remove();
+    $(".field.error").removeClass("error");
+  },
+
+  onSuccess: function(e, data) {
+    window.location = "/orders/" + data.id;
+  },
+
+  onError: function(e, data) {
+
+    var response = JSON.parse(data.responseText);
+    var errors   = response.errors;
+
+    _.each(errors, function(error, field) {
+      $(".field." + field).addClass("error");
+      var $span = $("<span />").text(error[0]).hide();
+      $(".field." + field).find("label").append($span);
+      $span.fadeIn(250);
+    });
 
   },
 
@@ -404,6 +429,11 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   },
 
+  replaceCartoDBLayer: function(layerOptions) {
+    window.map.removeLayerByCid(this.cartoDBLayer);
+    window.navigation.loadCartoDBLayer(layerOptions);
+  },
+
   loadCartoDBLayer: function(options) {
 
     if (options) {
@@ -457,6 +487,7 @@ cdb.ui.common.Form = Backbone.View.extend({
   },
 
   open: function() {
+
   },
 
   initialize: function() {
@@ -533,19 +564,13 @@ cdb.ui.common.Form = Backbone.View.extend({
     var fields = {};
 
     var fieldView;
-    var fieldOrder = 0;
 
     this.collection.each(function(field, i) {
 
       if (field.get("type") == false) {
-
         fieldView = new cdb.ui.common.FieldViewFixed({ model: field });
-
       } else {
-
-        fieldOrder++;
         fieldView = new cdb.ui.common.FieldView({ model: field });
-
       }
 
       field.bind("change:selected", self.recalc, field);

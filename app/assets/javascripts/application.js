@@ -5,8 +5,8 @@
 //= require underscore-min
 //= require backbone-min
 //= require reqwest
-//= require jquery.easing.1.3.js
-//= require fileuploader.js
+//= require jquery.easing.1.3
+//= require fileuploader
 //= require cdb
 //= require_tree .
 

@@ -1,5 +1,5 @@
 <%= f.hidden_field :template_type, :id => "default_page" %>
-<%= hidden_field :template, :name,   :id => "default_name"  %>
+<%= hidden_field :template, :name, :id => "default_name"  %>
 
 <section id="upload" class="highlighted">
 <div class="inner">
@@ -17,21 +17,21 @@
 <div class="left">
 
   <div class="inner">
-    <div class="field left">
-      <label<%= " class='error'" if @order.errors[:name].any? %> for="name"><%= t('.contact_info.name') %><%= raw "<span>#{ @order.errors[:name].first }</span>" if @order.errors[:name].any? %></label>
+    <div class="field name left">
+      <label><%= t('.contact_info.name') %></label>
       <div class="input-field<%= " error" if @order.errors[:name].any? %>">
         <%= f.text_field :name %>
       </div>
     </div>
 
-    <div class="field right">
-      <label<%= " class='error'" if @order.errors[:email].any? %> for="email"><%= t('.contact_info.email') %><%= raw "<span>#{ @order.errors[:email].first }</span>" if @order.errors[:email].any? %></label>
+    <div class="field email right">
+      <label><%= t('.contact_info.email') %></label>
       <div class="input-field<%= " error" if @order.errors[:email].any? %>">
         <%= f.text_field :email %>
       </div>
     </div>
 
-    <div class="field long">
+    <div class="field comments long">
       <label for="comments"><%= t('.contact_info.comments') %></label>
       <div class="textarea">
         <%= f.text_area :comments %>

@@ -6,11 +6,10 @@ FactoryGirl.define do
 
     factory :markers do
       name 'markers'
-      price 2000
+      price 1800
 
       after(:create) do |template, evaluator|
 
-        # Options
         FactoryGirl.create(:dynamic_filters,    template: template)
         FactoryGirl.create(:custom_infowindows, template: template)
         FactoryGirl.create(:different_markers_for_different_categories,   template: template)
@@ -35,7 +34,7 @@ FactoryGirl.define do
 
     factory :thematic do
       name 'thematic'
-      price 2000
+      price 3000
 
       after(:create) do |template, evaluator|
         
@@ -56,11 +55,8 @@ FactoryGirl.define do
 
       after(:create) do |template, evaluator|
 
-        # Visualization methods
         FactoryGirl.create(:rectangular_grid,   template: template)
         FactoryGirl.create(:hexagonal_grid,     template: template)
-
-        # Options
         FactoryGirl.create(:variable_selection, template: template)
 
       end

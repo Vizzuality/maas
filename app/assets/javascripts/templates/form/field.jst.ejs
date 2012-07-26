@@ -10,7 +10,7 @@
 <% if (type == 'radio') { %>
 <input type="hidden" <% if (disabled) {%> disabled = "disabled" <% } %> <% if (checked) {%> checked = "checked" value="<%= value %>" <% } %> class="option" name="order[<%= name %>]" />
 <% } else { %>
-<input type="hidden" <% if (disabled) {%> disabled = "disabled" <% } %> <% if (checked) {%> checked = "checked" value="<%= value %>" <% } %> class="option" name="order[order_options_attributes][<%= id %>][<%= name %>_id]" />
+<input type="hidden" <% if (disabled) {%> disabled = "disabled" <% } %> <% if (checked) {%> checked = "checked" value="<%= value %>" <% } %> class="option" name="order[order_options_attributes][<%= el_id %>][<%= name %>_id]" />
 <% } %>
 
 <% } %>

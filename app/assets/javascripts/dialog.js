@@ -16,7 +16,6 @@ $(function() {
     },
 
     logKey: function(e) {
-      console.log(e.type, e.keyCode);
     },
 
     initialize: function() {
@@ -27,7 +26,6 @@ $(function() {
 
     render: function() {
       this.$el = $(this.template(this.model.toJSON()));
-      console.log(this.$el);
 
       return this.$el;
     }

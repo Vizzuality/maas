@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
 
+  respond_to :html, :json
   responders :flash, :http_cache
 
   def new
@@ -12,12 +13,13 @@ class OrdersController < ApplicationController
   end
 
   def create
+
     @templates_list = Template.all
-
     @defaultPageName = params[:template][:name]
-
     @order = Order.create(params[:order])
+
     respond_with @order
+
   end
 
   def show
