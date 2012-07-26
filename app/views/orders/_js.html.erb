@@ -74,7 +74,7 @@
         parsedData = JSON.parse(data.latlng),
         latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
-        infowindow.model.set({ template_name: 'templates/map/infowindow_classic', content: data, latlng: [latlng.lat, latlng.lng] });
+        infowindow.model.set({ template_name: 'templates/map/infowindow_classic', offset: [58, -10], content: data, latlng: [latlng.lat, latlng.lng] });
         infowindow.showInfowindow();
       }
     };
@@ -96,6 +96,7 @@
         infowindow.model.set({ 
           template_name: 'templates/map/infowindow_big', 
           title: data.title,
+          offset: [0, -10],
           subtitle: data.subtitle,
           description: data.description,
           latlng: [latlng.lat, latlng.lng] 
@@ -129,8 +130,8 @@
       markers: {
 
         dynamic_filters: {
-          on: {},
-          off: {}
+          on:  function() {},
+          off: function() {}
         },
         custom_infowindows: { 
 
@@ -154,11 +155,16 @@
 
       different_markers_for_different_categories: {
 
-        on: function() {
+        on: function(e) {
+          console.log(e);
+          window.map.infowindow.hide(true);
           window.navigation.replaceCartoDBLayer(customMarkerOptions);
         },
 
-        off: function() {
+        off: function(e) {
+          console.log(e);
+          window.map.infowindow.hide(true);
+          window.map.infowindow.hide();
           window.navigation.replaceCartoDBLayer(markerOptions);
         }
 
