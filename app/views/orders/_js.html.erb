@@ -74,7 +74,7 @@
         parsedData = JSON.parse(data.latlng),
         latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
-        infowindow.model.set({ template_name: 'templates/map/infowindow_classic', offset: [58, -10], content: data, latlng: [latlng.lat, latlng.lng] });
+        infowindow.model.set({ template_name: 'templates/map/infowindow_classic', offset: [53, 10], content: data, latlng: [latlng.lat, latlng.lng] });
         infowindow.showInfowindow();
       }
     };
@@ -82,8 +82,8 @@
     var markerOptions = {
       user_name: 'maas',
       table_name: 'markers',
-      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, title, subtitle, description, category FROM {{table_name}}',
-      interactivity: "cartodb_id, latlng, title, subtitle, description, category",
+      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
+      interactivity: "cartodb_id, latlng, src, title, subtitle, description, category",
       auto_bound: false,
       featureOver:  function() { document.body.style.cursor = "pointer"; },
       featureOut:   function() { document.body.style.cursor = "default"; },
@@ -96,7 +96,9 @@
         infowindow.model.set({ 
           template_name: 'templates/map/infowindow_big', 
           title: data.title,
-          offset: [0, -10],
+          src: data.src,
+          offset: [108, 0],
+          // offset: [0, 10],
           subtitle: data.subtitle,
           description: data.description,
           latlng: [latlng.lat, latlng.lng] 

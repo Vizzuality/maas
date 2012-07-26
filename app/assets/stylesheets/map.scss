@@ -101,6 +101,19 @@
       top: -7px;
     }
 
+    // Different styles
+
+    &.photo {
+      .tip { position:relative; top: -7px }
+
+      img {
+        position: relative;
+        top: 7px;
+        left: 7px;
+      }
+
+    }
+
     &.classic {
 
       a.cartodb-popup-close-button {position:absolute; right:3px; top:2px; width:22px; height:15px; padding:4px 0 3px 0; text-align:center; font:bold 15px "Helvetica",Arial; color:#666666; text-decoration:none; line-height:15px; background:none; text-indent:0; overflow:visible}
@@ -153,11 +166,6 @@
 
       box-shadow: none;
 
-      img {
-        position: relative;
-        top: 7px;
-        left: 7px;
-      }
     }
 
     .content {
