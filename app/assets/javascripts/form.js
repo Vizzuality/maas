@@ -259,7 +259,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var self = this;
 
-    _.bindAll(this, "select", "keydown", "prev", "next", "showCircle", "hideCircle", "showDontKnow", "showPane", "loadLayers", "loadBaseLayer", "replaceCartoDBLayer", "loadCartoDBLayer", "removeLayers", "centerMap", "onSuccess", "onError");
+    _.bindAll(this, "select", "keydown", "prev", "next", "showCircle", "hideCircle", "showDontKnow", "showPane", "loadLayers", "loadBaseLayer", "replaceBaseLayer", "replaceCartoDBLayer", "loadCartoDBLayer", "removeLayers", "centerMap", "onSuccess", "onError");
 
     $(".circle").on("click", function(e) { // TODO: create Circle element and move this functionality there
       e.preventDefault();
@@ -310,11 +310,11 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   },
 
   hideCircle: function() {
-    if ($("body").scrollTop() < 600) $(".circle").animate({ opacity: 0 }, 150);
+    if ($("body").scrollTop() < 450) $(".circle").animate({ opacity: 0 }, 150);
   },
 
   showCircle: function($el) {
-    if ( $("body").scrollTop() > 600 && $(".circle").css("opacity") == 0) {
+    if ( $("body").scrollTop() > 450 && $(".circle").css("opacity") == 0) {
       $(".circle").animate({ top: $el.position().top - $(".circle").height()/2, opacity: 1 }, 150);
     }
   },
@@ -456,16 +456,34 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   },
 
+  // Methods to remove, replace and create CartoDB layers
+  // and regular layers
+
+  removeBaseLayer: function() {
+    window.map.removeLayerByCid(this.baseLayer);
+  },
+
+  removeCartoDBLayer: function() {
+    window.map.removeLayerByCid(this.cartoDBLayer);
+  },
+  replaceBaseLayer: function(layerOptions) {
+    if (this.baseLayer) {
+      window.map.removeLayerByCid(this.baseLayer);
+    }
+    window.navigation.loadBaseLayer(layerOptions);
+  },
+
+  replaceCartoDBLayer: function(layerOptions) {
+    if (this.cartoDBLayer) {
+      window.map.removeLayerByCid(this.cartoDBLayer);
+    }
+    window.navigation.loadCartoDBLayer(layerOptions);
+  },
+
   loadBaseLayer: function(options) {
 
     var layer      = new cdb.geo.TileLayer({ urlTemplate: options.url });
     this.baseLayer = window.map.addLayer(layer);
-
-  },
-
-  replaceCartoDBLayer: function(layerOptions) {
-    window.map.removeLayerByCid(this.cartoDBLayer);
-    window.navigation.loadCartoDBLayer(layerOptions);
   },
 
   loadCartoDBLayer: function(options) {

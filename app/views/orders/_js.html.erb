@@ -19,19 +19,29 @@
     // Adds zoom
     var zoom = new cdb.geo.ui.Zoom({
       model: map,
-      template: cdb.templates.getTemplate('templates/map/zoom')
+      template: cdb.templates.getTemplate('templates/map/zoom/zoom')
     })
 
     mapView.$el.append(zoom.render().$el);
 
+    var switcher = new cdb.geo.ui.Switcher({
+      model: map,
+      template: cdb.templates.getTemplate('templates/map/switcher/switcher')
+    })
+
     var legend = new cdb.geo.ui.Legend({
       model: map,
-      template: cdb.templates.getTemplate('templates/map/legend')
+      template: cdb.templates.getTemplate('templates/map/legend/legend')
+    })
+
+    var selector = new cdb.geo.ui.Selector({
+      model: map,
+      template: cdb.templates.getTemplate('templates/map/selector/selector')
     })
 
     // Adds Infowindow
     var infowindowModel = new cdb.geo.ui.InfowindowModel({
-      template_name: 'templates/map/infowindow'
+      template_name: 'templates/map/infowindow/infowindow'
     });
 
     var infowindow = new cdb.geo.ui.Infowindow({
@@ -48,10 +58,14 @@
 
     window.pane = pane;
 
-    var // layer URLs
-    baseLayerURL  = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
-    baseLayerURL2 = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-    terrainURL    = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+
+    var
+    layersURL = {
+      base:    'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
+      base2:   'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+      terrain: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+      forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.Forest-Height-Test/{z}/{x}/{y}.png'
+    };
 
     var trianglesOptions = {
       user_name: "viz2",
@@ -60,7 +74,7 @@
       query: "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, stop_frisk i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell"
     };
 
-    var customMarkerOptions = {
+    var cDensity = {
       user_name: 'examples',
       table_name: 'maas_markers',
       query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, category FROM {{table_name}}',
@@ -74,12 +88,30 @@
         parsedData = JSON.parse(data.latlng),
         latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
-        infowindow.model.set({ template_name: 'templates/map/infowindow_classic', offset: [53, 10], content: data, latlng: [latlng.lat, latlng.lng] });
+        infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [53, 10], content: data, latlng: [latlng.lat, latlng.lng] });
+        infowindow.showInfowindow();
+      }
+    };
+    var cCustomMarkers = {
+      user_name: 'examples',
+      table_name: 'maas_markers',
+      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, category FROM {{table_name}}',
+      interactivity: "cartodb_id, latlng, category",
+      auto_bound: false,
+      featureOver:  function() { document.body.style.cursor = "pointer"; },
+      featureOut:   function() { document.body.style.cursor = "default"; },
+      featureClick: function(ev, latlng, pos, data) {
+
+        var // get coordinates of the marker
+        parsedData = JSON.parse(data.latlng),
+        latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
+
+        infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [53, 10], content: data, latlng: [latlng.lat, latlng.lng] });
         infowindow.showInfowindow();
       }
     };
 
-    var markerOptions = {
+    var cMarkers = {
       user_name: 'maas',
       table_name: 'markers',
       query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
@@ -93,39 +125,62 @@
         parsedData = JSON.parse(data.latlng),
         latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
-        infowindow.model.set({ 
-          template_name: 'templates/map/infowindow_big', 
+        infowindow.model.set({
+          template_name: 'templates/map/infowindow/infowindow_big',
           title: data.title,
           src: data.src,
           offset: [108, 0],
           // offset: [0, 10],
           subtitle: data.subtitle,
           description: data.description,
-          latlng: [latlng.lat, latlng.lng] 
+          latlng: [latlng.lat, latlng.lng]
         });
 
         infowindow.showInfowindow();
       }
     };
 
-    var choroplethOptions = {
+    var cThematic = {
       user_name: 'maas',
       table_name: 'choropleth',
-      query: 'SELECT cartodb_id, pop_est, the_geom_webmercator FROM {{table_name}}'
+      query: 'SELECT cartodb_id, pop_est, the_geom_webmercator FROM {{table_name}}',
+      interactivity: "cartodb_id",
+      featureOver:  function() { document.body.style.cursor = "pointer"; },
+      featureOut:   function() { document.body.style.cursor = "default"; },
+      featureClick: function(ev, latlng, pos, data) {
+
+        infowindow.model.set({
+          template_name: 'templates/map/infowindow/infowindow_big',
+          title: data.cartodb_id,
+          offset: [108, 0],
+          subtitle: "Subtitle",
+          description: "Description",
+          latlng: [latlng.lat, latlng.lng]
+        });
+
+        infowindow.showInfowindow();
+
+      }
+
     };
 
-    var polygonOptions = {
+    var cPolygons = {
       user_name: 'maas',
       table_name: 'polygons',
       query: 'SELECT cartodb_id, the_geom_webmercator FROM {{table_name}}'
     };
 
+
+    var lBase    = { url: layersURL.base, zoom: 5,  center: [33.13755, -3.71337] };
+    var lTerrain = { url: layersURL.terrain, zoom: 5,  center: [33.13755, -3.71337] };
+    var lForest  = { url: layersURL.forest, zoom: 5,  center: [33.13755, -3.71337] };
+
     var data = {
-      markers:   { cartoDBLayerOptions: markerOptions,       baseLayerOptions: { url: baseLayerURL, zoom: 5,  center: [33.13755, -3.71337] }, className: "markers",   name: "Markers map"  },
-      polygons:  { cartoDBLayerOptions: polygonOptions,      baseLayerOptions: { url: terrainURL,   zoom: 5,  center: [40.14528, -3.82324] }, className: "polygons",  name: "Polygons map" },
-      density:   { cartoDBLayerOptions: customMarkerOptions, baseLayerOptions: { url: baseLayerURL, zoom: 12, center: [40.71435, -73.9000] }, className: "density",   name: "Bubble map"   },
-      thematic:  { cartoDBLayerOptions: choroplethOptions,   baseLayerOptions: { url: baseLayerURL, zoom: 3,  center: [43.06888, 29.35545] }, className: "thematic",  name: "Thematic map" },
-      dont_know: { cartoDBLayerOptions: null,                baseLayerOptions: { url: baseLayerURL, zoom: 2,  center: [40.46366, -3.74922] }, className: "dont_know", name: "Don't know"   }
+      markers:   { cartoDBLayerOptions: cMarkers,  baseLayerOptions: lBase, className: "markers",   name: "Markers map"  },
+      polygons:  { cartoDBLayerOptions: cPolygons, baseLayerOptions: { url: layersURL.terrain,   zoom: 5,  center: [40.14528, -3.82324] }, className: "polygons",  name: "Polygons map" },
+      density:   { cartoDBLayerOptions: cDensity,  baseLayerOptions: { url: layersURL.base, zoom: 12, center: [40.71435, -73.9000] }, className: "density",   name: "Bubble map"   },
+      thematic:  { cartoDBLayerOptions: cThematic, baseLayerOptions: { url: layersURL.base, zoom: 3,  center: [43.06888, 29.35545] }, className: "thematic",  name: "Thematic map" },
+      dont_know: { cartoDBLayerOptions: null,      baseLayerOptions: null, className: "dont_know", name: "Don't know"   }
     };
 
     var checkboxCallbacks = {
@@ -139,6 +194,15 @@
 
           on: function() { 
 
+            switcher.collection = new cdb.geo.ui.SwitcherItems([ 
+              { selected: true,  name: "Map",       callback: function() { 
+                window.navigation.replaceBaseLayer(lBase);
+              } },
+              { selected: false, name: "Satellite", callback: function() { 
+                window.navigation.replaceBaseLayer(lForest);
+              } }
+            ]);
+
             legend.collection = new cdb.geo.ui.LegendItems([ 
               { className: "light_blue", name: "1-10 stops" },
               { className: "blue",       name: "11-50 stops" },
@@ -147,30 +211,30 @@
             ]);
 
             mapView.$el.append(legend.render().$el);
+            mapView.$el.append(switcher.render().$el);
 
             legend.show();
+            switcher.show();
           }, 
 
-          off: function() { legend.hide() }  
+          off: function() { legend.hide(); switcher.hide(); }  
 
-      },
-
-      different_markers_for_different_categories: {
-
-        on: function(e) {
-          console.log(e);
-          window.map.infowindow.hide(true);
-          window.navigation.replaceCartoDBLayer(customMarkerOptions);
         },
 
-        off: function(e) {
-          console.log(e);
-          window.map.infowindow.hide(true);
-          window.map.infowindow.hide();
-          window.navigation.replaceCartoDBLayer(markerOptions);
-        }
+        different_markers_for_different_categories: {
 
-      }
+          on: function(e) {
+            window.map.infowindow.hide(true);
+            window.navigation.replaceCartoDBLayer(cCustomMarkers);
+          },
+
+          off: function(e) {
+            window.map.infowindow.hide(true);
+            window.map.infowindow.hide();
+            window.navigation.replaceCartoDBLayer(cMarkers);
+          }
+
+        }
       }, 
 
       polygons:  {},
@@ -189,7 +253,7 @@
           if (window.navigation) { // we do this so the callback doesn't get fired at the start
 
             if (e.model.get("option_name") == "rectangular_grid") {
-              window.navigation.replaceCartoDBLayer(customMarkerOptions);
+              window.navigation.replaceCartoDBLayer(cCustomMarkers);
             } else {
               window.navigation.replaceCartoDBLayer(trianglesOptions);
             }

@@ -345,10 +345,24 @@ form .map {
 .circle {
 
   opacity: 0;
+  display:block;
 
   @include position(650px, 183px, false, false);
   @include size(92px);
   @include icons-sprite(map-updated-circle);
+
+  text-align:center;
+
+  & > div {
+    position:relative;
+    top: 37px;
+    margin: auto;
+    width: 70px;
+
+    line-height: 12px;
+    text-transform: uppercase;
+    @include font("sans-serif-light", 10px, $cWhite);
+  }
 
 }
 

@@ -13,7 +13,7 @@
 $(function() {
 
   $("footer ul li a.contact").on("click", function(e) {
-  e.preventDefault();
+    e.preventDefault();
     window.dialog.open();
   });
 
