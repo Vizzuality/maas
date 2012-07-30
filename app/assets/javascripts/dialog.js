@@ -1,11 +1,6 @@
 $(function() {
   cdb.init();
 
-  var InputModel = Backbone.Model.extend({ });
-
-  var Inputs = Backbone.Collection.extend({
-    model: InputModel
-  });
 
   cdb.ui.common.InputView = cdb.core.View.extend({
 
@@ -61,15 +56,9 @@ $(function() {
 
       this.$el.html(this.template_base(this.options));
 
-      this.collection.each(function(input) {
-        var inputView = new cdb.ui.common.InputView({ model: input });
-        input.on("change", function() { this.model.set(input.name, input.get("value")); } );
-        that.$el.find("form ul").append(inputView.render);
-      });
-
-      //this.$name    = this.$el.find('input[name="contact[name]"]');
-      //this.$email   = this.$el.find('input[name="contact[email]"]');
-      //this.$comment = this.$el.find('textarea[name="contact[comment]"]');
+      this.$name    = this.$el.find('input[name="contact[name]"]');
+      this.$email   = this.$el.find('input[name="contact[email]"]');
+      this.$comment = this.$el.find('textarea[name="contact[comment]"]');
 
       return this;
     },
@@ -102,20 +91,20 @@ $(function() {
     ok: function() {
       var that = this;
 
-      //this.model.save({ name: this.$name.val(), email: this.$email.val(), comment: this.$comment.val() }, {
+      this.model.save({ name: this.$name.val(), email: this.$email.val(), comment: this.$comment.val() }, {
 
-        //success: function() {
-          //that.hide();
-        //},
+        success: function() {
+          that.hide();
+        },
 
-        //error: function() {
+        error: function() {
 
-          //that.$name.parent().addClass("error");
-          //that.$email.parent().addClass("error");
-          //that.$comment.parent().addClass("error");
+          that.$name.parent().addClass("error");
+          that.$email.parent().addClass("error");
+          that.$comment.parent().addClass("error");
 
-        //}
-      //});
+        }
+      });
 
     },
 
@@ -128,18 +117,12 @@ $(function() {
 
   });
 
-  var nameInput       = new InputModel({ template_name: "templates/contact/input", type: "text", name: "name" });
-  var emailInput      = new InputModel({ template_name: "templates/contact/input", type: "text", name: "name" });
-  var commentTextarea = new InputModel({ template_name: "templates/contact/textarea", type: "text", name: "name" });
-
-  var inputs = new Inputs([nameInput, emailInput, commentTextarea]);
 
   var dialog = new MyDialog({
     model: new dialogModel(),
     title: 'test',
     description: 'long description here',
     template_name: 'templates/contact/contact',
-    collection: inputs,
     width:  458,
     height: 539
   });
