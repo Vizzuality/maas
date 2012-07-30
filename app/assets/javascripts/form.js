@@ -5,6 +5,22 @@ cdb.ui.common.FieldModel = Backbone.Model.extend({
   }
 });
 
+/*
+cdb.ui.common.CircleModel = Backbone.Model.extend({ });
+
+cdb.ui.common.CircleView = Backbone.View.extend({
+  initialize: function() {
+    this.model = new CircleModel();
+  },
+  toggle: function() {
+    if (this.model("visible")) {
+    this.$el.fadeIN(
+    } else {
+
+    }
+  }
+});*/
+
 cdb.ui.common.FieldView = Backbone.View.extend({
 
   tagName: "li",
@@ -65,6 +81,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       var callback = this.model.get("callback");
 
       if (callback && callback.on) {
+        if (window.navigation) window.navigation.showCircle(this.$el);
         callback.on( this );
       }
 
@@ -81,10 +98,10 @@ cdb.ui.common.FieldView = Backbone.View.extend({
 
       var callback = this.model.get("callback");
 
-      if (callback && callback.on) {
+      if (callback && callback.off) {
+        if (window.navigation) window.navigation.showCircle(this.$el);
         callback.off( this );
       }
-
     }
 
   },
@@ -242,7 +259,9 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     var self = this;
 
-    _.bindAll(this, "select", "keydown", "prev", "next", "showDontKnow", "showPane", "loadLayers", "loadBaseLayer", "replaceCartoDBLayer", "loadCartoDBLayer", "removeLayers", "centerMap", "onSuccess", "onError");
+    _.bindAll(this, "select", "keydown", "prev", "next", "showCircle", "hideCircle", "showDontKnow", "showPane", "loadLayers", "loadBaseLayer", "replaceCartoDBLayer", "loadCartoDBLayer", "removeLayers", "centerMap", "onSuccess", "onError");
+
+    $(window).on("scroll", this.hideCircle);
 
     $("form").on("ajax:error", this.onError);
     $("form").on("ajax:success", this.onSuccess);
@@ -283,6 +302,16 @@ cdb.ui.common.Navigation = Backbone.View.extend({
       $span.fadeIn(250);
     });
 
+  },
+
+  hideCircle: function() {
+    if ($("body").scrollTop() < 600) $(".circle").animate({ opacity: 0 }, 150);
+  },
+
+  showCircle: function($el) {
+    if ( $("body").scrollTop() > 600 ) {
+      $(".circle").animate({ top: $el.position().top - $(".circle").height()/2, opacity: 1 }, 150);
+    }
   },
 
   prev: function(e) {

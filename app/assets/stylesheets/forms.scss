@@ -340,13 +340,13 @@ form .map {
   } // form map browser
 }
 
-/*#container > div { display: none; position:relative; }*/
+/* #container > div { display: none; position:relative; } */
 
 .circle {
 
-  display:none;
+  opacity: 0;
 
-  @include position(70px, 183px, false, false);
+  @include position(650px, 183px, false, false);
   @include size(92px);
   @include icons-sprite(map-updated-circle);
 
