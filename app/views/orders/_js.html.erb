@@ -2,6 +2,7 @@
   $(function() {
 
     cdb.init();
+    currentLayer = null;
 
     defaultPageName = "<%= @defaultPageName %>";
 
@@ -44,7 +45,7 @@
       template_name: 'templates/map/infowindow/infowindow'
     });
 
-    var infowindow = new cdb.geo.ui.Infowindow({
+    infowindow = new cdb.geo.ui.Infowindow({
       model: infowindowModel,
       mapView: mapView
     });
@@ -57,7 +58,6 @@
     });
 
     window.pane = pane;
-
 
     var
     layersURL = {
@@ -88,27 +88,61 @@
         parsedData = JSON.parse(data.latlng),
         latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
-        infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [53, 10], content: data, latlng: [latlng.lat, latlng.lng] });
+        infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10], content: data, latlng: [latlng.lat, latlng.lng] });
         infowindow.showInfowindow();
       }
     };
+
+    var cMarkersNewInfowindow = function(ev, latlng, pos, data) {
+
+      var // get coordinates of the marker
+      parsedData = JSON.parse(data.latlng),
+      latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
+
+      infowindow.model.set({
+        template_name: 'templates/map/infowindow/infowindow_big',
+        title: data.title,
+        src: data.src,
+        offset: [108, 0],
+        subtitle: data.subtitle,
+        description: data.description,
+        latlng: [latlng.lat, latlng.lng],
+        subtitle: data.subtitle,
+        description: data.description,
+      });
+
+      infowindow.showInfowindow();
+    };
+
+    var cMarkersClassicInfowindow = function(ev, latlng, pos, data) {
+
+      var // get coordinates of the marker
+      parsedData = JSON.parse(data.latlng),
+      latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
+
+      infowindow.model.set({
+        template_name: 'templates/map/infowindow/infowindow_classic',
+        title: data.title,
+        cartodb_id: data.cartodb_id,
+        src: data.src,
+        offset: [50, 10],
+        subtitle: data.subtitle,
+        description: data.description,
+        latlng: [latlng.lat, latlng.lng]
+      });
+
+      infowindow.showInfowindow();
+    };
+
     var cCustomMarkers = {
       user_name: 'examples',
       table_name: 'maas_markers',
-      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, category FROM {{table_name}}',
-      interactivity: "cartodb_id, latlng, category",
+      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
+      interactivity: "cartodb_id, latlng, src, title, subtitle, description, category",
       auto_bound: false,
       featureOver:  function() { document.body.style.cursor = "pointer"; },
       featureOut:   function() { document.body.style.cursor = "default"; },
-      featureClick: function(ev, latlng, pos, data) {
-
-        var // get coordinates of the marker
-        parsedData = JSON.parse(data.latlng),
-        latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
-
-        infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [53, 10], content: data, latlng: [latlng.lat, latlng.lng] });
-        infowindow.showInfowindow();
-      }
+      featureClick: cMarkersClassicInfowindow
     };
 
     var cMarkers = {
@@ -119,26 +153,9 @@
       auto_bound: false,
       featureOver:  function() { document.body.style.cursor = "pointer"; },
       featureOut:   function() { document.body.style.cursor = "default"; },
-      featureClick: function(ev, latlng, pos, data) {
-
-        var // get coordinates of the marker
-        parsedData = JSON.parse(data.latlng),
-        latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
-
-        infowindow.model.set({
-          template_name: 'templates/map/infowindow/infowindow_big',
-          title: data.title,
-          src: data.src,
-          offset: [108, 0],
-          // offset: [0, 10],
-          subtitle: data.subtitle,
-          description: data.description,
-          latlng: [latlng.lat, latlng.lng]
-        });
-
-        infowindow.showInfowindow();
-      }
+      featureClick: cMarkersClassicInfowindow
     };
+
 
     var cThematic = {
       user_name: 'maas',
@@ -170,16 +187,15 @@
       query: 'SELECT cartodb_id, the_geom_webmercator FROM {{table_name}}'
     };
 
-
-    var lBase    = { url: layersURL.base, zoom: 5,  center: [33.13755, -3.71337] };
-    var lTerrain = { url: layersURL.terrain, zoom: 5,  center: [33.13755, -3.71337] };
-    var lForest  = { url: layersURL.forest, zoom: 5,  center: [33.13755, -3.71337] };
+    var lBase    = { url: layersURL.base, zoom: 5,  center: [33.13750, -3.71337] };
+    var lTerrain = { url: layersURL.terrain, zoom: 5,  center: [33.13750, -3.71337] };
+    var lForest  = { url: layersURL.forest, zoom: 5,  center: [33.13750, -3.71337] };
 
     var data = {
       markers:   { cartoDBLayerOptions: cMarkers,  baseLayerOptions: lBase, className: "markers",   name: "Markers map"  },
       polygons:  { cartoDBLayerOptions: cPolygons, baseLayerOptions: { url: layersURL.terrain,   zoom: 5,  center: [40.14528, -3.82324] }, className: "polygons",  name: "Polygons map" },
       density:   { cartoDBLayerOptions: cDensity,  baseLayerOptions: { url: layersURL.base, zoom: 12, center: [40.71435, -73.9000] }, className: "density",   name: "Bubble map"   },
-      thematic:  { cartoDBLayerOptions: cThematic, baseLayerOptions: { url: layersURL.base, zoom: 3,  center: [43.06888, 29.35545] }, className: "thematic",  name: "Thematic map" },
+      thematic:  { cartoDBLayerOptions: cThematic, baseLayerOptions: { url: layersURL.base, zoom: 3,  center: [43.06888, 29.35045] }, className: "thematic",  name: "Thematic map" },
       dont_know: { cartoDBLayerOptions: null,      baseLayerOptions: null, className: "dont_know", name: "Don't know"   }
     };
 
@@ -199,51 +215,76 @@
             mapView.$el.append(selector.render().$el);
 
             selector.show();
-          
+
           },
-          off: function() {}
+          off: function() { 
+            selector.hide();
+          }
         },
+
         custom_infowindows: { 
 
           on: function() { 
 
-            switcher.collection = new cdb.geo.ui.SwitcherItems([ 
-              { selected: true,  name: "Map",       callback: function() { 
-                window.navigation.replaceBaseLayer(lBase);
-              } },
-              { selected: false, name: "Satellite", callback: function() { 
-                window.navigation.replaceBaseLayer(lForest);
-              } }
-            ]);
+            infowindow.hide(true);
+            infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_big', offset: [108, 0] });
+            var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
+            cMarkers.featureClick = cMarkersNewInfowindow;
+            cCustomMarkers.featureClick = cMarkersNewInfowindow;
+            currentLayer.featureClick = cMarkersNewInfowindow;
+            window.navigation.replaceCartoDBLayer(currentLayer);
+            infowindow.show();
+            
 
-            legend.collection = new cdb.geo.ui.LegendItems([ 
-              { className: "light_blue", name: "1-10 stops" },
-              { className: "blue",       name: "11-50 stops" },
-              { className: "light_red",  name: "51-100" },
-              { className: "red",        name: "> 100 stops" }
-            ]);
+            // switcher.collection = new cdb.geo.ui.SwitcherItems([ 
+            //   { selected: true,  name: "Map",       callback: function() { 
+            //     window.navigation.replaceBaseLayer(lBase);
+            //   } },
+            //   { selected: false, name: "Satellite", callback: function() { 
+            //     window.navigation.replaceBaseLayer(lForest);
+            //   } }
+            // ]);
 
-            mapView.$el.append(legend.render().$el);
-            mapView.$el.append(switcher.render().$el);
+            // legend.collection = new cdb.geo.ui.LegendItems([ 
+            //   { className: "light_blue", name: "1-10 stops" },
+            //   { className: "blue",       name: "11-50 stops" },
+            //   { className: "light_red",  name: "51-100" },
+            //   { className: "red",        name: "> 100 stops" }
+            // ]);
 
-            legend.show();
-            switcher.show();
+            // mapView.$el.append(legend.render().$el);
+            // mapView.$el.append(switcher.render().$el);
+
+            // legend.show();
+            // switcher.show();
           }, 
 
-          off: function() { legend.hide(); switcher.hide(); }  
+          off: function() {
+            infowindow.hide(true);
+            var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
+            infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10] });
+            cMarkers.featureClick = cMarkersClassicInfowindow;
+            cCustomMarkers.featureClick = cMarkersClassicInfowindow;
+            currentLayer.featureClick = cMarkersClassicInfowindow;
+            window.navigation.replaceCartoDBLayer(currentLayer);
+            infowindow.show();
+
+            // legend.hide();
+            // switcher.hide();
+          }
 
         },
 
         different_markers_for_different_categories: {
 
           on: function(e) {
-            window.map.infowindow.hide(true);
+
             window.navigation.replaceCartoDBLayer(cCustomMarkers);
+
           },
 
           off: function(e) {
-            window.map.infowindow.hide(true);
-            window.map.infowindow.hide();
+
             window.navigation.replaceCartoDBLayer(cMarkers);
           }
 

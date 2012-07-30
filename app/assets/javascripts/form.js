@@ -460,6 +460,10 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   // Methods to remove, replace and create CartoDB layers
   // and regular layers
 
+  getCurrentCartoDBLayerOptions: function() {
+    return this.map.getLayerByCid(this.cartoDBLayer).toJSON();
+  },
+
   removeBaseLayer: function() {
     window.map.removeLayerByCid(this.baseLayer);
   },
