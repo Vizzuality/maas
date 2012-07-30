@@ -76,7 +76,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       this.$el.find(".price").fadeIn(this.options.speed);
       this.$el.find(".ellipsis").fadeOut(this.options.speed);
 
-      this.$el.find("input").val(this.model.get("id"));
+      this.$el.find("input").val(this.model.get("el_id"));
 
       var callback = this.model.get("callback");
 
@@ -409,12 +409,18 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     // Hides the infowindow
     window.map.infowindow.model.set("visibility", false);
+    window.map.selector.hide();
+
+    pane.collection.each(function(f) {
+      if (f.get('selected')) {
+        var callback = f.get("callback");
+        if (callback && callback.on) { setTimeout(function() { callback.on( f.view ); }, 2000); }
+      }
+    });
 
     // Callback: after the animations, unload & load the layers
     var loadLayers = function() {
-
       self.loadLayers(pane.options.data.cartoDBLayerOptions, pane.options.data.baseLayerOptions);
-
     };
 
     // Callback: shows the map and makes it ready to show the layers
@@ -426,7 +432,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
         $(".browser").fadeIn({ duration: 250, easing: "easeOutExpo", complete: loadLayers });
 
       });
-
     }
 
     // Hide the 'I don't know' divs
@@ -637,6 +642,8 @@ cdb.ui.common.Form = Backbone.View.extend({
         fieldView = new cdb.ui.common.FieldView({ model: field });
       }
 
+      field.view = fieldView;
+
       field.bind("change:selected", self.recalc, field);
 
       if (field.get('type') == false ||field.get('checked') == true)  {
@@ -679,6 +686,7 @@ cdb.Router = Backbone.Router.extend({
   page: function(pageName) {
 
     if (!pageName) pageName = defaultPageName;
+
 
     var pane = window.pane.active(pageName)
     window.navigation.select(pane);

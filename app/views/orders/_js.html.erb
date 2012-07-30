@@ -4,12 +4,16 @@
     cdb.init();
     currentLayer = null;
 
+    var config = {
+      username: "maas"
+    };
+
     defaultPageName = "<%= @defaultPageName %>";
 
     // Adds map
     var map = new cdb.geo.Map({
-      center: [40.463667, -3.74922],
-      zoom: 2
+      center: [33.13750, -3.71337],
+      zoom: 5
     });
 
     var mapView = new cdb.geo.LeafletMapView({
@@ -50,6 +54,10 @@
       mapView: mapView
     });
 
+
+    var classicInfowindow = { template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10] };
+    var newInfowindow     = { template_name: 'templates/map/infowindow/infowindow_big',     offset: [108, 0] };
+    var classicInfowindow = { template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10] };
     $("#map").append(infowindow.$el);
 
     // Adds pane
@@ -64,7 +72,7 @@
       base:    'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
       base2:   'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
       terrain: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-      forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.Forest-Height-Test/{z}/{x}/{y}.png'
+      forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png'
     };
 
     var trianglesOptions = {
@@ -146,7 +154,7 @@
     };
 
     var cMarkers = {
-      user_name: 'maas',
+      user_name: config.username,
       table_name: 'markers',
       query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
       interactivity: "cartodb_id, latlng, src, title, subtitle, description, category",
@@ -158,7 +166,7 @@
 
 
     var cThematic = {
-      user_name: 'maas',
+      user_name: config.username,
       table_name: 'choropleth',
       query: 'SELECT cartodb_id, pop_est, the_geom_webmercator FROM {{table_name}}',
       interactivity: "cartodb_id",
@@ -181,19 +189,61 @@
 
     };
 
-    var cPolygons = {
-      user_name: 'maas',
-      table_name: 'polygons',
-      query: 'SELECT cartodb_id, the_geom_webmercator FROM {{table_name}}'
+    var cPolygonsStyled = {
+      user_name: config.username,
+      table_name: 'polygons_styled',
+      query: 'SELECT cartodb_id, the_geom_webmercator FROM {{table_name}}',
+      interactivity: "cartodb_id",
+      featureOver:  function() { document.body.style.cursor = "pointer"; },
+      featureOut:   function() { document.body.style.cursor = "default"; },
+      featureClick: function(ev, latlng, pos, data) {
+
+        infowindow.model.set({
+          template_name: 'templates/map/infowindow/infowindow_classic',
+          title: data.cartodb_id,
+          cartodb_id: data.cartodb_id,
+          offset: [50, 0],
+          subtitle: "Subtitle",
+          description: "Description",
+          latlng: [latlng.lat, latlng.lng]
+        });
+
+        infowindow.showInfowindow();
+
+      }
     };
 
-    var lBase    = { url: layersURL.base, zoom: 5,  center: [33.13750, -3.71337] };
-    var lTerrain = { url: layersURL.terrain, zoom: 5,  center: [33.13750, -3.71337] };
-    var lForest  = { url: layersURL.forest, zoom: 5,  center: [33.13750, -3.71337] };
+    var cPolygons = {
+      user_name: config.username,
+      table_name: 'polygons',
+      query: 'SELECT cartodb_id, the_geom_webmercator FROM {{table_name}}',
+      interactivity: "cartodb_id",
+      featureOver:  function() { document.body.style.cursor = "pointer"; },
+      featureOut:   function() { document.body.style.cursor = "default"; },
+      featureClick: function(ev, latlng, pos, data) {
+
+        infowindow.model.set({
+          template_name: 'templates/map/infowindow/infowindow_classic',
+          title: data.cartodb_id,
+          cartodb_id: data.cartodb_id,
+          offset: [50, 0],
+          subtitle: "Subtitle",
+          description: "Description",
+          latlng: [latlng.lat, latlng.lng]
+        });
+
+        infowindow.showInfowindow();
+
+      }
+    };
+
+    var lBase    = { url: layersURL.base,    zoom: 5, center: [33.13750, -3.71337] };
+    var lTerrain = { url: layersURL.terrain, zoom: 5, center: [33.13750, -3.71337] };
+    var lForest  = { url: layersURL.forest,  zoom: 9, center: [40.2599756, -5.9280726] };
 
     var data = {
       markers:   { cartoDBLayerOptions: cMarkers,  baseLayerOptions: lBase, className: "markers",   name: "Markers map"  },
-      polygons:  { cartoDBLayerOptions: cPolygons, baseLayerOptions: { url: layersURL.terrain,   zoom: 5,  center: [40.14528, -3.82324] }, className: "polygons",  name: "Polygons map" },
+      polygons:  { cartoDBLayerOptions: cPolygons, baseLayerOptions: lForest, className: "polygons",  name: "Polygons map" },
       density:   { cartoDBLayerOptions: cDensity,  baseLayerOptions: { url: layersURL.base, zoom: 12, center: [40.71435, -73.9000] }, className: "density",   name: "Bubble map"   },
       thematic:  { cartoDBLayerOptions: cThematic, baseLayerOptions: { url: layersURL.base, zoom: 3,  center: [43.06888, 29.35045] }, className: "thematic",  name: "Thematic map" },
       dont_know: { cartoDBLayerOptions: null,      baseLayerOptions: null, className: "dont_know", name: "Don't know"   }
@@ -206,13 +256,12 @@
           on:  function() {
 
             selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { className: "light_blue", name: "1-10 stops" },
-              { className: "blue",       name: "11-50 stops" },
-              { className: "light_red",  name: "51-100" },
-              { className: "red",        name: "> 100 stops" }
+              { className: "light_blue", name: "ALL FEATURES"  },
+              { className: "blue",       name: "Blue markers"  },
+              { className: "light_red",  name: "Green markers" }
             ]);
 
-            mapView.$el.append(selector.render().$el);
+            mapView.$el.parent().append(selector.render().$el);
 
             selector.show();
 
@@ -225,16 +274,21 @@
         custom_infowindows: { 
 
           on: function() { 
-
+            if (!infowindow.isHidden()) var show = true;
             infowindow.hide(true);
-            infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_big', offset: [108, 0] });
+
             var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
-            cMarkers.featureClick = cMarkersNewInfowindow;
+
+            cMarkers.featureClick       = cMarkersNewInfowindow;
             cCustomMarkers.featureClick = cMarkersNewInfowindow;
-            currentLayer.featureClick = cMarkersNewInfowindow;
+            currentLayer.featureClick   = cMarkersNewInfowindow;
+
             window.navigation.replaceCartoDBLayer(currentLayer);
-            infowindow.show();
-            
+
+            if (show) {
+              infowindow.model.set(newInfowindow);
+              infowindow.show();
+            }
 
             // switcher.collection = new cdb.geo.ui.SwitcherItems([ 
             //   { selected: true,  name: "Map",       callback: function() { 
@@ -252,22 +306,28 @@
             //   { className: "red",        name: "> 100 stops" }
             // ]);
 
-            // mapView.$el.append(legend.render().$el);
-            // mapView.$el.append(switcher.render().$el);
+            // mapView.$el.parent().append(legend.render().$el);
+            // mapView.$el.parent().append(switcher.render().$el);
 
             // legend.show();
             // switcher.show();
           }, 
 
           off: function() {
+            if (!infowindow.isHidden()) var show = true;
             infowindow.hide(true);
             var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
-            infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10] });
-            cMarkers.featureClick = cMarkersClassicInfowindow;
+
+            cMarkers.featureClick       = cMarkersClassicInfowindow;
             cCustomMarkers.featureClick = cMarkersClassicInfowindow;
-            currentLayer.featureClick = cMarkersClassicInfowindow;
+            currentLayer.featureClick   = cMarkersClassicInfowindow;
+
             window.navigation.replaceCartoDBLayer(currentLayer);
-            infowindow.show();
+
+            if (show) {
+              infowindow.model.set(classicInfowindow);
+              infowindow.show();
+            }
 
             // legend.hide();
             // switcher.hide();
@@ -276,22 +336,39 @@
         },
 
         different_markers_for_different_categories: {
-
-          on: function(e) {
-
-            window.navigation.replaceCartoDBLayer(cCustomMarkers);
-
-          },
-
-          off: function(e) {
-
-            window.navigation.replaceCartoDBLayer(cMarkers);
-          }
-
+          on:  function(e) { window.navigation.replaceCartoDBLayer(cCustomMarkers); },
+          off: function(e) { window.navigation.replaceCartoDBLayer(cMarkers); }
         }
       }, 
 
-      polygons:  {},
+      polygons:  {
+      
+        dynamic_filters: {
+          on:  function() {
+
+            selector.collection = new cdb.geo.ui.SelectorItems([ 
+              { className: "light_blue", name: "ALL FEATURES"  },
+              { className: "blue",       name: "Blue markers"  },
+              { className: "light_red",  name: "Green markers" }
+            ]);
+
+            mapView.$el.parent().append(selector.render().$el);
+
+            selector.show();
+
+          },
+
+          off: function() { 
+            selector.hide();
+          }
+        },
+
+        different_styles_for_different_types_of_polygons: {
+          on:  function(e) { window.navigation.replaceCartoDBLayer(cPolygonsStyled); },
+          off: function(e) { window.navigation.replaceCartoDBLayer(cPolygons); }
+        }
+
+      },
       density:   {},
       thematic:  {},
       dont_know: {}
@@ -343,7 +420,7 @@
             type: 'radio', 
             name: "visualization_method_id", 
             el_id: "<%= option.id %>", 
-            disable: true,
+            disabled: true,
             price: 0, 
             title: "<%= option.name.humanize %>", 
             option_name: "<%= option.name %>", 
@@ -356,7 +433,7 @@
             callback: checkboxCallbacks.<%= template.name %>.<%= option.name %>, 
             className: <%= ( i == 0 && template.visualization_methods.size > 0 ) ? "'separator'" : "null" %>, 
             checked: false,
-            disable: true,
+            disabled: true,
             name: "template_option", 
             type: 'checkbox', 
             el_id: "<%= option.id %>", 
@@ -391,6 +468,9 @@
     window.mapView = mapView;
 
     window.map.infowindow = infowindow;
+    window.map.selector   = selector;
+    window.map.legend     = legend;
+
     window.navigation  = new cdb.ui.common.Navigation({ map: map, collection: templates });
     window.router      = new cdb.Router();
     Backbone.history.start({ pushState: true });

@@ -101,8 +101,8 @@ en:
       option:
         description: 
           rectangular_grid: "Group and represent data using a rectangular grid"
-          dynamic_filters: "This allows you to filter the polygons in your map dynamically."
-          different_styles_for_different_types_of_polygons: "This allow you to visual differentiate the polygons- styles may change"
+          dynamic_filters: "This allows you to filter the features in your map dynamically."
+          different_styles_for_different_types_of_polygons: "This allow you to visual differentiate the polygons -styles may change-."
           hexagonal_grid: "Group and represent data using an hexagonal grid"
           variable_selection: "This allows your users to toggle between different variables to visualize."
           custom_infowindows: "This includes an ad-hoc design for your map infowindows."
