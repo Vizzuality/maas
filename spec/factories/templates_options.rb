@@ -29,10 +29,10 @@ FactoryGirl.define do
       price 200
     end
 
-    factory :dynamic_clusters do
-      name 'dynamic_clusters'
-      price 350
-    end
+    #factory :dynamic_clusters do
+      #name 'dynamic_clusters'
+      #price 350
+    #end
 
     factory :different_polygons do
       name 'different_polygons'

@@ -187,7 +187,20 @@
       markers: {
 
         dynamic_filters: {
-          on:  function() {},
+          on:  function() {
+
+            selector.collection = new cdb.geo.ui.SelectorItems([ 
+              { className: "light_blue", name: "1-10 stops" },
+              { className: "blue",       name: "11-50 stops" },
+              { className: "light_red",  name: "51-100" },
+              { className: "red",        name: "> 100 stops" }
+            ]);
+
+            mapView.$el.append(selector.render().$el);
+
+            selector.show();
+          
+          },
           off: function() {}
         },
         custom_infowindows: { 

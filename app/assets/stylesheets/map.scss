@@ -10,37 +10,7 @@
 
   @include position(10px, 10px, false, false);
 
-  background: $cWhite;
-  background: rgba($cWhite, .9);
-
-  border: 1px solid $cGray0;
-  @include dark-glow(.3);
-
-  @include border-radius(2px);
-
-  z-index: 1000;
-
-  ul {
-
-    li {
-
-      @include inline-block();
-      border-right: 1px solid $cGray0;
-      padding: 7px 15px;
-
-      &.selected a { color: $cLink; }
-      &:hover a, &.selected:hover a { color: $cLinkHover; }
-
-      a {
-        @include font("sans-serif-bold", 11px, $cGray2);
-        text-transform: uppercase;
-      }
-
-    }
-
-    li:last-child { border: none; }
-
-  }
+  z-index: 10000;
 }
 
 #switcher {
