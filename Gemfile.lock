@@ -201,8 +201,7 @@ DEPENDENCIES
   capybara-webkit
   carrierwave
   coffee-rails (~> 3.2.1)
-  compass (~> 0.12.1)
-  compass-rails (~> 1.0.3)
+  compass-rails
   database_cleaner
   debugger
   factory_girl_rails
