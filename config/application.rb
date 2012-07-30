@@ -57,5 +57,8 @@ module MaaS
     config.assets.version = '1.0'
 
     ActiveRecord::Base.include_root_in_json = false
+
+    # Disables database calls in precompile
+    config.assets.initialize_on_precompile = false
   end
 end
