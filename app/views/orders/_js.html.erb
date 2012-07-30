@@ -337,7 +337,7 @@
     window.mapView = mapView;
 
     window.map.infowindow = infowindow;
-    window.navigation  = new cdb.ui.common.Navigation({ collection: templates });
+    window.navigation  = new cdb.ui.common.Navigation({ map: map, collection: templates });
     window.router      = new cdb.Router();
     Backbone.history.start({ pushState: true });
 

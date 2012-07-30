@@ -272,6 +272,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     $("form").on("ajax:success", this.onSuccess);
     $("form").on("submit", this.onSubmit);
 
+    this.map          = this.options.map;
     this.template     = cdb.templates.getTemplate('templates/form/navigation');
     this.animating    = false;
     this.selectedPage = 0;
@@ -466,11 +467,18 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   removeCartoDBLayer: function() {
     window.map.removeLayerByCid(this.cartoDBLayer);
   },
+
   replaceBaseLayer: function(layerOptions) {
     if (this.baseLayer) {
       window.map.removeLayerByCid(this.baseLayer);
     }
     window.navigation.loadBaseLayer(layerOptions);
+
+    // We have to add the original CartoDBLayer on top,
+    // so using the Cid of the layer, we recover the hash
+    // with its configuration and use it to regenerate the layer
+    var cartoDBLayerOptions = this.map.getLayerByCid(this.cartoDBLayer).toJSON();
+    window.navigation.replaceCartoDBLayer(cartoDBLayerOptions);
   },
 
   replaceCartoDBLayer: function(layerOptions) {
