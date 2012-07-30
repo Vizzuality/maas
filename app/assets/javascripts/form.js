@@ -261,6 +261,11 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     _.bindAll(this, "select", "keydown", "prev", "next", "showCircle", "hideCircle", "showDontKnow", "showPane", "loadLayers", "loadBaseLayer", "replaceCartoDBLayer", "loadCartoDBLayer", "removeLayers", "centerMap", "onSuccess", "onError");
 
+    $(".circle").on("click", function(e) { // TODO: create Circle element and move this functionality there
+      e.preventDefault();
+      $("html, body").animate({ scrollTop: 0 }, 250);
+    });
+
     $(window).on("scroll", this.hideCircle);
 
     $("form").on("ajax:error", this.onError);
@@ -309,7 +314,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   },
 
   showCircle: function($el) {
-    if ( $("body").scrollTop() > 600 ) {
+    if ( $("body").scrollTop() > 600 && $(".circle").css("opacity") == 0) {
       $(".circle").animate({ top: $el.position().top - $(".circle").height()/2, opacity: 1 }, 150);
     }
   },
