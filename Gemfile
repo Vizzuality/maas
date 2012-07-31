@@ -5,7 +5,7 @@ gem 'pg'
 gem 'responders'
 gem 'carrierwave'
 gem 'recurly'
-gem 'rails-backbone'
+gem 'ejs'
 gem 'carrierwave'
 
 group :assets do
