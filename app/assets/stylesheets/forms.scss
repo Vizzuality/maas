@@ -277,7 +277,7 @@ body.orders form.new_order {
 
     opacity: 0;
 
-    @include position(50px, false, false, -100px);
+    @include position(50px, false, false, -500px);
 
     h2 {
       width: 400px;

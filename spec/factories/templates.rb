@@ -45,7 +45,6 @@ FactoryGirl.define do
         # Options
         FactoryGirl.create(:variable_selection, template: template)
         FactoryGirl.create(:custom_infowindows, template: template)
-        FactoryGirl.create(:custom_regions,     template: template)
       end
     end
 
