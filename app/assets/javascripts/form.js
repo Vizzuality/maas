@@ -466,7 +466,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   // and regular layers
 
   getCurrentCartoDBLayerOptions: function() {
-    return this.map.getLayerByCid(this.cartoDBLayer).toJSON();
+    return this.map.layers.getByCid(this.cartoDBLayer).toJSON();
   },
 
   removeBaseLayer: function() {
@@ -486,7 +486,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     // We have to add the original CartoDBLayer on top,
     // so using the Cid of the layer, we recover the hash
     // with its configuration and use it to regenerate the layer
-    var cartoDBLayerOptions = this.map.getLayerByCid(this.cartoDBLayer).toJSON();
+    var cartoDBLayerOptions = this.map.layers.getByCid(this.cartoDBLayer).toJSON();
     window.navigation.replaceCartoDBLayer(cartoDBLayerOptions);
   },
 
