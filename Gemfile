@@ -30,10 +30,13 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'launchy'
+end
+
+group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'vcr'
   gem 'webmock'
   gem 'database_cleaner'
-  gem 'launchy'
 end

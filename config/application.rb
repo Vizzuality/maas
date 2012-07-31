@@ -61,5 +61,12 @@ module MaaS
     # Disables database calls in precompile
     config.assets.initialize_on_precompile = false
     config.assets.precompile += %w[ active_admin.css active_admin.js ]
+
+    config.action_mailer.smtp_settings = {
+      :address   => 'smtp.mandrillapp.com',
+      :port      => 587,
+      :user_name => ENV['MANDRILL_USERNAME'],
+      :password  => ENV['MANDRILL_PASSWORD']
+    }
   end
 end
