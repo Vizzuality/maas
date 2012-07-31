@@ -12,7 +12,7 @@
 
     // Adds map
     var map = new cdb.geo.Map({
-      center: [33.13750, -3.71337],
+      center: [40.34654412118006, 14.0625],
       zoom: 5
     });
 
@@ -114,6 +114,7 @@
         offset: [108, 0],
         subtitle: data.subtitle,
         description: data.description,
+        cartodb_id: data.cartodb_id,
         latlng: [latlng.lat, latlng.lng],
         subtitle: data.subtitle,
         description: data.description,
@@ -142,28 +143,17 @@
       infowindow.showInfowindow();
     };
 
-    var cCustomMarkers = {
-      user_name: 'examples',
-      table_name: 'maas_markers',
-      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
-      interactivity: "cartodb_id, latlng, src, title, subtitle, description, category",
-      auto_bound: false,
-      featureOver:  function() { document.body.style.cursor = "pointer"; },
-      featureOut:   function() { document.body.style.cursor = "default"; },
-      featureClick: cMarkersClassicInfowindow
-    };
-
     var cMarkers = {
       user_name: config.username,
       table_name: 'markers',
       query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
+      tile_style: "#markers { marker-fill: #FF6600; marker-opacity: 1; marker-width: 8; marker-line-color: white; marker-line-width: 3; marker-line-opacity: 0.9; marker-placement: point; marker-type: ellipse; marker-allow-overlap: true; }",
       interactivity: "cartodb_id, latlng, src, title, subtitle, description, category",
       auto_bound: false,
       featureOver:  function() { document.body.style.cursor = "pointer"; },
       featureOut:   function() { document.body.style.cursor = "default"; },
       featureClick: cMarkersClassicInfowindow
     };
-
 
     var cThematic = {
       user_name: config.username,
@@ -237,7 +227,7 @@
       }
     };
 
-    var lBase    = { url: layersURL.base,    zoom: 5, center: [33.13750, -3.71337] };
+    var lBase    = { url: layersURL.base,    zoom: 5, center: [40.34654412118006, 14.0625] };
     var lTerrain = { url: layersURL.terrain, zoom: 5, center: [33.13750, -3.71337] };
     var lForest  = { url: layersURL.forest,  zoom: 9, center: [40.2599756, -5.9280726] };
 
@@ -280,7 +270,6 @@
             var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
 
             cMarkers.featureClick       = cMarkersNewInfowindow;
-            cCustomMarkers.featureClick = cMarkersNewInfowindow;
             currentLayer.featureClick   = cMarkersNewInfowindow;
 
             window.navigation.replaceCartoDBLayer(currentLayer);
@@ -319,7 +308,6 @@
             var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
 
             cMarkers.featureClick       = cMarkersClassicInfowindow;
-            cCustomMarkers.featureClick = cMarkersClassicInfowindow;
             currentLayer.featureClick   = cMarkersClassicInfowindow;
 
             window.navigation.replaceCartoDBLayer(currentLayer);
@@ -336,8 +324,16 @@
         },
 
         different_markers_for_different_categories: {
-          on:  function(e) { window.navigation.replaceCartoDBLayer(cCustomMarkers); },
-          off: function(e) { window.navigation.replaceCartoDBLayer(cMarkers); }
+          on:  function(e) { 
+            console.log(window.navigation.getCartoDBLayer());
+             window.navigation.getCartoDBLayer().set("tile_style", ""); 
+
+          },
+          off: function(e) { 
+          
+             window.navigation.getCartoDBLayer().set("tile_style", "#markers { marker-fill: #FF6600; marker-opacity: 1; marker-width: 8; marker-line-color: white; marker-line-width: 3; marker-line-opacity: 0.9; marker-placement: point; marker-type: ellipse; marker-allow-overlap: true; }"); 
+
+          }
         }
       }, 
 
