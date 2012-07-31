@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
 
+  before_filter :get_order, :only => [:show]
+
   respond_to :html, :json
   responders :flash, :http_cache
 
@@ -22,7 +24,7 @@ class OrdersController < ApplicationController
 
   end
 
-  def show
+  def get_order
     @order = Order.where(:id => params[:id]).first
   end
 

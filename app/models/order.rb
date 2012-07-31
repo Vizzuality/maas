@@ -1,14 +1,14 @@
 class Order < ActiveRecord::Base
 
   attr_accessible :name,
-    :email,
-    :template_type,
-    :visualization_method_id,
-    :comments,
-    :total,
-    :data_sources_attributes,
-    :order_options_attributes,
-    :client_data_attributes
+                  :email,
+                  :template_type,
+                  :visualization_method_id,
+                  :comments,
+                  :total,
+                  :data_sources_attributes,
+                  :order_options_attributes,
+                  :client_data_attributes
 
   belongs_to :visualization_method
   belongs_to :template, :foreign_key => 'template_type'
