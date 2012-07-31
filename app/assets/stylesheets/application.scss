@@ -19,6 +19,19 @@ a {
   text-decoration:none;
 }
 
+.backdrop {
+  display:none;
+
+  @include position(0, 0, 0, 0);
+  position: fixed;
+
+  background:rgba(255,255,255, .9);
+
+  z-index: 1040;
+
+  &.show { display: block; }
+}
+
 .price { @extend .sans-serif-base; font-size: 15px; font-weight:100; color: $cOrange; }
 
 .section_title {
@@ -414,7 +427,7 @@ footer {
   border: 1px solid #9A9A9A;
   @include border-radius(3px);
 
-  z-index: 1000;
+  z-index: 2000;
 
   .inner { padding: 30px; }
 
