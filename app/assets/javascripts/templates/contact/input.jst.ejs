@@ -1,5 +1,5 @@
-<li>
-  <label for="<%= name %>">Your email</label>
+<li class="field <% if (error) { %>error<% } %>">
+<label for="<%= name %>">Your <%= name %></label>
   <div class="input-field">
   <input type="text" name="contact[<%= name %>]" />
   </div>

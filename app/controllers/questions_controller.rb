@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
 
-  respond_to :json
+  respond_to :html, :json
+  responders :flash, :http_cache
 
   #responders :flash, :http_cache
 
