@@ -15,10 +15,10 @@ en:
           subtitle: 'General questions'
       orders:
         create:
-          title: 'Creating your order'
+          title: 'Create your order'
           subtitle: 'Select your template'
         new:
-          title: 'Creating your order'
+          title: 'Create your order'
           subtitle: 'Select your template'
         show:
           title: 'Track your order'
@@ -47,10 +47,10 @@ en:
           faq: FAQ
     header:
       title: 'Turn your data into interactive maps'
-      subtitle: 'Hand crafted, personalized and fit to your needs in <strong>less than 2 weeks, starting at $3,000</strong>'
+      subtitle: '<strong>Hand crafted</strong>, <strong>personalized</strong>, and <strong>made to order</strong> in less than 2 weeks, starting at $1,800.'
       order_your_map: 'Order your map'
       menu:
-        how_does_it_work: 'How does it work'
+        how_does_it_work: 'How it works'
         why_mapme: 'Why MapMe'
         showcase: 'Showcase'
         order_your_map: 'Order your map'
@@ -61,34 +61,34 @@ en:
       title: 'Interested?'
       order_your_map:
         title: 'Order your map'
-        subtitle: 'and ask for a budget with no compromises'
+        subtitle: 'and settle for only the best'
     characteristics:
       how_does_it_work:
-        title: 'How does it work?'
-        explanation_1: 'You send us your data and select a visualization template.'
-        explanation_2: 'We analyze your data and send you a quote.'
+        title: 'How it works'
+        explanation_1: 'Select one of our visualization templates and send us your data.'
+        explanation_2: 'We analyze it and send you a quote.'
         order_your_map: 'Order your map'
-        explanation_3: 'After a couple of days, you receive your map ready be to published.'
+        explanation_3: 'Within a few days you receive your map, ready to be published.'
       why_mapme:
         title: 'Why MapMe?'
         reason_1:
           title: 'Custom solutions'
-          description: 'All the maps delivered by MapMe are made bespoke for your needs. We will find the best solution for your data.'
+          description: 'MapMe is bespoke. We find the best way to visualize and interpret your data, ensuring for a maximum impcat.'
         reason_2:
-          title: "It's efficient"
-          description: 'With our experiencied maps team, we can turn it around in just a few days. More efficient than doing yourself.'
+          title: "Rapid delivery"
+          description: 'Our expereinced maps team can turn your project around in a few days. Letting you focus on other business drivers.'
         reason_3:
           title: 'Source code included'
-          description: 'For every map, we deliver the visualization complete with the source code. Should you want you can edit, modify, or even repeat the work yourself for a similar use case.'
+          description: 'All visualizations come complete with source code. Allowing you to edit, modify, or apply our work for similar use cases.'
         reason_4:
-          title: "It's flexible"
-          description: "Creating a map doesn't have to be boring. Since we use CartoDB we can do *almost* whatever you need. Custom styles, animations, infowindows, effects, etc..."
+          title: "Interactive + dynamic"
+          description: "Using CartoDB we're able to give your maps uparalleled versatility in styles, animations, infowindows, effects, etc..."
         reason_5:
-          title: 'Powered by data'
-          description: 'If you have a CartoDB account, you will be able to update your data and see the results on your dynamic map.'
+          title: 'Maps that update'
+          description: 'If you have a CartoDB account, just update your data set and see the changes reflected on map in minutes.'
         reason_6:
           title: 'Different basemaps'
-          description: 'You can have your maps over Google Maps, MapBox tiles or your own base layer.'
+          description: 'Whether you want to use Google Maps, MapBox tiles, Bing, or your own base layer, MapMe! works with all of them.'
     footer:
       title: 'MapMe!'
       understand:
@@ -104,6 +104,7 @@ en:
       know_more:
         title: 'Know more'
         contact_us: 'Contact us'
+        powered_by: 'Powered by CartoDB' 
   orders:
     nav:
       header:
@@ -113,48 +114,54 @@ en:
     js:
       option:
         description: 
+<<<<<<< HEAD
           rectangular_grid: "Group and represent data using a rectangular grid"
           dynamic_filters: "This allows you to filter the features in your map dynamically."
           different_styles_for_different_types_of_polygons: "This allow you to visual differentiate the polygons -styles may change-."
+=======
+          rectangular_grid: "Group and represent data using a rectangular grid."
+          dynamic_filters: "This allows you to dynamically filter polygons on your map."
+          different_styles_for_different_types_of_polygons: "This allow you to visually differentiate polygons - styles may change"
+>>>>>>> Updated en.yml
           hexagonal_grid: "Group and represent data using an hexagonal grid"
           variable_selection: "This allows your users to toggle between different variables to visualize."
           custom_infowindows: "This includes an ad-hoc design for your map infowindows."
-          custom_regions: "Define the geographic regions you want to use instead of the default ones."
-          infographic_map: "Remove base layer and leave only your data."
-          bubble_map: "Show values through bubbles of different size."
+          custom_regions: "Define the geographic regions you want to use instead of default ones."
+          infographic_map: "Remove the base layer and leave only your data."
+          bubble_map: "Show values through bubbles of varying sizes."
           choropleth_map: "Show values coloring the geographic features in different colors or intensities."
-          dynamic_clusters: "Creates a cluster when a lot of points are close each other - styles may change-."
-          different_markers_for_different_categories: "This allow you to visual differentiate the features - styles may change-."
+          dynamic_clusters: "Creates clusters when a lot of points are close one aother - styles may change."
+          different_markers_for_different_categories: "This allows you to visually differentiate between features - styles may change."
       description:
-        markers: "Including base interactivity, mouse-over effect and basic infowindows."
-        polygons: "Including base interactivity, mouse-over effect and basic infowindows."
-        thematic: "Including base interactivity, mouse-over effect and basic infowindows."
+        markers: "Includes base interactivity, mouse-over effect and basic infowindows."
+        polygons: "Includes base interactivity, mouse-over effect and basic infowindows."
+        thematic: "Includes base interactivity, mouse-over effect and basic infowindows."
         density: "Includes data process & visualization."
-        dont_know: "Just send us your data and a brief idea of what you need to analyze, and we will give you the best option to represent it and the corresponding estimate."
+        dont_know: "Just send us your data with a brief description of what you need analyzed, and we will recommend the best visualization option for it along with a corresponding estimate."
     new:
       templates-list:
         markers: 'Markers map'
         polygons: 'Polygons map'
         thematic: 'Thematic map'
         density: 'Density map'
-        dont_know: "Don't know"
+        dont_know: "Not sure"
       templates-detail:
         select_one_type: 'Select one of the types above to start configuring your template'
         visualization_method: 'Visualization method'
         markers:
-          title: 'Markers map'
+          title: 'Markers'
           description: 'Including base interactivity, mouse-over effects and basic infowindows.'
           price: '$%{price}'
         polygons:
-          title: 'Polygons map'
+          title: 'Polygons'
           description: 'Including base interactivity, mouse-over effects and basic infowindows.'
           price: '$%{price}'
         thematic:
-          title: 'Thematic map'
+          title: 'Thematic'
           description: 'Including base interactivity, mouse-over effects and basic infowindows.'
           price: '$%{price}'
         density:
-          title: 'Density map'
+          title: 'Density'
           description: 'Includes data process & visualization.'
           price: '$%{price}'
         dont_know:
@@ -163,10 +170,10 @@ en:
           price: '$%{price}'
         visualization_methods:
           choropleth:
-            name: 'Choropleth map'
+            name: 'Choropleth'
             description: 'Shows values coloring the geographic features in different colors or intensities.'
           bubble:
-            name: 'Bubble map'
+            name: 'Bubble'
             description: 'Shows values through bubbles of different size.'
           rectangular_grid:
             name: 'Rectangular grid'
@@ -205,30 +212,30 @@ en:
             price: '$%{price}'
       total:
         title: 'Total'
-        ammount_html: 'Starting from $<span>%{price}</span>'
+        ammount_html: 'Starting at $<span>%{price}</span>'
     form: 
       your_data:
         title: 'Attach your data'
-        description: 'In order to get the best option for you, we need to analyze your data before sending you a budget.'
+        description: 'In order to give you the best possible visualization option and quote, we first need to analyze your data.'
         drag_drop: 'To attach files drag & drop here or '
         select_files: 'select files from your computer'
       contact_info:
         name: 'Your name/company'
         email: 'Your email'
-        comments: 'Comments that should we know about your data on the map you want'
+        comments: 'Tell us about what we should know about your data and the map you want'
       submit: 'Confirm and ask for a budget'
     show:
       title:
         hi: 'Hi %{name},'
-        description: 'This is your map tracker page. Here you will be able to see the progress of your map.'
+        description: "Track your order.  "
       summary:
         title: 'Your order summary'
         map_type: '%{type} with...'
       total:
         title: 'Total'
-        starting: 'Starting from $%{price}'
+        starting: 'Estimate $%{price}'
       analyzing:
         title: 'We are analyzing your data.'
-        give_price: 'In order to give you a price based on the time we will need to process and visualize it we need to take a look at your data first. Once we finish, we will contact you -and update this page- with the definitive budget, which you will approve or discard.'
-        too_much_time: 'Do you think that is taking us too much time?'
+        give_price: 'In order to give you a precise quote on how long it will take to process and visualize your data we first need to take a look at it. Once done we will contact you with a quote that you can approve or discard.'
+        too_much_time: 'Are we taking too long?'
         contact_us: 'Contact us.'
