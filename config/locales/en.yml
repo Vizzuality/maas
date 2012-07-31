@@ -37,6 +37,14 @@ en:
       title: "Still have questions?"
       contact_us: "Contact us"
   home:
+    nav:
+      header:
+        menu:
+          how_does_it_work: How does it work
+          why_mapme: Why Mapme
+          showcase: Showcase
+          order_your_map: Order your map
+          faq: FAQ
     header:
       title: 'Turn your data into interactive maps'
       subtitle: 'Hand crafted, personalized and fit to your needs in <strong>less than 2 weeks, starting at $3,000</strong>'
@@ -97,6 +105,11 @@ en:
         title: 'Know more'
         contact_us: 'Contact us'
   orders:
+    nav:
+      header:
+        menu:
+          order_your_map: Order your map
+          faq: FAQ
     js:
       option:
         description: 
