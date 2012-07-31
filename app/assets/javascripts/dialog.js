@@ -119,9 +119,9 @@ $(function() {
 
     hide: function() {
 
-      this.$el.fadeOut(250);
+      this.$el.fadeOut(150);
 
-      $(".backdrop").fadeOut(250, function() {
+      $(".backdrop").fadeOut(150, function() {
         $(this).remove();
       });
 
@@ -129,12 +129,12 @@ $(function() {
 
     open: function() {
 
-      this.$el.fadeIn(250);
+      this.$el.fadeIn(150);
       this.center();
       this.$el.find(".error").removeClass("error");
 
       $("body").append("<div class='backdrop'></div>");
-      $(".backdrop").fadeIn(250);
+      $(".backdrop").fadeIn(150);
       $(".backdrop").on("click", this.hide);
 
     },
