@@ -1,6 +1,6 @@
 class Notifications < ActionMailer::Base
-  default from: "boss@mapmydata.co"
-          #, bcc: "contact@vizzuality.com"
+  default from: "boss@mapmydata.co",
+          bcc: "contact@vizzuality.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
