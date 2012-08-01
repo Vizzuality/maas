@@ -420,7 +420,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     // Callback: after the animations, unload & load the layers
     var loadLayers = function() {
-      self.loadLayers(pane.options.data.cartoDBLayerOptions, pane.options.data.baseLayerOptions);
+      self.loadLayers(pane.options.data.cartoDBLayerOptions, pane.options.data.baseLayerOptions, pane.options.data.extraLayer);
     };
 
     // Callback: shows the map and makes it ready to show the layers
@@ -440,9 +440,10 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   },
 
-  loadLayers: function(cartoDBLayerOptions, baseLayerOptions) {
+  loadLayers: function(cartoDBLayerOptions, baseLayerOptions, extraLayerOptions) {
 
     this.removeLayers();
+    if (extraLayerOptions) this.loadExtraLayer(extraLayerOptions);
     this.loadBaseLayer(baseLayerOptions);
     this.loadCartoDBLayer(cartoDBLayerOptions);
     this.centerMap(baseLayerOptions.center, baseLayerOptions.zoom);
@@ -473,6 +474,9 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     return this.map.layers.getByCid(this.cartoDBLayer).toJSON();
   },
 
+  removeExtraLayer: function() {
+    window.map.removeLayerByCid(this.extraLayer);
+  },
   removeBaseLayer: function() {
     window.map.removeLayerByCid(this.baseLayer);
   },
@@ -501,6 +505,12 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     window.navigation.loadCartoDBLayer(layerOptions);
   },
 
+  loadExtraLayer: function(options) {
+
+    var layer       = new cdb.geo.TileLayer({ urlTemplate: options.url });
+    this.extraLayer = window.map.addLayer(layer);
+  },
+
   loadBaseLayer: function(options) {
 
     var layer      = new cdb.geo.TileLayer({ urlTemplate: options.url });
@@ -522,6 +532,12 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
       if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
       if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
+
+      if (this.extraLayer)   {
+        window.map.removeLayerByCid(this.extraLayer);
+        this.extraLayer = null;
+      }
+
     }
     catch(err) {
 

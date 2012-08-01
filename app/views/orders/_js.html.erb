@@ -67,13 +67,18 @@
 
     window.pane = pane;
 
+    statements = createCalls(8, 4);
+
     var
     layersURL = {
       base:    'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
       base2:   'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
       terrain: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-      forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png'
+      forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png',
+      density: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[0]
     };
+
+    console.log(layersURL.density);
 
     var trianglesOptions = {
       user_name: "viz2",
@@ -227,16 +232,18 @@
       }
     };
 
-    var lBase    = { url: layersURL.base,    zoom: 5, center: [40.34654412118006, 14.0625] };
-    var lTerrain = { url: layersURL.terrain, zoom: 5, center: [33.13750, -3.71337] };
-    var lForest  = { url: layersURL.forest,  zoom: 9, center: [40.2599756, -5.9280726] };
+    var lBase     = { url: layersURL.base,    zoom: 5, center: [40.34654412118006, 14.0625] };
+    var lTerrain  = { url: layersURL.terrain, zoom: 5, center: [33.13750, -3.71337] };
+    var lForest   = { url: layersURL.forest,  zoom: 9, center: [40.2599756, -5.9280726] };
+    var lDensity  = { url: layersURL.density, zoom: 3, center: [40.04443758460856, -101.25] };
+    var lThematic = { url: layersURL.base,    zoom: 3, center: [43.06888, 29.35045] };
 
     var data = {
-      markers:   { cartoDBLayerOptions: cMarkers,  baseLayerOptions: lBase, className: "markers",   name: "Markers map"  },
-      polygons:  { cartoDBLayerOptions: cPolygons, baseLayerOptions: lForest, className: "polygons",  name: "Polygons map" },
-      density:   { cartoDBLayerOptions: cDensity,  baseLayerOptions: { url: layersURL.base, zoom: 12, center: [40.71435, -73.9000] }, className: "density",   name: "Bubble map"   },
-      thematic:  { cartoDBLayerOptions: cThematic, baseLayerOptions: { url: layersURL.base, zoom: 3,  center: [43.06888, 29.35045] }, className: "thematic",  name: "Thematic map" },
-      dont_know: { cartoDBLayerOptions: null,      baseLayerOptions: null, className: "dont_know", name: "Don't know"   }
+      markers:   { cartoDBLayerOptions: cMarkers,  baseLayerOptions: lBase,     extraLayer: null,  className: "markers",   name: "Markers map"  },
+      polygons:  { cartoDBLayerOptions: cPolygons, baseLayerOptions: lForest,   extraLayer: null,  className: "polygons",  name: "Polygons map" },
+      density:   { cartoDBLayerOptions: null,      baseLayerOptions: lDensity,  extraLayer: lBase, className: "density",   name: "Density grid map"   },
+      thematic:  { cartoDBLayerOptions: cThematic, baseLayerOptions: lThematic, extraLayer: null,  className: "thematic",  name: "Thematic map" },
+      dont_know: { cartoDBLayerOptions: null,      baseLayerOptions: null,      extraLayer: null,  className: "dont_know", name: "Don't know"   }
     };
 
     var checkboxCallbacks = {
@@ -246,9 +253,20 @@
           on:  function() {
 
             selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { className: "light_blue", name: "ALL FEATURES"  },
-              { className: "blue",       name: "Blue markers"  },
-              { className: "light_red",  name: "Green markers" }
+              { className: "light_blue", name: "ALL FEATURES" , callback: function() {
+                console.log('a');
+
+                var query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} LIMIT 1';
+                window.navigation.getCartoDBLayer().set("sql", query); 
+
+              }},
+              { className: "blue",       name: "Blue markers" , callback: function() {
+                console.log('a');
+              
+              }},
+              { className: "light_red",  name: "Green markers", callback: function() {
+              
+              }}
             ]);
 
             mapView.$el.parent().append(selector.render().$el);
@@ -325,7 +343,6 @@
 
         different_markers_for_different_categories: {
           on:  function(e) { 
-            console.log(window.navigation.getCartoDBLayer());
              window.navigation.getCartoDBLayer().set("tile_style", ""); 
 
           },
@@ -373,16 +390,17 @@
 
     var radioCallbacks = {
       markers:   function() { console.log('a'); },
-      polygons:  function() { console.log('b'); },
+      polygons:  {},
       density:  { 
         on:  function(e) { 
 
           if (window.navigation) { // we do this so the callback doesn't get fired at the start
 
             if (e.model.get("option_name") == "rectangular_grid") {
-              window.navigation.replaceCartoDBLayer(cCustomMarkers);
+
+
             } else {
-              window.navigation.replaceCartoDBLayer(trianglesOptions);
+              window.navigation.removeLayers();
             }
           }
         }
@@ -455,7 +473,7 @@
     var templates = new cdb.ui.common.NavigationItems([
       { selected: false, className: "markers",   name: "Markers map" },
       { selected: false, className: "polygons",  name: "Polygons map" },
-      { selected: false, className: "density",   name: "Bubble map" },
+      { selected: false, className: "density",   name: "Density grid map" },
       { selected: false, className: "thematic",  name: "Thematic map" },
       { selected: false, className: "dont_know", name: "Don't know" }
     ]);
