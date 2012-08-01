@@ -27,25 +27,26 @@
   </ul>
 
   <div class="total">
-    <strong>TOTAL</strong> <div class="price">Starting from $<%= @order.starting_from %></div>
+    <% if @order.paid? %>
+      <strong>TOTAL</strong> <div class="price">$<%= @order.total %></div>
+    <% else %>
+      <strong>TOTAL</strong> <div class="price">Starting from $<%= @order.starting_from %></div>
+    <% end %>
   </div>
 
   <div class="stamp"></div>
   </section>
 
-  <% if false %>
+  <% if !@order.ready_for_payment? and !@order.paid? %>
   <section class="highlighted centered">
-  <% if @order.paid? %>
-    <h3>Pagado!!</h3>
-  <% elsif @order.ready_for_payment? %>
-    <h3><%= link_to "A pagaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrr!!!(#{@order.total} pavos)", new_order_payment_path(@order) %></h3>
-  <% else %>
     <h3>We are analyzing your data.</h3>
     <p>In order to give you a price based on the time we will need to proccess and visualize it we need to take a look at your data first. Once we finish, we will contact you -and update this page- with the definitive budget, which you will approve or discard.</p>
     <p>Do you think that is taking us too much time? <a href="#">Contact us</a></p>
-  <% end %>
   </section>
-<% elsif false %>
+  <% end %>
+
+
+<% if @order.ready_for_payment? %>
 
   <section class="highlighted dark">
   <h3>Your final price <span class="price">$<%= @order.total %></span></h3>
@@ -61,13 +62,15 @@
   we will start working inmediately on your map.
   </p>
 
-  <%= link_to "Proceed to payment ($2500)", "#", :class => "blue button" %>
+  <%= link_to "Proceed to payment ($#{@order.total})", new_order_payment_path(@order), :class => "blue button" %>
 
   </section>
 
-<% else %>
+<% end %>
 
-  <section class="payed">
+<% if @order.paid? %>
+
+  <section class="paid">
     <h3>Your payment has been received</h3>
     <p> We’ve received your payment correctly. Your map will be ready in a couple of days. If you have any question, don’t hesitate in contacting us.  </p>
   </section>
