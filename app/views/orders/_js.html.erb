@@ -69,19 +69,18 @@
 
     statements = createCalls(8, 4);
 
-
     var styles = {
 
       polygons: { 
-        base: "#polygons{ polygon-fill:orange; polygon-opacity: 0.7; line-opacity:1; line-color: #FFFFFF; }",
+        base:    "#polygons{ polygon-fill:orange; polygon-opacity: 0.7; line-opacity:1; line-color: #FFFFFF; }",
         special: "#polygons{ polygon-fill:#FFFFFF; polygon-opacity: 0.7; line-opacity:1; line-color: #FFFFFF; [category = 'high'] { polygon-fill:#FFA22B; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_cross1.png'); } [category = 'medium'] { polygon-fill:#B81E20; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_diag1.png'); } [category = 'low'] { polygon-fill:#F3441E; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_dots1.png'); } }"
       },
       markers: {
         base: "#markers { marker-fill: #FF6600; marker-opacity: 1; marker-width: 8; marker-line-color: white; marker-line-width: 3; marker-line-opacity: 0.9; marker-placement: point; marker-type: ellipse; marker-allow-overlap: true; }",
         special: ""
       }
+    };
 
-  };
     var
     layersURL = {
       base:    'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
@@ -90,8 +89,6 @@
       forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png',
       density: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[0]
     };
-
-    console.log(layersURL.density);
 
     var trianglesOptions = {
       user_name: "viz2",
@@ -245,22 +242,22 @@
 
 
             selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { className: "light_blue", name: "Select a category" , callback: null },
+              { name: "Select a category" , callback: null },
               { 
-                className: "light_blue", name: "All" , callback: function() {
+                name: "All" , callback: function() {
 
                 var query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}';
                 window.navigation.getCartoDBLayer().set("query", query); 
 
               }},
               { 
-                className: "light_blue", name: "Natural" , callback: function() {
+                name: "Natural" , callback: function() {
 
                 var query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'natural'";
                 window.navigation.getCartoDBLayer().set("query", query); 
               }},
 
-              { className: "blue",       name: "Cultural" , callback: function() {
+              { name: "Cultural" , callback: function() {
                 var query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'cultural'";
                 window.navigation.getCartoDBLayer().set("query", query); 
               }}
@@ -349,11 +346,31 @@
         dynamic_filters: {
           on:  function() {
 
-
             selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { className: "light_blue", name: "ALL FEATURES"  },
-              { className: "blue",       name: "Blue markers"  },
-              { className: "light_red",  name: "Green markers" }
+              { name: "Select a category" , callback: null },
+              { 
+                name: "All" , callback: function() {
+
+                var query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}';
+                window.navigation.getCartoDBLayer().set("query", query); 
+
+              }},
+              { 
+                name: "High" , callback: function() {
+
+                var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'high'";
+                window.navigation.getCartoDBLayer().set("query", query); 
+              }},
+
+              { name: "Medium" , callback: function() {
+                var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'medium'";
+                window.navigation.getCartoDBLayer().set("query", query); 
+              }},
+
+              { name: "Low" , callback: function() {
+                var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'low'";
+                window.navigation.getCartoDBLayer().set("query", query); 
+              }}
             ]);
 
             mapView.$el.parent().append(selector.render().$el);
