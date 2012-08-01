@@ -2,14 +2,16 @@ var config = {
   username: "maas"
 };
 
-statements = createCalls(8, 4);
+statements       = createCalls(8, 3);
+bubbleStatements = createBubbleCalls(8, 3);
 
 var layersURL = {
   base:    'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
   base2:   'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
   terrain: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
   forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png',
-  density: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[0]
+  density: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[0],
+  bubbles: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + bubbleStatements[0],
 };
 
 var baseLayers = {
@@ -19,6 +21,7 @@ var baseLayers = {
   polygons: { url: layersURL.base,    coords: { zoom: 8,  center: [24.00, 70.00] }},
   forest:   { url: layersURL.forest,  coords: { zoom: 9,  center: [40.2599756, -5.9280726] }},
   density:  { url: layersURL.density, coords: { zoom: 3,  center: [40.04443758460856, -101.25] }},
+  bubbles:  { url: layersURL.bubbles, coords: { zoom: 3,  center: [40.04443758460856, -101.25] }},
   thematic: { url: layersURL.base,    coords: { zoom: 3,  center: [43.06888, 29.35045] }}
 }
 
@@ -155,6 +158,7 @@ var layers = { // This hash contains the combination of layers for each of the o
   markers:   { coords: baseLayers.base.coords,     cdb: cMarkers,  base: baseLayers.base,     extra: null },
   polygons:  { coords: baseLayers.polygons.coords, cdb: cPolygons, base: baseLayers.polygons, extra: null },
   density:   { coords: baseLayers.density.coords,  cdb: null,      base: baseLayers.density,  extra: baseLayers.base },
+  bubbles:   { coords: baseLayers.bubbles.coords,  cdb: null,      base: baseLayers.bubbles,  extra: baseLayers.base },
   hexagons:  { coords: baseLayers.hexagons.coords, cdb: cHexagons, base: baseLayers.hexagons, extra: null },
   thematic:  { coords: baseLayers.thematic.coords, cdb: cThematic, base: baseLayers.thematic, extra: null },
   dont_know: { coords: baseLayers.base.coords,     cdb: null,      base: null,                extra: null }

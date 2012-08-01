@@ -241,10 +241,27 @@ callbacks.radio.density  = {
     if (e.model.get("option_name") == "hexagonal_grid") {
       window.navigation.loadLayers(layers.density);
       legend.hide();
+
+      //window.map.bind('change:zoom', function() {
+        //z = window.map.getZoom();
+      //});
+
     }
 
   }
 };
 
-callbacks.radio.thematic  = null;
+callbacks.radio.thematic  = {
+  on: function(e) {
+    if (window.navigation && e.model.get("option_name") == "choropleth_map") {
+      window.navigation.loadLayers(layers.thematic);
+    }
+  },
+  off: function(e) {
+    if (e.model.get("option_name") == "choropleth_map") {
+      window.navigation.loadLayers(layers.bubbles);
+    }
+
+  }
+};
 callbacks.radio.dont_know = null;
