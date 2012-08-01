@@ -390,8 +390,67 @@
         }
 
       },
-      density:   {},
-      thematic:  {},
+      density:   {
+        variable_selection: {
+          on: function() {
+
+            selector.collection = new cdb.geo.ui.SelectorItems([ 
+              { name: "Select a category" , callback: null },
+              { 
+                name: "All" , callback: function() {
+              }},
+              { 
+                name: "High" , callback: function() {
+              }},
+
+              { name: "Medium" , callback: function() {
+              }},
+
+              { name: "Low" , callback: function() {
+              }}
+            ]);
+
+            mapView.$el.parent().append(selector.render().$el);
+            selector.show();
+
+          },
+          off: function() {
+            selector.hide();
+          }
+        }
+      
+      
+      },
+      thematic:  {
+        variable_selection: {
+          on: function() {
+
+            selector.collection = new cdb.geo.ui.SelectorItems([ 
+              { name: "Select a category" , callback: null },
+              { 
+                name: "All" , callback: function() {
+              }},
+              { 
+                name: "High" , callback: function() {
+              }},
+
+              { name: "Medium" , callback: function() {
+              }},
+
+              { name: "Low" , callback: function() {
+              }}
+            ]);
+
+            mapView.$el.parent().append(selector.render().$el);
+            selector.show();
+
+          },
+          off: function() {
+            selector.hide();
+          }
+        }
+      
+      },
       dont_know: {}
 
     };
