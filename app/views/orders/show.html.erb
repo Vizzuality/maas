@@ -46,7 +46,7 @@
   <% end %>
 
 
-<% if @order.ready_for_payment? %>
+<% if @order.ready_for_payment? and !@order.paid? %>
 
   <section class="highlighted dark">
   <h3>Your final price <span class="price">$<%= @order.total %></span></h3>
