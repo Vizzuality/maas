@@ -471,7 +471,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   },
 
   getCurrentCartoDBLayerOptions: function() {
-    return this.getCartoDBLayer.toJSON();
+    return this.getCartoDBLayer().toJSON();
   },
 
   removeExtraLayer: function() {

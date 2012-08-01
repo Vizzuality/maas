@@ -58,10 +58,10 @@ var cMarkersNewInfowindow = function(ev, latlng, pos, data) {
   latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
   infowindow.model.set({
-    template_name: 'templates/map/infowindow/infowindow_big',
+    template_name: 'templates/map/infowindow/infowindow_photo',
     title: data.title,
     src: data.src,
-    offset: [108, 0],
+    offset: [108, -10],
     subtitle: data.subtitle,
     description: data.description,
     cartodb_id: data.cartodb_id,
