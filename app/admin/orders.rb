@@ -17,6 +17,10 @@ ActiveAdmin.register Order do
     orders.joins(:payments).where("payments.invoice_state IS NULL OR payments.invoice_state <> 'collected'")
   end
 
+  scope :ready do |orders|
+    orders.where('map_url IS NOT NULL AND map_source_url IS NOT NULL')
+  end
+
   index do
     column :id do |order|
       link_to order.id, admin_order_path(order)
@@ -54,6 +58,8 @@ ActiveAdmin.register Order do
         order.client_data.each_with_index do |client_data|
           row("client_data") { link_to File.basename(client_data.data.url), client_data.data.url }
         end
+        row('map_url') { if order.map_url.present? then link_to order.map_url, order.map_url else nil end }
+        row('map_source_url') { if order.map_source_url.present? then link_to order.map_source_url, order.map_source_url else nil end }
       end
     end
 
@@ -70,6 +76,11 @@ ActiveAdmin.register Order do
     f.inputs do
       f.input :template
       f.input :visualization_method
+    end
+
+    f.inputs do
+      f.input :map_url
+      f.input :map_source_url
     end
 
     f.buttons
