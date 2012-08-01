@@ -240,32 +240,28 @@
         dynamic_filters: {
           on:  function() {
 
-
             selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { name: "Select a category" , callback: null },
-              { 
-                name: "All" , callback: function() {
-
-                var query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}';
-                window.navigation.getCartoDBLayer().set("query", query); 
-
-              }},
-              { 
-                name: "Natural" , callback: function() {
-
-                var query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'natural'";
-                window.navigation.getCartoDBLayer().set("query", query); 
-              }},
-
-              { name: "Cultural" , callback: function() {
-                var query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'cultural'";
-                window.navigation.getCartoDBLayer().set("query", query); 
-              }}
+              { name: "All" ,     callback: null },
+              { name: "Natural",  callback: null },
+              { name: "Cultural", callback: null }
             ]);
 
             mapView.$el.parent().append(selector.render().$el);
-
             selector.show();
+
+            $(".dk").dropkick({
+              change: function (value, label) {
+
+                if (value == "All") {
+                var query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}';
+                } else if (value == "Natural") {
+                var query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'natural'";
+                } else if (value == "Cultural") {
+                var query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'cultural'";
+                }
+                window.navigation.getCartoDBLayer().set("query", query); 
+              }
+            });
 
           },
           off: function() { 
