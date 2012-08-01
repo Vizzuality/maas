@@ -1,7 +1,10 @@
 class Order < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 
   attr_accessible :name,
                   :email,
+                  :slug,
                   :template_type,
                   :visualization_method_id,
                   :comments,
@@ -26,8 +29,19 @@ class Order < ActiveRecord::Base
   validates :name, :email, :presence => true
   validates :email, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
 
-  def total
-    read_attribute('total') || self.template.price + self.order_options.sum { |p| p.template_option.price }
+  def starting_from
+    self.template.price + self.order_options.sum { |p| p.template_option.price }
   end
 
+  def normalize_friendly_id(value)
+    Digest::MD5.hexdigest(value + Time.now.to_s)
+  end
+
+  def ready_for_payment?
+    read_attribute('total').present?
+  end
+
+  def paid?
+    payments.present? && payments.last.paid?
+  end
 end
