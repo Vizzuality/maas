@@ -1,14 +1,12 @@
 <script type="text/javascript">
+
+  defaultPageName = "<%= @defaultPageName %>";
+
   $(function() {
 
     cdb.init();
     currentLayer = null;
 
-    var config = {
-      username: "maas"
-    };
-
-    defaultPageName = "<%= @defaultPageName %>";
 
     // Adds map
     var map = new cdb.geo.Map({
@@ -54,7 +52,6 @@
       mapView: mapView
     });
 
-
     var classicInfowindow = { template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10] };
     var newInfowindow     = { template_name: 'templates/map/infowindow/infowindow_big',     offset: [108, 0] };
     var classicInfowindow = { template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10] };
@@ -66,414 +63,6 @@
     });
 
     window.pane = pane;
-
-    statements = createCalls(8, 4);
-
-    var styles = {
-
-      polygons: { 
-        base:    "#polygons{ polygon-fill:orange; polygon-opacity: 0.7; line-opacity:1; line-color: #FFFFFF; }",
-        special: "#polygons{ polygon-fill:#FFFFFF; polygon-opacity: 0.7; line-opacity:1; line-color: #FFFFFF; [category = 'high'] { polygon-fill:#FFA22B; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_cross1.png'); } [category = 'medium'] { polygon-fill:#B81E20; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_diag1.png'); } [category = 'low'] { polygon-fill:#F3441E; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_dots1.png'); } }"
-      },
-      markers: {
-        base: "#markers { marker-fill: #FF6600; marker-opacity: 1; marker-width: 8; marker-line-color: white; marker-line-width: 3; marker-line-opacity: 0.9; marker-placement: point; marker-type: ellipse; marker-allow-overlap: true; }",
-        special: ""
-      }
-    };
-
-    var
-    layersURL = {
-      base:    'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
-      base2:   'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-      terrain: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-      forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png',
-      density: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[0]
-    };
-
-    var trianglesOptions = {
-      user_name: "viz2",
-      table_name: "stop_frisk",
-      style: "#stop_frisk{[prop_count>0]{polygon-fill:#415E9E;}[prop_count>2]{polygon-fill:#6581B5;}[prop_count>4]{polygon-fill:#88A3CC;}[prop_count>6]{polygon-fill:#ACC6E3;}[prop_count>8]{polygon-fill:#88A3CC;}[prop_count>10]{polygon-fill:#F6BEB5;}[prop_count>30]{polygon-fill:#E3928C;}[prop_count>50]{polygon-fill:#CF6562;}[prop_count>100]{polygon-fill:#BC3939;}polygon-opacity:0.71;line-opacity:0.11;line-color:#000000;line-width:0.8;}",
-      query: "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, stop_frisk i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell"
-    };
-
-    var cDensity = {
-      user_name: 'examples',
-      table_name: 'maas_markers',
-      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng FROM {{table_name}}',
-      interactivity: "cartodb_id, latlng",
-      auto_bound: false,
-      featureOver:  function() { document.body.style.cursor = "pointer"; },
-      featureOut:   function() { document.body.style.cursor = "default"; },
-      featureClick: function(ev, latlng, pos, data) {
-
-        var // get coordinates of the marker
-        parsedData = JSON.parse(data.latlng),
-        latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
-
-        infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10], content: data, latlng: [latlng.lat, latlng.lng] });
-        infowindow.showInfowindow();
-      }
-    };
-
-    var cMarkersNewInfowindow = function(ev, latlng, pos, data) {
-
-      var // get coordinates of the marker
-      parsedData = JSON.parse(data.latlng),
-      latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
-
-      infowindow.model.set({
-        template_name: 'templates/map/infowindow/infowindow_big',
-        title: data.title,
-        src: data.src,
-        offset: [108, 0],
-        subtitle: data.subtitle,
-        description: data.description,
-        cartodb_id: data.cartodb_id,
-        latlng: [latlng.lat, latlng.lng],
-        subtitle: data.subtitle,
-        description: data.description,
-      });
-
-      infowindow.showInfowindow();
-    };
-
-    var cMarkersClassicInfowindow = function(ev, latlng, pos, data) {
-
-      var // get coordinates of the marker
-      parsedData = JSON.parse(data.latlng),
-      latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
-
-      infowindow.model.set({
-        template_name: 'templates/map/infowindow/infowindow_classic',
-        title: data.title,
-        cartodb_id: data.cartodb_id,
-        src: data.src,
-        offset: [50, 10],
-        subtitle: data.subtitle,
-        description: data.description,
-        latlng: [latlng.lat, latlng.lng]
-      });
-
-      infowindow.showInfowindow();
-    };
-
-    var cMarkers = {
-      user_name: config.username,
-      table_name: 'markers',
-      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
-      tile_style: styles.markers.base,
-      interactivity: "cartodb_id, latlng, src, title, subtitle, description, category",
-      auto_bound: false,
-      featureOver:  function() { document.body.style.cursor = "pointer"; },
-      featureOut:   function() { document.body.style.cursor = "default"; },
-      featureClick: cMarkersClassicInfowindow
-    };
-
-    var cThematic = {
-      user_name: config.username,
-      table_name: 'choropleth',
-      query: 'SELECT cartodb_id, pop_est, the_geom_webmercator FROM {{table_name}}',
-      interactivity: "cartodb_id",
-      featureOver:  function() { document.body.style.cursor = "pointer"; },
-      featureOut:   function() { document.body.style.cursor = "default"; },
-      featureClick: function(ev, latlng, pos, data) {
-
-        infowindow.model.set({
-          template_name: 'templates/map/infowindow/infowindow_big',
-          title: data.cartodb_id,
-          offset: [108, 0],
-          subtitle: "Subtitle",
-          description: "Description",
-          latlng: [latlng.lat, latlng.lng]
-        });
-
-        infowindow.showInfowindow();
-
-      }
-
-    };
-
-    var cPolygons = {
-      user_name: config.username,
-      table_name: 'polygons',
-      query: 'SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}}',
-      interactivity: "cartodb_id, category",
-      tile_style: styles.polygons.base,
-      featureOver:  function() { document.body.style.cursor = "pointer"; },
-      featureOut:   function() { document.body.style.cursor = "default"; },
-      featureClick: function(ev, latlng, pos, data) {
-
-        infowindow.model.set({
-          template_name: 'templates/map/infowindow/infowindow_classic',
-          title: data.cartodb_id,
-          cartodb_id: data.cartodb_id,
-          offset: [50, 0],
-          subtitle: "Subtitle",
-          description: "Description",
-          latlng: [latlng.lat, latlng.lng]
-        });
-
-        infowindow.showInfowindow();
-
-      }
-    };
-
-    var lBase     = { url: layersURL.base,    zoom: 5, center: [40.34654412118006, 14.0625] };
-    var lTerrain  = { url: layersURL.terrain, zoom: 5, center: [33.13750, -3.71337] };
-    var lPolygons = { url: layersURL.base,    zoom: 8, center: [24.00, 70.00] };
-    var lForest   = { url: layersURL.forest,  zoom: 9, center: [40.2599756, -5.9280726] };
-    var lDensity  = { url: layersURL.density, zoom: 3, center: [40.04443758460856, -101.25] };
-    var lThematic = { url: layersURL.base,    zoom: 3, center: [43.06888, 29.35045] };
-
-    var data = {
-      markers:   { cartoDBLayerOptions: cMarkers,  baseLayerOptions: lBase,     extraLayer: null,  className: "markers",   name: "Markers map"  },
-      polygons:  { cartoDBLayerOptions: cPolygons, baseLayerOptions: lPolygons, extraLayer: null,  className: "polygons",  name: "Polygons map" },
-      density:   { cartoDBLayerOptions: null,      baseLayerOptions: lDensity,  extraLayer: lBase, className: "density",   name: "Density grid map"   },
-      thematic:  { cartoDBLayerOptions: cThematic, baseLayerOptions: lThematic, extraLayer: null,  className: "thematic",  name: "Thematic map" },
-      dont_know: { cartoDBLayerOptions: null,      baseLayerOptions: null,      extraLayer: null,  className: "dont_know", name: "Don't know"   }
-    };
-
-    var checkboxCallbacks = {
-      markers: {
-
-        dynamic_filters: {
-          on:  function() {
-
-            selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { name: "All" ,     callback: null },
-              { name: "Natural",  callback: null },
-              { name: "Cultural", callback: null }
-            ]);
-
-            mapView.$el.parent().append(selector.render().$el);
-            selector.show();
-
-            $(".dk").dropkick({
-              change: function (value, label) {
-
-                var query;
-
-                if (value == "All") {
-                  query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}';
-                } else if (value == "Natural") {
-                  query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'natural'";
-                } else if (value == "Cultural") {
-                  query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'cultural'";
-                }
-
-                infowindow.hide(true);
-                window.navigation.getCartoDBLayer().set("query", query); 
-              }
-            });
-
-          },
-          off: function() { 
-            selector.hide();
-          }
-        },
-
-        custom_infowindows: { 
-
-          on: function() { 
-            if (!infowindow.isHidden()) var show = true;
-            infowindow.hide(true);
-
-            var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
-
-            cMarkers.featureClick       = cMarkersNewInfowindow;
-            currentLayer.featureClick   = cMarkersNewInfowindow;
-
-            window.navigation.replaceCartoDBLayer(currentLayer);
-
-            if (show) {
-              infowindow.model.set(newInfowindow);
-              infowindow.show();
-            }
-
-            // switcher.collection = new cdb.geo.ui.SwitcherItems([ 
-            //   { selected: true,  name: "Map",       callback: function() { 
-            //     window.navigation.replaceBaseLayer(lBase);
-            //   } },
-            //   { selected: false, name: "Satellite", callback: function() { 
-            //     window.navigation.replaceBaseLayer(lForest);
-            //   } }
-            // ]);
-
-            // legend.collection = new cdb.geo.ui.LegendItems([ 
-            //   { className: "light_blue", name: "1-10 stops" },
-            //   { className: "blue",       name: "11-50 stops" },
-            //   { className: "light_red",  name: "51-100" },
-            //   { className: "red",        name: "> 100 stops" }
-            // ]);
-
-            // mapView.$el.parent().append(legend.render().$el);
-            // mapView.$el.parent().append(switcher.render().$el);
-
-            // legend.show();
-            // switcher.show();
-          }, 
-
-          off: function() {
-            if (!infowindow.isHidden()) var show = true;
-            infowindow.hide(true);
-            var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
-
-            cMarkers.featureClick       = cMarkersClassicInfowindow;
-            currentLayer.featureClick   = cMarkersClassicInfowindow;
-
-            window.navigation.replaceCartoDBLayer(currentLayer);
-
-            if (show) {
-              infowindow.model.set(classicInfowindow);
-              infowindow.show();
-            }
-
-            // legend.hide();
-            // switcher.hide();
-          }
-
-        },
-
-        different_markers_for_different_categories: {
-          on:  function(e) { window.navigation.getCartoDBLayer().set("tile_style", styles.markers.special); },
-          off: function(e) { window.navigation.getCartoDBLayer().set("tile_style", styles.markers.base); }
-        }
-      }, 
-
-      polygons:  {
-      
-        dynamic_filters: {
-          on:  function() {
-
-            selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { name: "All" ,   callback: null },
-              { name: "High",   callback: null },
-              { name: "Medium", callback: null },
-              { name: "Low" ,   callback: null }
-            ]);
-
-            mapView.$el.parent().append(selector.render().$el);
-            selector.show();
-
-            $(".dk").dropkick({
-              change: function (value, label) {
-
-                var query; 
-
-                if (value == "All") {
-                  query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}}";
-                } else if (value == "High") {
-                  query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'high'";
-                } else if ( value == "Medium") {
-                  query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'medium'";
-                } else if (value == "Low") {
-                  query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'low'";
-                }
-
-                infowindow.hide(true);
-                window.navigation.getCartoDBLayer().set("query", query); 
-              }
-            });
-
-          },
-
-          off: function() { 
-            selector.hide();
-          }
-        },
-
-        different_styles_for_different_types_of_polygons: {
-          on:  function(e) { window.navigation.getCartoDBLayer().set("tile_style", styles.polygons.special); },
-          off: function(e) { window.navigation.getCartoDBLayer().set("tile_style", styles.polygons.base); }
-        }
-
-      },
-      density:   {
-        variable_selection: {
-          on: function() {
-
-            selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { name: "Select a category" , callback: null },
-              { 
-                name: "All" , callback: function() {
-              }},
-              { 
-                name: "High" , callback: function() {
-              }},
-
-              { name: "Medium" , callback: function() {
-              }},
-
-              { name: "Low" , callback: function() {
-              }}
-            ]);
-
-            mapView.$el.parent().append(selector.render().$el);
-            selector.show();
-
-          },
-          off: function() {
-            selector.hide();
-          }
-        }
-      
-      
-      },
-      thematic:  {
-        variable_selection: {
-          on: function() {
-
-            selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { name: "Select a category" , callback: null },
-              { 
-                name: "All" , callback: function() {
-              }},
-              { 
-                name: "High" , callback: function() {
-              }},
-
-              { name: "Medium" , callback: function() {
-              }},
-
-              { name: "Low" , callback: function() {
-              }}
-            ]);
-
-            mapView.$el.parent().append(selector.render().$el);
-            selector.show();
-
-          },
-          off: function() {
-            selector.hide();
-          }
-        }
-      
-      },
-      dont_know: {}
-
-    };
-
-    var radioCallbacks = {
-      markers:   function() { console.log('a'); },
-      polygons:  {},
-      density:  { 
-        on:  function(e) { 
-
-          if (window.navigation) { // we do this so the callback doesn't get fired at the start
-
-            if (e.model.get("option_name") == "rectangular_grid") {
-
-
-            } else {
-              window.navigation.removeLayers();
-            }
-          }
-        }
-      },
-      thematic:  function() { console.log('d'); },
-      dont_know: function() { console.log('e');}
-    };
 
     var fields = {};
 
@@ -493,7 +82,7 @@
         },
         <% template.visualization_methods.each_with_index do |option, i| -%>
           { 
-            callback: radioCallbacks.<%= template.name %>, 
+            callback: callbacks.radio.<%= template.name %>, 
             className: null, 
             checked: <%= i == 0 ? "true" : "false" %>,
             value: <%= option.id %>,
@@ -510,7 +99,7 @@
 
         <% template.options.each_with_index do |option, i| -%>
           { 
-            callback: checkboxCallbacks.<%= template.name %>.<%= option.name %>, 
+            callback: callbacks.checkbox.<%= template.name %>.<%= option.name %>, 
             className: <%= ( i == 0 && template.visualization_methods.size > 0 ) ? "'separator'" : "null" %>, 
             checked: false,
             disabled: true,
@@ -527,7 +116,7 @@
       var view = new cdb.ui.common.Form({ 
         map: map,
         id: <%= template.id %>, 
-        data: data.<%= template.name %>,
+        data: layers.<%= template.name %>,
         className: '<%= template.name %>', 
         collection: fields.<%= template.name %> 
       });
@@ -554,81 +143,6 @@
     window.navigation  = new cdb.ui.common.Navigation({ map: map, collection: templates });
     window.router      = new cdb.Router();
     Backbone.history.start({ pushState: true });
-
-    var 
-    i         = 0,
-    progress  = 0,
-    processed = [];
-
-    var uploader = new qq.FileUploader({
-      element: document.getElementById('file-uploader'),
-      action: '/client_data',
-
-      onSubmit: function(id, fileName){
-        $(".qq-uploader").addClass("uploading");
-        $("section#upload").removeClass("finished");
-        $(".qq-uploader .progress .bar span").removeClass("big");
-      },
-      onProgress: function(id, fileName, loaded, total){
-        p = Math.round(loaded/total * 100);
-        if (p > progress) {
-          progress = p;
-        }
-
-        $(".qq-uploader .progress .bar").css({ width: progress + "%" });
-
-        if (progress > 95) {
-          $(".qq-uploader .progress .bar span").addClass("big");
-        }  else {
-          $(".qq-uploader .progress .bar span").removeClass("big");
-        }
-
-        $(".qq-uploader .progress .bar span").html(progress + "%");
-        $(".qq-uploader").addClass("uploading");
-      },
-
-      onComplete: function(id, fileName, files, responseJSON){
-        var data = responseJSON.data;
-        var id = data.id;
-
-        if (!processed[data.id]) {
-          var $field = $('<input id="order_client_data_attributes_' + i + '_id" name="order[client_data_attributes][' + i + '][id]" value="' + id + '"type="hidden" />');
-          processed[data.id] = true;
-          i++;
-        }
-
-        $("form").append($field);
-
-        progress = 0;
-
-        var z = _.compact(_.clone(files));
-
-        if (z.length <= 1) {
-          $("section#upload").addClass("finished");
-        }
-
-        $(".qq-uploader .progress .bar").fadeOut(250, function() {
-          $(".qq-uploader .progress .bar").css({ width: 0 });
-          $(".qq-uploader .progress .bar").show();
-        });
-
-        $(".qq-uploader").removeClass("uploading");
-      },
-      onCancel: function(id, fileName){
-        $(".qq-uploader").removeClass("uploading");
-        $(".qq-uploader .progress .bar").fadeOut(250, function() {
-          $(".qq-uploader .progress .bar").css({ width: 0 });
-          $(".qq-uploader .progress .bar").show();
-        });
-      },
-
-      template: '<ul class="qq-upload-list"></ul>'  +
-        '<div class="qq-uploader">' +
-        '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
-        '<div class="placeholder"><div class="icon"></div><div class="qq-upload-button">To attach files drag & drop here or <a href="#">select files from your computer</a>.</div></div>' +
-        '<div class="progress"><div class="bar"><span>0</span></div></div>' +
-        '</div>'
-    });
 
   });
 </script>

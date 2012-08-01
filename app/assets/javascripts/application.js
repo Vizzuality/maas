@@ -9,6 +9,10 @@
 //= require jquery.dropkick-1.0.0
 //= require fileuploader
 //= require cdb
+//= require helpers
+//= require form/styles
+//= require form/layers
+//= require form/callbacks
 //= require_tree .
 
 $(function() {

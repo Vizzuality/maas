@@ -5,22 +5,6 @@ cdb.ui.common.FieldModel = Backbone.Model.extend({
   }
 });
 
-/*
-cdb.ui.common.CircleModel = Backbone.Model.extend({ });
-
-cdb.ui.common.CircleView = Backbone.View.extend({
-  initialize: function() {
-    this.model = new CircleModel();
-  },
-  toggle: function() {
-    if (this.model("visible")) {
-    this.$el.fadeIN(
-    } else {
-
-    }
-  }
-});*/
-
 cdb.ui.common.FieldView = Backbone.View.extend({
 
   tagName: "li",
@@ -414,13 +398,14 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     pane.collection.each(function(f) {
       if (f.get('selected')) {
         var callback = f.get("callback");
+
         if (callback && callback.on) { setTimeout(function() { callback.on( f.view ); }, 2000); }
       }
     });
 
     // Callback: after the animations, unload & load the layers
     var loadLayers = function() {
-      self.loadLayers(pane.options.data.cartoDBLayerOptions, pane.options.data.baseLayerOptions, pane.options.data.extraLayer);
+      self.loadLayers(pane.options.data);
     };
 
     // Callback: shows the map and makes it ready to show the layers
@@ -440,13 +425,19 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   },
 
-  loadLayers: function(cartoDBLayerOptions, baseLayerOptions, extraLayerOptions) {
+  loadLayers: function(layers) {
 
     this.removeLayers();
-    if (extraLayerOptions) this.loadExtraLayer(extraLayerOptions);
-    this.loadBaseLayer(baseLayerOptions);
-    this.loadCartoDBLayer(cartoDBLayerOptions);
-    this.centerMap(baseLayerOptions.center, baseLayerOptions.zoom);
+
+    if (layers.extra) this.loadExtraLayer(layers.extra);
+    if (layers.base)  this.loadBaseLayer(layers.base);
+    if (layers.cdb)   this.loadCartoDBLayer(layers.cdb);
+
+    var self = this;
+
+    setTimeout(function() { // TODO: test this
+      self.centerMap(layers.coords.center, layers.coords.zoom);
+    }, 500);
 
   },
 
@@ -454,7 +445,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   var self = this;
 
-    $("#map").fadeIn(150, function() {
+    $("#map").fadeIn(100, function() {
       $(".browser").animate({ bottom: -70 }, 150, function() {
         self.animating = false;
         window.map.setView(center, zoom);
@@ -494,8 +485,8 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     // We have to add the original CartoDBLayer on top,
     // so using the Cid of the layer, we recover the hash
     // with its configuration and use it to regenerate the layer
-    var cartoDBLayerOptions = this.map.layers.getByCid(this.cartoDBLayer).toJSON();
-    window.navigation.replaceCartoDBLayer(cartoDBLayerOptions);
+    var cdb = this.map.layers.getByCid(this.cartoDBLayer).toJSON();
+    window.navigation.replaceCartoDBLayer(cdb);
   },
 
   replaceCartoDBLayer: function(layerOptions) {
@@ -507,14 +498,18 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   loadExtraLayer: function(options) {
 
-    var layer       = new cdb.geo.TileLayer({ urlTemplate: options.url });
-    this.extraLayer = window.map.addLayer(layer);
+    if (options) {
+      var layer       = new cdb.geo.TileLayer({ urlTemplate: options.url });
+      this.extraLayer = window.map.addLayer(layer);
+    } else this.extraLayer = null;
   },
 
   loadBaseLayer: function(options) {
 
-    var layer      = new cdb.geo.TileLayer({ urlTemplate: options.url });
-    this.baseLayer = window.map.addLayer(layer);
+    if (options) {
+      var layer      = new cdb.geo.TileLayer({ urlTemplate: options.url });
+      this.baseLayer = window.map.addLayer(layer);
+    } else this.baseLayer = null;
   },
 
   loadCartoDBLayer: function(options) {
@@ -530,8 +525,15 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
     try { // Removes previously loaded layers
 
-      if (this.baseLayer)    window.map.removeLayerByCid(this.baseLayer);
-      if (this.cartoDBLayer) window.map.removeLayerByCid(this.cartoDBLayer);
+      if (this.baseLayer)    {
+        window.map.removeLayerByCid(this.baseLayer);
+        this.baseLayer = null;
+      }
+
+      if (this.cartoDBLayer) {
+        window.map.removeLayerByCid(this.cartoDBLayer);
+        this.cartoDBLayer = null;
+      }
 
       if (this.extraLayer)   {
         window.map.removeLayerByCid(this.extraLayer);
