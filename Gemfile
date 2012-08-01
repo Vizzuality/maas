@@ -9,6 +9,7 @@ gem 'ejs'
 gem 'carrierwave'
 gem 'activeadmin'
 gem 'meta_search', '>= 1.1.0.pre'
+gem 'friendly_id', '~> 4.0.7'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

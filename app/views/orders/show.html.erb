@@ -27,7 +27,7 @@
   </ul>
 
   <div class="total">
-    <strong>TOTAL</strong> <div class="price">Starting from $<%= @order.total %></div>
+    <strong>TOTAL</strong> <div class="price">Starting from $<%= @order.starting_from %></div>
   </div>
 
   <div class="stamp"></div>
@@ -35,9 +35,15 @@
 
   <% if false %>
   <section class="highlighted centered">
-  <h3>We are analyzing your data.</h3>
-  <p>In order to give you a price based on the time we will need to proccess and visualize it we need to take a look at your data first. Once we finish, we will contact you -and update this page- with the definitive budget, which you will approve or discard.</p>
-  <p>Do you think that is taking us too much time? <a href="#">Contact us</a></p>
+  <% if @order.paid? %>
+    <h3>Pagado!!</h3>
+  <% elsif @order.ready_for_payment? %>
+    <h3><%= link_to "A pagaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrr!!!(#{@order.total} pavos)", new_order_payment_path(@order) %></h3>
+  <% else %>
+    <h3>We are analyzing your data.</h3>
+    <p>In order to give you a price based on the time we will need to proccess and visualize it we need to take a look at your data first. Once we finish, we will contact you -and update this page- with the definitive budget, which you will approve or discard.</p>
+    <p>Do you think that is taking us too much time? <a href="#">Contact us</a></p>
+  <% end %>
   </section>
 <% elsif false %>
 

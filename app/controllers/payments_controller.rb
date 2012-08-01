@@ -6,13 +6,17 @@ class PaymentsController < ApplicationController
 
   def new
     @signature = Recurly.js.sign(
-      :transaction => { :amount_in_cents => @order.total, :currency => 'EUR' }
+      :transaction => { :amount_in_cents => @order.total, :currency => 'USD' }
     )
   end
 
   def create
-    @payment = @order.payments.create(:recurly_token => params[:recurly_token])
-    respond_with @payment
+    invoice = Recurly.js.fetch params[:recurly_token]
+    @payment = @order.payments.create(:recurly_token => params[:recurly_token],
+                                      :invoice_uuid => invoice.uuid,
+                                      :account_code => invoice.account.account_code,
+                                      :invoice_state => invoice.state)
+    respond_with @order
   end
 
   def get_order

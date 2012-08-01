@@ -1,9 +1,9 @@
 <script>
 
   Recurly.config({
-    subdomain: 'ferdev'
-  , currency: 'EUR'
-  , country: 'SP'
+    subdomain: '<%= ENV['RECURLY_DOMAIN'] %>'
+  , currency: 'USD'
+  , country: 'US'
   });
 
   Recurly.buildTransactionForm({
