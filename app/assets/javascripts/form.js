@@ -394,6 +394,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     // Hides the infowindow
     window.map.infowindow.model.set("visibility", false);
     window.map.selector.hide();
+    window.map.unbind('change:zoom');
 
     pane.collection.each(function(f) {
       if (f.get('selected')) {
@@ -457,12 +458,20 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   // Methods to remove, replace and create CartoDB layers
   // and regular layers
 
+  getBaseLayer: function() {
+    return this.map.layers.getByCid(this.baseLayer);
+  },
+
+  getBaseLayerOptions: function() {
+    return this.getBaseLayer().toJSON();
+  },
+
   getCartoDBLayer: function() {
     return this.map.layers.getByCid(this.cartoDBLayer);
   },
 
   getCurrentCartoDBLayerOptions: function() {
-    return this.map.layers.getByCid(this.cartoDBLayer).toJSON();
+    return this.getCartoDBLayer.toJSON();
   },
 
   removeExtraLayer: function() {
@@ -477,7 +486,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   },
 
   replaceBaseLayer: function(layerOptions) {
-  console.log(this.baseLayer, layerOptions);
     if (this.baseLayer) {
       window.map.removeLayerByCid(this.baseLayer);
     }

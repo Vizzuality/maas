@@ -230,9 +230,20 @@ callbacks.radio.markers  = function() { console.log('a'); };
 callbacks.radio.polygons = {};
 callbacks.radio.density  = {
   on: function(e) {
+
+    if (window.navigation && e.model.get("option_name") == "rectangular_grid") {
+      window.map.bind('change:zoom', function() {
+        z = window.map.getZoom();
+        var l = window.navigation.getBaseLayer();
+        var url = 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[z];
+        l.set("urlTemplate", url);
+      });
+    }
+
     if (window.navigation && e.model.get("option_name") == "hexagonal_grid") {
       window.navigation.loadLayers(layers.hexagons);
 
+      window.map.unbind('change:zoom');
       legend.show();
 
     }
@@ -242,12 +253,7 @@ callbacks.radio.density  = {
       window.navigation.loadLayers(layers.density);
       legend.hide();
 
-      //window.map.bind('change:zoom', function() {
-        //z = window.map.getZoom();
-      //});
-
     }
-
   }
 };
 
