@@ -184,35 +184,12 @@
 
     };
 
-    var cPolygonsStyled = {
-      user_name: config.username,
-      table_name: 'polygons_styled',
-      query: 'SELECT cartodb_id, the_geom_webmercator FROM {{table_name}}',
-      interactivity: "cartodb_id",
-      featureOver:  function() { document.body.style.cursor = "pointer"; },
-      featureOut:   function() { document.body.style.cursor = "default"; },
-      featureClick: function(ev, latlng, pos, data) {
-
-        infowindow.model.set({
-          template_name: 'templates/map/infowindow/infowindow_classic',
-          title: data.cartodb_id,
-          cartodb_id: data.cartodb_id,
-          offset: [50, 0],
-          subtitle: "Subtitle",
-          description: "Description",
-          latlng: [latlng.lat, latlng.lng]
-        });
-
-        infowindow.showInfowindow();
-
-      }
-    };
-
     var cPolygons = {
       user_name: config.username,
       table_name: 'polygons',
-      query: 'SELECT cartodb_id, the_geom_webmercator FROM {{table_name}}',
-      interactivity: "cartodb_id",
+      query: 'SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}}',
+      interactivity: "cartodb_id, category",
+      tile_style: "#polygons{ polygon-fill:orange; polygon-opacity: 0.7; line-opacity:1; line-color: #FFFFFF; }",
       featureOver:  function() { document.body.style.cursor = "pointer"; },
       featureOut:   function() { document.body.style.cursor = "default"; },
       featureClick: function(ev, latlng, pos, data) {
@@ -234,13 +211,14 @@
 
     var lBase     = { url: layersURL.base,    zoom: 5, center: [40.34654412118006, 14.0625] };
     var lTerrain  = { url: layersURL.terrain, zoom: 5, center: [33.13750, -3.71337] };
+    var lPolygons = { url: layersURL.base,    zoom: 8, center: [24.00, 70.00] };
     var lForest   = { url: layersURL.forest,  zoom: 9, center: [40.2599756, -5.9280726] };
     var lDensity  = { url: layersURL.density, zoom: 3, center: [40.04443758460856, -101.25] };
     var lThematic = { url: layersURL.base,    zoom: 3, center: [43.06888, 29.35045] };
 
     var data = {
       markers:   { cartoDBLayerOptions: cMarkers,  baseLayerOptions: lBase,     extraLayer: null,  className: "markers",   name: "Markers map"  },
-      polygons:  { cartoDBLayerOptions: cPolygons, baseLayerOptions: lForest,   extraLayer: null,  className: "polygons",  name: "Polygons map" },
+      polygons:  { cartoDBLayerOptions: cPolygons, baseLayerOptions: lPolygons, extraLayer: null,  className: "polygons",  name: "Polygons map" },
       density:   { cartoDBLayerOptions: null,      baseLayerOptions: lDensity,  extraLayer: lBase, className: "density",   name: "Density grid map"   },
       thematic:  { cartoDBLayerOptions: cThematic, baseLayerOptions: lThematic, extraLayer: null,  className: "thematic",  name: "Thematic map" },
       dont_know: { cartoDBLayerOptions: null,      baseLayerOptions: null,      extraLayer: null,  className: "dont_know", name: "Don't know"   }
@@ -384,8 +362,12 @@
         },
 
         different_styles_for_different_types_of_polygons: {
-          on:  function(e) { window.navigation.replaceCartoDBLayer(cPolygonsStyled); },
-          off: function(e) { window.navigation.replaceCartoDBLayer(cPolygons); }
+          on:  function(e) { 
+             window.navigation.getCartoDBLayer().set("tile_style", ""); 
+          },
+          off: function(e) { 
+            window.navigation.getCartoDBLayer().set("tile_style", "#polygons{ polygon-fill:#FFFFFF; polygon-opacity: 0.7; line-opacity:1; line-color: #FFFFFF; [category = 'high'] { polygon-fill:#FFA22B; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_cross1.png'); } [category = 'medium'] { polygon-fill:#B81E20; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_diag1.png'); } [category = 'low'] { polygon-fill:#F3441E; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_dots1.png'); } }"); 
+          }
         }
 
       },
