@@ -90,8 +90,8 @@
     var cDensity = {
       user_name: 'examples',
       table_name: 'maas_markers',
-      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, category FROM {{table_name}}',
-      interactivity: "cartodb_id, latlng, category",
+      query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng FROM {{table_name}}',
+      interactivity: "cartodb_id, latlng",
       auto_bound: false,
       featureOver:  function() { document.body.style.cursor = "pointer"; },
       featureOut:   function() { document.body.style.cursor = "default"; },
@@ -254,14 +254,12 @@
 
             selector.collection = new cdb.geo.ui.SelectorItems([ 
               { className: "light_blue", name: "ALL FEATURES" , callback: function() {
-                console.log('a');
 
                 var query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} LIMIT 1';
                 window.navigation.getCartoDBLayer().set("sql", query); 
 
               }},
               { className: "blue",       name: "Blue markers" , callback: function() {
-                console.log('a');
               
               }},
               { className: "light_red",  name: "Green markers", callback: function() {
