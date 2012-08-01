@@ -6,6 +6,7 @@
 //= require backbone-min
 //= require reqwest
 //= require jquery.easing.1.3
+//= require jquery.dropkick-1.0.0
 //= require fileuploader
 //= require cdb
 //= require_tree .

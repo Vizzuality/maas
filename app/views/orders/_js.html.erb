@@ -347,35 +347,30 @@
           on:  function() {
 
             selector.collection = new cdb.geo.ui.SelectorItems([ 
-              { name: "Select a category" , callback: null },
-              { 
-                name: "All" , callback: function() {
-
-                var query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}';
-                window.navigation.getCartoDBLayer().set("query", query); 
-
-              }},
-              { 
-                name: "High" , callback: function() {
-
-                var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'high'";
-                window.navigation.getCartoDBLayer().set("query", query); 
-              }},
-
-              { name: "Medium" , callback: function() {
-                var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'medium'";
-                window.navigation.getCartoDBLayer().set("query", query); 
-              }},
-
-              { name: "Low" , callback: function() {
-                var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'low'";
-                window.navigation.getCartoDBLayer().set("query", query); 
-              }}
+              { name: "All" ,   callback: null },
+              { name: "High",   callback: null },
+              { name: "Medium", callback: null },
+              { name: "Low" ,   callback: null }
             ]);
 
             mapView.$el.parent().append(selector.render().$el);
-
             selector.show();
+
+            $(".dk").dropkick({
+              change: function (value, label) {
+
+                if (value == "All") {
+                  var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}}";
+                } else if (value == "High") {
+                  var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'high'";
+                } else if ( value == "Medium") {
+                  var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'medium'";
+                } else if (value == "Low") {
+                  var query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'low'";
+                }
+                window.navigation.getCartoDBLayer().set("query", query); 
+              }
+            });
 
           },
 
