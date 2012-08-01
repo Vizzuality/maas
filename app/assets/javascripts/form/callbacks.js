@@ -154,23 +154,34 @@ callbacks.checkbox.density = {
     on: function() {
 
       selector.collection = new cdb.geo.ui.SelectorItems([
-        { name: "Select a category" , callback: null },
-        {
-          name: "All" , callback: function() {
-          }},
-          {
-            name: "High" , callback: function() {
-            }},
-
-            { name: "Medium" , callback: function() {
-            }},
-
-            { name: "Low" , callback: function() {
-            }}
+        { name: "All" ,   callback: null },
+        { name: "High",   callback: null },
+        { name: "Medium", callback: null },
+        { name: "Low" ,   callback: null }
       ]);
 
       mapView.$el.parent().append(selector.render().$el);
       selector.show();
+
+      $(".dk").dropkick({
+        change: function (value, label) {
+
+          var query;
+
+          if (value == "All") {
+            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}}";
+          } else if (value == "High") {
+            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'high'";
+          } else if ( value == "Medium") {
+            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'medium'";
+          } else if (value == "Low") {
+            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'low'";
+          }
+
+          infowindow.hide(true);
+          //window.navigation.getCartoDBLayer().set("query", query);
+        }
+      });
 
     },
     off: function() {
