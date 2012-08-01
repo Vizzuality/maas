@@ -29,6 +29,14 @@ class Order < ActiveRecord::Base
   validates :name, :email, :presence => true
   validates :email, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
 
+  scope :not_reviewed, where(:total => nil)
+
+  scope :reviewed, where('total IS NOT NULL')
+
+  scope :paid, joins(:payments).where("payments.invoice_state == 'collected'")
+
+  scope :not_paid, joins(:payments).where("payments.invoice_state != 'collected'")
+
   def starting_from
     self.template.price + self.order_options.sum { |p| p.template_option.price }
   end
