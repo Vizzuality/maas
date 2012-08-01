@@ -1,7 +1,7 @@
 <script>
 
   Recurly.config({
-    subdomain: 'cartodb-development'
+    subdomain: '<%= ENV['RECURLY_DOMAIN'] %>'
   , currency: 'USD'
   , country: 'US'
   });
