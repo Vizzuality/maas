@@ -27,7 +27,7 @@ class Order < ActiveRecord::Base
   validates :email, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
 
   def total
-    self.template.price + self.order_options.sum { |p| p.template_option.price }
+    read_attribute('total') || self.template.price + self.order_options.sum { |p| p.template_option.price }
   end
 
 end
