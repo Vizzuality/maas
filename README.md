@@ -15,7 +15,9 @@ To install locally:
 
 4. Create the database and import the initial data:
 
-    rake db:setup
+    rake db:create
+    rake db:migrate
+    rake db:seed
 
 5. Run the server
 
