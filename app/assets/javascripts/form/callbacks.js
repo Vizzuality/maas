@@ -259,6 +259,15 @@ callbacks.radio.density  = {
 
 callbacks.radio.thematic  = {
   on: function(e) {
+
+    if (window.navigation && e.model.get("option_name") == "bubble_map") {
+      window.map.bind('change:zoom', function() {
+        z = window.map.getZoom();
+        var l = window.navigation.getBaseLayer();
+        var url = 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + bubbleStatements[z];
+        l.set("urlTemplate", url);
+      });
+    }
     if (window.navigation && e.model.get("option_name") == "choropleth_map") {
       window.navigation.loadLayers(layers.thematic);
     }

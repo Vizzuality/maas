@@ -3,7 +3,7 @@ var config = {
 };
 
 statements       = createCalls(8, 3);
-bubbleStatements = createBubbleCalls(8, 3);
+bubbleStatements = createBubbleCalls(50, 0);
 
 var layersURL = {
   base:    'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
