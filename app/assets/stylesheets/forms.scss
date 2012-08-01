@@ -24,11 +24,11 @@ $formWidth: 880px;
 section {
 
   &.dark {
-    background: #F2F2F2;
+    background-color: #F2F2F2;
   }
 
   &.highlighted {
-    background: #FCFCEB;
+    background-color: #FCFCEB;
 
     a { color: #397DB9; text-decoration: underline; }
 
@@ -54,6 +54,9 @@ section {
   h3 {
     margin: 0 0 10px 0;
     @include font("sans-serif-semi", 17px, $cGray1);
+
+    & > .price { float:right; }
+    &.name { margin: 0; }
   }
 
   p {
@@ -64,6 +67,10 @@ section {
     line-height:120%;
 
     @include font("sans-serif-base", 15px, $cGray2);
+  }
+
+  a.button {
+    text-decoration:none;
   }
 }
 
@@ -567,6 +574,23 @@ form .navigation {
       padding: 40px 40px 20px 40px;
     }
 
+    &.payed {
+      background-color: #E4F8DD;
+      background-color: rgba(#E4F8DD, .7);
+
+      padding: 40px 40px 20px 40px;
+
+      p { color: $cGray2; }
+    }
+
+    &.dark {
+      p { color: $cGray2; }
+    }
+
+    &.final-price {
+      padding: 40px 40px 40px 40px;
+    }
+
     &:first-child {
       $pT: 20px;
       $pL: 40px;
@@ -616,5 +640,4 @@ section#upload {
 
 section#upload.finished  {
   background-color: #E4F8DD!important;
-
 }
