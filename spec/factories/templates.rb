@@ -40,7 +40,7 @@ FactoryGirl.define do
         
         # Visualization methods
         FactoryGirl.create(:choropleth_map,     template: template)
-        FactoryGirl.create(:density_grid_map,         template: template)
+        FactoryGirl.create(:bubble_map,         template: template)
 
         # Options
         FactoryGirl.create(:variable_selection, template: template)
