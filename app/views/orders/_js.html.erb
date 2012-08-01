@@ -77,7 +77,8 @@
         special: "#polygons{ polygon-fill:#FFFFFF; polygon-opacity: 0.7; line-opacity:1; line-color: #FFFFFF; [category = 'high'] { polygon-fill:#FFA22B; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_cross1.png'); } [category = 'medium'] { polygon-fill:#B81E20; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_diag1.png'); } [category = 'low'] { polygon-fill:#F3441E; polygon-pattern-file:url('/home/ubuntu/tile_assets/maas/maas_dots1.png'); } }"
       },
       markers: {
-        special: "#markers { marker-fill: #FF6600; marker-opacity: 1; marker-width: 8; marker-line-color: white; marker-line-width: 3; marker-line-opacity: 0.9; marker-placement: point; marker-type: ellipse; marker-allow-overlap: true; }"
+        base: "#markers { marker-fill: #FF6600; marker-opacity: 1; marker-width: 8; marker-line-color: white; marker-line-width: 3; marker-line-opacity: 0.9; marker-placement: point; marker-type: ellipse; marker-allow-overlap: true; }",
+        special: ""
       }
 
   };
@@ -164,7 +165,7 @@
       user_name: config.username,
       table_name: 'markers',
       query: 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
-      tile_style: "#markers { marker-fill: #FF6600; marker-opacity: 1; marker-width: 8; marker-line-color: white; marker-line-width: 3; marker-line-opacity: 0.9; marker-placement: point; marker-type: ellipse; marker-allow-overlap: true; }",
+      tile_style: styles.markers.base,
       interactivity: "cartodb_id, latlng, src, title, subtitle, description, category",
       auto_bound: false,
       featureOver:  function() { document.body.style.cursor = "pointer"; },
