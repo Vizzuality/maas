@@ -68,17 +68,8 @@ callbacks.checkbox.markers = {
       //   } }
       // ]);
 
-      // legend.collection = new cdb.geo.ui.LegendItems([
-      //   { className: "light_blue", name: "1-10 stops" },
-      //   { className: "blue",       name: "11-50 stops" },
-      //   { className: "light_red",  name: "51-100" },
-      //   { className: "red",        name: "> 100 stops" }
-      // ]);
-
-      // mapView.$el.parent().append(legend.render().$el);
       // mapView.$el.parent().append(switcher.render().$el);
 
-      // legend.show();
       // switcher.show();
     },
 
@@ -230,11 +221,15 @@ callbacks.radio.density  = {
   on: function(e) {
     if (window.navigation && e.model.get("option_name") == "hexagonal_grid") {
       window.navigation.loadLayers(layers.hexagons);
+
+      legend.show();
+
     }
   },
   off: function(e) {
     if (e.model.get("option_name") == "hexagonal_grid") {
       window.navigation.loadLayers(layers.density);
+      legend.hide();
     }
 
   }

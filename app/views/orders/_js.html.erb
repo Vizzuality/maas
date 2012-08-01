@@ -23,24 +23,34 @@
     var zoom = new cdb.geo.ui.Zoom({
       model: map,
       template: cdb.templates.getTemplate('templates/map/zoom/zoom')
-    })
+    });
 
     mapView.$el.append(zoom.render().$el);
 
-    var switcher = new cdb.geo.ui.Switcher({
+    switcher = new cdb.geo.ui.Switcher({
       model: map,
       template: cdb.templates.getTemplate('templates/map/switcher/switcher')
-    })
+    });
 
-    var legend = new cdb.geo.ui.Legend({
+    legend = new cdb.geo.ui.Legend({
       model: map,
       template: cdb.templates.getTemplate('templates/map/legend/legend')
-    })
+    });
 
     selector = new cdb.geo.ui.Selector({
       model: map,
       template: cdb.templates.getTemplate('templates/map/selector/selector')
-    })
+    });
+
+    legend.collection = new cdb.geo.ui.LegendItems([
+      { className: "light_blue", name: "1-10 stops" },
+      { className: "blue",       name: "11-50 stops" },
+      { className: "light_red",  name: "51-100" },
+      { className: "red",        name: "> 100 stops" }
+    ]);
+
+    mapView.$el.parent().append(legend.render().$el);
+
 
     // Adds Infowindow
     var infowindowModel = new cdb.geo.ui.InfowindowModel({

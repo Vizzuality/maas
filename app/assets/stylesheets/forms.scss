@@ -690,16 +690,16 @@ transition: border-color .5s;
   border-color: #40b5e2;
 }
 .dk_focus .dk_toggle {
-  box-shadow: 0 0 5px #40b5e2;
-  -moz-box-shadow: 0 0 5px #40b5e2;
-  -webkit-box-shadow: 0 0 5px #40b5e2;
+  /*box-shadow: 0 0 5px #40b5e2;*/
+  /*-moz-box-shadow: 0 0 5px #40b5e2;*/
+  /*-webkit-box-shadow: 0 0 5px #40b5e2;*/
 }
 
 /* Applied whenever the dropdown is open */
 .dk_open {
-  box-shadow: 0 0 5px #40b5e2;
-  -moz-box-shadow: 0 0 5px #40b5e2;
-  -webkit-box-shadow: 0 0 5px #40b5e2;
+  /*box-shadow: 0 0 5px #40b5e2;*/
+  /*-moz-box-shadow: 0 0 5px #40b5e2;*/
+  /*-webkit-box-shadow: 0 0 5px #40b5e2;*/
   /**
    * Help: Dropdown menu is covered by something
    * Try setting this value higher
@@ -710,7 +710,7 @@ z-index: 10;
   background-color: #ececec;
   border-color: #8c8c8c;
   color: #ccc;
-  box-shadow: inset 0 -2px 5px #ccc;
+  /*box-shadow: inset 0 -2px 5px #ccc;*/
   border-radius: 5px 5px 0 0;
   -moz-border-radius: 5px 5px 0 0;
   -webkit-border-radius: 5px 5px 0 0;
@@ -718,9 +718,9 @@ z-index: 10;
 
 /* The outer container of the options */
 .dk_options {
-  box-shadow: rgba(0, 0, 0, .2) 0 2px 8px;
-  -moz-box-shadow: rgba(0, 0, 0, .2) 0 2px 8px;
-  -webkit-box-shadow: rgba(0, 0, 0, .2) 0 2px 8px;
+  /*box-shadow: rgba(0, 0, 0, .2) 0 2px 8px;*/
+  /*-moz-box-shadow: rgba(0, 0, 0, .2) 0 2px 8px;*/
+  /*-webkit-box-shadow: rgba(0, 0, 0, .2) 0 2px 8px;*/
   border-radius: 0 0 5px 5px;
   -moz-border-radius: 0 0 5px 5px;
   -webkit-border-radius: 0 0 5px 5px;
@@ -737,7 +737,7 @@ z-index: 10;
 .dk_options a:hover,
 .dk_option_current a {
   background-color: #f1f1f1;
-  border-bottom-color: #004c72;
+  /*border-bottom-color: #004c72;*/
   color: $cGray2;
   text-decoration: none;
 }
@@ -745,8 +745,8 @@ z-index: 10;
 /* Inner container for options, this is what makes the scrollbar possible. */
 .dk_options_inner {
   border: 1px solid #8c8c8e;
-  border-bottom-width: 2px;
-  border-bottom-color: #999;
+  /*border-bottom-width: 2px;*/
+  /*border-bottom-color: #999;*/
   color: #333;
   max-height: 250px;
   border-radius: 0 0 5px 5px;
