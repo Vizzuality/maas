@@ -9,7 +9,8 @@ class OrderObserver < ActiveRecord::Observer
   end
 
   def after_update(order)
-    Notifications.final_price(order).deliver if order.present? && order.total_changed?
+    Notifications.final_price(order).deliver if order.total_updated?
+    Notifications.map_ready(order).deliver if order.ready?
   end
 
 end

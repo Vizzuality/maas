@@ -23,4 +23,15 @@ class Notifications < ActionMailer::Base
 
     mail to: order.email
   end
+
+  # Subject can be set in your I18n file at config/locales/en.yml
+  # with the following lookup:
+  #
+  #   en.notifications.map_ready.subject
+  #
+  def map_ready(order)
+    @greeting = "Hi"
+
+    mail to: order.email
+  end
 end
