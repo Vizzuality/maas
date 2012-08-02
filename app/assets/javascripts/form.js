@@ -422,7 +422,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     }
 
     // Hide the 'I don't know' divs
-    $(".dontknow .browsers").animate({ opacity: 0, bottom: -200}, 250);
+    $(".dontknow .browsers").animate({ opacity: 0, bottom: -250}, 250);
     $(".dontknow .message").animate({  opacity: 0, left: -500}, 250, showMap);
 
   },

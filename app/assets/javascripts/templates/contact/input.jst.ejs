@@ -1,5 +1,5 @@
 <li class="field <% if (error) { %>error<% } %>">
-<label for="<%= name %>">Your <%= name %></label>
+<label for="<%= name %>">Your <%= name %><% if (error_msg) {%><span class="error"><%= error_msg %></span><% } %></label>
   <div class="input-field">
     <input type="text" name="contact[<%= name %>]" val="<=% value %>" />
   </div>

@@ -326,6 +326,8 @@ form .map {
   border: 1px solid rgba($cGray0, 0.4);
   background: url(backgrounds/bg-map-stars.png) center top;
 
+  .shadow { pointer-events:none; }
+
   .browser {
     @include absolute-vertical-center($width);
     bottom: -70px;
@@ -644,6 +646,8 @@ section#upload.finished  {
 
 // Select
 
+$border-radius: 3px;
+
 .dk_container {
   margin-bottom: 18px;
   @include font("sans-serif-base-bold", 11px, $cGray2);
@@ -652,7 +656,7 @@ section#upload.finished  {
 
   background-color: #fff;
 
-  @include border-radius(5px);
+  @include border-radius($border-radius);
 
   &:focus { outline: 0; }
   & a { cursor: pointer; text-decoration: none; }
@@ -666,7 +670,7 @@ section#upload.finished  {
   color: $cGray2;
   padding: 7px 45px 7px 10px;
 
-  @include border-radius(5px);
+  @include border-radius($border-radius);
   -webkit-transition: border-color .5s;
   -moz-transition: border-color .5s;
   -o-transition: border-color .5s;
@@ -676,7 +680,7 @@ section#upload.finished  {
 }
 
 /* Applied when the dropdown is focused */
-.dk_focus .dk_toggle { border-color: #40b5e2; }
+.dk_focus .dk_toggle { border-color: $cGray2; }
 
 .dk_open { z-index: 10; }
 
@@ -684,35 +688,36 @@ section#upload.finished  {
   background-color: #ececec;
   border-color: #8c8c8c;
   color: #ccc;
-  @include border-radius(5px 5px 0 0);
+  @include border-radius($border-radius $border-radius 0 0);
 }
 
 .dk_options {
-  @include border-radius(0 0 5px 5px);
+  @include border-radius(0 0 $border-radius $border-radius);
 
   a {
-    background-color: #fff;
-    font-weight: bold;
     padding: 8px 10px;
+    background-color: $cWhite;
+    font-weight: bold;
   }
-}
 
-.dk_options li:last-child a {
-  border-bottom: none;
+  li:last-child a {
+    border-bottom: none;
+  }
 }
 
 .dk_options a:hover,
 .dk_option_current a {
-  background-color: #f1f1f1;
+  background-color: $cGray5;
   color: $cGray2;
   text-decoration: none;
 }
 
 .dk_options_inner {
-  border: 1px solid #8c8c8e;
-  color: #333;
   max-height: 250px;
-  @include border-radius(0 0 5px 5px);
+
+  border: 1px solid #8c8c8e;
+  color: $cGray1;
+  @include border-radius(0 0 $border-radius $border-radius);
 }
 
 .dk_options_inner,

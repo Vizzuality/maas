@@ -11,7 +11,6 @@ $(function() {
 
   cdb.ui.common.InputView = cdb.core.View.extend({
 
-
     initialize: function() {
       _.bindAll(this, "render", "clear", "error", "setValue");
 
@@ -30,11 +29,14 @@ $(function() {
     },
 
     error: function() {
-      if (this.model.get("error") == true) {
-        this.$el.addClass('error');
-      } else {
-        this.$el.removeClass('error');
-      }
+      //if (this.model.get("error") == true) {
+        //this.$el.addClass('error');
+      //} else {
+        //this.$el.removeClass('error');
+      //}
+
+
+      this.render();
     },
 
     get: function() {
@@ -59,17 +61,17 @@ $(function() {
     var error = false;
 
       if (!attrs.email || !attrs.email.match(emailRegexp)) {
-        window.dialog.email.model.set("error", true);
+        window.dialog.email.model.set({ error:true, error_msg: "We would like to know who you are" });
         error = true;
       }
 
       if (!attrs.name) {
-        window.dialog.name.model.set("error", true);
+        window.dialog.name.model.set({ error:true, error_msg: "We would like to know who you are" });
         error = true;
       }
 
       if (!attrs.comment ) {
-        window.dialog.comment.model.set("error", true);
+        window.dialog.comment.model.set({ error:true, error_msg: "We would like to know who you are" });
         error = true;
       }
 
@@ -90,9 +92,9 @@ $(function() {
       this.model = new dialogModel();
       this.add_related_model(this.model);
 
-      this.name    = new cdb.ui.common.InputView({ model: new InputModel({ error: false, name: "name", template_name: 'templates/contact/input' })});
-      this.email   = new cdb.ui.common.InputView({ model: new InputModel({ error: false, name: "email", template_name: 'templates/contact/input' })});
-      this.comment = new cdb.ui.common.InputView({ model: new InputModel({ error: false, name: "comment", template_name: 'templates/contact/textarea' })});
+      this.name    = new cdb.ui.common.InputView({ model: new InputModel({ error_msg: "", error: false, name: "name", template_name: 'templates/contact/input' })});
+      this.email   = new cdb.ui.common.InputView({ model: new InputModel({ error_msg: "", error: false, name: "email", template_name: 'templates/contact/input' })});
+      this.comment = new cdb.ui.common.InputView({ model: new InputModel({ error_msg: "", error: false, name: "comment", template_name: 'templates/contact/textarea' })});
 
       this.template_base = this.options.template_base ? _.template(this.options.template_base) : cdb.templates.getTemplate(this.options.template_name);
     },
