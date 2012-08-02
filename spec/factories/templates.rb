@@ -10,10 +10,9 @@ FactoryGirl.define do
 
       after(:create) do |template, evaluator|
 
-        FactoryGirl.create(:dynamic_filters,    template: template)
-        FactoryGirl.create(:custom_infowindows, template: template)
         FactoryGirl.create(:different_markers_for_different_categories,   template: template)
-        #FactoryGirl.create(:dynamic_clusters,   template: template)
+        FactoryGirl.create(:custom_infowindows, template: template)
+        FactoryGirl.create(:dynamic_filters,    template: template)
 
       end
     end
