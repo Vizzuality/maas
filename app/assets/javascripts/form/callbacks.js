@@ -141,6 +141,41 @@ callbacks.checkbox.polygons = {
       selector.hide();
     }
   },
+  custom_infowindows: {
+
+    on: function() {
+      if (!infowindow.isHidden()) var show = true;
+      infowindow.hide(true);
+
+      var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
+
+      cMarkers.featureClick       = cMarkersNewInfowindow;
+      currentLayer.featureClick   = cMarkersNewInfowindow;
+
+      window.navigation.replaceCartoDBLayer(currentLayer);
+
+      if (show) {
+        infowindow.model.set(newInfowindow);
+        infowindow.show();
+      }
+    },
+
+    off: function() {
+      if (!infowindow.isHidden()) var show = true;
+      infowindow.hide(true);
+      var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
+
+      cMarkers.featureClick       = cMarkersClassicInfowindow;
+      currentLayer.featureClick   = cMarkersClassicInfowindow;
+
+      window.navigation.replaceCartoDBLayer(currentLayer);
+
+      if (show) {
+        infowindow.model.set(classicInfowindow);
+        infowindow.show();
+      }
+    }
+  },
 
   different_styles_for_different_types_of_polygons: {
     on:  function(e) { window.navigation.getCartoDBLayer().set("tile_style", styles.polygons.special); },
@@ -259,24 +294,14 @@ callbacks.radio.density  = {
 
 callbacks.radio.thematic  = {
   on: function(e) {
-
-    if (window.navigation && e.model.get("option_name") == "bubble_map") {
-      window.map.bind('change:zoom', function() {
-        z = window.map.getZoom();
-        var l = window.navigation.getBaseLayer();
-        var url = 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + bubbleStatements[z];
-        l.set("urlTemplate", url);
-      });
-    }
     if (window.navigation && e.model.get("option_name") == "choropleth_map") {
-      window.navigation.loadLayers(layers.thematic);
+      window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.choropleth);
     }
   },
   off: function(e) {
     if (e.model.get("option_name") == "choropleth_map") {
-      window.navigation.loadLayers(layers.bubbles);
+      window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.bubble);
     }
-
   }
 };
 callbacks.radio.dont_know = null;

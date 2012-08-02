@@ -25,7 +25,6 @@ var baseLayers = {
   thematic: { url: layersURL.base,    coords: { zoom: 3,  center: [43.06, 29.35] }}
 }
 
-
 var cHexagons = {
   user_name: "saleiva",
   table_name: "github_javascript",
@@ -33,12 +32,12 @@ var cHexagons = {
   query:"WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15),CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell"
 };
 
-var cHexagons2 = {
+/*var cHexagons2 = {
   user_name: "viz2",
   table_name: "stop_frisk",
   style: "#stop_frisk{[prop_count>0]{polygon-fill:#415E9E;}[prop_count>2]{polygon-fill:#6581B5;}[prop_count>4]{polygon-fill:#88A3CC;}[prop_count>6]{polygon-fill:#ACC6E3;}[prop_count>8]{polygon-fill:#88A3CC;}[prop_count>10]{polygon-fill:#F6BEB5;}[prop_count>30]{polygon-fill:#E3928C;}[prop_count>50]{polygon-fill:#CF6562;}[prop_count>100]{polygon-fill:#BC3939;}polygon-opacity:0.71;line-opacity:0.11;line-color:#000000;line-width:0.8;}",
   query: "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 2),CDB_XYZ_Resolution({z}) * 2 ) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, stop_frisk i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell"
-};
+}; */
 
 var cDensity = {
   user_name: 'examples',
@@ -166,7 +165,6 @@ var layers = { // This hash contains the combination of layers for each of the o
   markers:   { coords: baseLayers.base.coords,     cdb: cMarkers,  base: baseLayers.base,     extra: null },
   polygons:  { coords: baseLayers.polygons.coords, cdb: cPolygons, base: baseLayers.polygons, extra: null },
   density:   { coords: baseLayers.density.coords,  cdb: null,      base: baseLayers.density,  extra: baseLayers.base },
-  bubbles:   { coords: baseLayers.bubbles.coords,  cdb: null,      base: baseLayers.bubbles,  extra: baseLayers.base },
   hexagons:  { coords: baseLayers.hexagons.coords, cdb: cHexagons, base: baseLayers.hexagons, extra: null },
   thematic:  { coords: baseLayers.thematic.coords, cdb: cThematic, base: baseLayers.thematic, extra: null },
   dont_know: { coords: baseLayers.base.coords,     cdb: null,      base: null,                extra: null }
