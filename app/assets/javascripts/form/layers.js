@@ -15,17 +15,25 @@ var layersURL = {
 };
 
 var baseLayers = {
-  base:     { url: layersURL.base,    coords: { zoom: 5,  center: [40.34654412118006, 14.0625] }},
-  hexagons: { url: layersURL.base,    coords: { zoom: 11, center: [40.71, -74.00] }},
-  terrain:  { url: layersURL.terrain, coords: { zoom: 5,  center: [33.13750, -3.71337] }},
+  base:     { url: layersURL.base,    coords: { zoom: 5,  center: [40.34, 14.06] }},
+  hexagons: { url: layersURL.base,    coords: { zoom: 3,  center: [30.00, -99.00] }},
+  terrain:  { url: layersURL.terrain, coords: { zoom: 5,  center: [33.13, -3.71] }},
   polygons: { url: layersURL.base,    coords: { zoom: 8,  center: [24.00, 70.00] }},
-  forest:   { url: layersURL.forest,  coords: { zoom: 9,  center: [40.2599756, -5.9280726] }},
-  density:  { url: layersURL.density, coords: { zoom: 3,  center: [40.04443758460856, -101.25] }},
-  bubbles:  { url: layersURL.bubbles, coords: { zoom: 3,  center: [40.04443758460856, -101.25] }},
-  thematic: { url: layersURL.base,    coords: { zoom: 3,  center: [43.06888, 29.35045] }}
+  forest:   { url: layersURL.forest,  coords: { zoom: 9,  center: [40.25, -5.92] }},
+  density:  { url: layersURL.density, coords: { zoom: 3,  center: [43.00, -101.25] }},
+  bubbles:  { url: layersURL.bubbles, coords: { zoom: 3,  center: [43.00, -101.25] }},
+  thematic: { url: layersURL.base,    coords: { zoom: 3,  center: [43.06, 29.35] }}
 }
 
+
 var cHexagons = {
+  user_name: "saleiva",
+  table_name: "github_javascript",
+  style:"#github_javascript{[prop_count>0]{polygon-fill:#313695;}[prop_count>1]{polygon-fill:#4575B4;}[prop_count>2]{polygon-fill:#74ADD1;}[prop_count>4]{polygon-fill:#ABD9E9;}[prop_count>8]{polygon-fill:#E0F3F8;}[prop_count>16]{polygon-fill:#FFFFBF;}[prop_count>32]{polygon-fill:#FEE090;}[prop_count>64]{polygon-fill:#FDAE61;}[prop_count>128]{polygon-fill:#F46D43;}[prop_count>256]{polygon-fill:#D73027;}[prop_count>512]{polygon-fill:#A50026;}polygon-opacity:0.71;line-width:0;}",
+  query:"WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15),CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell"
+};
+
+var cHexagons2 = {
   user_name: "viz2",
   table_name: "stop_frisk",
   style: "#stop_frisk{[prop_count>0]{polygon-fill:#415E9E;}[prop_count>2]{polygon-fill:#6581B5;}[prop_count>4]{polygon-fill:#88A3CC;}[prop_count>6]{polygon-fill:#ACC6E3;}[prop_count>8]{polygon-fill:#88A3CC;}[prop_count>10]{polygon-fill:#F6BEB5;}[prop_count>30]{polygon-fill:#E3928C;}[prop_count>50]{polygon-fill:#CF6562;}[prop_count>100]{polygon-fill:#BC3939;}polygon-opacity:0.71;line-opacity:0.11;line-color:#000000;line-width:0.8;}",
