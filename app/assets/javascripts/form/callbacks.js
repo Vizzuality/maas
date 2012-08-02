@@ -230,26 +230,39 @@ callbacks.checkbox.density = {
 
 callbacks.checkbox.thematic =  {
   variable_selection: {
-    on: function() {
-
+    on: function(e) {
       selector.collection = new cdb.geo.ui.SelectorItems([
-        { name: "Select a category" , callback: null },
-        {
-          name: "All" , callback: function() {
-          }},
-          {
-            name: "High" , callback: function() {
-            }},
-
-            { name: "Medium" , callback: function() {
-            }},
-
-            { name: "Low" , callback: function() {
-            }}
+        { name: "Population",   callback: null },
+        { name: "Gross domestic product", callback: null }
       ]);
 
       mapView.$el.parent().append(selector.render().$el);
       selector.show();
+
+      $(".dk").dropkick({
+        change: function (value, label) {
+          var query;
+          var choroplethSelected = activePane.collection.at(1).get("selected");
+
+          if (value == "Population") {
+
+            if (choroplethSelected)
+              window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.choropleth.population);
+            else
+              window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.bubble.population);
+
+          } else if (value == "Gross domestic product") {
+            if (choroplethSelected)
+              window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.choropleth.gdp);
+            else
+              window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.bubble.gdp);
+          }
+
+          infowindow.hide(true);
+          //window.navigation.getCartoDBLayer().set("query", query);
+        }
+      });
+
 
     },
     off: function() {
@@ -294,14 +307,19 @@ callbacks.radio.density  = {
 
 callbacks.radio.thematic  = {
   on: function(e) {
-    if (window.navigation && e.model.get("option_name") == "choropleth_map") {
-      window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.choropleth);
+    if (window.navigation) {
+      if (e.model.get("option_name") == "bubble_map") {
+        window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.bubble.population);
+      } else if (e.model.get("option_name") == "choropleth_map") {
+        window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.choropleth.population);
+      }
     }
   },
   off: function(e) {
     if (e.model.get("option_name") == "choropleth_map") {
-      window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.bubble);
+      window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.bubble.population);
     }
   }
 };
+
 callbacks.radio.dont_know = null;

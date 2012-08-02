@@ -397,11 +397,10 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     window.map.legend.hide();
     window.map.unbind('change:zoom');
 
-    pane.collection.each(function(f) {
-      if (f.get('selected')) {
+    pane.collection.each(function(f, i) {
+      if (f.get('selected') && ((f.get("type") == "checkbox") || (f.get("type") == 'radio' && i > 1))) {
         var callback = f.get("callback");
-
-        if (callback && callback.on) { setTimeout(function() { callback.on( f.view ); }, 2000); }
+        if (callback && callback.on) { setTimeout(function() { callback.on( f.view ); }, 500); }
       }
     });
 
@@ -722,8 +721,8 @@ cdb.Router = Backbone.Router.extend({
     if (!pageName) pageName = defaultPageName;
 
 
-    var pane = window.pane.active(pageName)
-    window.navigation.select(pane);
+    activePane = window.pane.active(pageName)
+    window.navigation.select(activePane);
 
   }
 

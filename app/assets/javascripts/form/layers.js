@@ -3,15 +3,13 @@ var config = {
 };
 
 statements       = createCalls(8, 3);
-bubbleStatements = createBubbleCalls(50, 0);
 
 var layersURL = {
   base:    'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
   base2:   'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
   terrain: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
   forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png',
-  density: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[0],
-  bubbles: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + bubbleStatements[0],
+  density: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[0]
 };
 
 var baseLayers = {
@@ -21,7 +19,6 @@ var baseLayers = {
   polygons: { url: layersURL.base,    coords: { zoom: 8,  center: [24.00, 70.00] }},
   forest:   { url: layersURL.forest,  coords: { zoom: 9,  center: [40.25, -5.92] }},
   density:  { url: layersURL.density, coords: { zoom: 3,  center: [43.00, -101.25] }},
-  bubbles:  { url: layersURL.bubbles, coords: { zoom: 3,  center: [43.00, -101.25] }},
   thematic: { url: layersURL.base,    coords: { zoom: 3,  center: [43.06, 29.35] }}
 }
 
@@ -115,8 +112,8 @@ var cMarkers = {
 var cThematic = {
   user_name: config.username,
   table_name: 'choropleth',
-  query: 'SELECT cartodb_id, pop_est, the_geom_webmercator FROM {{table_name}}',
-  interactivity: "cartodb_id",
+  query: 'SELECT cartodb_id, pop_est, gdp_md_est, the_geom_webmercator FROM {{table_name}}',
+  interactivity: "cartodb_id, pop_est, gdp_md_est",
   featureOver:  function() { document.body.style.cursor = "pointer"; },
   featureOut:   function() { document.body.style.cursor = "default"; },
   featureClick: function(ev, latlng, pos, data) {
