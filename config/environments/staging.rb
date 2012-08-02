@@ -54,12 +54,12 @@ MaaS::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :domain               => 'mapmydata.co',
+    :domain               => 'vizzuality.com',
     :user_name            => ENV['EMAIL_USERNAME'],
     :password             => ENV['EMAIL_PASSWORD'],
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
-  config.action_mailer.default_url_options = { :host => 'mapmydata.co' }
+  config.action_mailer.default_url_options = { :host => 'mapme-staging.herokuapp.com' }
 
   # Enable threaded mode
   # config.threadsafe!
