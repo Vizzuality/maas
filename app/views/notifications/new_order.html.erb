@@ -19,13 +19,6 @@
     </tr>
   <% end %>
 
-  <% if @order.total - @order.starting_from > 0 %>
-    <tr style="border-bottom: 2px solid #CCCCCC;">
-      <td style="padding: 0 0 10px 0;" width="180" valign="top"><strong style="font-size:17px">Additional</strong></td>
-      <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; color: #E67632;"><span style="font-size:15px; color: #E67632;">Starting on <%= @order.total - @order.starting_from %> USD</span></td>
-    </tr>
-  <% end %>
-
   <tr style="border-bottom: 2px solid #CCCCCC;">
     <td style="padding: 0 0 10px 0;" width="180" valign="top"><strong style="font-size:17px">Provisional estimate</strong></td>
     <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; color: #E67632;"><span style="font-size:15px; color: #E67632;">Starting on <%= @order.starting_from %> USD</span></td>
