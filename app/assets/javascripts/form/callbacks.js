@@ -297,8 +297,8 @@ callbacks.radio.density  = {
       });
     }
 
-    if (window.navigation && e.model.get("option_name") == "hexagonal_grid") {
-      window.navigation.loadLayers(layers.hexagons);
+    if (window.navigation && e.model.get("option_name") == "rectangular_grid") {
+      window.navigation.loadLayers(layers.rectangular);
 
       window.map.unbind('change:zoom');
       legend.show();
@@ -306,7 +306,7 @@ callbacks.radio.density  = {
     }
   },
   off: function(e) {
-    if (e.model.get("option_name") == "hexagonal_grid") {
+    if (e.model.get("option_name") == "rectangular_grid") {
       window.navigation.loadLayers(layers.density);
       legend.hide();
 
