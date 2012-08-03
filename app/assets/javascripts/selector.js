@@ -60,11 +60,19 @@ cdb.geo.ui.Selector = cdb.core.View.extend({
 
   default_options: { },
 
+  getSelectedItem: function() {
+    return this.model.get("selectedItem");
+  },
+
   select: function(i) {
+  var self = this;
+  console.log('selecting');
 
     this.collection.each(function(item, j) {
-      if (i == j) item.set("selected", true);
-      else item.set("selected", false);
+      if (i == j) {
+        item.set("selected", true);
+        self.model.set("selectedItem", item);
+      } else item.set("selected", false);
     });
 
   },
@@ -75,12 +83,13 @@ cdb.geo.ui.Selector = cdb.core.View.extend({
 
     this.add_related_model(this.model);
 
-    _.bindAll(this, "render", "show", "hide", "toggle");
+    _.bindAll(this, "render", "show", "hide", "toggle", "select", "getSelectedItem");
 
     _.defaults(this.options, this.default_options);
 
     if (this.collection) {
       this.model.collection = this.collection;
+      this.model.set("selectedItem", this.collection.at(0));
     }
 
     this.template = this.options.template ? this.options.template : cdb.templates.getTemplate('geo/selector');
