@@ -28,14 +28,14 @@
 
 
   <tr style="border-bottom: 2px solid #CCCCCC;">
-    <td width="200" valign="top"><strong style="padding: 10px 0; font-size:17px; color: #333333;">TOTAL</strong></td>
-    <td width="150" valign="top" style="text-align:right; padding: 10px 0; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= @order.total %> USD</span></td>
+    <td width="200" valign="top"><strong style="padding: 0 0 10px 0; font-size:17px; color: #333333;">TOTAL</strong></td>
+    <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= @order.total %> USD</span></td>
   </tr>
 </table>
 
 <p style="color:#5E5E5E; font-size: 13px;">Are you ok with this estimate?</p>
 
-<p><a href="http://mapme-staging.herokuapp.com/orders/<%= @order.friendly_id %>/payments/new" style="font-weight: bold; font-size:27px; color: #397DB8;">Order it now</a></p>
+<p style="margin-bottom: 5px"><a href="http://mapme-staging.herokuapp.com/orders/<%= @order.friendly_id %>/payments/new" style="font-weight: bold; font-family: Arial, sans-serif; font-size:27px; color: #397DB8;">Order it now</a></p>
 
 <p style="color:#5E5E5E; font-size: 13px;">If you have any kind of question about it, please reply this email with your comments and we will solve your doubts as soon as possible.</p>
 
