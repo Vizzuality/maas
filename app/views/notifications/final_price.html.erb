@@ -21,8 +21,8 @@
 
   <% if @order.total - @order.starting_from > 0 %>
     <tr style="border-bottom: 2px solid #CCCCCC;">
-      <td style="padding: 0 0 10px 0;" width="180" valign="top"><strong style="font-size:17px">Additional</strong></td>
-      <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; color: #E67632;"><span style="font-size:15px; color: #E67632;">Starting on <%= @order.total - @order.starting_from %> USD</span></td>
+      <td style="padding: 0 0 10px 0; font-size:15px; color: #666666;" width="180" valign="top">Additional fees</td>
+      <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= @order.total - @order.starting_from %> USD</span></td>
     </tr>
   <% end %>
 
@@ -33,7 +33,7 @@
   </tr>
 </table>
 
-<p style="color:#5E5E5E; font-size: 13px;">Are you ok with this estimate</p>
+<p style="color:#5E5E5E; font-size: 13px;">Are you ok with this estimate?</p>
 
 <p><a href="http://mapme-staging.herokuapp.com/orders/<%= @order.friendly_id %>/payments/new" style="font-weight: bold; font-size:27px; color: #397DB8;">Order it now</a></p>
 
