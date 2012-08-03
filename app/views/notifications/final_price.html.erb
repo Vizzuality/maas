@@ -5,29 +5,29 @@
 
 <strong style="font-size: 17px; color:#333;black">Order #123456</strong>
 
-<table cellpadding="0" cellspacing="0" border="0" align="center">
+<table cellpadding="0" cellspacing="0" border="0" style="margin: 0 0 20px 0;">
+
   <tr>
-    <td width="200" valign="top">Basic Markers Map</td>
-    <td width="200" valign="top" style="color: #E67632;">2,500 USD</td>
-  </tr>
-  <tr>
-    <td width="200" valign="top">Dynamic filters.</td>
-    <td width="200" valign="top" style="color: #E67632;">2,500 USD</td>
-  </tr>
+    <td style="padding: 10px 0; font-size:15px; color: #666666;" width="180" valign="top"><%= @order.template.name.capitalize %> map</td>
+    <td width="150" valign="top" style="text-align:right; padding: 10px 0; color: #E67632;"><%= @order.template.price %> USD</td>
+  </tr> 
+
+  <% @order.order_options.each do |o| %>
+    <tr>
+      <td style="padding: 10px 0; font-size:15px; color: #666666;" width="180" valign="top"><%= o.template_option.name.humanize %></td>
+      <td width="150" valign="top" style="text-align:right; padding: 10px 0; color: #E67632;"><%= o.template_option.price %> USD</td>
+    </tr>
+  <% end %>
+
   <tr style="border-bottom: 2px solid #CCCCCC;">
-    <td width="200" valign="top">Aditional fees</td>
-    <td width="200" valign="top" style="color: #E67632;">200 USD</td>
-  </tr>
-  <tr style="border-bottom: 2px solid #CCCCCC;">
-    <td width="200" valign="top"><strong style="font-size:17px; color: #333333;">TOTAL</strong></td>
-    <td width="200" valign="top" style="color: #E67632;">3,400 USD</td>
+    <td width="200" valign="top"><strong style="padding: 10px 0; font-size:17px; color: #333333;">TOTAL</strong></td>
+    <td width="150" valign="top" style="text-align:right; padding: 10px 0; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= @order.total %> USD</span></td>
   </tr>
 </table>
 
-
 <p style="color:#5E5E5E; font-size: 13px;">Are you ok with this estimate</p>
 
-<p><a href="#" style="font-weight: bold; font-size:27px; color: #397DB8;">Order it now</a></p>
+<p><a href="http://mapme-staging.herokuapp.com/orders/<%= @order.friendly_id %>/payments/new" style="font-weight: bold; font-size:27px; color: #397DB8;">Order it now</a></p>
 
 <p><strong style="font-size:17px">Provisional estimate</strong> <span style="font-size:15px; color: #E67632;">Starting on 3,200 USD</span> </p>
 

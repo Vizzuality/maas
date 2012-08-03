@@ -35,7 +35,7 @@
 
     legend = new cdb.geo.ui.Legend({
       model: map,
-      template: cdb.templates.getTemplate('templates/map/legend/legend')
+      template: cdb.templates.getTemplate('templates/map/legend/legend_heat')
     });
 
     selector = new cdb.geo.ui.Selector({
@@ -43,14 +43,14 @@
       template: cdb.templates.getTemplate('templates/map/selector/selector')
     });
 
-    legend.collection = new cdb.geo.ui.LegendItems([
-      { className: "light_blue", name: "1-10 stops" },
-      { className: "blue",       name: "11-50 stops" },
-      { className: "light_red",  name: "51-100" },
-      { className: "red",        name: "> 100 stops" }
-    ]);
+//    legend.collection = new cdb.geo.ui.LegendItems([
+//      { className: "light_blue", name: "1-10 stops" },
+//      { className: "blue",       name: "11-50 stops" },
+//      { className: "light_red",  name: "51-100" },
+//      { className: "red",        name: "> 100 stops" }
+//    ]);
 
-    mapView.$el.parent().append(legend.render().$el);
+   mapView.$el.parent().append(legend.render().$el);
 
 
     // Adds Infowindow
