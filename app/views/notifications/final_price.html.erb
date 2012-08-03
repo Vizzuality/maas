@@ -1,9 +1,9 @@
-<h1>Your MapMyData estimate is ready</h1>
+<h1 style="line-height: 26px">Your MapMyData estimate is ready</h1>
 
 <p style="color:#5E5E5E; font-size: 13px;">Hi <%= @order.name %>!</p>
 <p style="color:#5E5E5E; font-size: 13px;">We finished analyzing the data you provided and this is the final estimate:</p>
 
-<strong style="font-size: 17px; color:#333;black">Order #123456</strong>
+<p style="margin:0 0 20px 0;"><strong style="font-size: 17px; color:#333;">Order #<%= @order.friendly_id[0, 10] %></strong></p>
 
 <table cellpadding="0" cellspacing="0" border="0" style="margin: 0 0 20px 0;">
 
