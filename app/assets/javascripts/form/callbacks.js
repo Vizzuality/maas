@@ -58,7 +58,7 @@ callbacks.checkbox.markers = {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set(newInfowindow);
+        infowindow.model.set(photoInfowindow);
         infowindow.show();
       }
 
@@ -109,10 +109,11 @@ callbacks.checkbox.polygons = {
     on:  function() {
 
       selector.collection = new cdb.geo.ui.SelectorItems([
-        { name: "All" ,   callback: null },
-        { name: "High",   callback: null },
-        { name: "Medium", callback: null },
-        { name: "Low" ,   callback: null }
+        { name: "All types of government" ,   callback: null },
+        { name: "Governance by government",   callback: null },
+        { name: "Local communities", callback: null },
+        { name: "Shared governance", callback: null },
+        { name: "Not Reported" ,   callback: null }
       ]);
 
       mapView.$el.parent().append(selector.render().$el);
@@ -123,14 +124,16 @@ callbacks.checkbox.polygons = {
 
           var query;
 
-          if (value == "All") {
-            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}}";
-          } else if (value == "High") {
-            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'high'";
-          } else if ( value == "Medium") {
-            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'medium'";
-          } else if (value == "Low") {
-            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'low'";
+          if (value == "All types of government") {
+            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}}";
+          } else if (value == "Governance by government") {
+            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Governance by government'";
+          } else if ( value == "Local communities") {
+            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Local communities'";
+          } else if (value == "Shared Governance") {
+            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Shared Governance'";
+          } else if (value == "Not Reported") {
+            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Not Reported'";
           }
 
           infowindow.hide(true);
@@ -152,8 +155,8 @@ callbacks.checkbox.polygons = {
 
       var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
 
-      cMarkers.featureClick       = cMarkersNewInfowindow;
-      currentLayer.featureClick   = cMarkersNewInfowindow;
+      cPolygons.featureClick      = cPolygonsNewInfowindow;
+      currentLayer.featureClick   = cPolygonsNewInfowindow;
 
       window.navigation.replaceCartoDBLayer(currentLayer);
 
@@ -168,8 +171,8 @@ callbacks.checkbox.polygons = {
       infowindow.hide(true);
       var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
 
-      cMarkers.featureClick       = cMarkersClassicInfowindow;
-      currentLayer.featureClick   = cMarkersClassicInfowindow;
+      cMarkers.featureClick       = cPolygonsClassicInfowindow;
+      currentLayer.featureClick   = cPolygonsClassicInfowindow;
 
       window.navigation.replaceCartoDBLayer(currentLayer);
 

@@ -1,12 +1,18 @@
 var styles = {
   polygons: {
     base:    "#polygons { polygon-fill: orange; polygon-opacity: 0.7; line-opacity: 1; line-color: #FFFFFF; }",
-    special: "#polygons " +
-      "{ " +
-        " polygon-fill: #FFFFFF; polygon-opacity: 0.7; line-opacity: 1; line-color: #FFFFFF; " +
-      " [category = 'high']   { polygon-fill: #FFA22B; polygon-pattern-file: url('/home/ubuntu/tile_assets/maas/maas_cross1.png'); } " +
-      " [category = 'medium'] { polygon-fill: #B81E20; polygon-pattern-file: url('/home/ubuntu/tile_assets/maas/maas_diag1.png');  } " +
-      " [category = 'low']    { polygon-fill: #F3441E; polygon-pattern-file: url('/home/ubuntu/tile_assets/maas/maas_dots1.png');  } " +
+    special: "#polygons { "+
+      "polygon-fill:#FFCA5F;" +
+      "polygon-opacity: 0.8;" +
+      "line-opacity:1;" +
+      "line-color: #FFFFFF;" +
+      "polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_cross1.png);" +
+      "[iucn_cat = 'Ib'] {polygon-fill:#F85FFF; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_cross1.png);}" +
+      "[iucn_cat = 'II'] { polygon-fill:#FF5F8E; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_diag1.png); }" +
+      "[iucn_cat = 'III'] { polygon-fill:#FFCA5F; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_diag1.png); }" +
+      "[iucn_cat = 'IV'] { polygon-fill:#C3CC4C; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_diag1.png); }" +
+      "[iucn_cat = 'VI'] { polygon-fill:#FF00FF; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_diag1.png); }" +
+      "[iucn_cat = 'Not Reported'] { polygon-fill:#88CC4C; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_dots1.png); }" +
       "}"
   },
   markers: {

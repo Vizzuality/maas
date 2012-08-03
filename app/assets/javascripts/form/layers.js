@@ -16,7 +16,7 @@ var baseLayers = {
   base:     { url: layersURL.base,    coords: { zoom: 5,  center: [40.34, 14.06] }},
   hexagons: { url: layersURL.base,    coords: { zoom: 3,  center: [30.00, -99.00] }},
   terrain:  { url: layersURL.terrain, coords: { zoom: 5,  center: [33.13, -3.71] }},
-  polygons: { url: layersURL.base,    coords: { zoom: 8,  center: [24.00, 70.00] }},
+  polygons: { url: layersURL.base,    coords: { zoom: 7,  center: [-7.36, 34.88] }},
   forest:   { url: layersURL.forest,  coords: { zoom: 9,  center: [40.25, -5.92] }},
   density:  { url: layersURL.density, coords: { zoom: 3,  center: [43.00, -101.25] }},
   thematic: { url: layersURL.base,    coords: { zoom: 3,  center: [43.06, 29.35] }}
@@ -53,6 +53,58 @@ var cDensity = {
     infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10], content: data, latlng: [latlng.lat, latlng.lng] });
     infowindow.showInfowindow();
   }
+};
+
+var cPolygonsClassicInfowindow = function(ev, latlng, pos, data) {
+
+  infowindow.model.set({
+    template_name: 'templates/map/infowindow/infowindow_classic',
+    title: data.name,
+    offset: [108, -10],
+    description: data.description,
+    latlng: [latlng.lat, latlng.lng],
+    subtitle: data.iucn_cat,
+    description: data.gov_type
+  });
+
+  infowindow.showInfowindow();
+};
+
+var cPolygonsNewInfowindow = function(ev, latlng, pos, data) {
+
+  infowindow.model.set({
+    template_name: 'templates/map/infowindow/infowindow_big',
+    title: data.name,
+    offset: [108, -10],
+    description: data.description,
+    latlng: [latlng.lat, latlng.lng],
+    subtitle: data.iucn_cat,
+    description: data.gov_type
+  });
+
+  infowindow.showInfowindow();
+  };
+
+var cNewInfowindow = function(ev, latlng, pos, data) {
+
+  var // get coordinates of the marker
+  parsedData = JSON.parse(data.latlng),
+  latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
+
+  infowindow.model.set({
+    template_name: 'templates/map/infowindow/infowindow_big',
+    title: data.title,
+    src: data.src,
+    offset: [108, -10],
+    subtitle: data.subtitle,
+    description: data.description,
+    cartodb_id: data.cartodb_id,
+    latlng: [latlng.lat, latlng.lng],
+    subtitle: data.subtitle,
+    description: data.description,
+  });
+
+  infowindow.showInfowindow();
 };
 
 var cMarkersNewInfowindow = function(ev, latlng, pos, data) {
@@ -136,8 +188,8 @@ var cThematic = {
 var cPolygons = {
   user_name: config.username,
   table_name: 'polygons',
-  query: 'SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}}',
-  interactivity: "cartodb_id, category",
+  query: 'SELECT cartodb_id, iucn_cat, gov_type, name, the_geom_webmercator FROM {{table_name}}',
+  interactivity: "cartodb_id, iucn_cat, gov_type, name",
   tile_style: styles.polygons.base,
   featureOver:  function() { document.body.style.cursor = "pointer"; },
   featureOut:   function() { document.body.style.cursor = "default"; },
@@ -145,12 +197,13 @@ var cPolygons = {
 
     infowindow.model.set({
       template_name: 'templates/map/infowindow/infowindow_classic',
-      title: data.cartodb_id,
       cartodb_id: data.cartodb_id,
       offset: [50, 0],
-      subtitle: "Subtitle",
-      description: "Description",
-      latlng: [latlng.lat, latlng.lng]
+      latlng: [latlng.lat, latlng.lng],
+      title: data.name,
+      description: data.description,
+      subtitle: data.iucn_cat,
+      description: data.gov_type
     });
 
     infowindow.showInfowindow();
