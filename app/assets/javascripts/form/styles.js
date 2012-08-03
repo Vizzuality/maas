@@ -1,22 +1,29 @@
+/**
+* Styles for the different layers
+*/
+
+var assetsPath = "/home/ubuntu/tile_assets/maas/";
+
 var styles = {
   polygons: {
     base:    "#polygons { polygon-fill: orange; polygon-opacity: 0.7; line-opacity: 1; line-color: #FFFFFF; }",
-    special: "#polygons { "+
+    special: "#polygons { " +
       "polygon-fill:#FFCA5F;" +
       "polygon-opacity: 0.8;" +
       "line-opacity:1;" +
       "line-color: #FFFFFF;" +
-      "polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_cross1.png);" +
-      "[iucn_cat = 'Ib'] {polygon-fill:#F85FFF; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_cross1.png);}" +
-      "[iucn_cat = 'II'] { polygon-fill:#FF5F8E; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_diag1.png); }" +
-      "[iucn_cat = 'III'] { polygon-fill:#FFCA5F; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_diag1.png); }" +
-      "[iucn_cat = 'IV'] { polygon-fill:#C3CC4C; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_diag1.png); }" +
-      "[iucn_cat = 'VI'] { polygon-fill:#FF00FF; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_diag1.png); }" +
-      "[iucn_cat = 'Not Reported'] { polygon-fill:#88CC4C; polygon-pattern-file: url(/home/ubuntu/tile_assets/maas/maas_dots1.png); }" +
+      "polygon-pattern-file: url(" + assetsPath + "maas_cross1.png);" +
+      "[iucn_cat = 'Ib']  { polygon-fill:#F85FFF; polygon-pattern-file: url(" + assetsPath + "maas_cross1.png);}" +
+      "[iucn_cat = 'II']  { polygon-fill:#FF5F8E; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
+      "[iucn_cat = 'III'] { polygon-fill:#FFCA5F; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
+      "[iucn_cat = 'IV']  { polygon-fill:#C3CC4C; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
+      "[iucn_cat = 'VI']  { polygon-fill:#FF00FF; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
+      "[iucn_cat = 'Not Reported'] { polygon-fill:#88CC4C; polygon-pattern-file: url(" + assetsPath + "maas_dots1.png); }" +
       "}"
   },
   markers: {
-    base: "#markers { marker-fill: #FF6600; marker-opacity: 1; " +
+    base: "#markers { marker-fill: #FF6600; " +
+      "marker-opacity: 1; " +
       "marker-width: 8;" +
       "marker-line-color: white; " +
       "marker-line-width: 3; " +
@@ -29,7 +36,7 @@ var styles = {
   thematic: {
     bubble: {
       population: "#choropleth { " +
-        "marker-fill: #FF6600; " +
+        "marker-fill: #2CA25F; " +
         "marker-line-color: #FFFFFF; " +
         "marker-line-width: 0; " +
         "marker-opacity: .7; " +
@@ -43,39 +50,43 @@ var styles = {
         "#choropleth [pop_est<=6000000]    { marker-width: 7 } " +
         "#choropleth [pop_est<=2000000]    { marker-width: 6 }",
       gdp: "#choropleth { " +
-        "   marker-fill:#FF6600; " +
+        "   marker-fill:#F03B20; " +
         "   marker-line-color:#FFFFFF; " +
         "   marker-line-width:1; " +
-        "   marker-opacity:1; " +
-        "   marker-line-opacity:1; " +
+        "   marker-opacity:.7; " +
+        "   marker-line-opacity:0; " +
         "   marker-placement:point; " +
         "   marker-type:ellipse; " +
         "   marker-allow-overlap:true; " +
         "} " +
         "#choropleth [gdp_md_est<=14260000] { marker-width:23 } " +
-        "#choropleth [gdp_md_est<=800200] { marker-width:21.11111111111111 } "  +
-        "#choropleth [gdp_md_est<=335400] { marker-width:19.22222222222222 } "  +
-        "#choropleth [gdp_md_est<=188400] { marker-width:17.333333333333332 } " +
-        "#choropleth [gdp_md_est<=88080] { marker-width:15.444444444444445 } "  +
-        "#choropleth [gdp_md_est<=44060] { marker-width:13.555555555555555 } "  +
-        "#choropleth [gdp_md_est<=28890] { marker-width:11.666666666666666 } "  +
-        "#choropleth [gdp_md_est<=17820] { marker-width:9.777777777777779 } "   +
-        "#choropleth [gdp_md_est<=10040] { marker-width:7.888888888888889 } "   +
-        "#choropleth [gdp_md_est<=3158] { marker-width:6 } "
+        "#choropleth [gdp_md_est<=800200] { marker-width:21 }   " +
+        "#choropleth [gdp_md_est<=335400] { marker-width:19 }   " +
+        "#choropleth [gdp_md_est<=188400] { marker-width:17 }   " +
+        "#choropleth [gdp_md_est<=88080]  { marker-width:15 }   " +
+        "#choropleth [gdp_md_est<=44060]  { marker-width:13 }   " +
+        "#choropleth [gdp_md_est<=28890]  { marker-width:11 }   " +
+        "#choropleth [gdp_md_est<=17820]  { marker-width:9 }    " +
+        "#choropleth [gdp_md_est<=10040]  { marker-width:7 }    " +
+        "#choropleth [gdp_md_est<=3158]   { marker-width:6 }    "
     },
     choropleth: {
       population: "#choropleth { line-color: #FFFFFF; line-width: 1; line-opacity: 1; polygon-opacity: 1; } " +
-        "#choropleth [pop_est<=1338612968] { polygon-fill: #006D2C } " +
-        "#choropleth [pop_est<=33487208]   { polygon-fill: #2CA25F } " +
-        "#choropleth [pop_est<=11862740]   { polygon-fill: #66C2A4 } " +
-        "#choropleth [pop_est<=6057263]    { polygon-fill: #B2E2E2 } " +
-        "#choropleth [pop_est<=2231503]    { polygon-fill: #EDF8FB } ",
-      gdp: "#choropleth { line-color:#FFFFFF; line-width:1; line-opacity:1; polygon-opacity:1; } " +
-        "#choropleth [gdp_md_est<=14260000] { polygon-fill:#006D2C } " +
-        "#choropleth [gdp_md_est<=329500] { polygon-fill:#2CA25F } " +
-        "#choropleth [gdp_md_est<=81710] { polygon-fill:#66C2A4 } " +
-        "#choropleth [gdp_md_est<=27940] { polygon-fill:#B2E2E2 } " +
-        "#choropleth [gdp_md_est<=10040] { polygon-fill:#EDF8FB }"
+        "#choropleth [pop_est<=1338612968]  { polygon-fill: #006D2C } " +
+        "#choropleth [pop_est<=33487208]    { polygon-fill: #2CA25F } " +
+        "#choropleth [pop_est<=11862740]    { polygon-fill: #66C2A4 } " +
+        "#choropleth [pop_est<=6057263]     { polygon-fill: #B2E2E2 } " +
+        "#choropleth [pop_est<=2231503]     { polygon-fill: #EDF8FB } ",
+      gdp: "#choropleth { " +
+        "line-color:#FFFFFF;" +
+        "line-width:1;" +
+        "line-opacity:1;" +
+        "polygon-opacity:1; } " +
+        "#choropleth [pop_est<=1338612968] { polygon-fill:#BD0026 }" +
+        "#choropleth [pop_est<=33487208] { polygon-fill:#F03B20 }" +
+        "#choropleth [pop_est<=11862740] { polygon-fill:#FD8D3C }" +
+        "#choropleth [pop_est<=6057263] { polygon-fill:#FECC5C }" +
+        "#choropleth [pop_est<=2231503] { polygon-fill:#FFFFB2 }"
     }
   }
 };
