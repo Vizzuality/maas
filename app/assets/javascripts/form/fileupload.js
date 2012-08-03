@@ -1,6 +1,6 @@
 $(function() {
 
-  if ($("file-uploader").length > 0) {
+  if ($("#file-uploader").length > 0) {
     var
     i         = 0,
     progress  = 0,
