@@ -33,6 +33,22 @@ var styles = {
       "marker-allow-overlap: true; }",
     special: ""
   },
+  density: {
+    hexagons: "#github_javascript { " +
+    "[prop_count>0]   { polygon-fill: #313695; } " +
+    "[prop_count>1]   { polygon-fill: #4575B4; } " +
+    "[prop_count>2]   { polygon-fill: #74ADD1; } " +
+    "[prop_count>4]   { polygon-fill: #ABD9E9; } " +
+    "[prop_count>10]  { polygon-fill: #E0F3F8; } " +
+    "[prop_count>16]  { polygon-fill: #FFFFBF; } " +
+    "[prop_count>32]  { polygon-fill: #FEE090; } " +
+    "[prop_count>64]  { polygon-fill: #FDAE61; } " +
+    "[prop_count>128] { polygon-fill: #F46D43; } " +
+    "[prop_count>256] { polygon-fill: #D73027; } " +
+    "[prop_count>512] { polygon-fill: #A50026; } " +
+    "polygon-opacity:0.71; line-width:0; " +
+    "}",
+  },
   thematic: {
     bubble: {
       population: "#choropleth { " +
