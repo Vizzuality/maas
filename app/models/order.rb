@@ -36,11 +36,15 @@ class Order < ActiveRecord::Base
   end
 
   def map_url=(value)
+    return false if value == "http://"
+
     value = "http://#{value}" unless value.starts_with?('http://') || value.starts_with?('https://')
     super(value)
   end
 
   def map_source_url=(value)
+    return false if value == "http://"
+
     value = "http://#{value}" unless value.starts_with?('http://') || value.starts_with?('https://')
     super(value)
   end
