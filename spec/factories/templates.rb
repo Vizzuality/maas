@@ -53,8 +53,8 @@ FactoryGirl.define do
 
       after(:create) do |template, evaluator|
 
-        FactoryGirl.create(:rectangular_grid,   template: template)
         FactoryGirl.create(:hexagonal_grid,     template: template)
+        FactoryGirl.create(:rectangular_grid,   template: template)
         FactoryGirl.create(:variable_selection, template: template)
 
       end
