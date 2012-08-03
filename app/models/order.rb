@@ -31,6 +31,10 @@ class Order < ActiveRecord::Base
   validates :name, :email, :presence => true
   validates :email, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
 
+  def should_generate_new_friendly_id?
+    new_record?
+  end
+
   def map_url=(value)
     value = "http://#{value}" unless value.starts_with?('http://') || value.starts_with?('https://')
     super(value)

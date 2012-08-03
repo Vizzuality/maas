@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
   end
 
   def get_order
-    @order = Order.where(:id => params[:id]).first
+    #@order = Order.where(:id => params[:id]).first
     @order = Order.find(params[:id])
 
     # If an old id or a numeric id was used to find the record, then
