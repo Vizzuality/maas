@@ -286,9 +286,18 @@ callbacks.checkbox.dont_know = null;
 callbacks.radio.markers  = {};
 callbacks.radio.polygons = {};
 callbacks.radio.density  = {
+  init: function(e) {
+
+    if (e.model.get("option_name") == "hexagonal_grid") {
+      legend.show();
+    }
+  },
   on: function(e) {
 
     if (window.navigation && e.model.get("option_name") == "rectangular_grid") {
+
+      window.navigation.loadLayers(layers.rectangular);
+
       window.map.bind('change:zoom', function() {
         z = window.map.getZoom();
         var l = window.navigation.getBaseLayer();
@@ -297,19 +306,19 @@ callbacks.radio.density  = {
       });
     }
 
-    if (window.navigation && e.model.get("option_name") == "rectangular_grid") {
-      window.navigation.loadLayers(layers.rectangular);
-
+    if (window.navigation && e.model.get("option_name") == "hexagonal_grid") {
       window.map.unbind('change:zoom');
       legend.show();
-
     }
+
   },
   off: function(e) {
+    if (e.model.get("option_name") == "hexagonal_grid") {
+      legend.hide();
+    }
+
     if (e.model.get("option_name") == "rectangular_grid") {
       window.navigation.loadLayers(layers.density);
-      legend.hide();
-
     }
   }
 };

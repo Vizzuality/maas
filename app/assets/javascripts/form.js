@@ -403,10 +403,16 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     window.map.unbind('change:zoom');
 
     pane.collection.each(function(f, i) {
-      if (f.get('selected') && ((f.get("type") == "checkbox") || (f.get("type") == 'radio' && i > 1))) {
         var callback = f.get("callback");
-        if (callback && callback.on) { setTimeout(function() { callback.on( f.view ); }, 500); }
-      }
+
+        if (f.get('selected') && ((f.get("type") == "checkbox") || (f.get("type") == 'radio' && i > 1))) {
+          if (callback && callback.on) { setTimeout(function() { callback.on( f.view ); }, 500); }
+        }
+
+        if (f.get('selected') && callback && callback.init) {
+          callback.init(f.view);
+        }
+
     });
 
     // Callback: after the animations, unload & load the layers
