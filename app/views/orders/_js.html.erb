@@ -35,6 +35,7 @@
 
     legend = new cdb.geo.ui.Legend({
       model: map,
+      className: "heat",
       template: cdb.templates.getTemplate('templates/map/legend/legend_heat')
     });
 
@@ -50,7 +51,7 @@
 //      { className: "red",        name: "> 100 stops" }
 //    ]);
 
-   mapView.$el.parent().append(legend.render().$el);
+    mapView.$el.parent().append(legend.render().$el);
 
 
     // Adds Infowindow
