@@ -326,6 +326,8 @@ form .map {
   border: 1px solid rgba($cGray0, 0.4);
   background: url(backgrounds/bg-map-stars.png) center top;
 
+  z-index: 10;
+
   .shadow { pointer-events:none; }
 
   .browser {
@@ -349,12 +351,11 @@ form .map {
   } // form map browser
 }
 
-/* #container > div { display: none; position:relative; } */
+ #container { z-index: 1000; }
 
 .circle {
 
-  opacity: 0;
-  display:block;
+  display:none;
 
   @include position(650px, 183px, false, false);
   @include size(92px);

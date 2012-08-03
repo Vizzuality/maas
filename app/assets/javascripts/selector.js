@@ -58,17 +58,15 @@ cdb.geo.ui.Selector = cdb.core.View.extend({
 
   },
 
-  default_options: {
+  default_options: { },
 
-  },
+  select: function(i) {
 
-  select: function() {
-    var
-    i    = (this.$el.find("select").get(0)).selectedIndex,
-    item = this.collection.at(i),
-    callback = item.get("callback");
+    this.collection.each(function(item, j) {
+      if (i == j) item.set("selected", true);
+      else item.set("selected", false);
+    });
 
-    if (callback) callback();
   },
 
   initialize: function() {

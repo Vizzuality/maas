@@ -23,10 +23,13 @@ callbacks.checkbox.markers = {
           var query;
 
           if (value == "All") {
+            selector.select(0);
             query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}';
           } else if (value == "Natural") {
+            selector.select(1);
             query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'natural'";
           } else if (value == "Cultural") {
+            selector.select(2);
             query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'cultural'";
           }
 
@@ -274,7 +277,7 @@ callbacks.checkbox.thematic =  {
 
 callbacks.checkbox.dont_know = null;
 
-callbacks.radio.markers  = function() { console.log('a'); };
+callbacks.radio.markers  = {};
 callbacks.radio.polygons = {};
 callbacks.radio.density  = {
   on: function(e) {

@@ -295,12 +295,17 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   },
 
   hideCircle: function() {
-    if ($("body").scrollTop() < 450) $(".circle").animate({ opacity: 0 }, 150);
+    if ($("body").scrollTop() < 450) $(".circle").fadeOut(150, "easeOutExpo", function() {
+      $(this).addClass("hidden");
+    });
   },
 
   showCircle: function($el) {
-    if ( $("body").scrollTop() > 450 && $(".circle").css("opacity") == 0) {
-      $(".circle").animate({ top: $el.position().top - $(".circle").height()/2, opacity: 1 }, 150);
+    if ( $("body").scrollTop() > 450 && $(".circle").hasClass("hidden")) {
+      $(".circle").css({ top: $el.position().top - $(".circle").height()/2 });
+      $(".circle").fadeIn(150, "easeOutExpo", function() {
+        $(this).removeClass("hidden");
+      });
     }
   },
 
