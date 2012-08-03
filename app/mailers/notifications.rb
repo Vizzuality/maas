@@ -8,6 +8,7 @@ class Notifications < ActionMailer::Base
   #
   def new_order(order)
     @greeting = "Hi"
+    @order = order;
 
     mail to: order.email
   end
@@ -19,6 +20,7 @@ class Notifications < ActionMailer::Base
   #
   def final_price(order)
     @greeting = "Hi"
+    @order = order;
 
     mail to: order.email
   end
@@ -30,6 +32,7 @@ class Notifications < ActionMailer::Base
   #
   def map_ready(order)
     @greeting = "Hi"
+    @order = order;
 
     mail to: order.email
   end
