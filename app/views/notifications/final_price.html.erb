@@ -1,4 +1,4 @@
-<h1 style="line-height: 26px">Your MapMyData estimate is ready</h1>
+<h1 style="line-height: 28px">Your MapMyData estimate is ready</h1>
 
 <p style="color:#5E5E5E; font-size: 13px;">Hi <%= @order.name %>!</p>
 <p style="color:#5E5E5E; font-size: 13px;">We finished analyzing the data you provided and this is the final estimate:</p>
@@ -9,27 +9,27 @@
 
   <tr>
     <td style="padding: 0 0 10px 0; font-size:15px; color: #666666;" width="180" valign="top"><%= @order.template.name.capitalize %> map</td>
-    <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; color: #E67632;"><%= @order.template.price %> USD</td>
+    <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;"><%= @order.template.price %> USD</td>
   </tr> 
 
   <% @order.order_options.each do |o| %>
   <tr style="border-bottom: 2px solid #CCCCCC;">
       <td style="padding: 0 0 10px 0; font-size:15px; color: #666666;" width="180" valign="top"><%= o.template_option.name.humanize %></td>
-      <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; color: #E67632;"><%= o.template_option.price %> USD</td>
+      <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;"><%= o.template_option.price %> USD</td>
     </tr>
   <% end %>
 
   <% if @order.total - @order.starting_from > 0 %>
     <tr style="border-bottom: 2px solid #CCCCCC;">
       <td style="padding: 0 0 10px 0; font-size:15px; color: #666666;" width="180" valign="top">Additional fees</td>
-      <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= @order.total - @order.starting_from %> USD</span></td>
+      <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= @order.total - @order.starting_from %> USD</span></td>
     </tr>
   <% end %>
 
 
   <tr style="border-bottom: 2px solid #CCCCCC;">
     <td width="200" valign="top"><strong style="padding: 10px 0; font-size:17px; color: #333333;">TOTAL</strong></td>
-    <td width="150" valign="top" style="text-align:right; padding: 10px 0; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= @order.total %> USD</span></td>
+    <td width="150" valign="top" style="text-align:right; padding: 10px 0; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= @order.total %> USD</span></td>
   </tr>
 </table>
 
