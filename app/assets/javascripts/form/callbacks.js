@@ -111,7 +111,6 @@ callbacks.checkbox.polygons = {
       selector.collection = new cdb.geo.ui.SelectorItems([
         { name: "All types of government" ,   callback: null },
         { name: "Governance by government",   callback: null },
-        { name: "Local communities", callback: null },
         { name: "Shared governance", callback: null },
         { name: "Not Reported" ,   callback: null }
       ]);
@@ -128,8 +127,6 @@ callbacks.checkbox.polygons = {
             query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}}";
           } else if (value == "Governance by government") {
             query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Governance by government'";
-          } else if ( value == "Local communities") {
-            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Local communities'";
           } else if (value == "Shared Governance") {
             query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Shared Governance'";
           } else if (value == "Not Reported") {
