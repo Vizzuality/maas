@@ -6,21 +6,20 @@
 <p style="margin:0 0 15px 0;"><strong style="font-size: 17px; color:#333;">Order #<%= @order.friendly_id[0, 10] %></strong></p>
 
 <table cellpadding="0" cellspacing="0" border="0" style="margin: 0 0 20px 0;">
-
   <tr>
-    <td style="padding: 0 0 10px 0; font-size:15px; color: #666666;" width="180" valign="top"><%= @order.template.name.capitalize %> map</td>
+    <td style="padding: 0 0 10px 0; font-size:15px; color: #666666;" valign="top"><%= @order.template.name.capitalize %> map</td>
     <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;"><%= number_to_currency(@order.template.price, :unit => "USD", :format => "%n %u") %></td>
   </tr> 
 
   <% @order.order_options.each do |o| %>
     <tr>
-      <td style="padding: 0 0 10px 0; font-size:15px; color: #666666;" width="180" valign="top"><%= o.template_option.name.humanize %></td>
-      <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;"><%= number_to_currency(o.template_option.price, :unit => "USD", :format => "%n %u") %></td>
+      <td style="border-bottom: 2px solid #A1A1A1; padding: 0 0 10px 0; font-size:15px; color: #666666;" valign="top"><%= o.template_option.name.humanize %></td>
+      <td style="border-bottom: 2px solid #A1A1A1; text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;" width="150" valign="top"><%= number_to_currency(o.template_option.price, :unit => "USD", :format => "%n %u") %></td>
     </tr>
   <% end %>
 
   <tr style="border-bottom: 2px solid #CCCCCC;">
-    <td style="padding: 0 0 10px 0;" width="180" valign="top"><strong style="font-size:17px">Provisional estimate</strong></td>
+    <td style="padding: 10px 0 10px 0;" valign="top"><strong style="font-size:17px">Provisional estimate</strong></td>
     <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;">Starting on <%= number_to_currency(@order.starting_from, :unit => "USD", :format => "%n %u") %></span></td>
   </tr>
 </table>
