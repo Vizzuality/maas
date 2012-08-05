@@ -22,8 +22,8 @@
 
   <% if @order.total - @order.starting_from > 0 %>
     <tr>
-      <td style="margin-top:20px; padding: 20px 0 0 0; border-top: 2px solid #A1A1A1; font-size:15px; color: #666666;" width="180" valign="top">Additional fees</td>
-      <td width="150" valign="top" style="margin-top:20px; padding: 20px 0 0 0; border-top: 2px solid #A1A1A1; text-align:right; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= number_to_currency(@order.total - @order.starting_from, :unit => "USD", :format => "%n %u") %></span></td>
+      <td style="margin-top:20px; padding: 17px 0 17px 0; border-top: 2px solid #A1A1A1; font-size:15px; color: #666666;" width="180" valign="top">Additional fees</td>
+      <td width="150" valign="top" style="margin-top:20px; padding: 17px 0 17px 0; border-top: 2px solid #A1A1A1; text-align:right; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= number_to_currency(@order.total - @order.starting_from, :unit => "USD", :format => "%n %u") %></span></td>
     </tr>
   <% end %>
   <tr>
@@ -34,7 +34,7 @@
 
 <p style="color:#5E5E5E; font-size: 13px;">Are you ok with this estimate?</p>
 
-<p style="margin-bottom: 5px"><a href="http://mapme-staging.herokuapp.com/orders/<%= @order.friendly_id %>/payments/new" style="font-weight: bold; font-family: Arial, sans-serif; font-size:27px; color: #397DB8;">Order it now</a></p>
+<p style="margin-bottom: 5px"><a href="http://mapme-staging.herokuapp.com/orders/<%= @order.friendly_id %>/payments/new" style="text-decoration:none; border-bottom: 3px solid #397DB8; padding: 0 0 2px 0; font-weight: bold; font-family: Arial, sans-serif; font-size:27px; color: #397DB8;">Order it now</a></p>
 
 <p style="color:#5E5E5E; font-size: 13px;">If you have any kind of question about it, please reply this email with your comments and we will solve your doubts as soon as possible.</p>
 
