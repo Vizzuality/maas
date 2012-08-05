@@ -337,6 +337,38 @@ form .map {
     @include size($width, $height);
     @include icons-sprite(browser);
 
+    .reload {
+
+      @include position(8px, false, false, 5px);
+      @include size(27px);
+
+      @include icons-sprite(browser-reload);
+
+      &:hover { @include icons-sprite(browser-reload-hover); }
+      &:active, &:hover:active { @include icons-sprite(browser-reload-active); }
+    }
+    .home {
+      @include position(8px, false, false, 32px);
+      @include size(27px);
+
+      @include icons-sprite(browser-home);
+
+      &:hover { @include icons-sprite(browser-home-hover); }
+      &:active, &:hover:active { @include icons-sprite(browser-home-active); }
+
+    }
+    .url {
+      @include position(11px, false, false, 87px);
+      @include size(610px, 17px);
+      @include font("sans-serif-base", 13px, $cGray1);
+      font-family: "Arial", sans-serif;
+
+      border:none;
+      outline:none;
+      background:none;
+
+    }
+
     .canvas {
       overflow:hidden;
 

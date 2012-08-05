@@ -396,22 +396,23 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   showPane: function(pane) {
     var self = this;
 
-    // Hides the infowindow
+    // Hide the widgets & do the unbinding
     window.map.infowindow.model.set("visibility", false);
     window.map.selector.hide();
     window.map.legend.hide();
     window.map.unbind('change:zoom');
 
+    // Fire the callbacks
     pane.collection.each(function(f, i) {
-        var callback = f.get("callback");
+      var callback = f.get("callback");
 
-        if (f.get('selected') && ((f.get("type") == "checkbox") || (f.get("type") == 'radio' && i > 1))) {
-          if (callback && callback.on) { setTimeout(function() { callback.on( f.view ); }, 500); }
-        }
+      if (f.get('selected') && ((f.get("type") == "checkbox") || (f.get("type") == 'radio' && i > 1))) {
+        if (callback && callback.on) { setTimeout(function() { callback.on( f.view ); }, 500); }
+      }
 
-        if (f.get('selected') && callback && callback.init) {
-          callback.init(f.view);
-        }
+      if (f.get('selected') && callback && callback.init) {
+        callback.init(f.view);
+      }
 
     });
 
@@ -445,11 +446,24 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     if (layers.base)  this.loadBaseLayer(layers.base);
     if (layers.cdb)   this.loadCartoDBLayer(layers.cdb);
 
+    this.showURL(layers.url);
+
     var self = this;
 
     setTimeout(function() { // TODO: test this
       self.centerMap(layers.coords.center, layers.coords.zoom);
     }, 500);
+
+  },
+
+  showURL: function(url) {
+
+    if (url == $(".browser .url").val()) return;
+
+    $(".browser .url").fadeOut(150, function() {
+      $(this).val(url);
+      $(this).fadeIn(150);
+    });
 
   },
 
