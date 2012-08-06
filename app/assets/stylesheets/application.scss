@@ -70,13 +70,12 @@ a {
 
   margin: 0 0 40px 0;
 
-  color: $cWhite;
-  @extend .sans-serif;
-  @include text-shadow( rgba($cGray0, 0.25) 1px 1px 2px);
+  @include font("sans-serif", 43px, $cWhite);
+  @include text-shadow( rgba($cGray0, 0.5) 1px 1px 2px);
 
   h1 { width: 474px; margin: 0 0 20px 0; font-size:43px; line-height:40px; }
-  p  { width: 430px; margin: 0 0 20px 0; font-size:21px; line-height: 25px; }
-  p strong { @extend .sans-serif-bold}
+  p  { width: 430px; margin: 0 0 20px 0; @include font("sans-serif", 21px, $cWhite); line-height: 25px; }
+  p strong { font-weight:normal; @include font("sans-serif-semi", 21px, $cWhite); }
 
 } // home header hgroup
 
