@@ -29,14 +29,14 @@ $(function() {
     },
 
     error: function() {
-      //if (this.model.get("error") == true) {
-        //this.$el.addClass('error');
-      //} else {
-        //this.$el.removeClass('error');
-      //}
+      if (this.model.get("error") == true) {
+        this.$el.addClass('error');
+      } else {
+        this.$el.removeClass('error');
+      }
 
 
-      this.render();
+      //this.render();
     },
 
     get: function() {
@@ -166,7 +166,7 @@ $(function() {
         },
 
         error: function(e) {
-          console.log('error', e);
+          //console.log('error', e);
         }
       });
 
