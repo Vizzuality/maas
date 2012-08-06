@@ -70,7 +70,7 @@ function intword(number) {
   } else if( number < 1000000 ) {
     return intcomma( number / 100000.0, 1 ) + " hundred K";
   } else if( number < 1000000000 ) {
-    return intcomma( number / 1000000.0, 1 ) + "M";
+    return intcomma( number / 1000000.0, 1 ) + "<span>M</span>";
   } else if( number < 1000000000000 ) { //senseless on a 32 bit system probably.
     return intcomma( number / 1000000000.0, 1 ) + " billion";
   } else if( number < 1000000000000000 ) {

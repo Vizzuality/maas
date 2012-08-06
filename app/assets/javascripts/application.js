@@ -17,6 +17,8 @@
 
 $(function() {
 
+$(".browser .home, .browser .reload").on("click", function(e) { e.preventDefault(); });
+
   $("footer ul li a.contact").on("click", function(e) {
     e.preventDefault();
     window.dialog.open();

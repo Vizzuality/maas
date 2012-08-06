@@ -195,9 +195,13 @@
       .content ul {
         list-style:none;
         li {
-          padding: 0 0 5px 0;
+          @include inline-block();
 
           @include font("sans-serif-base", 13px, $cGray3);
+          .count {
+            @include font("sans-serif-base-bold", 27px, $cGray3);
+            span { font-size: 10px; }
+          }
           strong { color: $cGray2; }
         }
 

@@ -206,25 +206,37 @@ callbacks.checkbox.density = {
 
           var query;
 
-          if (value == "All") {
-            query = queries.hexagons
-          } else if (value == "High") {
-            query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
-              'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
-              'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 90 '
-          } else if ( value == "Medium") {
-            query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
-              'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
-              'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 10 AND count(i.cartodb_id) < 90 '
-          } else if (value == "Low") {
-            query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
-              'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
-              'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) <= 10 '
+          var hexagonSelected = activePane.collection.at(1).get("selected");
 
+          if (value == "All") {
+            if (hexagonSelected) {
+              query = queries.hexagons;
+            }
+          } else if (value == "High") {
+            if (hexagonSelected) {
+              query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
+                'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
+                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 90';
+            }
+          } else if ( value == "Medium") {
+            if (hexagonSelected) {
+              query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
+                'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
+                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 10 AND count(i.cartodb_id) < 90';
+            }
+          } else if (value == "Low") {
+            if (hexagonSelected) {
+              query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
+                'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
+                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) <= 10';
+            }
           }
 
           infowindow.hide(true);
-          window.navigation.getCartoDBLayer().set("query", query);
+
+          if (query) {
+            window.navigation.getCartoDBLayer().set("query", query);
+          }
         }
       });
 

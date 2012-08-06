@@ -29,7 +29,10 @@ var styles = {
       "marker-placement: point; " +
       "marker-type: ellipse; " +
       "marker-allow-overlap: true; }",
-    special: ""
+    special: "#markers { " +
+    "[category='cultural'] { point-file: url(/home/ubuntu/tile_assets/maas/maas_markers_cultural.png); marker-opacity: 0; marker-line-opacity: 0; marker-width:  27px; marker-height: 28px; } " +
+    "[category='natural']  { point-file: url(/home/ubuntu/tile_assets/maas/maas_markers_natural.png); marker-opacity: 0; marker-line-opacity: 0; } " +
+    "}"
   },
   density: {
     hexagons: "#github_javascript { " +
