@@ -13,13 +13,13 @@ var layersURL = {
 };
 
 var baseLayers = {
-  base:     { url: layersURL.base,     coords: { zoom: 5,  center: [40.34, 14.06] }},
-  hexagons: { url: layersURL.base,     coords: { zoom: 3,  center: [30.00, -99.00] }},
-  terrain:  { url: layersURL.terrain,  coords: { zoom: 5,  center: [33.13, -3.71] }},
-  polygons: { url: layersURL.base,     coords: { zoom: 7,  center: [-7.36, 34.88] }},
-  forest:   { url: layersURL.forest,   coords: { zoom: 9,  center: [40.25, -5.92] }},
-  density:  { url: layersURL.density0, coords: { zoom: 3,  center: [43.00, -101.25] }},
-  thematic: { url: layersURL.base,     coords: { zoom: 3,  center: [43.06, 29.35] }}
+  base:     { url: layersURL.base,     coords: { zoom: 5,  center: [40.34, 14.06]  }},
+  hexagons: { url: layersURL.base,     coords: { zoom: 4,  center: [30.00, -99.00] }},
+  terrain:  { url: layersURL.terrain,  coords: { zoom: 5,  center: [33.13, -3.71]  }},
+  polygons: { url: layersURL.base,     coords: { zoom: 7,  center: [-7.36, 34.88]  }},
+  forest:   { url: layersURL.forest,   coords: { zoom: 9,  center: [40.25, -5.92]  }},
+  density:  { url: layersURL.density0, coords: { zoom: 4,  center: [30.00, -99.00] }},
+  thematic: { url: layersURL.base,     coords: { zoom: 3,  center: [43.06, 29.35]  }}
 };
 
 var queries = {
