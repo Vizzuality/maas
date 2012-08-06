@@ -20,7 +20,7 @@ var baseLayers = {
   forest:   { url: layersURL.forest,   coords: { zoom: 9,  center: [40.25, -5.92] }},
   density:  { url: layersURL.density0, coords: { zoom: 3,  center: [43.00, -101.25] }},
   thematic: { url: layersURL.base,     coords: { zoom: 3,  center: [43.06, 29.35] }}
-}
+};
 
 var cHexagons = {
   user_name: "saleiva",
