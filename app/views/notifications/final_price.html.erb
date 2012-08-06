@@ -15,20 +15,20 @@
 
   <% @order.order_options.each do |o| %>
   <tr>
-      <td style="padding: 0 0 10px 0; font-size:15px; color: #666666;" width="180" valign="top"><%= o.template_option.name.humanize %></td>
-      <td width="150" valign="top" style="text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;"><%= number_to_currency(o.template_option.price, :unit => "USD", :format => "%n %u") %></td>
+      <td style="line-height: 18px; padding: 0 0 10px 0; font-size:15px; color: #666666;" width="180" valign="top"><%= o.template_option.name.humanize %></td>
+      <td width="150" valign="top" style="line-height: 18px; text-align:right; padding: 0 0 10px 0; font-size:15px; color: #E67632;"><%= number_to_currency(o.template_option.price, :unit => "USD", :format => "%n %u") %></td>
     </tr>
   <% end %>
 
   <% if @order.total - @order.starting_from > 0 %>
     <tr>
-      <td style="margin-top:20px; padding: 17px 0 17px 0; border-top: 2px solid #A1A1A1; font-size:15px; color: #666666;" width="180" valign="top">Additional fees</td>
-      <td width="150" valign="top" style="margin-top:20px; padding: 17px 0 17px 0; border-top: 2px solid #A1A1A1; text-align:right; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= number_to_currency(@order.total - @order.starting_from, :unit => "USD", :format => "%n %u") %></span></td>
+      <td style="line-height:18x; margin-top:20px; padding: 17px 0 17px 0; border-top: 2px solid #A1A1A1; font-size:15px; color: #666666;" width="180" valign="top">Data processing and specific customization for clients data</td>
+      <td width="150" valign="top" style="line-height:18px; margin-top:20px; padding: 17px 0 17px 0; border-top: 2px solid #A1A1A1; text-align:right; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= number_to_currency(@order.total - @order.starting_from, :unit => "USD", :format => "%n %u") %></span></td>
     </tr>
   <% end %>
   <tr>
-    <td style="margin-top:20px; padding-top: 20px; border-top: 2px solid #A1A1A1;" width="200" valign="top"><strong style="padding: 0 0 10px 0; font-size:17px; color: #333333;">TOTAL</strong></td>
-    <td style="margin-top:20px; padding-top: 20px; border-top: 2px solid #A1A1A1; text-align:right; font-size:15px; color: #E67632;" width="150" valign="top"><span style="font-size:15px; color: #E67632;"><%= number_to_currency(@order.total, :unit => "USD", :format => "%n %u") %></span></td>
+    <td style="line-height:18px; margin-top:20px; padding-top: 20px; border-top: 2px solid #A1A1A1;" width="200" valign="top"><strong style="padding: 0 0 10px 0; font-size:17px; color: #333333;">TOTAL</strong></td>
+    <td style="line-height:18px; margin-top:20px; padding-top: 20px; border-top: 2px solid #A1A1A1; text-align:right; font-size:15px; color: #E67632;" width="150" valign="top"><span style="font-size:15px; color: #E67632;"><%= number_to_currency(@order.total, :unit => "USD", :format => "%n %u") %></span></td>
   </tr>
 </table>
 
