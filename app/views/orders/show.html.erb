@@ -34,7 +34,10 @@
     <% end %>
   </div>
 
-  <div class="stamp"></div>
+  <% if !@order.ready_for_payment? and !@order.paid? %>
+    <div class="stamp order-received"></div>
+  <% end %>
+
   </section>
 
   <% if !@order.ready_for_payment? and !@order.paid? %>

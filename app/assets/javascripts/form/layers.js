@@ -57,7 +57,7 @@ var cPolygonsClassicInfowindow = function(ev, latlng, pos, data) {
     offset: [108, -10],
     description: data.description,
     latlng: [latlng.lat, latlng.lng],
-    subtitle: data.iucn_cat,
+    subtitle: null,
     description: data.gov_type
   });
 
@@ -72,7 +72,7 @@ var cPolygonsNewInfowindow = function(ev, latlng, pos, data) {
     offset: [108, -10],
     description: data.description,
     latlng: [latlng.lat, latlng.lng],
-    subtitle: data.iucn_cat,
+    subtitle: null,
     description: data.gov_type
   });
 
@@ -182,8 +182,8 @@ var cThematic = {
 var cPolygons = {
   user_name: config.username,
   table_name: 'polygons',
-  query: 'SELECT cartodb_id, iucn_cat, gov_type, name, the_geom_webmercator FROM {{table_name}}',
-  interactivity: "cartodb_id, iucn_cat, gov_type, name",
+  query: 'SELECT cartodb_id, gov_type, name, the_geom_webmercator FROM {{table_name}}',
+  interactivity: "cartodb_id, gov_type, name",
   tile_style: styles.polygons.base,
   featureOver:  function() { document.body.style.cursor = "pointer"; },
   featureOut:   function() { document.body.style.cursor = "default"; },
@@ -196,7 +196,7 @@ var cPolygons = {
       latlng: [latlng.lat, latlng.lng],
       title: data.name,
       description: data.description,
-      subtitle: data.iucn_cat,
+      subtitle: null,
       description: data.gov_type
     });
 

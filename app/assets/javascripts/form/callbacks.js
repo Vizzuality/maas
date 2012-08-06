@@ -124,13 +124,13 @@ callbacks.checkbox.polygons = {
           var query;
 
           if (value == "All types of government") {
-            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}}";
+            query = "SELECT cartodb_id, gov_type, name, the_geom_webmercator FROM {{table_name}}";
           } else if (value == "Governance by government") {
-            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Governance by government'";
-          } else if (value == "Shared Governance") {
-            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Shared Governance'";
+            query = "SELECT cartodb_id, gov_type, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Governance by government'";
+          } else if (value == "Shared governance") {
+            query = "SELECT cartodb_id, gov_type, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Shared governance'";
           } else if (value == "Not Reported") {
-            query = "SELECT cartodb_id, gov_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Not Reported'";
+            query = "SELECT cartodb_id, gov_type, name, the_geom_webmercator FROM {{table_name}} WHERE gov_type = 'Not Reported'";
           }
 
           infowindow.hide(true);

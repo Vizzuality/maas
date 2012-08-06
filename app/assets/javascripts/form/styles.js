@@ -13,12 +13,10 @@ var styles = {
       "line-opacity:1;" +
       "line-color: #FFFFFF;" +
       "polygon-pattern-file: url(" + assetsPath + "maas_cross1.png);" +
-      "[iucn_cat = 'Ib']  { polygon-fill:#F85FFF; polygon-pattern-file: url(" + assetsPath + "maas_cross1.png);}" +
-      "[iucn_cat = 'II']  { polygon-fill:#FF5F8E; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
-      "[iucn_cat = 'III'] { polygon-fill:#FFCA5F; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
-      "[iucn_cat = 'IV']  { polygon-fill:#C3CC4C; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
-      "[iucn_cat = 'VI']  { polygon-fill:#FF00FF; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
-      "[iucn_cat = 'Not Reported'] { polygon-fill:#88CC4C; polygon-pattern-file: url(" + assetsPath + "maas_dots1.png); }" +
+      "[gov_type = 'Governance by government']  { polygon-fill:#F85FFF; polygon-pattern-file: url(" + assetsPath + "maas_cross1.png);}" +
+      "[gov_type = 'Shared governance']         { polygon-fill:#FF5F8E; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
+      "[gov_type = 'Private governance']        { polygon-fill:#FFCA5F; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
+      "[gov_type = 'Not Reported']              { polygon-fill:#88CC4C; polygon-pattern-file: url(" + assetsPath + "maas_dots1.png); }" +
       "}"
   },
   markers: {
