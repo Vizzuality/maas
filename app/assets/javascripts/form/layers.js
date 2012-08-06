@@ -134,7 +134,7 @@ var cNewInfowindow = function(ev, latlng, pos, data) {
     cartodb_id: data.cartodb_id,
     latlng: [latlng.lat, latlng.lng],
     subtitle: data.subtitle,
-    description: data.description,
+    description: data.description
   });
 
   infowindow.showInfowindow();
@@ -157,6 +157,7 @@ var cMarkersNewInfowindow = function(ev, latlng, pos, data) {
     latlng: [latlng.lat, latlng.lng],
     subtitle: data.subtitle,
     description: data.description,
+    content: [{key: "title", value: data.title }, {key: "subtitle", value: data.subtitle }]
   });
 
   infowindow.showInfowindow();
@@ -176,7 +177,8 @@ var cMarkersClassicInfowindow = function(ev, latlng, pos, data) {
     offset: [50, 10],
     subtitle: data.subtitle,
     description: data.description,
-    latlng: [latlng.lat, latlng.lng]
+    latlng: [latlng.lat, latlng.lng],
+    content: [{key: "title", value: data.title }, {key: "country", value: data.subtitle }]
   });
 
   infowindow.showInfowindow();
