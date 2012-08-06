@@ -27,7 +27,7 @@
 
   @include border-radius(2px);
 
-  z-index: 1000;
+  z-index: 10000;
 
   ul {
 
@@ -70,7 +70,7 @@
   @include font("sans-serif", 13px, $cGray2);
   @include border-radius(2px);
 
-  z-index: 1000;
+  z-index: 10000;
 
   &.heat {
     width: 151px;
@@ -129,7 +129,7 @@
   top:  15px;
   left: 15px;
 
-  z-index: 1000;
+  z-index: 10000;
 
   .zoom_in,
   .zoom_out { display:block; position:relative; width: $zoomWidth; height: $zoomHeight; cursor: pointer; }

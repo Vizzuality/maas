@@ -296,9 +296,20 @@ callbacks.radio.density  = {
       window.navigation.loadLayers(layers.rectangular);
 
       window.map.bind('change:zoom', function() {
-        z = window.map.getZoom();
-        var l = window.navigation.getBaseLayer();
-        var url = 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[z];
+        var
+        zoomLevel   = window.map.getZoom(),
+        l   = window.navigation.getBaseLayer(),
+        url = null;
+
+        var z = zoomLevel;
+
+        if (zoomLevel < 3) {
+          z = 0;
+        } else if (zoomLevel > 7) {
+          z = 8;
+        }
+        url = layersURL.density + '?' + statements[z];
+
         l.set("urlTemplate", url);
       });
     }

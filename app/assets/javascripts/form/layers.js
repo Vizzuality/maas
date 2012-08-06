@@ -2,24 +2,24 @@ var config = {
   username: "maas"
 };
 
-statements       = createCalls(8, 3);
+statements = createCalls(8, 3);
 
 var layersURL = {
-  base:    'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
-  base2:   'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-  terrain: 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-  forest:  'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png',
-  density: 'https://examples.cartodb.com/tiles/points_na/{z}/{x}/{y}.png?' + statements[0]
+  base:     'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
+  terrain:  'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+  forest:   'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png',
+  density:  'https://saleiva.cartodb.com/tiles/github_javascript/{z}/{x}/{y}.png',
+  density0: 'https://saleiva.cartodb.com/tiles/github_javascript/{z}/{x}/{y}.png?' + statements[0]
 };
 
 var baseLayers = {
-  base:     { url: layersURL.base,    coords: { zoom: 5,  center: [40.34, 14.06] }},
-  hexagons: { url: layersURL.base,    coords: { zoom: 3,  center: [30.00, -99.00] }},
-  terrain:  { url: layersURL.terrain, coords: { zoom: 5,  center: [33.13, -3.71] }},
-  polygons: { url: layersURL.base,    coords: { zoom: 7,  center: [-7.36, 34.88] }},
-  forest:   { url: layersURL.forest,  coords: { zoom: 9,  center: [40.25, -5.92] }},
-  density:  { url: layersURL.density, coords: { zoom: 3,  center: [43.00, -101.25] }},
-  thematic: { url: layersURL.base,    coords: { zoom: 3,  center: [43.06, 29.35] }}
+  base:     { url: layersURL.base,     coords: { zoom: 5,  center: [40.34, 14.06] }},
+  hexagons: { url: layersURL.base,     coords: { zoom: 3,  center: [30.00, -99.00] }},
+  terrain:  { url: layersURL.terrain,  coords: { zoom: 5,  center: [33.13, -3.71] }},
+  polygons: { url: layersURL.base,     coords: { zoom: 7,  center: [-7.36, 34.88] }},
+  forest:   { url: layersURL.forest,   coords: { zoom: 9,  center: [40.25, -5.92] }},
+  density:  { url: layersURL.density0, coords: { zoom: 3,  center: [43.00, -101.25] }},
+  thematic: { url: layersURL.base,     coords: { zoom: 3,  center: [43.06, 29.35] }}
 }
 
 var cHexagons = {
@@ -206,10 +206,10 @@ var cPolygons = {
 };
 
 var layers = { // This hash contains the combination of layers for each of the options in the navigation
-  markers:     { url: "worldheritagesites.org", coords: baseLayers.base.coords,     cdb: cMarkers,  base: baseLayers.base,     extra: null },
-  polygons:    { url: "tanzania.gov.tz", coords: baseLayers.polygons.coords, cdb: cPolygons, base: baseLayers.polygons, extra: null },
+  markers:     { url: "worldheritagesites.org",         coords: baseLayers.base.coords,     cdb: cMarkers,  base: baseLayers.base,     extra: null },
+  polygons:    { url: "tanzania.gov.tz",                coords: baseLayers.polygons.coords, cdb: cPolygons, base: baseLayers.polygons, extra: null },
   rectangular: { url: "map.javascript-developers.info", coords: baseLayers.density.coords,  cdb: null,      base: baseLayers.density,  extra: baseLayers.base },
   density:     { url: "map.javascript-developers.info", coords: baseLayers.hexagons.coords, cdb: cHexagons, base: baseLayers.hexagons, extra: null },
-  thematic:    { url: "world-population-watch.co.uk", coords: baseLayers.thematic.coords, cdb: cThematic, base: baseLayers.thematic, extra: null },
-  dont_know:   { url: null, coords: baseLayers.base.coords,     cdb: null,      base: null,                extra: null }
+  thematic:    { url: "world-population-watch.co.uk",   coords: baseLayers.thematic.coords, cdb: cThematic, base: baseLayers.thematic, extra: null },
+  dont_know:   { url: null,                             coords: baseLayers.base.coords,     cdb: null,      base: null,                extra: null }
 };
