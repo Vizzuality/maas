@@ -3,7 +3,14 @@
 
   <div class="wrapper">
     <div class="content">
-      <label><%= title %></label>
+      <% _.each(content, function(c) { %>
+      <label><%= c.key %></label>
+      <% if (c.value == null) { %>
+      <p class="empty">null</p>
+      <% } else { %>
+      <p><%= c.value %></p>
+      <% } %>
+      <% }) %>
     </div>
   </div>
 

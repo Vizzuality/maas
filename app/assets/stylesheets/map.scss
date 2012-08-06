@@ -191,6 +191,19 @@
 
     }
 
+    &.thematic {
+      .content ul {
+        list-style:none;
+        li {
+          padding: 0 0 5px 0;
+
+          @include font("sans-serif-base", 13px, $cGray3);
+          strong { color: $cGray2; }
+        }
+
+      }
+    }
+
     &.classic {
 
       a.close {position:absolute; right:4px; top:1px; width:22px; height:15px; padding:4px 0 3px 0; text-align:center; font:bold 15px "Helvetica",Arial; color:#666666; text-decoration:none; line-height:15px; background:none; text-indent:0; overflow:visible}
@@ -200,7 +213,7 @@
       .content .jspTrack {background: #dddddd;}
       .content .jspDrag {background: #999999;}
       .content .jspHover, div.cartodb-popup div.cartodb-popup-top-content .jspActive {background:#666666}
-      .content label {display:block; width:auto; padding:0 0 0 5px; font:normal 11px Arial; color:#B3B3B3; text-shadow:0 1px white}
+      .content label {display:block; width:auto; margin: 0; padding:0 0 0 5px; font:normal 11px Arial; color:#B3B3B3; text-shadow:0 1px white}
       .content p {display:block; width:170px; max-width:170px; padding:2px 4px!important; margin:2px 0 7px!important; font:bold 11px 'Helvetica',Arial; color:#666666; border:none; background:none; text-shadow:0 1px white;}
       .content p.empty {font-weight:normal; font-style:italic; color:#b7b7b7;}
       .tip {width:180px; height:36px; padding:11px 16px 10px 10px; margin:0; background:url('icons/infowindow-classic.png') no-repeat right top;}

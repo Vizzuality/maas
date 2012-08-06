@@ -18,7 +18,6 @@ cdb.geo.ui.SelectorItem = cdb.core.View.extend({
   },
 
   select: function(e) {
-    console.log('select');
     /*e.preventDefault();
 
     this.parent.toggle(this);
@@ -66,7 +65,6 @@ cdb.geo.ui.Selector = cdb.core.View.extend({
 
   select: function(i) {
   var self = this;
-  console.log('selecting');
 
     this.collection.each(function(item, j) {
       if (i == j) {

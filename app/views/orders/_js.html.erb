@@ -59,9 +59,10 @@
       mapView: mapView
     });
 
-    newInfowindow     = { template_name: 'templates/map/infowindow/infowindow_big',     offset: [108, -10] };
-    photoInfowindow   = { template_name: 'templates/map/infowindow/infowindow_photo',   offset: [108, -10] };
-    classicInfowindow = { template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10] };
+    newInfowindow      = { template_name: 'templates/map/infowindow/infowindow_big',      offset: [108, -10] };
+    thematicInfowindow = { template_name: 'templates/map/infowindow/infowindow_thematic', offset: [108, -10] };
+    photoInfowindow    = { template_name: 'templates/map/infowindow/infowindow_photo',    offset: [108, -10] };
+    classicInfowindow  = { content: null, template_name: 'templates/map/infowindow/infowindow_classic',  offset: [50, 10] };
 
     $("#map").append(infowindow.$el);
 

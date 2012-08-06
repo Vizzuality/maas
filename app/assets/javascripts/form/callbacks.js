@@ -58,7 +58,7 @@ callbacks.checkbox.markers = {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set(photoInfowindow);
+        infowindow.model.set({offset: photoInfowindow.offset, template_name: photoInfowindow.template_name });
         infowindow.show();
       }
 
@@ -87,7 +87,7 @@ callbacks.checkbox.markers = {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set(classicInfowindow);
+        infowindow.model.set({offset: classicInfowindow.offset, template_name: classicInfowindow.template_name });
         infowindow.show();
       }
 
@@ -174,7 +174,7 @@ callbacks.checkbox.polygons = {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set(classicInfowindow);
+        infowindow.model.set({offset: classicInfowindow.offset, template_name: classicInfowindow.template_name });
         infowindow.show();
       }
     }
@@ -232,6 +232,42 @@ callbacks.checkbox.density = {
 
 
 callbacks.checkbox.thematic =  {
+  custom_infowindows: {
+
+    on: function() {
+      if (!infowindow.isHidden()) var show = true;
+      infowindow.hide(true);
+
+      var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
+
+      cThematic.featureClick      = cThematicNewInfowindow;
+      currentLayer.featureClick   = cThematicNewInfowindow;
+
+      window.navigation.replaceCartoDBLayer(currentLayer);
+
+      if (show) {
+        infowindow.model.set({offset: thematicInfowindow.offset, template_name: thematicInfowindow.template_name });
+        infowindow.show();
+      }
+    },
+
+    off: function() {
+      if (!infowindow.isHidden()) var show = true;
+      infowindow.hide(true);
+      var currentLayer = window.navigation.getCurrentCartoDBLayerOptions();
+
+      cMarkers.featureClick       = cThematicClassicInfowindow;
+      currentLayer.featureClick   = cThematicClassicInfowindow;
+
+      window.navigation.replaceCartoDBLayer(currentLayer);
+
+      if (show) {
+        infowindow.model.set({offset: classicInfowindow.offset, template_name: classicInfowindow.template_name });
+        infowindow.show();
+      }
+    }
+  },
+
   variable_selection: {
     on: function(e) {
       selector.collection = new cdb.geo.ui.SelectorItems([
@@ -308,6 +344,7 @@ callbacks.radio.density  = {
         } else if (zoomLevel > 7) {
           z = 8;
         }
+
         url = layersURL.density + '?' + statements[z];
 
         l.set("urlTemplate", url);

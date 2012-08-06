@@ -51,3 +51,49 @@ function createCalls(seed, bottomZ) {
 
     return statements;
 }
+
+function intcomma( number, decimals ) {
+	decimals = decimals === undefined ? 0 : decimals;
+	return number_format( number, decimals, '.', ',' );
+};
+
+function intword(number) {
+  number = parseInt( number );
+  if( number < 1000000 ) {
+    return number;
+  } else if( number < 100 ) {
+    return intcomma(number, 1 );
+  } else if( number < 1000 ) {
+    return intcomma( number / 100, 1 ) + " hundred";
+  } else if( number < 100000 ) {
+    return intcomma( number / 1000.0, 1 ) + "K";
+  } else if( number < 1000000 ) {
+    return intcomma( number / 100000.0, 1 ) + " hundred K";
+  } else if( number < 1000000000 ) {
+    return intcomma( number / 1000000.0, 1 ) + "M";
+  } else if( number < 1000000000000 ) { //senseless on a 32 bit system probably.
+    return intcomma( number / 1000000000.0, 1 ) + " billion";
+  } else if( number < 1000000000000000 ) {
+    return intcomma( number / 1000000000000.0, 1 ) + " trillion";
+  }
+  return "" + number;	// too big.
+}
+
+function number_format( number, decimals, dec_point, thousands_sep ) {
+	// http://kevin.vanzonneveld.net
+	// +   original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+	// +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+	// +	 bugfix by: Michael White (http://crestidg.com)
+	// +	 bugfix by: Benjamin Lupton
+	// +	 bugfix by: Allan Jensen (http://www.winternet.no)
+	// +	revised by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
+	// *	 example 1: number_format(1234.5678, 2, '.', '');
+	// *	 returns 1: 1234.57
+
+	var n = number, c = isNaN(decimals = Math.abs(decimals)) ? 2 : decimals;
+	var d = dec_point == undefined ? "," : dec_point;
+	var t = thousands_sep == undefined ? "." : thousands_sep, s = n < 0 ? "-" : "";
+	var i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+
+	return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+}

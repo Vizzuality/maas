@@ -50,7 +50,7 @@ var styles = {
   thematic: {
     bubble: {
       population: "#choropleth { " +
-        "marker-fill: #2CA25F; " +
+        "marker-fill: #41B6C4; " +
         "marker-line-color: #FFFFFF; " +
         "marker-line-width: 0; " +
         "marker-opacity: .7; " +
@@ -85,12 +85,12 @@ var styles = {
         "#choropleth [gdp_md_est<=3158]   { marker-width:6 }    "
     },
     choropleth: {
-      population: "#choropleth { line-color: #FFFFFF; line-width: 1; line-opacity: 1; polygon-opacity: 1; } " +
-        "#choropleth [pop_est<=1338612968]  { polygon-fill: #006D2C } " +
-        "#choropleth [pop_est<=33487208]    { polygon-fill: #2CA25F } " +
-        "#choropleth [pop_est<=11862740]    { polygon-fill: #66C2A4 } " +
-        "#choropleth [pop_est<=6057263]     { polygon-fill: #B2E2E2 } " +
-        "#choropleth [pop_est<=2231503]     { polygon-fill: #EDF8FB } ",
+      population: "#choropleth { line-color:#FFFFFF; line-width:1; line-opacity:0.72; polygon-opacity:0.72; } " +
+        "#choropleth [pop_est<=1338612968] { polygon-fill:#253494 } " +
+        "#choropleth [pop_est<=33487208] { polygon-fill:#2C7FB8 } " +
+        "#choropleth [pop_est<=11862740] { polygon-fill:#41B6C4 } " +
+        "#choropleth [pop_est<=6057263] { polygon-fill:#A1DAB4 } " +
+        "#choropleth [pop_est<=2231503] { polygon-fill:#FFFFCC } ",
       gdp: "#choropleth { " +
         "line-color:#FFFFFF;" +
         "line-width:1;" +
@@ -104,4 +104,5 @@ var styles = {
     }
   }
 };
+
 
