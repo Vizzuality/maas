@@ -207,17 +207,24 @@ callbacks.checkbox.density = {
           var query;
 
           if (value == "All") {
-            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}}";
+            query = queries.hexagons
           } else if (value == "High") {
-            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'high'";
+            query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
+              'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
+              'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 90 '
           } else if ( value == "Medium") {
-            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'medium'";
+            query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
+              'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
+              'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 10 AND count(i.cartodb_id) < 90 '
           } else if (value == "Low") {
-            query = "SELECT cartodb_id, category, the_geom_webmercator FROM {{table_name}} WHERE category = 'low'";
+            query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
+              'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
+              'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) <= 10 '
+
           }
 
           infowindow.hide(true);
-          //window.navigation.getCartoDBLayer().set("query", query);
+          window.navigation.getCartoDBLayer().set("query", query);
         }
       });
 
