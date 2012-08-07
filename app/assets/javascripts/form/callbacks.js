@@ -158,7 +158,7 @@ callbacks.checkbox.polygons = {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set(newInfowindow);
+        infowindow.model.set({offset: infowindows.polygons.offset, template_name: infowindows.polygons.template_name });
         infowindow.show();
       }
     },

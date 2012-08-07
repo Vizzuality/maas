@@ -13,26 +13,27 @@ var layersURL = {
 };
 
 var baseLayers = {
-  base:     { url: layersURL.base,     coords: { zoom: 5,  center: [40.34, 14.06]  }},
-  hexagons: { url: layersURL.base,     coords: { zoom: 4,  center: [30.00, -99.00] }},
-  terrain:  { url: layersURL.terrain,  coords: { zoom: 5,  center: [33.13, -3.71]  }},
-  polygons: { url: layersURL.base,     coords: { zoom: 7,  center: [-7.36, 34.88]  }},
-  forest:   { url: layersURL.forest,   coords: { zoom: 9,  center: [40.25, -5.92]  }},
-  density:  { url: layersURL.density0, coords: { zoom: 4,  center: [30.00, -99.00] }},
-  thematic: { url: layersURL.base,     coords: { zoom: 3,  center: [43.06, 29.35]  }}
+  base:     { url: layersURL.base,     coords: { zoom: 5,  center: [40.34, 14.06]   }},
+  hexagons: { url: layersURL.base,     coords: { zoom: 4,  center: [30.00, -99.00]  }},
+  terrain:  { url: layersURL.terrain,  coords: { zoom: 5,  center: [33.13, -3.71]   }},
+  polygons: { url: layersURL.base,     coords: { zoom: 8,  center: [48.20, -121.46] }},
+  forest:   { url: layersURL.forest,   coords: { zoom: 9,  center: [40.25, -5.92]   }},
+  density:  { url: layersURL.density0, coords: { zoom: 4,  center: [30.00, -99.00]  }},
+  thematic: { url: layersURL.base,     coords: { zoom: 3,  center: [43.06, 29.35]   }}
 };
 
 var queries = {
   markers:  'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
   thematic: 'SELECT cartodb_id, admin, pop_est, gdp_md_est, the_geom_webmercator FROM {{table_name}}',
   density:  'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng FROM {{table_name}}',
-  polygons: 'SELECT cartodb_id, gov_type, name, the_geom_webmercator FROM {{table_name}}',
+  polygons: 'SELECT cartodb_id, desig, desig_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}}',
   hexagons: 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell'
 };
 
 var infowindows = {
   big:      { template_name: 'templates/map/infowindow/infowindow_big',      offset: [108, -10] },
   thematic: { template_name: 'templates/map/infowindow/infowindow_thematic', offset: [108, -10] },
+  polygons: { template_name: 'templates/map/infowindow/infowindow_polygons', offset: [108, -10] },
   small:    { template_name: 'templates/map/infowindow/infowindow_small',    offset: [108, -10] },
   photo:    { template_name: 'templates/map/infowindow/infowindow_photo',    offset: [108, -10] },
   classic:  { template_name: 'templates/map/infowindow/infowindow_classic',  offset: [50, 10], content: null }
@@ -124,11 +125,14 @@ var cPolygonsClassicInfowindow = function(ev, latlng, pos, data) {
     template_name: infowindows.classic.template_name,
     offset: infowindows.classic.offset,
     cartodb_id: data.cartodb_id,
-    content: [{key: "name", value: data.name }, {key: "gov_type", value: data.gov_type}],
+    content: [{key: "name", value: data.name }, {key: "iucn_cat", value: data.iucn_cat}],
     latlng: [latlng.lat, latlng.lng],
-    title: data.name,
-    subtitle: null,
-    description: data.gov_type
+    name: data.name,
+    iucn_cat: data.iucn_cat,
+    status: data.status,
+    desig: data.desig,
+    desig_type: data.desig_type,
+    iucn_cat: data.iucn_cat
   });
 
   infowindow.showInfowindow();
@@ -137,13 +141,16 @@ var cPolygonsClassicInfowindow = function(ev, latlng, pos, data) {
 var cPolygonsNewInfowindow = function(ev, latlng, pos, data) {
 
   infowindow.model.set({
-    template_name: infowindows.big.template_name,
+    template_name: infowindows.polygons.template_name,
     offset: infowindows.big.offset,
-    title: data.name,
-    description: data.description,
     latlng: [latlng.lat, latlng.lng],
-    subtitle: null,
-    description: data.gov_type
+    cartodb_id: data.cartodb_id,
+    name: data.name,
+    iucn_cat: data.iucn_cat,
+    status: data.status,
+    desig: data.desig,
+    desig_type: data.desig_type,
+    iucn_cat: data.iucn_cat
   });
 
   infowindow.showInfowindow();
@@ -240,10 +247,11 @@ var cThematic = {
 
 var cPolygons = {
   user_name: config.username,
-  table_name: 'polygons',
+  //table_name: 'polygons',
+  table_name: 'andrewxhill_search_u',
   query: queries.polygons,
-  interactivity: "cartodb_id, gov_type, name",
-  tile_style: styles.polygons.base,
+  interactivity: "cartodb_id, name, desig, desig_type, iucn_cat",
+  //tile_style: styles.polygons.base,
   featureOver:  function() { document.body.style.cursor = "pointer"; },
   featureOut:   function() { document.body.style.cursor = "default"; },
   featureClick: cPolygonsClassicInfowindow
@@ -251,7 +259,7 @@ var cPolygons = {
 
 var layers = { // This hash contains the combination of layers for each of the options in the navigation
   markers:     { url: "worldheritagesites.org",         coords: baseLayers.base.coords,     cdb: cMarkers,  base: baseLayers.base,     extra: null },
-  polygons:    { url: "tanzania.gov.tz",                coords: baseLayers.polygons.coords, cdb: cPolygons, base: baseLayers.polygons, extra: null },
+  polygons:    { url: "protected-areas.gov",            coords: baseLayers.polygons.coords, cdb: cPolygons, base: baseLayers.polygons, extra: null },
   rectangular: { url: "map.javascript-developers.info", coords: baseLayers.density.coords,  cdb: null,      base: baseLayers.density,  extra: baseLayers.base },
   density:     { url: "map.javascript-developers.info", coords: baseLayers.hexagons.coords, cdb: cHexagons, base: baseLayers.hexagons, extra: null },
   thematic:    { url: "world-population-watch.co.uk",   coords: baseLayers.thematic.coords, cdb: cThematic, base: baseLayers.thematic, extra: null },

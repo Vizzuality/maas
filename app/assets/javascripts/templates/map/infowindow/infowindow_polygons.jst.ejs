@@ -1,0 +1,14 @@
+<div class="cartodb-popup polygons">
+  <div class="wrapper">
+    <div class="content">
+      <div class="title"><strong><%= name %></strong> <div class="type"><%= iucn_cat %></div></div>
+
+      <ul>
+        <% if (status) { %><li><%= status %></li><% } %>
+        <% if (desig)  { %><li><%= desig %></li><%  } %>
+      </ul> 
+
+    </div>
+  </div>
+  <div class="tip"></div>
+</div>

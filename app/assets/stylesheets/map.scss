@@ -191,6 +191,66 @@
 
     }
 
+    &.polygons {
+
+      $width-polygons: 250px;
+      $pT: 20px; $pR: 15px; $pB: 0; $pL: 15px;
+
+      width: $width-polygons;
+
+      .content {
+        width: $width-polygons - $pR - $pL;
+        padding: $pT $pR $pB $pL;
+      }
+
+      .wrapper { width: $width-polygons; background: url("icons/infowindow-polygons.png") 0 top; }
+
+      .tip {
+        @include size($width-polygons, 36px);
+        background: url("icons/infowindow-polygons.png") no-repeat right top;
+      }
+
+      .content {
+        ul {
+          list-style:disc;
+          margin: 0 0 0 20px;
+          li {
+            @include font("sans-serif-base", 13px, #666);
+          }
+        }
+
+        .title {
+          border-bottom: 1px solid #CCC;
+          margin: 0 0 11px 0;
+          padding: 0 0 15px 0;
+          @include clearfix();
+
+          strong {
+            @include font("sans-serif-base-bold", 18px, #333);
+            float:left;
+            display:block;
+            width: 150px;
+            color: #333333;
+            font-size:21px;
+          }
+
+          .type {
+            float:right;
+            background: #FF9933;
+            text-align:center;
+            padding: 3px;
+            line-height: 15px;
+            text-transform: uppercase;
+            @include border-radius(1px);
+            @include size(17px);
+            @include font("sans-serif-base-bold", 11px, $cWhite);
+          }
+
+        }
+      }
+    }
+
+
     &.small {
 
       $width-small: 182px;
