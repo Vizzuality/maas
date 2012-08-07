@@ -225,6 +225,26 @@
           padding: 0 0 15px 0;
           @include clearfix();
 
+          &.Ib .type {
+            background: #FF013F;
+          }
+
+          &.II .type {
+            background: #FB8B01;
+          }
+
+          &.IV .type {
+            background: #339199;
+          }
+
+          &.V .type {
+            background: #FABE28;
+          }
+
+          &.VI .type {
+            background: #3A6367;
+          }
+
           strong {
             @include font("sans-serif-base-bold", 18px, #333);
             float:left;
@@ -236,12 +256,12 @@
 
           .type {
             float:right;
-            background: #FF9933;
             text-align:center;
             padding: 3px;
             line-height: 15px;
             text-transform: uppercase;
-            @include border-radius(1px);
+
+            @include border-radius(2px);
             @include size(17px);
             @include font("sans-serif-base-bold", 11px, $cWhite);
           }

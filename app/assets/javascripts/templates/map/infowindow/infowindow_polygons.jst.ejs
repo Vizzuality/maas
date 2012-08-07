@@ -1,7 +1,7 @@
 <div class="cartodb-popup polygons">
   <div class="wrapper">
     <div class="content">
-      <div class="title"><strong><%= name %></strong> <div class="type"><%= iucn_cat %></div></div>
+      <div class="title <%= iucn_cat %>"><strong><%= name %></strong> <% if (iucn_cat != "Not Reported") { %><div class="type"><%= iucn_cat %></div><% } %></div>
 
       <ul>
         <% if (status) { %><li><%= status %></li><% } %>
