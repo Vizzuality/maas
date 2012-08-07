@@ -248,13 +248,15 @@ section.call_for_action {
 
   text-align:center;
   background: url(backgrounds/bg-orange.png) repeat-x;
-  border-top: 1px solid rgba($cGray0, .6);
+  border-top: 1px solid rgba($cGray0, .7);
   border-bottom: 1px solid rgba($cGray0, .5);
 
   .section_title {
     color:$cWhite;
     margin: 0 0 43px 0;
   }
+
+  .button { width: 200px; }
 
 } // interest
 
