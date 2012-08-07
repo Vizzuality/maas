@@ -209,33 +209,55 @@ callbacks.checkbox.density = {
           var hexagonSelected = activePane.collection.at(1).get("selected");
 
           if (value == "All") {
+
             if (hexagonSelected) {
               query = queries.hexagons;
+            } else {
+              query = queries.rectangles;
             }
-          } else if (value == "High") {
+
+          } else if (value == 'High') {
+
             if (hexagonSelected) {
               query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
                 'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
                 'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 90';
+            } else {
+              query = 'WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * ({z}+1)), CDB_XYZ_Resolution({z}) * ({z}+1), CDB_XYZ_Resolution({z}) * ({z}+1) ) AS cell) ' +
+                'SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
+                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 90';
             }
-          } else if ( value == "Medium") {
+
+          } else if ( value == 'Medium') {
+
             if (hexagonSelected) {
               query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
                 'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
                 'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 10 AND count(i.cartodb_id) < 90';
+            } else {
+              query = 'WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * ({z}+1)), CDB_XYZ_Resolution({z}) * ({z}+1), CDB_XYZ_Resolution({z}) * ({z}+1) ) AS cell) ' +
+                'SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
+                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 10 AND count(i.cartodb_id) < 90';
             }
-          } else if (value == "Low") {
+
+          } else if (value == 'Low') {
+
             if (hexagonSelected) {
               query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
                 'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
                 'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) <= 10';
+            } else {
+              query = 'WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * ({z}+1)), CDB_XYZ_Resolution({z}) * ({z}+1), CDB_XYZ_Resolution({z}) * ({z}+1) ) AS cell) ' +
+                'SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
+                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell HAVING count(i.cartodb_id) <= 10';
             }
+
           }
 
           infowindow.hide(true);
 
           if (query) {
-            window.navigation.getCartoDBLayer().set("query", query);
+            window.navigation.getCartoDBLayer().set('query', query);
           }
         }
       });
@@ -342,9 +364,7 @@ callbacks.radio.polygons = {};
 callbacks.radio.density  = {
   init: function(e) {
 
-    if (e.model.get("option_name") == "hexagonal_grid") {
       legend.show();
-    }
   },
   on: function(e) {
 
@@ -379,10 +399,6 @@ callbacks.radio.density  = {
 
   },
   off: function(e) {
-    if (e.model.get("option_name") == "hexagonal_grid") {
-      legend.hide();
-    }
-
     if (e.model.get("option_name") == "rectangular_grid") {
       window.navigation.loadLayers(layers.density);
     }
