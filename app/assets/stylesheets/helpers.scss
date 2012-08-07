@@ -1,7 +1,6 @@
 @import "compass/css3";
 
 /* Colors */
-
 $cWhite:                 #FFFFFF;
 $cGray5:                 #F1F1F1;
 $cGray4:                 #CCCCCC;
@@ -20,28 +19,28 @@ $cRed:                   #C02216;
 $cError:                 $cRed;
 
 /* Sprites */
-
 $icons-white-sheet-spacing:40px;
-$icons-legend-heat-graph-spacing:11px;
+$icons-legend-heat-graph-spacing:10px;
 
 $icons-step-01-spacing:40px;
 $icons-step-02-spacing:40px;
 $icons-step-03-spacing:40px;
 
-// checkboxes
+/* Checkboxes */
 $icons-checkbox-checked-disabled-spacing: 40px;
 $icons-checkbox-checked-hover-spacing: 40px;
 $icons-checkbox-checked-spacing: 40px;
 $icons-checkbox-disabled-spacing: 40px;
 $icons-checkbox-spacing: 40px;
 
+/* Radio */
 $icons-radio-checked-disabled-spacing: 40px;
 $icons-radio-checked-hover-spacing: 40px;
 $icons-radio-checked-spacing: 40px;
 $icons-radio-disabled-spacing: 40px;
 $icons-radio-spacing: 41px;
 
-// Bullets
+/* Bullets */
 $icons-map-bullet-blue-spacing: 20px;
 $icons-map-bullet-light_blue-spacing: 20px;
 $icons-map-bullet-light_red-spacing: 20px;

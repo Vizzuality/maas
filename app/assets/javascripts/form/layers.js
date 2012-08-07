@@ -30,13 +30,20 @@ var queries = {
   hexagons: 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell'
 };
 
+var infowindows = {
+  big:      { template_name: 'templates/map/infowindow/infowindow_big',      offset: [108, -10] },
+  thematic: { template_name: 'templates/map/infowindow/infowindow_thematic', offset: [108, -10] },
+  small:    { template_name: 'templates/map/infowindow/infowindow_small',    offset: [108, -10] },
+  photo:    { template_name: 'templates/map/infowindow/infowindow_photo',    offset: [108, -10] },
+  classic:  { template_name: 'templates/map/infowindow/infowindow_classic',  offset: [50, 10], content: null }
+};
+
 var cHexagons = {
   user_name: "saleiva",
   table_name: "github_javascript",
   style: styles.density.hexagons,
   query: queries.hexagons
 };
-
 
 var cDensity = {
   user_name: 'examples',
@@ -52,20 +59,32 @@ var cDensity = {
     parsedData = JSON.parse(data.latlng),
     latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
-    infowindow.model.set({ template_name: 'templates/map/infowindow/infowindow_classic', offset: [50, 10], content: data, latlng: [latlng.lat, latlng.lng] });
+    infowindow.model.set({ template_name: infowindows.classic.template_name, offset: infowindows.classic.offset, content: data, latlng: [latlng.lat, latlng.lng] });
     infowindow.showInfowindow();
   }
 };
 
 var cThematicNewInfowindow = function(ev, latlng, pos, data) {
 
+  var value, legend;
+
+  if (thematicValue == "population") {
+    value =  data.pop_est;
+    legend = "population";
+  } else {
+    value =  data.gdp_md_est;
+    legend = "gdp";
+  }
+
   infowindow.model.set({
-    template_name: 'templates/map/infowindow/infowindow_thematic',
-    offset: [108, -10],
+    template_name: infowindows.small.template_name,
+    offset: infowindows.small.offset,
     latlng: [latlng.lat, latlng.lng],
     title: data.admin,
     gdp: data.gdp_md_est,
-    population: data.pop_est
+    population: data.pop_est,
+    value: value,
+    legend: legend
   });
 
   infowindow.showInfowindow();
@@ -73,15 +92,27 @@ var cThematicNewInfowindow = function(ev, latlng, pos, data) {
 
 var cThematicClassicInfowindow = function(ev, latlng, pos, data) {
 
+  var value, legend;
+
+  if (thematicValue == "population") {
+    value =  data.pop_est;
+    legend = "population";
+  } else {
+    value =  data.gdp_md_est;
+    legend = "gdp";
+  }
+
   infowindow.model.set({
-    template_name: 'templates/map/infowindow/infowindow_classic',
-    offset: [50, 10],
+    template_name: infowindows.classic.template_name,
+    offset: infowindows.classic.offset,
     latlng: [latlng.lat, latlng.lng],
-    content: [{key: "pop_est", value: data.pop_est }, {key: "gdp_md_est", value: data.gdp_md_est}],
+    content: [{key: "pop_est", value: data.pop_est }, { key: "gdp_md_est", value: data.gdp_md_est }],
     cartodb_id: data.cartodb_id,
     title: data.admin,
     gdp: data.gdp_md_est,
-    population: data.pop_est
+    population: data.pop_est,
+    value: data.pop_est,
+    legend: legend
   });
 
   infowindow.showInfowindow();
@@ -90,8 +121,8 @@ var cThematicClassicInfowindow = function(ev, latlng, pos, data) {
 var cPolygonsClassicInfowindow = function(ev, latlng, pos, data) {
 
   infowindow.model.set({
-    template_name: 'templates/map/infowindow/infowindow_classic',
-    offset: [50, 10],
+    template_name: infowindows.classic.template_name,
+    offset: infowindows.classic.offset,
     cartodb_id: data.cartodb_id,
     content: [{key: "name", value: data.name }, {key: "gov_type", value: data.gov_type}],
     latlng: [latlng.lat, latlng.lng],
@@ -106,9 +137,9 @@ var cPolygonsClassicInfowindow = function(ev, latlng, pos, data) {
 var cPolygonsNewInfowindow = function(ev, latlng, pos, data) {
 
   infowindow.model.set({
-    template_name: 'templates/map/infowindow/infowindow_big',
+    template_name: infowindows.big.template_name,
+    offset: infowindows.big.offset,
     title: data.name,
-    offset: [108, -10],
     description: data.description,
     latlng: [latlng.lat, latlng.lng],
     subtitle: null,
@@ -125,10 +156,10 @@ var cNewInfowindow = function(ev, latlng, pos, data) {
   latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
   infowindow.model.set({
-    template_name: 'templates/map/infowindow/infowindow_big',
+    template_name: infowindows.big.template_name,
+    offset: infowindows.big.offset,
     title: data.title,
     src: data.src,
-    offset: [108, -10],
     subtitle: data.subtitle,
     description: data.description,
     cartodb_id: data.cartodb_id,
@@ -147,10 +178,10 @@ var cMarkersNewInfowindow = function(ev, latlng, pos, data) {
   latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
   infowindow.model.set({
-    template_name: 'templates/map/infowindow/infowindow_photo',
+    template_name: infowindows.photo.template_name,
+    offset: infowindows.photo.offset,
     title: data.title,
     src: data.src,
-    offset: [108, -10],
     subtitle: data.subtitle,
     description: data.description,
     cartodb_id: data.cartodb_id,
@@ -170,11 +201,11 @@ var cMarkersClassicInfowindow = function(ev, latlng, pos, data) {
   latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
 
   infowindow.model.set({
-    template_name: 'templates/map/infowindow/infowindow_classic',
+    template_name: infowindows.classic.template_name,
+    offset: infowindows.classic.offset,
     title: data.title,
     cartodb_id: data.cartodb_id,
     src: data.src,
-    offset: [50, 10],
     subtitle: data.subtitle,
     description: data.description,
     latlng: [latlng.lat, latlng.lng],

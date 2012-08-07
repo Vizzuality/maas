@@ -1,0 +1,16 @@
+<div class="cartodb-popup small <%= legend %>">
+  <div class="wrapper">
+    <div class="content">
+      <h1><%= title %></h1>
+
+      <% if (legend == 'population') { %>
+      <h2><%= intword(value.toFixed(2)) %></h2>
+      <% } else { %>
+      <h2><span>$</span><%= (value/1000000).toFixed(2) %>M</h2>
+      <% } %>
+      <span><%= legend %></span>
+
+    </div>
+  </div>
+  <div class="tip"></div>
+</div>

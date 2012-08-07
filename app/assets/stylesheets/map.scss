@@ -169,16 +169,59 @@
 
   .cartodb-popup {
 
-    &:hover {
-      cursor: default;
-    }
-
-    &.with_photo {
-      position:relative;
-      top: -7px;
-    }
+    &:hover { cursor: default; }
+    &.with_photo { position:relative; top: -7px; }
 
     // Different styles
+
+    &.small {
+
+      $width: 182px;
+      $pT: 20px; $pR: 15px; $pB: 0; $pL: 15px;
+
+      text-align:center;
+
+      width: $width;
+
+      .content {
+        width: $width - $pR - $pL;
+        padding: $pT $pR $pB $pL;
+      }
+
+      .wrapper { width: $width; background: url("icons/infowindow-small.png") 0 top; }
+
+      .tip {
+        @include size($width, 36px);
+        background: url("icons/infowindow-small.png") no-repeat right top;
+      }
+
+      &.population .content h2,
+      &.population .content h2 span { color: #527FBD; }
+
+      &.gdp .content h2,
+      &.gdp .content h2 span { color: #DE4619; }
+      &.gdp .content span    { font-size:11px; }
+
+      .content {
+        h1 {
+          margin: 0 0 11px 0;
+          padding: 0 0 15px 0;
+          @include font("sans-serif-base-bold", 18px, #333);
+          border-bottom: 1px solid #CCC;
+        }
+
+        h2 {
+          margin: 0;
+          @include font("sans-serif-base-bold", 24px, #999999);
+        }
+
+        span {
+          @include font("sans-serif-base-bold", 11px, #999999);
+          text-transform: uppercase;
+        }
+      }
+
+    }
 
     &.photo {
       .tip { position:relative; top: -7px }
@@ -188,7 +231,6 @@
         top: 7px;
         left: 7px;
       }
-
     }
 
     &.thematic {
@@ -254,9 +296,13 @@
     }
 
     .content {
+      $pT: 20px;
+      $pR: 15px;
+      $pB: 0;
+      $pL: 15px;
 
-      width: $width - 30px;
-      padding: 20px 15px 0 15px;
+      width: $width - $pR - $pL;
+      padding: $pT $pR $pB $pL;
 
       margin: 0;
 

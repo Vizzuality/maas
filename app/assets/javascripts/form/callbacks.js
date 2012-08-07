@@ -58,7 +58,7 @@ callbacks.checkbox.markers = {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set({offset: photoInfowindow.offset, template_name: photoInfowindow.template_name });
+        infowindow.model.set({offset: infowindows.photo.offset, template_name: infowindows.photo.template_name });
         infowindow.show();
       }
 
@@ -87,7 +87,7 @@ callbacks.checkbox.markers = {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set({offset: classicInfowindow.offset, template_name: classicInfowindow.template_name });
+        infowindow.model.set({offset: infowindows.classic.offset, template_name: infowindows.classic.template_name });
         infowindow.show();
       }
 
@@ -174,7 +174,7 @@ callbacks.checkbox.polygons = {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set({offset: classicInfowindow.offset, template_name: classicInfowindow.template_name });
+        infowindow.model.set({offset: infowindows.classic.offset, template_name: infowindows.classic.template_name });
         infowindow.show();
       }
     }
@@ -265,7 +265,7 @@ callbacks.checkbox.thematic =  {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set({offset: thematicInfowindow.offset, template_name: thematicInfowindow.template_name });
+        infowindow.model.set({offset: infowindows.small.offset, template_name: infowindows.small.template_name });
         infowindow.show();
       }
     },
@@ -281,7 +281,7 @@ callbacks.checkbox.thematic =  {
       window.navigation.replaceCartoDBLayer(currentLayer);
 
       if (show) {
-        infowindow.model.set({offset: classicInfowindow.offset, template_name: classicInfowindow.template_name });
+        infowindow.model.set({offset: infowindows.classic.offset, template_name: infowindows.classic.template_name });
         infowindow.show();
       }
     }
@@ -290,7 +290,7 @@ callbacks.checkbox.thematic =  {
   variable_selection: {
     on: function(e) {
       selector.collection = new cdb.geo.ui.SelectorItems([
-        { name: "Population",   callback: null },
+        { name: "Population",             callback: null },
         { name: "Gross domestic product", callback: null }
       ]);
 
@@ -305,14 +305,18 @@ callbacks.checkbox.thematic =  {
 
           if (value == "Population") {
             selector.select(0);
+            thematicValue = "population";
 
             if (choroplethSelected)
-              window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.choropleth.population);
+              window.navigation.getCartoDBLayer().set("tile_style", styles.small.choropleth.population);
             else
-              window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.bubble.population);
+              window.navigation.getCartoDBLayer().set("tile_style", styles.small.bubble.population);
 
           } else if (value == "Gross domestic product") {
+            thematicValue = "gpd";
+
             selector.select(1);
+
             if (choroplethSelected)
               window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.choropleth.gdp);
             else
@@ -320,12 +324,10 @@ callbacks.checkbox.thematic =  {
           }
 
           infowindow.hide(true);
-          //window.navigation.getCartoDBLayer().set("query", query);
         }
       });
-
-
     },
+
     off: function() {
       selector.hide();
     }
