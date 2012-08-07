@@ -393,14 +393,18 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   },
 
-  showPane: function(pane) {
-    var self = this;
-
-    // Hide the widgets & do the unbinding
+  // Hide the widgets & do the unbinding
+  resetPane: function() {
     window.map.infowindow.model.set("visibility", false);
     window.map.selector.hide();
     window.map.legend.hide();
     window.map.unbind('change:zoom');
+  },
+
+  showPane: function(pane) {
+    var self = this;
+
+    this.resetPane();
 
     // Fire the callbacks
     pane.collection.each(function(f, i) {
@@ -590,6 +594,8 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
   showDontKnow: function() {
     var self = this;
+
+    this.resetPane();
 
     $("#map").fadeOut(250, function() {
       $(".browser").fadeOut({ duration: 250, easing: "easeInExpo" });
