@@ -169,29 +169,46 @@
 
   .cartodb-popup {
 
-    &:hover { cursor: default; }
-    &.with_photo { position:relative; top: -7px; }
+    &:hover {
+      cursor: default;
+    }
+
+    &.with_photo {
+      position:relative;
+      top: -7px;
+    }
 
     // Different styles
 
+    &.photo {
+      .tip { position:relative; top: -7px }
+
+      img {
+        position: relative;
+        top: 7px;
+        left: 7px;
+      }
+
+    }
+
     &.small {
 
-      $width: 182px;
+      $width-small: 182px;
       $pT: 20px; $pR: 15px; $pB: 0; $pL: 15px;
 
       text-align:center;
 
-      width: $width;
+      width: $width-small;
 
       .content {
-        width: $width - $pR - $pL;
+        width: $width-small - $pR - $pL;
         padding: $pT $pR $pB $pL;
       }
 
-      .wrapper { width: $width; background: url("icons/infowindow-small.png") 0 top; }
+      .wrapper { width: $width-small; background: url("icons/infowindow-small.png") 0 top; }
 
       .tip {
-        @include size($width, 36px);
+        @include size($width-small, 36px);
         background: url("icons/infowindow-small.png") no-repeat right top;
       }
 
@@ -222,16 +239,6 @@
         }
       }
 
-    }
-
-    &.photo {
-      .tip { position:relative; top: -7px }
-
-      img {
-        position: relative;
-        top: 7px;
-        left: 7px;
-      }
     }
 
     &.thematic {
@@ -297,13 +304,9 @@
     }
 
     .content {
-      $pT: 20px;
-      $pR: 15px;
-      $pB: 0;
-      $pL: 15px;
 
-      width: $width - $pR - $pL;
-      padding: $pT $pR $pB $pL;
+      width: $width - 30px;
+      padding: 20px 15px 0 15px;
 
       margin: 0;
 
