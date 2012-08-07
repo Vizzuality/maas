@@ -2,32 +2,29 @@ var config = {
   username: "maas"
 };
 
-statements = createCalls(8, 3);
-
 var layersURL = {
   base:     'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png',
   terrain:  'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-  forest:   'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png',
-  density:  'https://saleiva.cartodb.com/tiles/github_javascript/{z}/{x}/{y}.png',
-  density0: 'https://saleiva.cartodb.com/tiles/github_javascript/{z}/{x}/{y}.png?' + statements[0]
+  forest:   'http://{s}.tiles.mapbox.com/v3/cartodb.map-l2hg5qge/{z}/{x}/{y}.png'
 };
 
 var baseLayers = {
-  base:     { url: layersURL.base,     coords: { zoom: 5,  center: [40.34, 14.06]   }},
-  hexagons: { url: layersURL.base,     coords: { zoom: 4,  center: [30.00, -99.00]  }},
-  terrain:  { url: layersURL.terrain,  coords: { zoom: 5,  center: [33.13, -3.71]   }},
-  polygons: { url: layersURL.base,     coords: { zoom: 8,  center: [48.20, -121.46] }},
-  forest:   { url: layersURL.forest,   coords: { zoom: 9,  center: [40.25, -5.92]   }},
-  density:  { url: layersURL.density0, coords: { zoom: 4,  center: [30.00, -99.00]  }},
-  thematic: { url: layersURL.base,     coords: { zoom: 3,  center: [43.06, 29.35]   }}
+  base:     { url: layersURL.base,    coords: { zoom: 5, center: [40.34, 14.06]   }},
+  hexagons: { url: layersURL.base,    coords: { zoom: 4, center: [30.00, -99.00]  }},
+  terrain:  { url: layersURL.terrain, coords: { zoom: 5, center: [33.13, -3.71]   }},
+  polygons: { url: layersURL.base,    coords: { zoom: 8, center: [48.20, -121.46] }},
+  forest:   { url: layersURL.forest,  coords: { zoom: 9, center: [40.25, -5.92]   }},
+  density:  { url: layersURL.base,    coords: { zoom: 4, center: [30.00, -99.00]  }},
+  thematic: { url: layersURL.base,    coords: { zoom: 3, center: [43.06, 29.35]   }}
 };
 
 var queries = {
-  markers:  'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
-  thematic: 'SELECT cartodb_id, admin, pop_est, gdp_md_est, the_geom_webmercator FROM {{table_name}}',
-  density:  'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng FROM {{table_name}}',
-  polygons: 'SELECT cartodb_id, desig, desig_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}}',
-  hexagons: 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell'
+  markers:   'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
+  thematic:  'SELECT cartodb_id, admin, pop_est, gdp_md_est, the_geom_webmercator FROM {{table_name}}',
+  density:   'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng FROM {{table_name}}',
+  polygons:  'SELECT cartodb_id, desig, desig_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}}',
+  hexagons:  'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell',
+  rectangles:'WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * ({z}+1)),CDB_XYZ_Resolution({z}) * ({z}+1), CDB_XYZ_Resolution({z}) * ({z}+1) ) AS cell) SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell'
 };
 
 var infowindows = {
@@ -47,22 +44,10 @@ var cHexagons = {
 };
 
 var cDensity = {
-  user_name: 'examples',
-  table_name: 'maas_markers',
-  query: queries.density,
-  interactivity: "cartodb_id, latlng",
-  auto_bound: false,
-  featureOver:  function() { document.body.style.cursor = "pointer"; },
-  featureOut:   function() { document.body.style.cursor = "default"; },
-  featureClick: function(ev, latlng, pos, data) {
-
-    var // get coordinates of the marker
-    parsedData = JSON.parse(data.latlng),
-    latlng     = new L.LatLng(parsedData.coordinates[1], parsedData.coordinates[0]);
-
-    infowindow.model.set({ template_name: infowindows.classic.template_name, offset: infowindows.classic.offset, content: data, latlng: [latlng.lat, latlng.lng] });
-    infowindow.showInfowindow();
-  }
+  user_name: "saleiva",
+  table_name: "github_javascript",
+  style: styles.density.hexagons,
+  query: queries.rectangles
 };
 
 var cThematicNewInfowindow = function(ev, latlng, pos, data) {
@@ -247,11 +232,10 @@ var cThematic = {
 
 var cPolygons = {
   user_name: config.username,
-  //table_name: 'polygons',
-  table_name: 'andrewxhill_search_u',
+  table_name: 'polygons',
   query: queries.polygons,
   interactivity: "cartodb_id, name, desig, desig_type, iucn_cat",
-  //tile_style: styles.polygons.base,
+  tile_style: styles.polygons.base,
   featureOver:  function() { document.body.style.cursor = "pointer"; },
   featureOut:   function() { document.body.style.cursor = "default"; },
   featureClick: cPolygonsClassicInfowindow
@@ -260,7 +244,7 @@ var cPolygons = {
 var layers = { // This hash contains the combination of layers for each of the options in the navigation
   markers:     { url: "worldheritagesites.org",         coords: baseLayers.base.coords,     cdb: cMarkers,  base: baseLayers.base,     extra: null },
   polygons:    { url: "protected-areas.gov",            coords: baseLayers.polygons.coords, cdb: cPolygons, base: baseLayers.polygons, extra: null },
-  rectangular: { url: "map.javascript-developers.info", coords: baseLayers.density.coords,  cdb: null,      base: baseLayers.density,  extra: baseLayers.base },
+  rectangular: { url: "map.javascript-developers.info", coords: baseLayers.density.coords,  cdb: cDensity,  base: baseLayers.density,  extra: null },
   density:     { url: "map.javascript-developers.info", coords: baseLayers.hexagons.coords, cdb: cHexagons, base: baseLayers.hexagons, extra: null },
   thematic:    { url: "world-population-watch.co.uk",   coords: baseLayers.thematic.coords, cdb: cThematic, base: baseLayers.thematic, extra: null },
   dont_know:   { url: null,                             coords: baseLayers.base.coords,     cdb: null,      base: null,                extra: null }

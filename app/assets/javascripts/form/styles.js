@@ -7,17 +7,14 @@ var assetsPath = "/home/ubuntu/tile_assets/maas/";
 var styles = {
   polygons: {
     base:    "#polygons { polygon-fill: orange; polygon-opacity: 0.7; line-opacity: 1; line-color: #FFFFFF; }",
-    special: "#polygons { " +
-      "polygon-fill:#FFCA5F;" +
-      "polygon-opacity: 0.8;" +
-      "line-opacity:1;" +
-      "line-color: #FFFFFF;" +
-      "polygon-pattern-file: url(" + assetsPath + "maas_cross1.png);" +
-      "[gov_type = 'Governance by government']  { polygon-fill:#F85FFF; polygon-pattern-file: url(" + assetsPath + "maas_cross1.png);}" +
-      "[gov_type = 'Shared governance']         { polygon-fill:#FF5F8E; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
-      "[gov_type = 'Private governance']        { polygon-fill:#FFCA5F; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png); }" +
-      "[gov_type = 'Not Reported']              { polygon-fill:#88CC4C; polygon-pattern-file: url(" + assetsPath + "maas_dots1.png); }" +
-      "}"
+    special: "#polygons { polygon-fill:#FFCA5F; polygon-opacity: 0.8; line-opacity:0.6; line-color: #FFFFFF; polygon-pattern-file: url(" + assetsPath + "maas_cross1.png); "+
+    "[iucn_cat = 'Ib']  { polygon-fill:#FF013F; polygon-pattern-file: url(" + assetsPath + "maas_cross1.png); } " +
+    "[iucn_cat = 'II']  { polygon-fill:#FB8B01; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png);  } " +
+    "[iucn_cat = 'III'] { polygon-fill:#FABE28; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png);  } " +
+    "[iucn_cat = 'IV']  { polygon-fill:#339199; polygon-pattern-file: url(" + assetsPath + "maas_dots1.png);  } " +
+    "[iucn_cat = 'VI']  { polygon-fill:#3A6367; polygon-pattern-file: url(" + assetsPath + "maas_diag1.png);  } " +
+    "[iucn_cat = 'Not Reported'] { polygon-fill:#3A6367; polygon-pattern-file: url(" + assetsPath + "maas_dots1.png); } " +
+    "}"
   },
   markers: {
     base: "#markers { marker-fill: #FF6600; " +
