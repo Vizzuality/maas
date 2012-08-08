@@ -32,7 +32,7 @@ var styles = {
     "}"
   },
   density: {
-    hexagons: "#github_javascript { " +
+    hexagons: "#github_developers { " +
     "[prop_count>0]   { polygon-fill: #313695; } " +
     "[prop_count>1]   { polygon-fill: #4575B4; } " +
     "[prop_count>2]   { polygon-fill: #74ADD1; } " +

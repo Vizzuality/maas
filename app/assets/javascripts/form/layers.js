@@ -19,12 +19,12 @@ var baseLayers = {
 };
 
 var queries = {
-  markers:   'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
-  thematic:  'SELECT cartodb_id, admin, pop_est, gdp_md_est, the_geom_webmercator FROM {{table_name}}',
-  density:   'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng FROM {{table_name}}',
-  polygons:  'SELECT cartodb_id, desig, desig_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}}',
-  hexagons:  'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell',
-  rectangles:'WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * ({z}+1)),CDB_XYZ_Resolution({z}) * ({z}+1), CDB_XYZ_Resolution({z}) * ({z}+1) ) AS cell) SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell'
+  markers:    'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}',
+  thematic:   'SELECT cartodb_id, admin, pop_est, gdp_md_est, the_geom_webmercator FROM {{table_name}}',
+  density:    'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng FROM {{table_name}}',
+  polygons:   'SELECT cartodb_id, desig, desig_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}}',
+  hexagons:   "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) as cell) SELECT hgrid.cell as the_geom_webmercator, count(i.cartodb_id) as prop_count FROM hgrid, github_developers i WHERE language = 'javascript' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell",
+  rectangles: "WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15),CDB_XYZ_Resolution({z}) * 15, CDB_XYZ_Resolution({z}) * 15) AS cell) SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_developers i WHERE language = 'javascript' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell"
 };
 
 var infowindows = {
@@ -37,15 +37,15 @@ var infowindows = {
 };
 
 var cHexagons = {
-  user_name: "saleiva",
-  table_name: "github_javascript",
+  user_name: config.username,
+  table_name: "github_developers",
   style: styles.density.hexagons,
   query: queries.hexagons
 };
 
 var cDensity = {
-  user_name: "saleiva",
-  table_name: "github_javascript",
+  user_name: config.username,
+  table_name: "github_developers",
   style: styles.density.hexagons,
   query: queries.rectangles
 };
@@ -244,8 +244,8 @@ var cPolygons = {
 var layers = { // This hash contains the combination of layers for each of the options in the navigation
   markers:     { url: "worldheritagesites.org",         coords: baseLayers.base.coords,     cdb: cMarkers,  base: baseLayers.base,     extra: null },
   polygons:    { url: "protected-areas.gov",            coords: baseLayers.polygons.coords, cdb: cPolygons, base: baseLayers.polygons, extra: null },
-  rectangular: { url: "map.javascript-developers.info", coords: baseLayers.density.coords,  cdb: cDensity,  base: baseLayers.density,  extra: null },
-  density:     { url: "map.javascript-developers.info", coords: baseLayers.hexagons.coords, cdb: cHexagons, base: baseLayers.hexagons, extra: null },
+  rectangular: { url: "map.developers-in-the-world.info", coords: baseLayers.density.coords,  cdb: cDensity,  base: baseLayers.density,  extra: null },
+  density:     { url: "map.developers-in-the-world.info", coords: baseLayers.hexagons.coords, cdb: cHexagons, base: baseLayers.hexagons, extra: null },
   thematic:    { url: "world-population-watch.co.uk",   coords: baseLayers.thematic.coords, cdb: cThematic, base: baseLayers.thematic, extra: null },
   dont_know:   { url: null,                             coords: baseLayers.base.coords,     cdb: null,      base: null,                extra: null }
 };

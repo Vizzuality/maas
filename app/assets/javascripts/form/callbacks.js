@@ -1,3 +1,5 @@
+thematicValue = "population";
+
 polygonCategories = [ "Ib", "II", "IV", "V", "VI" ];
 
 var callbacks = {};
@@ -30,45 +32,15 @@ callbacks.checkbox.markers = {
           }
         }]);
 
-      window.map.overlay.model.set("title", "");
-      window.map.overlay.model.set("className", "markers");
-      window.map.overlay.model.set("mode", "radio");
-      overlay.setCollection(collection);
-      window.map.overlay.show();
+        window.map.overlay.model.set("title", "");
+        window.map.overlay.model.set("className", "markers");
+        window.map.overlay.model.set("mode", "radio");
+        overlay.setCollection(collection);
+        window.map.overlay.show();
 
-      //selector.collection = new cdb.geo.ui.SelectorItems([
-        //{ name: "All" ,     callback: null },
-        //{ name: "Natural",  callback: null },
-        //{ name: "Cultural", callback: null }
-      //]);
-
-      //mapView.$el.parent().append(selector.render().$el);
-      //selector.show();
-
-      $(".dk").dropkick({
-        change: function (value, label) {
-
-          var query;
-
-          if (value == "All") {
-            selector.select(0);
-            query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}';
-          } else if (value == "Natural") {
-            selector.select(1);
-            query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'natural'";
-          } else if (value == "Cultural") {
-            selector.select(2);
-            query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'cultural'";
-          }
-
-          infowindow.hide(true);
-          window.navigation.getCartoDBLayer().set("query", query);
-        }
-      });
 
     },
     off: function() {
-      selector.hide();
       overlay.hide();
     }
   },
@@ -151,37 +123,35 @@ callbacks.checkbox.polygons = {
   dynamic_filters: {
     on:  function() {
 
-    window.map.overlay.model.set("title", "Category");
-    window.map.overlay.model.set("className", "polygons");
-    window.map.overlay.model.set("mode", "checkbox");
+      window.map.overlay.model.set("title", "Category");
+      window.map.overlay.model.set("className", "polygons");
+      window.map.overlay.model.set("mode", "checkbox");
 
-    infowindow.hide(true);
+      var collection = new cdb.geo.ui.OverlayItems([
+        { className: 'Ib', selected: true, name: "Ib",
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('Ib')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('Ib')); }
+        },
+        { className: 'II', selected: true, name: "II",
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('II')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('II')); }
+        },
+        { className: 'IV', selected: true, name: "IV",
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('IV')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('IV')); }
+        },
+        { className: 'V', selected: true, name: "V",
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('V')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('V')); }
+        },
+        { className: 'VI', selected: true, name: "VI",
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('VI')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('VI')); }
+        }
+      ]);
 
-    var collection = new cdb.geo.ui.OverlayItems([
-      { className: 'Ib', selected: true, name: "Ib",
-        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('Ib')); },
-        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('Ib')); }
-      },
-      { className: 'II', selected: true, name: "II",
-        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('II')); },
-        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('II')); }
-      },
-      { className: 'IV', selected: true, name: "IV",
-        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('IV')); },
-        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('IV')); }
-      },
-      { className: 'V', selected: true, name: "V",
-        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('V')); },
-        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('V')); }
-      },
-      { className: 'VI', selected: true, name: "VI",
-        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('VI')); },
-        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('VI')); }
-      }
-    ]);
-
-    overlay.setCollection(collection);
-    overlay.show();
+      overlay.setCollection(collection);
+      overlay.show();
 
       $(".dk").dropkick({
         change: function (value, label) {
@@ -206,7 +176,6 @@ callbacks.checkbox.polygons = {
     },
 
     off: function() {
-      selector.hide();
       overlay.hide();
     }
   },
@@ -257,80 +226,49 @@ callbacks.checkbox.density = {
   variable_selection: {
     on: function() {
 
-      selector.collection = new cdb.geo.ui.SelectorItems([
-        { name: "All" ,   callback: null },
-        { name: "High",   callback: null },
-        { name: "Medium", callback: null },
-        { name: "Low" ,   callback: null }
-      ]);
-
-      mapView.$el.parent().append(selector.render().$el);
-      selector.show();
-
-      $(".dk").dropkick({
-        change: function (value, label) {
-
-          var query;
-
-          var hexagonSelected = activePane.collection.at(1).get("selected");
-
-          if (value == "All") {
+      var collection = new cdb.geo.ui.OverlayItems([
+        { className: 'javascript', selected: true, name: "Javascript developers",
+          on:  function() {
+            var hexagonSelected = activePane.collection.at(1).get("selected");
 
             if (hexagonSelected) {
-              query = queries.hexagons;
+              query = "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) " +
+                "SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_developers i " +
+                "WHERE language = 'javascript' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell"; 
             } else {
-              query = queries.rectangles;
+              query = "WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15, CDB_XYZ_Resolution({z}) * 15 ) AS cell) " +
+                "SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_developers i " +
+                "WHERE language = 'javascript' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell";
             }
-
-          } else if (value == 'High') {
-
-            if (hexagonSelected) {
-              query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
-                'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
-                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 90';
-            } else {
-              query = 'WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * ({z}+1)), CDB_XYZ_Resolution({z}) * ({z}+1), CDB_XYZ_Resolution({z}) * ({z}+1) ) AS cell) ' +
-                'SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
-                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 90';
-            }
-
-          } else if ( value == 'Medium') {
-
-            if (hexagonSelected) {
-              query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
-                'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
-                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 10 AND count(i.cartodb_id) < 90';
-            } else {
-              query = 'WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * ({z}+1)), CDB_XYZ_Resolution({z}) * ({z}+1), CDB_XYZ_Resolution({z}) * ({z}+1) ) AS cell) ' +
-                'SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
-                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell HAVING count(i.cartodb_id) > 10 AND count(i.cartodb_id) < 90';
-            }
-
-          } else if (value == 'Low') {
-
-            if (hexagonSelected) {
-              query = 'WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) ' +
-                'SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
-                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell HAVING count(i.cartodb_id) <= 10';
-            } else {
-              query = 'WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * ({z}+1)), CDB_XYZ_Resolution({z}) * ({z}+1), CDB_XYZ_Resolution({z}) * ({z}+1) ) AS cell) ' +
-                'SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_javascript i ' +
-                'WHERE ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell HAVING count(i.cartodb_id) <= 10';
-            }
-
-          }
-
-          infowindow.hide(true);
-
-          if (query) {
             window.navigation.getCartoDBLayer().set('query', query);
           }
-        }
-      });
+        },
+        { className: 'ruby', selected: false, name: "Ruby developers",
+          on:  function() {
+            var hexagonSelected = activePane.collection.at(1).get("selected");
 
+            if (hexagonSelected) {
+              query = "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) " +
+                "SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_developers i " +
+                "WHERE language = 'ruby' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell";
+            } else {
+              query = "WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15, CDB_XYZ_Resolution({z}) * 15 ) AS cell) " +
+                "SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_developers i " +
+                "WHERE language = 'ruby' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell";
+            }
+
+            window.navigation.getCartoDBLayer().set('query', query);
+          }
+        }]);
+
+        window.map.overlay.model.set("title", "");
+        window.map.overlay.model.set("className", "markers");
+        window.map.overlay.model.set("mode", "radio");
+        overlay.setCollection(collection);
+        window.map.overlay.show();
     },
     off: function() {
-      selector.hide();
+      overlay.hide();
     }
   }
 
@@ -377,47 +315,45 @@ callbacks.checkbox.thematic =  {
 
   variable_selection: {
     on: function(e) {
-      selector.collection = new cdb.geo.ui.SelectorItems([
-        { name: "Population",             callback: null },
-        { name: "Gross domestic product", callback: null }
-      ]);
 
-      mapView.$el.parent().append(selector.render().$el);
-      selector.model.set("selectedItem", selector.collection.at(0));
-      selector.show();
-
-      $(".dk").dropkick({
-        change: function (value, label) {
-          var query;
-          var choroplethSelected = activePane.collection.at(1).get("selected");
-
-          if (value == "Population") {
-            selector.select(0);
+      var collection = new cdb.geo.ui.OverlayItems([
+        { className: 'population', selected: true, name: "Population",
+          on:  function() {
             thematicValue = "population";
 
-            if (choroplethSelected)
-              window.navigation.getCartoDBLayer().set("tile_style", styles.small.choropleth.population);
-            else
-              window.navigation.getCartoDBLayer().set("tile_style", styles.small.bubble.population);
+            infowindow.hide(true);
 
-          } else if (value == "Gross domestic product") {
+            var choroplethSelected = activePane.collection.at(1).get("selected");
+
+            if (choroplethSelected)
+              window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.choropleth.population);
+            else
+              window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.bubble.population);
+          }
+        },
+        { className: 'gdp', selected: false, name: "GDP",
+          on:  function() {
+            infowindow.hide(true);
             thematicValue = "gpd";
 
-            selector.select(1);
+            var choroplethSelected = activePane.collection.at(1).get("selected");
 
             if (choroplethSelected)
               window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.choropleth.gdp);
             else
               window.navigation.getCartoDBLayer().set("tile_style", styles.thematic.bubble.gdp);
           }
+        }]);
 
-          infowindow.hide(true);
-        }
-      });
+        window.map.overlay.model.set("title", "");
+        window.map.overlay.model.set("className", "markers");
+        window.map.overlay.model.set("mode", "radio");
+        overlay.setCollection(collection);
+        window.map.overlay.show();
     },
 
     off: function() {
-      selector.hide();
+      overlay.hide();
     }
   }
 
@@ -430,45 +366,50 @@ callbacks.radio.polygons = {};
 callbacks.radio.density  = {
   init: function(e) {
 
-      legend.show();
+    legend.show();
   },
   on: function(e) {
 
-    if (window.navigation && e.model.get("option_name") == "rectangular_grid") {
+    if (!window.navigation) return;
 
-      window.navigation.loadLayers(layers.rectangular);
+    var query = "";
 
-      window.map.bind('change:zoom', function() {
-        var
-        zoomLevel   = window.map.getZoom(),
-        l   = window.navigation.getBaseLayer(),
-        url = null;
+    var selectedOptionName = undefined;
+    var selectedOption = overlay.getSelectedItem();
 
-        var z = zoomLevel;
+    if (selectedOption) selectedOptionName = selectedOption.get("name");
 
-        if (zoomLevel < 3) {
-          z = 0;
-        } else if (zoomLevel > 7) {
-          z = 8;
-        }
+    if (e.model.get("option_name") == "hexagonal_grid") {
 
-        url = layersURL.density + '?' + statements[z];
+      if (selectedOptionName == 'javascript' || selectedOptionName == undefined) {
 
-        l.set("urlTemplate", url);
-      });
+        query = "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) " +
+          "SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_developers i " +
+          "WHERE language = 'javascript' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell"; 
+      } else {
+        query = "WITH hgrid AS (SELECT CDB_HexagonGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}), CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15) AS cell) " +
+          "SELECT hgrid.cell AS the_geom_webmercator, COUNT(i.cartodb_id) AS prop_count FROM hgrid, github_developers i " +
+          "WHERE language = 'ruby' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell ) GROUP BY hgrid.cell"; 
+
+      }
+
+    } else if (e.model.get("option_name") == "rectangular_grid") {
+
+      if (selectedOptionName == 'javascript' || selectedOptionName == undefined) {
+        query = "WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15, CDB_XYZ_Resolution({z}) * 15 ) AS cell) " +
+          "SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_developers i " +
+          "WHERE language = 'javascript' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell";
+
+      } else {
+        query = "WITH hgrid AS (SELECT CDB_RectangleGrid(ST_Expand(CDB_XYZ_Extent({x},{y},{z}),CDB_XYZ_Resolution({z}) * 15), CDB_XYZ_Resolution({z}) * 15, CDB_XYZ_Resolution({z}) * 15 ) AS cell) " +
+          "SELECT hgrid.cell AS the_geom_webmercator, count(i.cartodb_id) AS prop_count FROM hgrid, github_developers i " +
+          "WHERE language = 'ruby' AND ST_Intersects(i.the_geom_webmercator, hgrid.cell) GROUP BY hgrid.cell";
+      }
     }
 
-    if (window.navigation && e.model.get("option_name") == "hexagonal_grid") {
-      window.map.unbind('change:zoom');
-      legend.show();
-    }
-
+    window.navigation.getCartoDBLayer().set('query', query);
   },
-  off: function(e) {
-    if (e.model.get("option_name") == "rectangular_grid") {
-      window.navigation.loadLayers(layers.density);
-    }
-  }
+  off: function(e) { }
 };
 
 callbacks.radio.thematic  = {
@@ -477,10 +418,9 @@ callbacks.radio.thematic  = {
     if (!window.navigation) return;
 
     var selectedOptionName = undefined;
-    var selectedOption = selector.getSelectedItem();
+    var selectedOption = overlay.getSelectedItem();
 
     if (selectedOption) selectedOptionName = selectedOption.get("name");
-
 
     if (e.model.get("option_name") == "bubble_map") {
 
@@ -500,6 +440,7 @@ callbacks.radio.thematic  = {
     }
 
   },
+
   off: function(e) { }
 };
 

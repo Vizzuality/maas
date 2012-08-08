@@ -101,7 +101,9 @@ cdb.geo.ui.Overlay = cdb.core.View.extend({
   default_options: { },
 
   getSelectedItem: function() {
-    return this.model.get("selectedItem");
+    return this.collection.find(function(item) {
+      return item.get("selected");
+    });
   },
 
   select: function(i) {
@@ -170,6 +172,7 @@ cdb.geo.ui.Overlay = cdb.core.View.extend({
       var view = new cdb.geo.ui.OverlayItem({ parent: self, className: item.get("className"), model: item });
       self.$el.find(".items").append(view.render());
     });
+
 
   },
 
