@@ -1,4 +1,11 @@
 en:
+  notifications:
+    new_order:
+      subject: 'Your MapMyData estimate request has been registered.'
+    final_price:
+      subject: 'Your MapMyData estimate is ready.'
+    map_ready:
+      subject: 'Your MapMyData order is ready :-)'
   time:
     formats:
       pretty: "%m/%d/%Y"
