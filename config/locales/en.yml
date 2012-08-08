@@ -41,7 +41,7 @@ en:
       header:
         menu:
           how_does_it_work: How does it work
-          why_mapme: Why Mapme
+          why_mapme: Why MapMyData
           showcase: Showcase
           order_your_map: Order your map
           faq: FAQ
@@ -51,7 +51,7 @@ en:
       order_your_map: 'Order your map'
       menu:
         how_does_it_work: 'How it works'
-        why_mapme: 'Why MapMe'
+        why_mapme: 'Why MapMyData'
         showcase: 'Showcase'
         order_your_map: 'Order your map'
         faq: 'FAQ'
@@ -70,10 +70,10 @@ en:
         order_your_map: 'Order your map'
         explanation_3: 'Within a few days you receive your map, ready to be published.'
       why_mapme:
-        title: 'Why MapMe?'
+        title: 'Why MapMyData?'
         reason_1:
           title: 'Custom solutions'
-          description: 'MapMe is bespoke. We find the best way to visualize and interpret your data, ensuring for a maximum impcat.'
+          description: 'MapMyData is bespoke. We find the best way to visualize and interpret your data, ensuring for a maximum impcat.'
         reason_2:
           title: "Rapid delivery"
           description: 'Our expereinced maps team can turn your project around in a few days. Letting you focus on other business drivers.'
@@ -88,13 +88,13 @@ en:
           description: 'If you have a CartoDB account, just update your data set and see the changes reflected on map in minutes.'
         reason_6:
           title: 'Different basemaps'
-          description: 'Whether you want to use Google Maps, MapBox tiles, Bing, or your own base layer, MapMe! works with all of them.'
+          description: 'Whether you want to use Google Maps, MapBox tiles, Bing, or your own base layer, MapMyData works with all of them.'
     footer:
-      title: 'MapMe!'
+      title: 'MapMyData'
       understand:
         title: 'Understand the service'
         how_it_works: 'How it works'
-        why_mapme: 'Why MapMe?'
+        why_mapme: 'Why MapMyData?'
         faq: 'FAQ'
       see_results:
         title: 'See our results'
