@@ -1,3 +1,5 @@
+polygonCategories = [ "Ib", "II", "IV", "V", "VI" ];
+
 var callbacks = {};
 
 callbacks.checkbox = {};
@@ -8,14 +10,40 @@ callbacks.checkbox.markers = {
   dynamic_filters: {
     on:  function() {
 
-      selector.collection = new cdb.geo.ui.SelectorItems([
-        { name: "All" ,     callback: null },
-        { name: "Natural",  callback: null },
-        { name: "Cultural", callback: null }
-      ]);
+      var collection = new cdb.geo.ui.OverlayItems([
+        { className: 'all', selected: true, name: "All sites",
+          on:  function() {
+            var query = 'SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}}';
+            window.navigation.getCartoDBLayer().set("query", query);
+          }
+        },
+        { className: 'natural', selected: false, name: "Natural sites",
+          on:  function() {
+            var query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'natural'";
+            window.navigation.getCartoDBLayer().set("query", query);
+          }
+        },
+        { className: 'cultural', selected: false, name: "Cultural sites",
+          on:  function() {
+            var query = "SELECT cartodb_id, the_geom_webmercator, ST_AsGeoJSON(the_geom) AS latlng, src, title, subtitle, description, category FROM {{table_name}} WHERE category = 'cultural'";
+            window.navigation.getCartoDBLayer().set("query", query);
+          }
+        }]);
 
-      mapView.$el.parent().append(selector.render().$el);
-      selector.show();
+      window.map.overlay.model.set("title", "");
+      window.map.overlay.model.set("className", "markers");
+      window.map.overlay.model.set("mode", "radio");
+      overlay.setCollection(collection);
+      window.map.overlay.show();
+
+      //selector.collection = new cdb.geo.ui.SelectorItems([
+        //{ name: "All" ,     callback: null },
+        //{ name: "Natural",  callback: null },
+        //{ name: "Cultural", callback: null }
+      //]);
+
+      //mapView.$el.parent().append(selector.render().$el);
+      //selector.show();
 
       $(".dk").dropkick({
         change: function (value, label) {
@@ -41,6 +69,7 @@ callbacks.checkbox.markers = {
     },
     off: function() {
       selector.hide();
+      overlay.hide();
     }
   },
 
@@ -103,20 +132,56 @@ callbacks.checkbox.markers = {
   }
 };
 
+function getPolygonQueryRemoving(item) {
+  polygonCategories =_.without(polygonCategories, item);
+  return "SELECT cartodb_id, desig, desig_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE iucn_cat IN ('" + polygonCategories.join("','") + "')";
+}
+
+function getPolygonQueryAdding(item) {
+
+  if (!_.has(polygonCategories, item)) {
+    polygonCategories.push(item);
+  }
+
+  return "SELECT cartodb_id, desig, desig_type, iucn_cat, name, the_geom_webmercator FROM {{table_name}} WHERE iucn_cat IN ('" + polygonCategories.join("','") + "')";
+}
+
 callbacks.checkbox.polygons = {
 
   dynamic_filters: {
     on:  function() {
 
-      selector.collection = new cdb.geo.ui.SelectorItems([
-        { name: "All types of government" ,   callback: null },
-        { name: "Governance by government",   callback: null },
-        { name: "Shared governance", callback: null },
-        { name: "Not Reported" ,   callback: null }
-      ]);
+    window.map.overlay.model.set("title", "Category");
+    window.map.overlay.model.set("className", "polygons");
+    window.map.overlay.model.set("mode", "checkbox");
 
-      mapView.$el.parent().append(selector.render().$el);
-      selector.show();
+    infowindow.hide(true);
+
+    var collection = new cdb.geo.ui.OverlayItems([
+      { className: 'Ib', selected: true, name: "Ib",
+        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('Ib')); },
+        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('Ib')); }
+      },
+      { className: 'II', selected: true, name: "II",
+        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('II')); },
+        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('II')); }
+      },
+      { className: 'IV', selected: true, name: "IV",
+        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('IV')); },
+        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('IV')); }
+      },
+      { className: 'V', selected: true, name: "V",
+        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('V')); },
+        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('V')); }
+      },
+      { className: 'VI', selected: true, name: "VI",
+        on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('VI')); },
+        off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('VI')); }
+      }
+    ]);
+
+    overlay.setCollection(collection);
+    overlay.show();
 
       $(".dk").dropkick({
         change: function (value, label) {
@@ -142,6 +207,7 @@ callbacks.checkbox.polygons = {
 
     off: function() {
       selector.hide();
+      overlay.hide();
     }
   },
   custom_infowindows: {

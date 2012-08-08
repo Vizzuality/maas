@@ -71,10 +71,22 @@ strong { font-weight: bold; } // This is sad, I know.
   margin-bottom: 30px;
 }
 
+.disable-background-color-transition {
+  -webkit-transition: none;
+  -moz-transition:    none;
+  -o-transition:      none;
+}
+
+.background-color-transition {
+  -webkit-transition: background-color 0.15s ease-out;
+  -moz-transition:    background-color 0.15s ease-out;
+  -o-transition:      background-color 0.15s ease-out;
+}
+
 .shadow-transition {
   -webkit-transition: -webkit-box-shadow 0.3s ease-out;
-  -moz-transition: -moz-box-shadow 0.3s ease-out;
-  -o-transition: box-shadow 0.3s ease-out;
+  -moz-transition:    -moz-box-shadow 0.3s ease-out;
+  -o-transition:       box-shadow 0.3s ease-out;
 }
 
 .no-glow {

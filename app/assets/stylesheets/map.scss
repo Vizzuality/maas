@@ -4,6 +4,68 @@
 
 /* Legend */
 
+#overlay {
+  display: none;
+
+  @include position(10px, 10px, false, false);
+  padding: 10px;
+
+  background: $cWhite;
+  background: rgba($cWhite, .9);
+
+  border: 1px solid $cGray0;
+  @include dark-glow(.3);
+
+  @include border-radius(2px);
+
+  z-index: 10000;
+
+  &.polygons {
+
+    padding: 15px 15px 20px 15px;
+    h1 { margin: 0 0 10px 0; @include font("sans-serif-base-bold", 11px, #999); clear:both; text-transform: uppercase; }
+
+    div {
+
+      @include inline-block();
+      margin: 0 5px 0 0;
+
+      &:last-child { margin: 0; }
+
+      a {
+        text-align:center;
+        padding: 5px 7px;
+        line-height: 15px;
+
+        @include border-radius(2px);
+        @include size(17px);
+        @include font("sans-serif-base-bold", 11px, $cWhite);
+
+      }
+
+      a { background: #ccc; }
+
+
+        &.Ib a:hover { background: #FF013F; }
+        &.II a:hover { background: #FB8B01; }
+        &.IV a:hover { background: #339199; }
+        &.V  a:hover { background: #FABE28; }
+        &.VI a:hover { background: #3A6367; }
+
+      &.selected {
+
+        &.Ib a { background: #FF013F; }
+        &.II a { background: #FB8B01; }
+        &.IV a { background: #339199; }
+        &.V  a { background: #FABE28; }
+        &.VI a { background: #3A6367; }
+
+      }
+    }
+
+  }
+}
+
 #selector {
 
   display:none;

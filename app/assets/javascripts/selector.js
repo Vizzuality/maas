@@ -41,8 +41,8 @@ cdb.geo.ui.SelectorItem = cdb.core.View.extend({
     }
 
     this.$el.html(this.template(this.model.toJSON()));
-    return this.$el;
 
+    return this.$el;
   }
 
 });

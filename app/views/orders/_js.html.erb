@@ -32,10 +32,23 @@
 
     mapView.$el.parent().append(zoom.render().$el);
 
+    overlay = new cdb.geo.ui.Overlay({
+      model: new cdb.geo.ui.OverlayModel({ 
+        title: "",
+        template: cdb.templates.getTemplate('templates/map/overlay/overlay'),
+        item_template: 'templates/map/overlay/item',
+        className: "polygons"
+      }),
+    });
+
+    mapView.$el.parent().append(overlay.render());
+
     switcher = new cdb.geo.ui.Switcher({
       model: map,
       template: cdb.templates.getTemplate('templates/map/switcher/switcher')
     });
+
+    mapView.$el.parent().append(switcher.render().$el);
 
     legend = new cdb.geo.ui.Legend({
       model: map,
@@ -49,7 +62,6 @@
     });
 
     mapView.$el.parent().append(legend.render().$el);
-
 
     // Adds Infowindow
     var infowindowModel = new cdb.geo.ui.InfowindowModel({
@@ -139,15 +151,17 @@
       { selected: false, className: "dont_know", name: "Don't know" }
     ]);
 
-    window.map = map;
+    window.map     = map;
     window.mapView = mapView;
 
     window.map.infowindow = infowindow;
     window.map.selector   = selector;
     window.map.legend     = legend;
+    window.map.switcher   = switcher;
+    window.map.overlay    = overlay;
 
-    window.navigation  = new cdb.ui.common.Navigation({ map: map, collection: templates });
-    window.router      = new cdb.Router();
+    window.navigation = new cdb.ui.common.Navigation({ map: map, collection: templates });
+    window.router     = new cdb.Router();
     Backbone.history.start({ pushState: true });
 
   });
