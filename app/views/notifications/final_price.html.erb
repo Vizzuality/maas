@@ -22,7 +22,7 @@
 
   <% if @order.total - @order.starting_from > 0 %>
     <tr>
-      <td style="line-height:18x; margin-top:20px; padding: 17px 0 17px 0; border-top: 2px solid #A1A1A1; font-size:15px; color: #666666;" width="180" valign="top">Data processing and specific customization for clients data</td>
+      <td style="line-height:18x; margin-top:20px; padding: 17px 0 17px 0; border-top: 2px solid #A1A1A1; font-size:15px; color: #666666;" width="180" valign="top">Additional charges (data formatting, special visualization needs, etc.)</td>
       <td width="150" valign="top" style="line-height:18px; margin-top:20px; padding: 17px 0 17px 0; border-top: 2px solid #A1A1A1; text-align:right; font-size:15px; color: #E67632;"><span style="font-size:15px; color: #E67632;"><%= number_to_currency(@order.total - @order.starting_from, :unit => "USD", :format => "%n %u") %></span></td>
     </tr>
   <% end %>
