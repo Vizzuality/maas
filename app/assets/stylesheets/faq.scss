@@ -65,10 +65,10 @@ body.faq .section_title {
 
 /* SECTIONS */
 
-body.faq section.questions {
+body.faq section.questions, body.faq section.service, body.faq section.technical, body.faq section.pricing  {
   position:relative;
 
-  padding: 68px 0;
+  padding: 68px 50px;
 
   width: 959px;
   margin: 58px auto;
@@ -76,7 +76,6 @@ body.faq section.questions {
   @include border-radius(5px);
 
   background:#fff;
-  text-align: center;
 
   ul {
 
