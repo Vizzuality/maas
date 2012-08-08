@@ -25,18 +25,24 @@
     padding: 0;
 
     .items div {
+
       a { text-transform: uppercase; @include font("sans-serif-base-bold", 11px, $cGray3 ); }
+
       border-bottom: 1px solid #ccc;
-      padding: 10px 5px;
+      padding: 10px 10px;
 
       &:last-child { border: none; }
 
+      &.all      a { @include icons-sprite(overlay-asterisk-disabled); padding-left: 20px; }
+      &.natural  a { @include icons-sprite(overlay-leaf-disabled); padding-left: 20px; }
+      &.cultural a { @include icons-sprite(overlay-book-disabled); padding-left: 20px; }
+
       &.selected {
         a { @include font("sans-serif-base-bold", 11px, $cGray2); }
-        &.natural a { color: #359302; }
-        &.cultural a { color: #158BC3; }
+        &.all      a { @include icons-sprite(overlay-asterisk); }
+        &.natural  a { @include icons-sprite(overlay-leaf); color: #359302; }
+        &.cultural a { @include icons-sprite(overlay-book); color: #158BC3; }
       }
-
     }
   }
 
