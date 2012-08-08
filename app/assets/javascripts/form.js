@@ -751,10 +751,8 @@ cdb.Router = Backbone.Router.extend({
 
     if (!pageName) pageName = defaultPageName;
 
-
     activePane = window.pane.active(pageName)
     window.navigation.select(activePane);
-
   }
 
 });

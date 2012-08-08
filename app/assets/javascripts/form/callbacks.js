@@ -1,3 +1,5 @@
+thematicValue = "population";
+
 polygonCategories = [ "Ib", "II", "IV", "V", "VI" ];
 
 var callbacks = {};
@@ -125,28 +127,26 @@ callbacks.checkbox.polygons = {
       window.map.overlay.model.set("className", "polygons");
       window.map.overlay.model.set("mode", "checkbox");
 
-      infowindow.hide(true);
-
       var collection = new cdb.geo.ui.OverlayItems([
         { className: 'Ib', selected: true, name: "Ib",
-          on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('Ib')); },
-          off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('Ib')); }
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('Ib')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('Ib')); }
         },
         { className: 'II', selected: true, name: "II",
-          on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('II')); },
-          off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('II')); }
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('II')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('II')); }
         },
         { className: 'IV', selected: true, name: "IV",
-          on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('IV')); },
-          off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('IV')); }
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('IV')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('IV')); }
         },
         { className: 'V', selected: true, name: "V",
-          on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('V')); },
-          off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('V')); }
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('V')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('V')); }
         },
         { className: 'VI', selected: true, name: "VI",
-          on:  function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('VI')); },
-          off: function() { window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('VI')); }
+          on:  function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryAdding('VI')); },
+          off: function() { infowindow.hide(true); window.navigation.getCartoDBLayer().set("query", getPolygonQueryRemoving('VI')); }
         }
       ]);
 
@@ -319,6 +319,9 @@ callbacks.checkbox.thematic =  {
       var collection = new cdb.geo.ui.OverlayItems([
         { className: 'population', selected: true, name: "Population",
           on:  function() {
+            thematicValue = "population";
+
+            infowindow.hide(true);
 
             var choroplethSelected = activePane.collection.at(1).get("selected");
 
@@ -330,6 +333,9 @@ callbacks.checkbox.thematic =  {
         },
         { className: 'gdp', selected: false, name: "GDP",
           on:  function() {
+            infowindow.hide(true);
+            thematicValue = "gpd";
+
             var choroplethSelected = activePane.collection.at(1).get("selected");
 
             if (choroplethSelected)

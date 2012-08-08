@@ -15,6 +15,7 @@ MaaS::Application.routes.draw do
   resources :orders do
     resources :payments
   end
+
   match "home/show" => "home#show"
 
   resources :demo
