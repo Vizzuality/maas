@@ -136,7 +136,7 @@ $(function() {
       this.$el.find(".error").removeClass("error");
 
       $("body").append("<div class='backdrop'></div>");
-      $(".backdrop").fadeIn(150);
+      $(".backdrop").fadeIn(250);
       $(".backdrop").on("click", this.hide);
 
     },
