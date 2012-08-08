@@ -399,7 +399,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     window.map.selector.hide();
     window.map.overlay.hide();
     window.map.legend.hide();
-    window.map.unbind('change:zoom');
   },
 
   showPane: function(pane) {
