@@ -1,3 +1,7 @@
+<% content_for :title do %>
+  Order #<%= @order.friendly_id[0, 10] %> status | MapMyData
+<% end %>
+
 <div class="bg-map"></div>
 
 <%= render :partial => 'common/header' %>
@@ -10,7 +14,7 @@
   </section>
 
   <section>
-  <h3>Your order summary <span class="date"><%= l @order.created_at, :format => :pretty %> </span></h3>
+  <h3>Order #<%= @order.friendly_id[0, 10] %> summary <span class="date"><%= l @order.created_at, :format => :pretty %> </span></h3>
   <ul>
     <li><%= @order.template.name.humanize.capitalize %> map <%= raw "with&hellip;" if @order.order_options.size > 0 %> <span class="price">$<%= @order.template.price %></span>
     <ul>
@@ -30,7 +34,7 @@
     <% if @order.paid? %>
       <strong>TOTAL</strong> <div class="price">$<%= @order.total %></div>
     <% else %>
-      <strong>TOTAL</strong> <div class="price">Starting from $<%= @order.starting_from %></div>
+      <strong>TOTAL</strong> <div class="price">$<%= @order.starting_from %></div>
     <% end %>
   </div>
 
@@ -43,7 +47,7 @@
   <% if !@order.ready_for_payment? and !@order.paid? %>
     <section class="highlighted centered">
     <h3>We are analyzing your data.</h3>
-    <p>In order to give you a price based on the time we will need to proccess and visualize it we need to take a look at your data first. Once we finish, we will contact you -and update this page- with the definitive budget, which you will approve or discard.</p>
+    <p>In order to give you a price based on the time we will need to proccess and visualize it, we need to take a look at your data first. Once we finish, we will contact you -and update this page- with the definitive budget, which you will approve or discard.</p>
     <p>Do you think that is taking us too much time? <a href="#">Contact us</a></p>
     </section>
   <% end %>
