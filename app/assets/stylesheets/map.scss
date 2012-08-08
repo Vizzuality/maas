@@ -264,6 +264,7 @@ html.lt-ie10 #overlay {
   padding: 0;
 
   @include clearfix();
+  z-index: 1000;
 
   -webkit-transform: translateZ(10000px); /* Hack for Safari */
 

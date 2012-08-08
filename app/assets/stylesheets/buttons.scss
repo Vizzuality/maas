@@ -78,8 +78,8 @@
 }
 
 
-body.lt-ie10 {
-  .button.gray { border-radius:none; }
+html.lt-ie10 { 
+  .button.gray { background:#f1f1f1; }
 }
 
 .button.gray {
