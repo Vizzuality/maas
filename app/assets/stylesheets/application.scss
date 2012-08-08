@@ -424,6 +424,43 @@ footer {
 } // footer
 
 
+.success {
+  width: 468px;
+  position: absolute;
+
+  display:none;
+
+  background: $cWhite;
+  border: 1px solid #9A9A9A;
+  @include border-radius(3px);
+
+  z-index: 2000;
+
+  .inner { padding: 30px; }
+
+  .close-dialog {
+    $width: 23px;
+    @include size($width);
+    @include position(-1*$width/2, -1*$width/2, false, false);
+    @include icons-sprite(btn-close);
+  }
+
+  p { margin: 0 0 15px 0; line-height: 17px; text-align: center; @include font("sans-serif-base", 15px, $cGray3); }
+  p a { color: $cLink;}
+  p a:hover { color: $cGray2;}
+
+  .section_title {
+    margin: 0 0 30px 0;
+    padding: 0 0 20px 0;
+
+    color: $cOrange;
+    border-bottom: 1px solid $cBorder;
+  }
+
+  .button { margin: 15px 0 0 0; width: 353px; text-align: center; }
+
+}
+
 .dialog {
   width: 468px;
   position: absolute;
