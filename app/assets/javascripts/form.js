@@ -65,6 +65,8 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       var callback = this.model.get("callback");
 
       if (callback && callback.on) {
+
+        infowindow.hide(true);
         if (window.navigation) window.navigation.showCircle(this.$el);
         callback.on( this );
       }
@@ -83,6 +85,7 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       var callback = this.model.get("callback");
 
       if (callback && callback.off) {
+        infowindow.hide(true);
         if (window.navigation) window.navigation.showCircle(this.$el);
         callback.off( this );
       }
@@ -224,7 +227,7 @@ cdb.ui.common.NavigationItem = Backbone.View.extend({
       (c == self.model) ? self.model.set("selected", true) :c.set("selected", false);
     });
 
-    window.router.navigate("/orders/new/" + this.model.get("className"), { trigger: true });
+    window.router.navigate(this.model.get("className"), { trigger: true });
   }
 
 });
@@ -318,7 +321,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     var name = this.collection.at(pos).get("className");
     this.select(name);
 
-    window.router.navigate("orders/new/" + name);
+    window.router.navigate(name);
     window.pane.active(name);
   },
 
@@ -330,11 +333,6 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     var n = this.collection.next();
 
     var pageName = n.get("className");
-
-    //var pane = window.pane.active(pageName)
-    //console.log(pane);
-    //window.navigation.select(pane);
-    //window.router.navigate("orders/new/" + pageName);
 
   },
 
@@ -741,10 +739,7 @@ cdb.ui.common.Form = Backbone.View.extend({
 cdb.Router = Backbone.Router.extend({
 
   routes: {
-    "orders":           "page",
-    "orders/new/":      "page",
-    "orders/new":       "page",
-    "orders/new/:page": "page"
+    ":page": "page"
   },
 
   page: function(pageName) {

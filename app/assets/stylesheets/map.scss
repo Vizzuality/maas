@@ -4,13 +4,18 @@
 
 /* Legend */
 
+
+html.lt-ie10 #overlay { 
+  background: $cWhite;
+  @include dark-glow(0);
+}
+
 #overlay {
   display: none;
 
   @include position(10px, 10px, false, false);
   padding: 10px;
 
-  background: $cWhite;
   background: rgba($cWhite, .9);
 
   border: 1px solid $cGray0;
