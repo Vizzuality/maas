@@ -3,14 +3,17 @@
 <p style="font-family: Arial, sans-serif; color:#5E5E5E; font-size: 13px;">Hi <%= @order.name %>!</p>
 <p style="font-family: Arial, sans-serif; color:#5E5E5E; font-size: 13px; margin:0 0 30px 0">We are thrilled to tell you your MapMyData map, <%= @order.friendly_id[0, 10] %>, is ready.</p>
 
-<p style="font-family: Arial, sans-serif; margin-bottom: 30px; font-size: 27px;"><a href="http://mapme-staging.herokuapp.com/orders/<%= @order.friendly_id %>" style="color: #397DB8"><strong>See it online</strong></a></p>
+<p style="font-family: Arial, sans-serif; margin-bottom: 30px; font-size: 27px;"><a href="<%= @order.map_url %>" style="color: #397DB8"><strong>See it online</strong></a></p>
 
 <p style="font-family: Arial, sans-serif; color:#333333; font-size: 17px; font-weight: bold; margin:0 0 10px 0;">Your source code</p>
-<p style="font-family: Arial, sans-serif; color:#5E5E5E; font-size: 13px; margin:0 0 30px 0">You can download the source code for the mapa <a href="">here</a>.</p>
+<p style="font-family: Arial, sans-serif; color:#5E5E5E; font-size: 13px; margin:0 0 30px 0">You can download the source code for the map <a href="<%= @order.map_source_url %>" style="color: #397DB8">here</a>.</p>
 
 <p style="font-family: Arial, sans-serif; color: #333333; font-size: 17px; font-weight: bold; margin:0 0 10px 0;">Embedding the map</p>
 <p style="font-family: Arial, sans-serif; color:#5E5E5E; font-size: 13px; margin:0 0 15px 0">You can embed the map in your page use the following HTML code:</p>
-<p style="margin: 0 0 15px 0; width: 100%; padding: 20px; color: #5E5E5E; font: monospaced; background-color: #FFFFCC; border: 1px solid #FF9966;">code to be embedded</p>
+<p style="margin: 0 0 15px 0; width: 100%; padding: 20px; color: #5E5E5E; font: monospaced; background-color: #FFFFCC; border: 1px solid #FF9966;">&lt;iframe src='<%= @order.map_url %>' width='572' height='220'&gt;&lt;/iframe&gt;</p>
+
+
+
 
 <p style="font-family: Arial, sans-serif; color:#5E5E5E; font-size: 13px;">We really hope you like it, and should you encounter any problems, please feel free to contact us by replying to this email.</p>
 <p style="font-family: Arial, sans-serif; color:#5E5E5E; font-size: 13px;">It's been a pleasure, and we're looking forward to meeting more of you mapping needs in the future.</p>
