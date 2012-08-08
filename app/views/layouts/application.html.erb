@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MaaS</title>
+    <title><%= yield :title %></title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
+    
+    <meta name="description" content="Make beautiful interactive maps easily from your data, pick a template, send us your data, and have us geocode it for you; unlimited free hosting for your maps."/>
+    <meta name="keywords" content = "map, mapping, service, data, location, template, geocoding, geospatial, beautiful, interactive, dynamic"/>
+    
   </head>
   <body class="<%= controller_name %>">
 

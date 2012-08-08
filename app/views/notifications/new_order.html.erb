@@ -1,7 +1,7 @@
 <h1 style="line-height: 30px">Your MapMyData estimate request has been received</h1>
 
 <p style="color:#5E5E5E; font-size: 13px;">Hi <%= @order.name %>!</p>
-<p style="color:#5E5E5E; font-size: 13px;">Just wanted to confirm we have registered your MapMyData estimate request:</p>
+<p style="color:#5E5E5E; font-size: 13px;">Just wanted to confirm we've registered your MapMyData estimate request:</p>
 
 <p style="margin:0 0 15px 0;"><strong style="font-family: Arial, sans-serif; font-size: 17px; color:#333;">Order #<%= @order.friendly_id[0, 10] %></strong></p>
 
@@ -20,14 +20,14 @@
 
   <tr>
     <td style="border-top: 2px solid #A1A1A1; margin-top: 15px; padding: 20px 0 10px 0;" valign="top"><strong style="font-size:17px">Provisional estimate</strong></td>
-    <td style="border-top: 2px solid #A1A1A1; text-align:right; margin-top: 15px; padding: 20px 0 10px 0; font-size:15px; color: #E67632;" width="180" valign="top"><span style="font-size:15px; color: #E67632;">Starting on <%= number_to_currency(@order.starting_from, :unit => "USD", :format => "%n %u") %></span></td>
+    <td style="border-top: 2px solid #A1A1A1; text-align:right; margin-top: 15px; padding: 20px 0 10px 0; font-size:15px; color: #E67632;" width="180" valign="top"><span style="font-size:15px; color: #E67632;"><%= number_to_currency(@order.starting_from, :unit => "USD", :format => "%n %u") %></span></td>
   </tr>
 </table>
 
 <table cellpadding="0" cellspacing="0" border="0">
   <tr>
     <td>
-      <p style="color:#5E5E5E; font-size: 13px;">We are analyzing the data you provided, you will receive a definitive estimate in some days. Check your order status at <a href="http://mapme-staging.herokuapp.com/orders/<%= @order.friendly_id %>" style="color: #397DB8; text-decoration:none;">mapme-staging.herokuapp.com/orders/<%= @order.friendly_id[0, 10] %></a> </p>
+      <p style="color:#5E5E5E; font-size: 13px;">We are analyzing your data, and will send you a concrete price within a couple of days. You can check your order status at <a href="http://mapme-staging.herokuapp.com/orders/<%= @order.friendly_id %>" style="color: #397DB8; text-decoration:none;">mapme-staging.herokuapp.com/orders/<%= @order.friendly_id[0, 10] %></a> </p>
       <p style="color:#5E5E5E; font-size: 13px;">Looking forward to work for you :-)</p>
     </td>
   </tr>
