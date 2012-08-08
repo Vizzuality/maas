@@ -244,8 +244,8 @@ var cPolygons = {
 var layers = { // This hash contains the combination of layers for each of the options in the navigation
   markers:     { url: "worldheritagesites.org",         coords: baseLayers.base.coords,     cdb: cMarkers,  base: baseLayers.base,     extra: null },
   polygons:    { url: "protected-areas.gov",            coords: baseLayers.polygons.coords, cdb: cPolygons, base: baseLayers.polygons, extra: null },
-  rectangular: { url: "map.javascript-developers.info", coords: baseLayers.density.coords,  cdb: cDensity,  base: baseLayers.density,  extra: null },
-  density:     { url: "map.javascript-developers.info", coords: baseLayers.hexagons.coords, cdb: cHexagons, base: baseLayers.hexagons, extra: null },
+  rectangular: { url: "map.developers-in-the-world.info", coords: baseLayers.density.coords,  cdb: cDensity,  base: baseLayers.density,  extra: null },
+  density:     { url: "map.developers-in-the-world.info", coords: baseLayers.hexagons.coords, cdb: cHexagons, base: baseLayers.hexagons, extra: null },
   thematic:    { url: "world-population-watch.co.uk",   coords: baseLayers.thematic.coords, cdb: cThematic, base: baseLayers.thematic, extra: null },
   dont_know:   { url: null,                             coords: baseLayers.base.coords,     cdb: null,      base: null,                extra: null }
 };
