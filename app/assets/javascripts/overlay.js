@@ -17,7 +17,9 @@ cdb.geo.ui.OverlayItem = cdb.core.View.extend({
 
   initialize: function() {
 
-    _.bindAll(this, "render", "click");
+    _.bindAll(this, "render", "click", "select", "changeSelected", "toggle");
+
+    this.model.bind("change:selected", this.changeSelected);
 
     this.parent = this.options.parent;
     this.template = cdb.templates.getTemplate(this.parent.model.get("item_template"));
@@ -25,8 +27,19 @@ cdb.geo.ui.OverlayItem = cdb.core.View.extend({
 
   },
 
+  changeSelected: function() {
+
+    if (this.model.get("selected") == true) {
+      this.$el.addClass("selected");
+    } else {
+      this.$el.removeClass("selected");
+    }
+
+  },
+
   click: function(e) {
     e.preventDefault();
+
 
     if (this.parent.model.get("mode") == 'checkbox') {
 
@@ -41,6 +54,8 @@ cdb.geo.ui.OverlayItem = cdb.core.View.extend({
 
     } else {
 
+      this.select(this.model);
+
       var on = this.model.get("on");
 
       if (on)  on();
@@ -48,17 +63,20 @@ cdb.geo.ui.OverlayItem = cdb.core.View.extend({
 
   },
 
+  select: function(i) {
+    var self = this;
+
+    this.parent.collection.each(function(item) {
+      if (item == i) {
+        item.set("selected", true);
+      } else {
+        item.set("selected", false);
+      }
+    });
+  },
+
   toggle: function() {
-
     this.model.set("selected", !this.model.get("selected"));
-
-    if (this.model.get("selected") == true) {
-      this.$el.addClass("selected");
-    } else {
-      this.$el.removeClass("selected");
-    }
-
-
   },
 
   render: function() {

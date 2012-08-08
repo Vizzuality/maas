@@ -20,12 +20,38 @@
 
   z-index: 10000;
 
+  &.markers {
+
+    padding: 0;
+
+    .items div {
+
+      a { text-transform: uppercase; @include font("sans-serif-base-bold", 11px, $cGray3 ); }
+
+      border-bottom: 1px solid #ccc;
+      padding: 10px 10px;
+
+      &:last-child { border: none; }
+
+      &.all      a { @include icons-sprite(overlay-asterisk-disabled); padding-left: 20px; }
+      &.natural  a { @include icons-sprite(overlay-leaf-disabled); padding-left: 20px; }
+      &.cultural a { @include icons-sprite(overlay-book-disabled); padding-left: 20px; }
+
+      &.selected {
+        a { @include font("sans-serif-base-bold", 11px, $cGray2); }
+        &.all      a { @include icons-sprite(overlay-asterisk); }
+        &.natural  a { @include icons-sprite(overlay-leaf); color: #359302; }
+        &.cultural a { @include icons-sprite(overlay-book); color: #158BC3; }
+      }
+    }
+  }
+
   &.polygons {
 
     padding: 15px 15px 20px 15px;
     h1 { margin: 0 0 10px 0; @include font("sans-serif-base-bold", 11px, #999); clear:both; text-transform: uppercase; }
 
-    div {
+    .items div {
 
       @include inline-block();
       margin: 0 5px 0 0;
