@@ -55,12 +55,11 @@
 <% if @order.ready_for_payment? and !@order.paid? %>
 
   <section class="highlighted dark">
-  <h3>Your final price <span class="price">$<%= @order.total %></span></h3>
+  <h3>Your final price <span class="price">$<strong><%= @order.total %></strong></span></h3>
 
   <p>
   After analyzing your data we’ve defined a final price for your map.
-  Your price has been increased by the amount of data you have and the 
-  cleanning tast that we will need to do before visualizing your data.
+  Your price may have been increased from the original estimate because of additional tasks or resources, like data cleaning & formatting or special visualization needs.
   </p>
 
   <p class="bottom-30">
