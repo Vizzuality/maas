@@ -117,7 +117,13 @@ body.orders header {
 
 body.orders header nav ul li a,
 body.orders header nav ul li:after,
-body.orders header .logo { color: $cGray2; }
+body.orders header .logo {
+	color: $cGray2; 
+}
+
+body.orders header .logo {
+	@include icons-sprite(logo-dark, $offset-y:-3);			
+}
 
 body.orders header nav ul li a:hover {
   border-bottom: 1px solid rgba($cGray0, 0.5);
