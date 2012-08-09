@@ -191,17 +191,17 @@ en:
             name: 'Custom infowindows.'
             description: 'This includes an ad-hoc design of your map infowindows.'
             price: '$%{price}'
-          different_markers:
+          different_markers_for_different_categories:
             name: 'Different markers for different categories.'
-            description: 'This allows you to visual differentiate the features - styles may change-.'
+            description: "This allows you to visually differentiate between features - styles may change."
             price: '$%{price}'
           dynamic_clusters:
             name: 'Dynamic clusters.'
             description: 'Creates a cluster when a lot of points are close each other - styles may change-.'
             price: '$%{price}'
-          different_polygons:
+          different_styles_for_different_types_of_polygons:
             name: 'Different polygons for different categories.'
-            description: 'This allows you to visual differentiate the features - styles may change-.'
+            description: "This allow you to visually differentiate polygons - styles may change"
             price: '$%{price}'
           variable_selection:
             name: 'Variable selection.'
