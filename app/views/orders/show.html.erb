@@ -25,13 +25,18 @@
       <% if @order.visualization_method %>
         <li><%= @order.visualization_method.name.humanize %></li>
       <% end %>
+
     </ul>
-
-
   </ul>
 
+  <% if @order.ready_for_payment? || @order.paid? %>
+    <div class="additional">
+      Additional charges (data formatting, special visualization needs, etc.) <div class="price">$<%= @order.total - @order.starting_from %></div>
+    </div>
+  <% end %>
+
   <div class="total">
-    <% if @order.paid? %>
+    <% if @order.ready_for_payment? || @order.paid? %>
       <strong>TOTAL</strong> <div class="price">$<%= @order.total %></div>
     <% else %>
       <strong>TOTAL</strong> <div class="price">$<%= @order.starting_from %></div>
@@ -48,7 +53,7 @@
     <section class="highlighted centered">
     <h3>We are analyzing your data.</h3>
     <p>In order to give you a price based on the time we will need to proccess and visualize it, we need to take a look at your data first. Once we finish, we will contact you -and update this page- with the definitive budget, which you will approve or discard.</p>
-    <p>Do you think that is taking us too much time? <a href="#">Contact us</a></p>
+    <p>Do you think that is taking us too much time? <a href="mailto:contact@mapmydata.co">Contact us</a></p>
     </section>
   <% end %>
 
@@ -68,6 +73,8 @@
   </p>
 
   <%= link_to "Proceed to payment ($#{@order.total})", new_order_payment_path(@order), :class => "blue button" %>
+  
+  <span class="writeus">or <a href="mailto:contact@mapmydata.co">write us an email with your questions</a>.</span>
 
   </section>
 
@@ -77,7 +84,8 @@
 
   <section class="paid">
     <h3>Your payment has been received</h3>
-    <p> We’ve received your payment correctly. Your map will be ready in a couple of days. If you have any question, don’t hesitate in contacting us.  </p>
+    <p> We’ve received your payment correctly. Your map will be ready in a couple of days. If you have any question, don’t hesitate in <a href="mailto:contact@mapmydata.co">contacting us</a>.</p>
+    <div class="stamp_paid order-received"></div>
   </section>
 
 <% end %>
