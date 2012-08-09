@@ -60,7 +60,7 @@ $(function() {
 
       var emailRegexp = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i;
 
-    var error = false;
+      var error = false;
 
       if (!attrs.email || !attrs.email.match(emailRegexp)) {
         window.dialog.email.model.set({ error:true, error_msg: "We would like to know who you are" });
@@ -87,7 +87,7 @@ $(function() {
     initialize: function() {
 
       _.defaults(this.options, this.default_options);
-      _.bindAll(this, 'render', 'keydown', 'hide', 'ok');
+      _.bindAll(this, 'render', 'keydown', '_forceHide', 'hide', 'ok', '_cancel');
 
       $(document).bind('keydown', this.keydown);
 
@@ -110,7 +110,7 @@ $(function() {
       this.$el.find("ul").append(this.email.render());
       this.$el.find("ul").append(this.comment.render());
 
-      return this;
+      return this.$el;
     },
 
     center: function() {
@@ -123,35 +123,47 @@ $(function() {
 
     hide: function(callback) {
 
-      this.$el.fadeOut(150);
+      this.$el.fadeOut(250);
 
-      if (!this.model.get("dontHideBackdrop")) {
-        $(".backdrop").fadeOut(150, function() {
-          $(this).remove();
-
-          if (callback) callback();
-
-        });
-      } else {
         if (callback) callback();
-      }
-
     },
 
     open: function() {
+      var that = this;
 
-      this.$el.fadeIn(150);
+      this.$el.fadeIn(250);
       this.center();
       this.$el.find(".error").removeClass("error");
 
       if (this.model.get("backdrop")) {
         $("body").append("<div class='backdrop'></div>");
         $(".backdrop").fadeIn(250);
-        $(".backdrop").on("click", this.hide);
+        $(".backdrop").on("click", that._forceHide);
       }
 
     },
+    _forceHide: function() {
+      window.currentDialog.$el.hide();
 
+      $(".backdrop").fadeOut(250, function() {
+        $(this).remove();
+      });
+    },
+
+    _cancel: function(ev) {
+
+      if (ev) ev.preventDefault();
+
+      if (this.cancel) {
+        this.cancel();
+      }
+
+      this.hide();
+      $(".backdrop").fadeOut(250, function() {
+        $(this).remove();
+      });
+
+    },
     ok: function() {
       var that = this;
 
@@ -168,18 +180,19 @@ $(function() {
         success: function() {
           that.hide(function() {
 
-          var dialog = new MyDialog({
-            title: 'Thank you!',
-            backdrop: false,
-            description: 'long description here',
-            className: 'success',
-            template_name: 'templates/contact/success',
-            width:  458,
-            height: 539
-          });
+            var dialog = new MyDialog({
+              title: 'Thank you!',
+              backdrop: false,
+              description: 'long description here',
+              className: 'success',
+              template_name: 'templates/contact/success',
+              width:  458,
+              height: 539
+            });
 
-          $('body').append(dialog.render().el);
-          dialog.open();
+            $('body').append(dialog.render());
+            window.currentDialog = dialog;
+            dialog.open();
 
 
           });
@@ -212,7 +225,6 @@ $(function() {
 
   var dialog = new MyDialog({
     title: 'test',
-    dontHideBackdrop: true,
     description: 'long description here',
     template_name: 'templates/contact/contact',
     width:  458,
@@ -221,6 +233,6 @@ $(function() {
 
   window.dialog = dialog;
 
-  $('body').append(dialog.render().el);
+  $('body').append(dialog.render());
 
 });
