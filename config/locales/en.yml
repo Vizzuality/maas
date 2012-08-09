@@ -29,7 +29,11 @@ en:
           subtitle: 'Select your template'
         show:
           title: 'Track your order'
-          subtitle: "We're analyzing your data"
+          analyzing: "We're analyzing your data"
+          awaiting_payment: "We've analized your data"
+          preparing_map: "We are preparing your map"
+          map_ready: "Your map is ready"                              
+          
   flash:
     actions:
       create:

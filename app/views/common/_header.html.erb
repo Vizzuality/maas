@@ -5,8 +5,27 @@
   <%= render :partial => 'orders/nav' %>
 
   <hgroup>
-  <h3><%= t(".#{controller.controller_name}.#{controller.action_name}.title") %></h3>
-  <h2>&mdash; <%= t(".#{controller.controller_name}.#{controller.action_name}.subtitle") %> &mdash;</h1>
+
+
+      <%
+      if controller.action_name === 'show'  
+        if  !@order.ready_for_payment? 
+          label_name = "analyzing"
+        elsif !@order.paid?
+          label_name = "awaiting_payment"
+        elsif !@order.ready?
+          label_name = "preparing_map"
+        else
+          label_name = "map_ready"
+        end
+      else
+        label_name = 'subtitle';
+      end
+      %>
+
+      <h3><%= t(".#{controller.controller_name}.#{controller.action_name}.title") %></h3>
+      <h2>&mdash; <%= t(".#{controller.controller_name}.#{controller.action_name}.#{label_name}") %> &mdash;</h2>
+  
   </hgroup>
 
 </div>
