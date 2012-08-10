@@ -117,7 +117,13 @@ body.orders header {
 
 body.orders header nav ul li a,
 body.orders header nav ul li:after,
-body.orders header .logo { color: $cGray2; }
+body.orders header .logo {
+	color: $cGray2; 
+}
+
+body.orders header .logo {
+	@include icons-sprite(logo-dark, $offset-y:-3);			
+}
 
 body.orders header nav ul li a:hover {
   border-bottom: 1px solid rgba($cGray0, 0.5);
@@ -586,6 +592,13 @@ form .navigation {
     @include icons-sprite(stamp);
   }
 
+  .stamp_paid {
+    @include size(96px);
+    @include position(false, 25px, -20px, false);
+    @include icons-sprite(stamp-paid);
+  }
+
+
   section {
 
     $pT: 40px;
@@ -616,6 +629,7 @@ form .navigation {
       padding: 40px 40px 20px 40px;
 
       p { color: $cGray2; }
+			a { text-decoration: underline; color: $cLink}
     }
 
     &.dark {
@@ -638,6 +652,14 @@ form .navigation {
 
     .date { float: right; @include font("sans-serif-base", 13px, $cGray4); }
 
+    .additional {
+      padding: 20px 0 0 0;
+      margin:  20px 0 0 0;
+      border-top: 1px solid $cBorder;
+			@include font("sans-serif", 15px, $cGray3); 
+      .price { float:right; }
+    }
+
     .total {
       padding: 20px 0 0 0;
       margin:  20px 0 0 0;
@@ -645,8 +667,10 @@ form .navigation {
       border-top: 1px solid $cBorder;
 
       strong { float: left; @include font("sans-serif", 13px, $cGray1); }
-      .price { float:right; }
+      .price { float:right; font-weight: bold}
     }
+
+		.writeus {margin-left: 10px; @include font("sans-serif-base", 15px, $cGray2);}
 
     ul {
       margin: 0 0 20px 0;

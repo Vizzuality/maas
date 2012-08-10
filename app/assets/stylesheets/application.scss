@@ -107,6 +107,8 @@ header nav {
 
 header .logo {
   @include position(40px, false, false, false);
+	@include icons-sprite(logo-white, $offset-y:-3);
+	padding-left: 30px;
 
   @extend .sans-serif-bold;
   font-size:31px;
@@ -391,7 +393,10 @@ footer {
   .logo {
 
     @include position(50px, false, false, false);
-    @include font("sans-serif-bold", 31px, $cGray1);
+    @include font("sans-serif-bold", 31px, $cGray2);
+		@include icons-sprite(logo-dark, $offset-y:-3);		
+
+		padding-left: 30px;		
 
   } // logo
 
