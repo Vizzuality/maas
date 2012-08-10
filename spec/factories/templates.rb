@@ -6,7 +6,7 @@ FactoryGirl.define do
 
     factory :markers do
       name 'markers'
-      price 1800
+      price 2300
 
       after(:create) do |template, evaluator|
 
@@ -19,7 +19,7 @@ FactoryGirl.define do
 
     factory :polygons do
       name 'polygons'
-      price 2000
+      price 2500
 
       after(:create) do |template, evaluator|
 
@@ -33,7 +33,7 @@ FactoryGirl.define do
 
     factory :thematic do
       name 'thematic'
-      price 3000
+      price 3500
 
       after(:create) do |template, evaluator|
         
@@ -49,7 +49,7 @@ FactoryGirl.define do
 
     factory :density do
       name 'density'
-      price 2000
+      price 2500
 
       after(:create) do |template, evaluator|
 
