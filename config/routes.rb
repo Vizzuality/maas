@@ -3,14 +3,13 @@ MaaS::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
 
+  match "orders/new/:page" => "orders#new"
+
   resources :client_data
 
   resources :questions
   resources :templates
   resources :faq
-
-  match "orders/new/:page" => "orders#new"
-  match "orders/new/:page" => "orders#new"
 
   resources :orders do
     resources :payments
