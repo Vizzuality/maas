@@ -13,9 +13,19 @@
 //= require form/styles
 //= require form/layers
 //= require form/callbacks
+//= require jquery.cycle.all
 //= require_tree .
 
 $(function() {
+
+  if ($('body.home').length > 0) {
+    $('.computer').cycle({
+      fx: 'fade',
+      random: false,
+      timeout: 4500
+    });
+  }
+
 
 $(".browser .home, .browser .reload").on("click", function(e) { e.preventDefault(); });
 

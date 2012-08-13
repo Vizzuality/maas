@@ -116,20 +116,22 @@ header .logo {
 }
 
 @-webkit-keyframes bodyslide {
-  0%   { right: -30px; }
-  100% { right: 0px; }
+  0%   { right: -250px; }
+  100% { right: -151px; }
 }
 
 .home header .computer {
 
-  @include position(false, 0, 0, false);
-  @include size(625px, 391px);
-
+  @include position(false, -150px, 0, false);
+  @include size(800px, 432px);
   background: url(backgrounds/bg-computer.png) no-repeat;
-
-  -webkit-animation:bodyslide 1s ease;
+  -webkit-animation:bodyslide 900ms ease;
 
   z-index: 100;
+
+  img {
+    @include position(66px, false, false, 87px);
+  }
 }
 
 
