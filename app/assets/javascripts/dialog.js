@@ -131,14 +131,21 @@ $(function() {
     open: function() {
       var that = this;
 
-      this.$el.fadeIn(250);
-      this.center();
-      this.$el.find(".error").removeClass("error");
+      var t = Math.max(0, (($(window).height() - this.$el.outerHeight()) / 2) +
+        $(window).scrollTop());
 
       if (this.model.get("backdrop")) {
         $("body").append("<div class='backdrop'></div>");
-        $(".backdrop").fadeIn(250);
+        $(".backdrop").fadeIn(250, function() {
+
+          that.$el.css({ top: t + 50, opacity: 0 });
+          that.$el.show();
+          that.$el.animate({ top: t, opacity: 1 }, 250);
+          that.$el.find(".error").removeClass("error");
+
+        });
         $(".backdrop").on("click", that._forceHide);
+
       }
 
     },

@@ -467,8 +467,8 @@ footer {
 }
 
 .dialog {
-  width: 468px;
-  position: absolute;
+  $width: 468px;
+  @include absolute-vertical-center($width);
 
   display:none;
 

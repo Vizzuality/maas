@@ -24,6 +24,9 @@ ProximaNova-Semibold.woff: ProximaNova-Semibold-60c2898f64ab920d9e1756ce779034f8
 backgrounds/bg-browser.png: backgrounds/bg-browser-ae1b27260c86ebb89e6ac19731b9faed.png
 backgrounds/bg-button-blue.jpg: backgrounds/bg-button-blue-4e34886acc136ccdf0d1ed8be376ec22.jpg
 backgrounds/bg-button-blue.png: backgrounds/bg-button-blue-d8ac2df971e14845e632863f486b8c4e.png
+backgrounds/bg-computer-1.png: backgrounds/bg-computer-1-c44a288b59fdb17584aefa8a35022880.png
+backgrounds/bg-computer-2.png: backgrounds/bg-computer-2-06790eb0abdab0f5dc2dc92e7ee2e5cc.png
+backgrounds/bg-computer-3.png: backgrounds/bg-computer-3-82da4df0f7dbaa5b694d11900b7bc7ad.png
 backgrounds/bg-computer.png: backgrounds/bg-computer-eb3e803495a63e4561ddb3115ac36062.png
 backgrounds/bg-form-input-error.png: backgrounds/bg-form-input-error-9db2112174180fcb91792b740cd49dee.png
 backgrounds/bg-form-input.png: backgrounds/bg-form-input-dbe8deb7e31b6623d84900b9c6993339.png
@@ -37,13 +40,14 @@ backgrounds/bg-orange.png: backgrounds/bg-orange-09e9f82260b560ce0b102f74060a4ca
 backgrounds/bg-padded.png: backgrounds/bg-padded-9844f4d216d99f7224d9d9cddf8607e8.png
 backgrounds/bg-paper.png: backgrounds/bg-paper-b1ab7952916f46e830fbdbb1bf956419.png
 backgrounds/bg-progress-bar.png: backgrounds/bg-progress-bar-c7580be1bbfe5a2954189d8b39c75ce8.png
+backgrounds/bg-recurly-logo.png: backgrounds/bg-recurly-logo-9f5dee5454898e1d06356ef5a6baca6d.png
 backgrounds/bg-shadow-bottom.png: backgrounds/bg-shadow-bottom-3ff04098cfa709883b3be18d21a7d254.png
 backgrounds/bg-shadow-top.png: backgrounds/bg-shadow-top-fbdddc54bddf82db653d97f5b99c19c0.png
 backgrounds/bg-stars.png: backgrounds/bg-stars-5cea0308efb7ed1f9045b5748b6d4bac.png
-backgrounds/bg-street.png: backgrounds/bg-street-60bb125764caadcd328abe9a97f64ec8.png
+backgrounds/bg-street.png: backgrounds/bg-street-2166844fed6f9569a1b3f1f3c0d87cc2.png
 buttons/bt-slideshow-next.png: buttons/bt-slideshow-next-58f35e0cc3d228b9aed356f1fcda14a0.png
 buttons/bt-slideshow-prev.png: buttons/bt-slideshow-prev-84e966bba9cb8d89954f8bc4704e69d3.png
-icons-sa5520d8659.png: icons-sa5520d8659-75fc1f84c31f32ed2bc30bc7f6e97a77.png
+icons-s5b2e0f7eb1.png: icons-s5b2e0f7eb1-c3923f47ae82096f92c80635f075e4f1.png
 icons/browser-big.png: icons/browser-big-42c0d6eb1e0f66fcaa04bc9cdc4b830d.png
 icons/browser-home-active.png: icons/browser-home-active-eb2654026eaaea2f13a178130cb15541.png
 icons/browser-home-hover.png: icons/browser-home-hover-69f7724c56e5ca71cf5d4ecac34e2596.png
@@ -75,6 +79,8 @@ icons/infowindow-small.png: icons/infowindow-small-ce3b247f28dbbb4a80b84eb0e26ea
 icons/infowindow.png: icons/infowindow-6aa20e70e9fdc7d39c4943bb814aaed0.png
 icons/infowindow_2.png: icons/infowindow_2-bf0cdabed0a02ddce93019c36bcf7868.png
 icons/legend-heat-graph.png: icons/legend-heat-graph-24a6e99f5d8e31ceb7d1cd9058300022.png
+icons/logo-dark.png: icons/logo-dark-51dc9754f39b855bc76c85f14b89ef7a.png
+icons/logo-white.png: icons/logo-white-cbee5ce4428d877ec9ee229ca3a35b19.png
 icons/map-bullet-blue.png: icons/map-bullet-blue-dfa59ff59cf303d03f427442b97f5cca.png
 icons/map-bullet-light_blue.png: icons/map-bullet-light_blue-d8fa6fb700fba168d4afbdc6a8afd890.png
 icons/map-bullet-light_red.png: icons/map-bullet-light_red-54b5a58e36327f81787289907f22b9ac.png
@@ -130,9 +136,9 @@ slideshow/slide-04.png: slideshow/slide-04-8f91aaead44b3c15b0177cb5562afc03.png
 slideshow/slide-05.png: slideshow/slide-05-7394dea5fbe5b6b7d88b932a46671af9.png
 tmp/infowindow-01.png: tmp/infowindow-01-85bba57346429e95f98ccade4be34b0a.png
 active_admin.js: active_admin-86dbac21cc05ceb10c3249e6402001b3.js
-application.js: application-30a297eb3469676ffb7328e08d3e7491.js
+application.js: application-5acf99471779124e1e416599b68978e1.js
 active_admin.css: active_admin-1055494fb5f6d49e87abdc46d72eae33.css
-application.css: application-52d4c550c96ae613f7449f838a16957b.css
+application.css: application-9c379e2e10e6213ea2cea81267e11646.css
 cdb/README.md: cdb/README-cee81ba06e23bfc10d622388484b90cd.md
 cdb/demos/geo/map.html: cdb/demos/geo/map-aaa9e92eb6c83d4fdc17d541a1b0cf35.html
 cdb/demos/index.html: cdb/demos/index-7270767b2a9e9fff880aa5de378ca791.html
