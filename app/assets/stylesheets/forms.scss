@@ -122,7 +122,8 @@ body.orders header .logo {
 }
 
 body.orders header .logo {
-	@include icons-sprite(logo-dark, $offset-y:-3);			
+	@include icons-sprite(logo-dark, $offset-x:-1);			
+  @include text-shadow(none);      
 }
 
 body.orders header nav ul li a:hover {

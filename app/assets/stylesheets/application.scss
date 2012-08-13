@@ -107,12 +107,13 @@ header nav {
 
 header .logo {
   @include position(40px, false, false, false);
-	@include icons-sprite(logo-white, $offset-y:-3);
-	padding-left: 30px;
+	@include icons-sprite(logo-white);
+	padding: 2px 0 0 38px;
 
   @extend .sans-serif-bold;
   font-size:31px;
   color: $cWhite;
+  @include text-shadow( rgba($cGray0, 0.5) 1px 1px 2px);  
 }
 
 @-webkit-keyframes bodyslide {
@@ -394,9 +395,8 @@ footer {
 
     @include position(50px, false, false, false);
     @include font("sans-serif-bold", 31px, $cGray2);
-		@include icons-sprite(logo-dark, $offset-y:-3);		
-
-		padding-left: 30px;		
+		@include icons-sprite(logo-dark);		
+		padding: 2px 0 0 38px;		
 
   } // logo
 
