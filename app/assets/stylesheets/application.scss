@@ -77,6 +77,8 @@ a {
   p  { width: 430px; margin: 0 0 20px 0; @include font("sans-serif", 21px, $cWhite); line-height: 25px; }
   p strong { font-weight:normal; @include font("sans-serif-semi", 21px, $cWhite); }
 
+  z-index: 1000;
+
 } // home header hgroup
 
 header nav {
