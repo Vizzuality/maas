@@ -117,13 +117,14 @@ header .logo {
 
 @-webkit-keyframes bodyslide {
   0%   { right: -250px; }
-  100% { right: -151px; }
+  100% { right: -64px; }
 }
 
 .home header .computer {
 
-  @include position(false, -150px, 0, false);
-  @include size(800px, 432px);
+  @include position(false, -65px, 0, false);
+  @include size(800px, 400px);
+  overflow:hidden;
   background: url(backgrounds/bg-computer.png) no-repeat;
   -webkit-animation:bodyslide 900ms ease;
 
