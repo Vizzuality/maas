@@ -59,7 +59,7 @@ MaaS::Application.configure do
     :password             => ENV['EMAIL_PASSWORD'],
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
-  config.action_mailer.default_url_options = { :host => 'mapme-staging.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'mapmydata.co' }
 
   # Enable threaded mode
   # config.threadsafe!
