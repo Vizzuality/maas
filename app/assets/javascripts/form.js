@@ -428,7 +428,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
 
       $("#map").fadeOut(200, function() {
 
-        $(".map").animate({ height: 463 }, { duration: 250, easing: "easeOutExpo" });
+        $(".map").animate({ height: 423 }, { duration: 250, easing: "easeOutExpo" });
         $(".browser").fadeIn({ duration: 250, easing: "easeOutExpo", complete: loadLayers });
 
       });
@@ -474,7 +474,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   var self = this;
 
     $("#map").fadeIn(100, function() {
-      $(".browser").animate({ bottom: -70 }, 150, function() {
+      $(".browser").animate({ bottom: -50 }, 150, function() {
         self.animating = false;
         window.map.setView(center, zoom);
       });

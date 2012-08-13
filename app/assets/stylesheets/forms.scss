@@ -118,11 +118,11 @@ body.orders header {
 body.orders header nav ul li a,
 body.orders header nav ul li:after,
 body.orders header .logo {
-	color: $cGray2; 
+	color: $cGray2;
 }
 
 body.orders header .logo {
-	@include icons-sprite(logo-dark, $offset-y:-3);			
+	@include icons-sprite(logo-dark, $offset-y:-3);
 }
 
 body.orders header nav ul li a:hover {
@@ -323,7 +323,7 @@ body.orders form.new_order {
 form .map {
 
   $width: 722px;
-  $height: 463px;
+  $height: 423px;
 
   height:$height - 2;
   position:relative;
@@ -338,7 +338,7 @@ form .map {
 
   .browser {
     @include absolute-vertical-center($width);
-    bottom: -70px;
+    bottom: -50px;
 
     @include size($width, $height);
     @include icons-sprite(browser);
@@ -379,7 +379,7 @@ form .map {
       overflow:hidden;
 
       @include position(40px, false, false, 1px);
-      @include size($width - 2, $height - 110);
+      @include size($width - 2, $height - 90);
 
       #map {
         @include size(100%, 100%);
@@ -656,7 +656,7 @@ form .navigation {
       padding: 20px 0 0 0;
       margin:  20px 0 0 0;
       border-top: 1px solid $cBorder;
-			@include font("sans-serif", 15px, $cGray3); 
+			@include font("sans-serif", 15px, $cGray3);
       .price { float:right; }
     }
 
