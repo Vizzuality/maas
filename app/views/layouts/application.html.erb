@@ -10,8 +10,8 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     
-    <meta name="description" content="Make beautiful interactive maps easily from your data, pick a template, send us your data, and have us geocode it for you; unlimited free hosting for your maps."/>
-    <meta name="keywords" content = "map, mapping, service, data, location, template, geocoding, geospatial, beautiful, interactive, dynamic"/>
+    <meta name="description" content="Make beautiful interactive maps easily from your data, pick a template, send us your data, and have us geocode it for you; unlimited free hosting for your maps." />
+    <meta name="keywords" content = "map, mapping, service, data, location, template, geocoding, geospatial, beautiful, interactive, dynamic" />
     
   </head>
   <body class="<%= controller_name %>">
@@ -21,18 +21,17 @@
 
     <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-34067553-1']);
-  _gaq.push(['_trackPageview']);
+       var _gaq = _gaq || [];
+       _gaq.push(['_setAccount', 'UA-34067553-1']);
+       _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+       (function() {
+           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+  </script>
 
-</script>
-  </body>
+  <%= yield :adwords %>
+</body>
 </html>
-
-
