@@ -18,6 +18,13 @@
 
 $(function() {
 
+  $('body.home a.scroll').on("click", function(e) {
+    e.preventDefault();
+    var url = $(this).attr("href");
+    var hash = url.substring(url.indexOf('#'));
+    $("body").animate({ scrollTop: $(hash).offset().top - 10 }, { easing: "easeInSine", duration: 500 });
+  });
+
   if ($('body.home').length > 0) {
     $('.computer').cycle({
       fx: 'fade',
