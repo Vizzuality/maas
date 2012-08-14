@@ -5,14 +5,14 @@
   <nav>
   <ul class="understand">
     <li><strong><%= t('.understand.title') %></strong></li>
-    <li><%= link_to t('.understand.how_it_works'), root_path(:anchor => :characteristics) %></li>
-    <li><%= link_to t('.understand.why_mapme'), root_path(:anchor => :why_mapme) %></li>
+    <li><%= link_to t('.understand.how_it_works'), root_path(:anchor => :characteristics), :class => :scroll %></li>
+    <li><%= link_to t('.understand.why_mapme'),    root_path(:anchor => :why_mapme), :class => :scroll %></li>
     <li><%= link_to t('.understand.faq'), faq_index_path %></li>
   </ul>
 
   <ul class="see_results">
     <li><strong><%= t('.see_results.title') %></strong></li>
-    <li><%= link_to t('.see_results.showcase'), root_path(:anchor => :slideshow) %></li>
+    <li><%= link_to t('.see_results.showcase'),       root_path(:anchor => :slideshow), :class => :scroll %></li>
     <li><%= link_to t('.see_results.order_your_map'), "/orders/new/markers" %></li>
     <!-- <li><%= link_to t('.see_results.blog'), '#' %></li> -->
   </ul>
