@@ -67,7 +67,9 @@ cdb.ui.common.FieldView = Backbone.View.extend({
       if (callback && callback.on) {
 
         infowindow.hide(true);
+
         if (window.navigation) window.navigation.showCircle(this.$el);
+
         callback.on( this );
       }
 
@@ -397,6 +399,10 @@ cdb.ui.common.Navigation = Backbone.View.extend({
     window.map.selector.hide();
     window.map.overlay.hide();
     window.map.legend.hide();
+
+    this.sentenceIndex = 0;
+    this.originalURL   = null;
+
   },
 
   showPane: function(pane) {
@@ -459,6 +465,7 @@ cdb.ui.common.Navigation = Backbone.View.extend({
   },
 
   showURL: function(url) {
+  var that = this;
 
     if (url == $(".browser .url").val()) return;
 
@@ -630,6 +637,58 @@ cdb.ui.common.Form = Backbone.View.extend({
     this.model.bind("change:total", this.updatePrice, this);
 
     this.render();
+    this.easterEgg();
+
+  },
+
+  easterEgg: function() {
+
+    var that = this;
+
+    this.sentenceIndex = 0;
+    this.originalURL   = null;
+
+    this.sentences = [
+      "oh-howdy.com/#!",
+      "we.hopeyoulikeourmaps.com",
+      "a test"
+    ];
+
+    $(".browser .home").on("click", function(e) {
+      e.preventDefault();
+
+      if (that.originalURL == null) return;
+
+      $("input.url").fadeOut(100, function() {
+        $(this).val(that.originalURL);
+        $(this).fadeIn(100);
+      });
+
+      that.originalURL = null;
+      that.sentenceIndex = 0;
+
+    });
+
+    $(".browser .reload").on("click", function(e) {
+      e.preventDefault();
+
+      $("input.url").fadeOut(100, function() {
+        var i = that.sentenceIndex++;
+
+        if (i >= that.sentences.length - 1) {
+
+          $(this).val(that.originalURL);
+          that.originalURL   = null;
+          that.sentenceIndex = 0;
+
+        } else {
+          $(this).val(that.sentences[i]);
+        }
+
+        $(this).fadeIn(100);
+      });
+
+    });
 
   },
 

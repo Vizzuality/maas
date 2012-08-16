@@ -18,6 +18,7 @@
 
 $(function() {
 
+  // Smooth scrolling
   $('body.home a.scroll').on("click", function(e) {
     e.preventDefault();
     var url = $(this).attr("href");
@@ -25,6 +26,7 @@ $(function() {
     $("body").animate({ scrollTop: $(hash).offset().top - 10 }, { easing: "easeInSine", duration: 500 });
   });
 
+  // Simple slideshow
   if ($('body.home').length > 0) {
     $('.computer').cycle({
       fx: 'fade',
@@ -34,8 +36,7 @@ $(function() {
   }
 
 
-$(".browser .home, .browser .reload").on("click", function(e) { e.preventDefault(); });
-
+  // Contat dialog launcher
   $("footer ul li a.contact").on("click", function(e) {
     e.preventDefault();
     window.dialog.open();

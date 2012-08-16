@@ -118,11 +118,12 @@ body.orders header {
 body.orders header nav ul li a,
 body.orders header nav ul li:after,
 body.orders header .logo {
-	color: $cGray2;
+  color: $cGray2;
+  text-shadow: none;
 }
 
 body.orders header .logo {
-	@include icons-sprite(logo-dark);
+  @include icons-sprite(logo-dark);
 }
 
 body.orders header nav ul li a:hover {
