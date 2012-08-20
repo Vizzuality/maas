@@ -13,11 +13,6 @@
     <meta name="description" content="Make beautiful interactive maps easily from your data, pick a template, send us your data, and have us geocode it for you; unlimited free hosting for your maps." />
     <meta name="keywords" content = "map, mapping, service, data, location, template, geocoding, geospatial, beautiful, interactive, dynamic" />
     
-  </head>
-  <body class="<%= controller_name %>">
-
-    <%= yield %>
-    <%= yield :js %>
 
     <script type="text/javascript">
 
@@ -31,6 +26,12 @@
              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
        })();
   </script>
+
+  </head>
+  <body class="<%= controller_name %>">
+
+    <%= yield %>
+    <%= yield :js %>
 
   <%= yield :adwords %>
 </body>
