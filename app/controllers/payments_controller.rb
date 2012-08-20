@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
 
   def new
     @signature = Recurly.js.sign(
-      :transaction => { :amount_in_cents => @order.total, :currency => 'USD' }
+      :transaction => { :amount_in_cents => @order.total * 100, :currency => 'USD' }
     )
   end
 
