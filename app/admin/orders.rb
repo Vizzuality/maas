@@ -25,6 +25,9 @@ ActiveAdmin.register Order do
     column :id do |order|
       link_to order.id, admin_order_path(order)
     end
+    column :slug do |order|
+      link_to order.slug, admin_order_path(order)
+    end
     column :name do |order|
       link_to order.name, admin_order_path(order)
     end
